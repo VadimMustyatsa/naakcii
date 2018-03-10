@@ -1,3 +1,13 @@
-<p>
-  foods-food-list works!
-</p>
+<div class="row" *ngIf="foodList.length > 0">
+  <app-foods-food-card
+    *ngFor="let food of foodList"
+    [curFood]="food"
+  >
+  </app-foods-food-card>
+</div>
+
+<div *ngIf="foodList.length == 0" class="card-panel amber">
+  <h5 class="blue-text text-darken-2">2. Выберите подкатегорию товара!</h5>
+</div>
+
+

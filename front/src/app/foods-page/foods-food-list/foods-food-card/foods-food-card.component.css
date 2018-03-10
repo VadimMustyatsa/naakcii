@@ -1,0 +1,36 @@
+.card {
+  height: 280px;
+}
+.card-content {
+  padding: 5px;
+  height: 80px;
+}
+.card-content span {
+  font-size: 16px;
+}
+.card-image {
+  height: 140px;
+  background-image: url("../../../../images/food3.jpg");
+  background-size: cover;
+}
+.card-action {
+  padding: 5px;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+  transition: 0.5s all;
+  z-index: 100;
+}
+.card-reveal {
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.card-reveal span {
+  font-size: 16px;
+  font-weight: bold;
+}
+.card-reveal div p {
+  font-size: 12px;
+}

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-layer1.component.css']
 })
 export class HomeLayer1Component implements OnInit {
-  goFoodsBtn = 'Перейти к товарам';
+  goFoodsBtn = 'Перейти к продуктам';
 
   constructor() { }
 

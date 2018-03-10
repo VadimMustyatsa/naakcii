@@ -1,0 +1,25 @@
+<div class="col s4 m4">
+  <div class="card sticky-action">
+    <div class="card-image activator waves-effect waves-block waves-light">
+
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">
+        {{curFood.name}}<i class="material-icons right">more_vert</i>
+      </span>
+    </div>
+    <div class="card-action center-align white">
+      <a class="btn waves-effect waves-teal" (click)="selectFood(curFood)">Добавить</a>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{{curFood.name}}<i class="material-icons right">close</i></span>
+      <div>
+        <p class="red-text">старая ЦЕНА: {{curFood.allPrice}}</p>
+        <p>скидка:{{curFood.discount}}%</p>
+        <p class="green-text bold">новая ЦЕНА: {{curFood.totalPrice}}</p>
+        <p>Вес:{{curFood.boxWeight}}</p>
+        <p>Магазин:{{curFood.idStrore}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,11 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeStepsComponent implements OnInit {
   steps = [
-    {text: 'Выбирайте нужный товар'},
-    {text: 'Добавляйте в список'},
-    {text: 'Формируйте корзину'},
-    {text: 'Выбирайте магазин'},
-    {text: 'Готово!'},
+    {text: '1. Выбирайте категорию/ подкатегорию', img: ''},
+    {text: '2. Добавляйте товар в список', img: ''},
+    {text: '3. Редактируйте и качайте список', img: ''},
+    {text: '4. Вы готовы к покупкам!', img: ''}
   ]
 
   constructor() { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FoodsCategoriesService} from '../shared/category/foods.categories.service';
 
 @Component({
   selector: 'app-foods-page',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./foods-page.component.css']
 })
 export class FoodsPageComponent implements OnInit {
+  str: string;
 
-  constructor() { }
+  constructor(private service: FoodsCategoriesService) { }
 
   ngOnInit() {
+    this.str = 'asdff';
   }
-
+  isSelectedCategory(): boolean {
+    if (!this.service.getSelectCategory()) {
+      return false;
+    }
+    return true;
+  }
 }

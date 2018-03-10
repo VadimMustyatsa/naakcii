@@ -1,0 +1,27 @@
+<div class="container foods-main-group">
+
+  <div class="chevron" (click)="chevronLeft()">
+    <i class="material-icons amber-text">chevron_left</i>
+  </div>
+
+  <div class="carousel center"
+       materialize="carousel"
+       [materializeParams]="[{dist: 0, padding: 0}]"
+       [materializeActions]="carouselActions">
+    <a
+      class="carousel-item"
+      *ngFor="let cat of categories"
+      (click)="selectCategory(cat)"
+    >
+      <div [class.selected]="isSelected(cat.id)" class="amber-text-text" >
+        {{cat.id}}
+      </div>
+      <p class="brown-text">{{cat.name}}</p>
+    </a>
+  </div>
+
+  <div class="chevron" (click)="chevronRight()">
+    <i class="material-icons amber-text">chevron_right</i>
+  </div>
+
+</div>
