@@ -3,6 +3,7 @@ import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
 import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service';
+import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
 
 @Component({
   selector: 'app-foods-food-list',
@@ -10,8 +11,9 @@ import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service
   styleUrls: ['./foods-food-list.component.css']
 })
 export class FoodsFoodListComponent implements OnInit {
-  foodList: FoodList[] = [];
-  curFoodList: FoodList[] = [];
+  foodList: SelectFoodList[] = [];
+  private curFoodCard: SelectFoodList;
+
   private service: FoodsFoodListService = new FoodsFoodListService();
 
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
@@ -20,11 +22,7 @@ export class FoodsFoodListComponent implements OnInit {
         this.foodList = [];
         for (let i = 0; i < update.subCatList.length; i++) {
           if (update.subCatList[i].selected) {
-            console.log('catID: ' + update.category.id + '; subID: ' + update.subCatList[i].id);
-            this.curFoodList = this.service.getFoodList(update.category.id, update.subCatList[i].id);
-            for (let j = 0; j < this.curFoodList.length; j++) {
-              this.foodList.push(this.curFoodList[j]);
-            }
+            this.putToFoodList(this.service.getFoodList(update.category.id, update.subCatList[i].id));
           }
         }
       }
@@ -33,5 +31,19 @@ export class FoodsFoodListComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  putToFoodList(newFoodList: FoodList[]) {
+    for (let i = 0; i < newFoodList.length; i++) {
+      this.curFoodCard = new SelectFoodList;
+      this.curFoodCard.id = newFoodList[i].id;
+      this.curFoodCard.name = newFoodList[i].name;
+      this.curFoodCard.allPrice = newFoodList[i].allPrice;
+      this.curFoodCard.discount = newFoodList[i].discount;
+      this.curFoodCard.totalPrice = newFoodList[i].totalPrice;
+      this.curFoodCard.boxWeight = newFoodList[i].boxWeight;
+      this.curFoodCard.idStrore = newFoodList[i].idStrore;
+      this.curFoodCard.img = newFoodList[i].img;
+      this.curFoodCard.amount = 1;
+      this.foodList.push(this.curFoodCard);
+    }
+  }
 }

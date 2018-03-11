@@ -1,5 +1,5 @@
 .card {
-  height: 280px;
+  height: 320px;
 }
 .card-content {
   padding: 5px;
@@ -15,6 +15,7 @@
 }
 .card-action {
   padding: 5px;
+  height: 100px;
 }
 .card:hover {
   transform: scale(1.05);
@@ -33,4 +34,18 @@
 }
 .card-reveal div p {
   font-size: 12px;
+}
+.amountItem {
+  padding: 5px 0px;
+}
+.amountItem span {
+  font-size: 18px;
+  font-weight: bold;
+}
+.btn-floating {
+  transform: scale(0.7);
+}
+
+.btn-floating:active {
+  transform: scale(0.6);
 }

@@ -25,26 +25,25 @@ export class FoodsTotalItemsComponent implements OnInit {
   ngOnInit() {
     this.foodTotalList = [];
   }
-  putToTotalList(newFoodCard: FoodList) {
+  putToTotalList(newFoodCard: SelectFoodList) {
     console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
       this.putNewFoodCard(newFoodCard);
       return;
     }
-
   }
-  isAvailable(newFoodCard: FoodList): boolean {
+  isAvailable(newFoodCard: SelectFoodList): boolean {
     for (let i = 0; i < this.foodTotalList.length; i++) {
       console.log('foodTotalList.id: ' + this.foodTotalList[i].id);
       console.log('newFoodCard.id: ' + newFoodCard.id);
       if (this.foodTotalList[i].id === newFoodCard.id) {
-        this.foodTotalList[i].amount += 1;
+        this.foodTotalList[i].amount += newFoodCard.amount;
         return true;
       }
     }
     return false;
   }
-  putNewFoodCard(newFoodCard: FoodList) {
+  putNewFoodCard(newFoodCard: SelectFoodList) {
     console.log('putNew.id: ' + newFoodCard.id);
     this.curFoodCard = new SelectFoodList;
     this.curFoodCard.id = newFoodCard.id;
@@ -55,7 +54,7 @@ export class FoodsTotalItemsComponent implements OnInit {
     this.curFoodCard.boxWeight = newFoodCard.boxWeight;
     this.curFoodCard.idStrore = newFoodCard.idStrore;
     this.curFoodCard.img = newFoodCard.img;
-    this.curFoodCard.amount = 1;
+    this.curFoodCard.amount = newFoodCard.amount;
     this.foodTotalList.push(this.curFoodCard);
   }
   deleteFoodCard(curFood: SelectFoodList) {

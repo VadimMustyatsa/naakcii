@@ -9,8 +9,18 @@
       </span>
     </div>
     <div class="card-action center-align white">
+      <div class="amountItem center">
+        <a class="btn-floating btn teal" (click)="subItem(curFood)">
+          <i class="material-icons">remove</i>
+        </a>
+        <span>{{curFood.amount}}</span>
+        <a class="btn-floating btn teal" (click)="addItem(curFood)">
+          <i class="material-icons">add</i>
+        </a>
+      </div>
       <a class="btn waves-effect waves-teal" (click)="selectFood(curFood)">Добавить</a>
     </div>
+
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">{{curFood.name}}<i class="material-icons right">close</i></span>
       <div>

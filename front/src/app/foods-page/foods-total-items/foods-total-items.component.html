@@ -5,7 +5,7 @@
       <div>Список покупок</div>
     </li>
     <li
-        *ngFor="let curFood of foodTotalList"
+      *ngFor="let curFood of foodTotalList"
     >
       <div class="collapsible-header">
         <span class="left">{{curFood.name}}</span>
@@ -22,6 +22,10 @@
       </div>
     </li>
   </ul>
+
+
+  <a class="waves-effect waves btn green left">PDF</a>
+  <a class="waves-effect waves btn green right">К корзине</a>
 
 </div>
 <div *ngIf="foodTotalList.length == 0" class="card-panel amber">
