@@ -1,4 +1,4 @@
-package nakcii.by.api;
+package naakcii.by.api;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTests {
+public class APIApplicationTests {
 
 	@Test
 	public void contextLoads() {
