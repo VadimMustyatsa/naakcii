@@ -1,0 +1,14 @@
+.card-panel {
+  height: 120px;
+  text-align: center;
+}
+.material-icons {
+  margin: 0px;
+}
+.collapsible-body {
+  padding: 5px;
+}
+.collapsible-header div {
+  margin: 0 auto;
+  font-size: 18px;
+}
