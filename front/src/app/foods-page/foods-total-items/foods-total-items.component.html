@@ -1,0 +1,59 @@
+<div *ngIf="foodTotalList.length > 0">
+
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div>Список покупок</div>
+    </li>
+    <li
+      *ngFor="let curFood of foodTotalList"
+    >
+      <div class="collapsible-header">
+        <span class="foodName left">{{curFood.name | cutString: 15}}</span>
+
+        <div class="amountItem right">
+          <a class="btn-floating btn teal amber" (click)="subItem(curFood)">
+            <i class="material-icons">remove</i>
+          </a>
+          <span class="amber-text">{{curFood.amount}}</span>
+          <a class="btn-floating btn teal amber" (click)="addItem(curFood)">
+            <i class="material-icons">add</i>
+          </a>
+        </div>
+        <i class="material-icons">keyboard_arrow_right</i>
+      </div>
+
+      <div class="collapsible-body">
+        <div class="foodName">
+          {{curFood.name}} <br>
+          {{curFood.boxWeight}}
+        </div>
+        <div class="foodAllPrice">
+          Старая цена: {{curFood.allPrice | number:"1.2-2"}} руб.
+        </div>
+        <div class="foodTotalPrice">
+          Новая цена: {{curFood.totalPrice | number:"1.2-2"}} руб.
+        </div>
+
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">
+            <i class="material-icons amber-text">mode_edit</i>
+          </label>
+        </div>
+
+        <div class="deleteFood row">
+          <a class="right" (click)="deleteFoodCard(curFood)">
+            <i class="material-icons center amber-text">delete_forever</i>
+          </a>
+        </div>
+      </div>
+
+    </li>
+  </ul>
+
+  <!--<a class="waves-effect waves btn amber left">PDF</a>-->
+  <a class="waves-effect waves btn amber right">К корзине</a>
+</div>
+<div *ngIf="foodTotalList.length == 0" class="card-panel amber">
+  <h5 class="blue-text text-darken-2">3. Выберите товар!</h5>
+</div>

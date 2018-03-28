@@ -1,0 +1,31 @@
+.card-panel {
+  height: 120px;
+  text-align: center;
+}
+.collection-header p {
+  text-align: center;
+  font-size: 18px;
+}
+.checkbox-amber[type="checkbox"] + label:before{
+  border: 2px solid #ffc107;
+  background: transparent;
+}
+.checkbox-amber[type="checkbox"]:checked + label:before{
+  border: 2px solid transparent;
+  border-bottom: 2px solid #ffc107;
+  border-right: 2px solid #ffc107;
+  background: transparent;
+}
+.checkbox-amber.filled-in[type="checkbox"] + label:after{
+  border: 2px solid #ffc107;
+  background: transparent;
+}
+.checkbox-amber.filled-in[type="checkbox"]:checked + label:after{
+  background: #ffc107;
+}
+.checkbox-amber.filled-in[type="checkbox"]:checked + label:before{
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
