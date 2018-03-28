@@ -1,0 +1,41 @@
+.foods-main-group {
+  display: flex;
+  justify-content: space-between;
+}
+.carousel {
+  height: 160px;
+  width: 100%;
+}
+.carousel-item {
+  cursor: pointer;
+  height: 150px;
+  width: 140px;
+}
+.carousel-item:hover div {
+  background-color: #c4c4c4;
+}
+
+.carousel-item div {
+  margin: 0 auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: solid 2px brown;
+  line-height: 100px;
+}
+.carousel-item p {
+  padding-top: 0px;
+  font-size: 18px;
+  text-align: center;
+}
+.chevron{
+  cursor: pointer;
+  padding-top: 30px;
+}
+.chevron i {
+  font-size: 48px;
+}
+
+.selected{
+  background-color: #70c442;
+}
