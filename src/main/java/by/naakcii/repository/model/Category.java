@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 	@NamedQuery(name = "Category.findAll", query = "select cat from Category cat"),
 	@NamedQuery(name = "Category.findAllWithDetails", 
-	query = "select distinct cat from Category cat left join fetch cat.subcategories sub order by cat.id"), 
+	query = "select cat from Category cat left join fetch cat.subcategories sub order by cat.id"), 
 	@NamedQuery(name = "Category.findById", 
 		query = "select cat from Category cat where cat.id = :id"),
 	@NamedQuery(name = "Category.findByIdWithDetails", 
@@ -52,8 +52,12 @@ public class Category implements Serializable {
 	@NotNull
 	private boolean isActive;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY_ID",	nullable = false)
+	@Column(name = "ICON")
+	@Size(max = 45)
+	private String icon;
+	
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "CATEGORY_ID", nullable = false)
 	private List<Subcategory> subcategories = new ArrayList<Subcategory>();
 	
 	public Category() {

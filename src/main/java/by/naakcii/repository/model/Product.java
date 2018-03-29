@@ -1,6 +1,8 @@
 package by.naakcii.repository.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,12 +24,16 @@ import javax.validation.constraints.Size;
 @Table(name = "PRODUCT")
 @NamedQueries({
 	@NamedQuery(name = "Product.findAll", query = "select p from Product p"),
-	//@NamedQuery(name = "Product.findAllWithDetails", 
-	//query = "select distinct cat from Category cat left join fetch cat.subcategories sub order by cat.id"), 
+	@NamedQuery(name = "Product.findAllWithDetails", 
+	query = "select p from Product p left join fetch p.productInfo pi left join fetch p.subcategory sub"), 
 	@NamedQuery(name = "Product.findById", 
 		query = "select p from Product p where p.id = :id"),
-	//@NamedQuery(name = "Category.findByIdWithDetails", 
-	//query = "select cat from Category cat left join fetch cat.subcategories sub where cat.id = :id"),
+	@NamedQuery(name = "Product.findByIdWithDetails", 
+	query = "select p from Product p left join fetch p.productInfo pi left join fetch p.subcategory sub where p.id = :id"),
+	@NamedQuery(name = "Product.findBySubcategoryId", 
+	query = "select p from Product p left join fetch p.subcategory sub where sub.id = :id"),
+	@NamedQuery(name = "Product.findBySubcategoryIdAndChainId", 
+	query = "select p from Product p join fetch p.subcategory sub join fetch p.chainsAndProducts cap where sub.id = :id1 and cap.chain = :id2"),
 	@NamedQuery(name = "Product.softDelete", 
 		query = "update Product p set p.isActive=false where p.id = :id")
 })
@@ -51,21 +58,28 @@ public class Product implements Serializable {
 	@NotNull
 	private boolean isActive;
 	
+	@Column(name = "ICON")
+	@Size(max = 45)
+	private String icon;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
 			name = "SUBCATEGORY_ID",
 			updatable = false,
 			insertable = false
-			)
+	)
 	@NotNull
 	private Subcategory subcategory;
 	
 	@OneToOne(
 			mappedBy = "product",
-			cascade = CascadeType.ALL,
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
 			fetch = FetchType.LAZY
 	)
 	private ProductInfo productInfo;
+	
+	@OneToMany(mappedBy = "chain", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private Set<ChainsAndProducts> chainsAndProducts = new HashSet<ChainsAndProducts>();
 	
 	public Product() {
 		
@@ -115,6 +129,22 @@ public class Product implements Serializable {
 
 	public void setProductInfo(ProductInfo productInfo) {
 		this.productInfo = productInfo;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public Set<ChainsAndProducts> getChainsAndProducts() {
+		return chainsAndProducts;
+	}
+
+	public void setChainsAndProducts(Set<ChainsAndProducts> chainsAndProducts) {
+		this.chainsAndProducts = chainsAndProducts;
 	}
 
 }

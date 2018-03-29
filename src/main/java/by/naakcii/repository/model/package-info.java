@@ -18,4 +18,10 @@ parameters = {
   value = "1000"
   )
 })
+@org.hibernate.annotations.GenericGenerator(
+		name = "productInfoKeyGenerator", 
+		strategy = "foreign", 
+		parameters = 
+		@org.hibernate.annotations.Parameter(name = "property", value = "product")
+)
 package by.naakcii.repository.model;

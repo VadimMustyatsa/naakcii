@@ -70,4 +70,11 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
 		query.executeUpdate();
 	}
 
+	@Override
+	public List<Subcategory> findByCategoryId(Long id) {
+		TypedQuery<Subcategory> query = em.createNamedQuery("Subcategory.findByCategoryId", Subcategory.class);
+		query.setParameter("id", id);
+		return query.getResultList();
+	}
+
 }

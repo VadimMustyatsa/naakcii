@@ -34,13 +34,7 @@ public class ProductInfo implements Serializable {
 	private static final long serialVersionUID = -2357476801377668338L;
 
 	@Id
-	@GeneratedValue(generator = "infoKeyGenerator")
-	@org.hibernate.annotations.GenericGenerator(
-			name = "infoKeyGenerator", 
-			strategy = "foreign", 
-			parameters = 
-			@org.hibernate.annotations.Parameter(name = "property", value = "product")
-	)
+	@GeneratedValue(generator = "productInfoKeyGenerator")
 	@Column(name = "PRODUCT_INFO_ID")
 	private Long id;
 	

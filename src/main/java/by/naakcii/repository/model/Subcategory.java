@@ -28,7 +28,11 @@ import javax.validation.constraints.Size;
 	@NamedQuery(name = "Subcategory.findById", 
 		query = "select sub from Subcategory sub where sub.id = :id"),
 	@NamedQuery(name = "Subcategory.findByIdWithDetails", 
-	query = "select sub from Subcategory sub left join fetch sub.category cat where sub.id = :id")
+	query = "select sub from Subcategory sub left join fetch sub.category cat where sub.id = :id"),
+	@NamedQuery(name = "Subcategory.findByCategoryId", 
+	query = "select sub from Subcategory sub left join fetch sub.category cat where cat.id = :id"),
+	@NamedQuery(name = "Subcategory.softDelete", 
+	query = "update Subcategory sub set sub.isActive=false where sub.id = :id")
 })
 public class Subcategory implements Serializable {
 
@@ -42,7 +46,7 @@ public class Subcategory implements Serializable {
 	@Column(name = "SUBCATEGORY_ID")
 	private Long id;
 	
-	@Column(name = "CATEGORY_NAME")
+	@Column(name = "SUBCATEGORY_NAME")
 	@NotNull
 	@Size(min = 2, max = 45)
 	private String name;
@@ -52,12 +56,12 @@ public class Subcategory implements Serializable {
 			name = "CATEGORY_ID",
 			updatable = false,
 			insertable = false
-			)
+	)
 	@NotNull
-	private Category category;
+	protected Category category;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "SUBCATEGORY_ID",	nullable = false)
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	@JoinColumn(name = "SUBCATEGORY_ID", nullable = false)
 	private List<Product> products = new ArrayList<Product>();
 	
 	@Column(name = "IS_ACTIVE")
