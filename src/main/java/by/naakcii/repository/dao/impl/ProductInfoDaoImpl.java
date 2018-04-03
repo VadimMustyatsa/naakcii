@@ -55,10 +55,8 @@ public class ProductInfoDaoImpl implements ProductInfoDao {
 	public ProductInfo save(ProductInfo productInfo) {
 		if(productInfo.getId() == null) {
 			em.persist(productInfo);
-			System.out.println("persist");
 		} else {
 			em.merge(productInfo);
-			System.out.println("merge");
 		}
 		return productInfo;
 	}

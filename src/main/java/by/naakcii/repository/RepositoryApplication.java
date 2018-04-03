@@ -5,15 +5,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import by.naakcii.repository.dao.ActionDao;
 import by.naakcii.repository.dao.CategoryDao;
 import by.naakcii.repository.dao.ChainDao;
-import by.naakcii.repository.dao.ChainsAndProductsDao;
 import by.naakcii.repository.dao.ProductDao;
 import by.naakcii.repository.dao.ProductInfoDao;
 import by.naakcii.repository.dao.SubcategoryDao;
+import by.naakcii.repository.model.Action;
 import by.naakcii.repository.model.Category;
 import by.naakcii.repository.model.Chain;
-import by.naakcii.repository.model.ChainsAndProducts;
 import by.naakcii.repository.model.Product;
 import by.naakcii.repository.model.ProductInfo;
 import by.naakcii.repository.model.Subcategory;
@@ -37,7 +37,7 @@ public class RepositoryApplication implements CommandLineRunner {
 	ChainDao ichd;
 	
 	@Autowired
-	ChainsAndProductsDao icapd;
+	ActionDao iad;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RepositoryApplication.class, args);
@@ -61,12 +61,12 @@ public class RepositoryApplication implements CommandLineRunner {
 		Product p4 = new Product("p4", true, s2);
 		Product p5 = new Product("p5", true, s3);
 		Product p6 = new Product("p6", true, s4);
-		ProductInfo pi1 = new ProductInfo("pi1 descr", 1, "measure1", 1);
-		ProductInfo pi2 = new ProductInfo("pi2 descr", 1, "measure2", 1);
-		ProductInfo pi3 = new ProductInfo("pi3 descr", 1, "measure3", 1);
-		ProductInfo pi4 = new ProductInfo("pi4 descr", 1, "measure4", 1);
-		ProductInfo pi5 = new ProductInfo("pi5 descr", 1, "measure5", 1);
-		ProductInfo pi6 = new ProductInfo("pi6 descr", 1, "measure6", 1);
+		ProductInfo pi1 = new ProductInfo("pi1 descr", 1, "measure1");
+		ProductInfo pi2 = new ProductInfo("pi2 descr", 1, "measure2");
+		ProductInfo pi3 = new ProductInfo("pi3 descr", 1, "measure3");
+		ProductInfo pi4 = new ProductInfo("pi4 descr", 1, "measure4");
+		ProductInfo pi5 = new ProductInfo("pi5 descr", 1, "measure5");
+		ProductInfo pi6 = new ProductInfo("pi6 descr", 1, "measure6");
 		s1.getProducts().add(p1);
 		s1.getProducts().add(p2);
 		s2.getProducts().add(p3);
@@ -94,19 +94,19 @@ public class RepositoryApplication implements CommandLineRunner {
 		icd.save(c1);
 		icd.save(c2);
 		
-		ChainsAndProducts cap1 = new ChainsAndProducts(p1, ch1);
-		ChainsAndProducts cap2 = new ChainsAndProducts(p2, ch1);
-		ChainsAndProducts cap3 = new ChainsAndProducts(p3, ch1);
-		ChainsAndProducts cap4 = new ChainsAndProducts(p4, ch1);
-		ChainsAndProducts cap5 = new ChainsAndProducts(p5, ch2);
-		ChainsAndProducts cap6 = new ChainsAndProducts(p6, ch2);
+		Action ac1 = new Action(p1, ch1, 1.0);
+		Action ac2 = new Action(p2, ch1, 1.0);
+		Action ac3 = new Action(p3, ch1, 1.0);
+		Action ac4 = new Action(p4, ch1, 1.0);
+		Action ac5 = new Action(p5, ch2, 1.0);
+		Action ac6 = new Action(p6, ch2, 1.0);
 		
-		icapd.save(cap1);
-		icapd.save(cap2);
-		icapd.save(cap3);
-		icapd.save(cap4);
-		icapd.save(cap5);
-		icapd.save(cap6);
+		iad.save(ac1);
+		iad.save(ac2);
+		iad.save(ac3);
+		iad.save(ac4);
+		iad.save(ac5);
+		iad.save(ac6);
 		
 		for (Product p: ipd.findAllWithDetails()) {
 			System.out.println("Product "+ p.getName());
@@ -119,12 +119,8 @@ public class RepositoryApplication implements CommandLineRunner {
 		for (Product p: ipd.findBySubcategoryId(s1.getId())) {
 			System.out.println("Product name " + p.getName());
 		}
-		
-		for (Product p: ipd.findBySubcategoryIdAndChainId(s1.getId(), ch1)) {
-			System.out.println("Product name " + p.getName());
-			System.out.println("Subcategory name " + p.getSubcategory().getName());
-			System.out.println("Chain name " + ch1.getName());
+		for (Action a : iad.findByChainIdAndProductSubcategory(ch1.getId(), s2.getId())) {
+			System.out.println("Product name " + a.getProduct().getName());
 		}
-		
 	}
 }

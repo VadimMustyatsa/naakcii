@@ -2,7 +2,6 @@ package by.naakcii.repository.dao;
 
 import java.util.List;
 
-import by.naakcii.repository.model.Chain;
 import by.naakcii.repository.model.Product;
 
 public interface ProductDao extends GenericDao<Product, Long> {
@@ -12,7 +11,6 @@ public interface ProductDao extends GenericDao<Product, Long> {
 	Product findById(Long id);
 	Product findByIdWithDetails(Long id);
 	List<Product> findBySubcategoryId(Long id);
-	List<Product> findBySubcategoryIdAndChainId(Long id1, Chain id2);
 	Product save(Product product);
 	void softDelete(Product product);
 

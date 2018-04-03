@@ -55,10 +55,8 @@ public class ChainDaoImpl implements ChainDao {
 	public Chain save(Chain chain) {
 		if(chain.getId() == null) {
 			em.persist(chain);
-			System.out.println("persist");
 		} else {
 			em.merge(chain);
-			System.out.println("merge");
 		}
 		return chain;
 	}

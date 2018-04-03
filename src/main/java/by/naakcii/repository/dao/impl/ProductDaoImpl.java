@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.naakcii.repository.dao.ProductDao;
-import by.naakcii.repository.model.Chain;
 import by.naakcii.repository.model.Product;
 
 @Repository
@@ -57,10 +56,8 @@ public class ProductDaoImpl implements ProductDao {
 	public Product save(Product product) {
 		if(product.getId() == null) {
 			em.persist(product);
-			System.out.println("persist");
 		} else {
 			em.merge(product);
-			System.out.println("merge");
 		}
 		return product;
 	}
@@ -76,14 +73,6 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> findBySubcategoryId(Long id) {
 		TypedQuery<Product> query = em.createNamedQuery("Product.findBySubcategoryId", Product.class);
 		query.setParameter("id", id);
-		return query.getResultList();
-	}
-
-	@Override
-	public List<Product> findBySubcategoryIdAndChainId(Long id1, Chain id2) {
-		TypedQuery<Product> query = em.createNamedQuery("Product.findBySubcategoryIdAndChainId", Product.class);
-		query.setParameter("id1", id1);
-		query.setParameter("id2", id2);
 		return query.getResultList();
 	}
 

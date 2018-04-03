@@ -61,7 +61,7 @@ public class Chain implements Serializable {
 	private String icon;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private Set<ChainsAndProducts> chainsAndProducts = new HashSet<ChainsAndProducts>();
+	private Set<Action> actions = new HashSet<Action>();
 	
 	public Chain() {
 		
@@ -105,12 +105,12 @@ public class Chain implements Serializable {
 		this.isActive = isActive;
 	}
 
-	public Set<ChainsAndProducts> getChainsAndProducts() {
-		return chainsAndProducts;
+	public Set<Action> getActions() {
+		return actions;
 	}
 
-	public void setChainsAndProducts(Set<ChainsAndProducts> chainsAndProducts) {
-		this.chainsAndProducts = chainsAndProducts;
+	public void setActions(Set<Action> actions) {
+		this.actions = actions;
 	}
 
 	public String getIcon() {

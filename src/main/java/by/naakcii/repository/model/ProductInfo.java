@@ -51,16 +51,6 @@ public class ProductInfo implements Serializable {
 	@NotNull
 	private String measure;
 	
-	@Column(name = "PRICE")
-	@NotNull
-	private double price;
-	
-	@Column(name = "DISCOUNT")
-	private double discount;
-	
-	@Column(name = "DISCOUNT_PRICE")
-	private double discountPrice;
-	
 	@OneToOne(optional = false, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Product product;
@@ -69,11 +59,10 @@ public class ProductInfo implements Serializable {
 		
 	}
 	
-	public ProductInfo(String description, double quantity, String measure, double price) {
+	public ProductInfo(String description, double quantity, String measure) {
 		this.description = description;
 		this.quantity = quantity;
 		this.measure = measure;
-		this.price = price;
 	}
 
 	public Long getId() {
@@ -106,30 +95,6 @@ public class ProductInfo implements Serializable {
 
 	public void setMeasure(String measure) {
 		this.measure = measure;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
-
-	public double getDiscountPrice() {
-		return discountPrice;
-	}
-
-	public void setDiscountPrice(double discountPrice) {
-		this.discountPrice = discountPrice;
 	}
 
 	public Product getProduct() {

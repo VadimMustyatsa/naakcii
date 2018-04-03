@@ -55,10 +55,8 @@ public class CategoryDaoImpl implements CategoryDao{
 	public Category save(Category category) {
 		if(category.getId() == null) {
 			em.persist(category);
-			System.out.println("persist");
 		} else {
 			em.merge(category);
-			System.out.println("merge");
 		}
 		return category;
 	}

@@ -32,8 +32,6 @@ import javax.validation.constraints.Size;
 	query = "select p from Product p left join fetch p.productInfo pi left join fetch p.subcategory sub where p.id = :id"),
 	@NamedQuery(name = "Product.findBySubcategoryId", 
 	query = "select p from Product p left join fetch p.subcategory sub where sub.id = :id"),
-	@NamedQuery(name = "Product.findBySubcategoryIdAndChainId", 
-	query = "select p from Product p join fetch p.subcategory sub join fetch p.chainsAndProducts cap where sub.id = :id1 and cap.chain = :id2"),
 	@NamedQuery(name = "Product.softDelete", 
 		query = "update Product p set p.isActive=false where p.id = :id")
 })
@@ -79,7 +77,7 @@ public class Product implements Serializable {
 	private ProductInfo productInfo;
 	
 	@OneToMany(mappedBy = "chain", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	private Set<ChainsAndProducts> chainsAndProducts = new HashSet<ChainsAndProducts>();
+	private Set<Action> actions = new HashSet<Action>();
 	
 	public Product() {
 		
@@ -139,12 +137,12 @@ public class Product implements Serializable {
 		this.icon = icon;
 	}
 
-	public Set<ChainsAndProducts> getChainsAndProducts() {
-		return chainsAndProducts;
+	public Set<Action> getActions() {
+		return actions;
 	}
 
-	public void setChainsAndProducts(Set<ChainsAndProducts> chainsAndProducts) {
-		this.chainsAndProducts = chainsAndProducts;
+	public void setActions(Set<Action> actions) {
+		this.actions = actions;
 	}
 
 }

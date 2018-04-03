@@ -55,10 +55,8 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
 	public Subcategory save(Subcategory subcategory) {
 		if(subcategory.getId() == null) {
 			em.persist(subcategory);
-			System.out.println("persist");
 		} else {
 			em.merge(subcategory);
-			System.out.println("merge");
 		}
 		return subcategory;
 	}

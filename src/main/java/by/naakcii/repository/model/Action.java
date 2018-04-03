@@ -9,12 +9,32 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "CHAIS_AND_PRODUCTS")
+@Table(name = "Action")
+@NamedQueries({
+	@NamedQuery(name = "Action.findAll", query = "select ac from Action ac"),
+	@NamedQuery(name = "Action.findAllWithDetails", 
+	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p"), 
+	@NamedQuery(name = "Action.findByChainId", 
+		query = "select ac from Action ac where ac.id.chainId = :id"),
+	@NamedQuery(name = "Action.findByChainIdWithDetails", 
+	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p where ac.id.chainId = :id"),
+	@NamedQuery(name = "Action.findByChainIdAndProductSubcategory", 
+	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p where ac.id.chainId = :id1 and p.subcategory.id = :id2")
+})
 @org.hibernate.annotations.Immutable
-public class ChainsAndProducts {
+public class Action implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1525810593299011676L;
+
 
 	@Embeddable
 	public static class Id implements Serializable {
@@ -57,6 +77,16 @@ public class ChainsAndProducts {
 	@EmbeddedId
 	private Id id = new Id();
 	
+	@Column(name = "PRICE")
+	@NotNull
+	private double price;
+	
+	@Column(name = "DISCOUNT")
+	private double discount;
+	
+	@Column(name = "DISCOUNT_PRICE")
+	private double discountPrice;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
 			name = "PRODUCT_ID",
@@ -73,17 +103,19 @@ public class ChainsAndProducts {
 	)
 	private Chain chain;
 	
-	public ChainsAndProducts() {
+	public Action() {
 		
 	}
 	
-	public ChainsAndProducts(Product product, Chain chain) {
+	
+	public Action(Product product, Chain chain, double price) {
 		this.product = product;
 		this.chain = chain;
+		this.price = price;
 		this.id.productId = product.getId();
 		this.id.chainId = chain.getId();
-		product.getChainsAndProducts().add(this);
-		chain.getChainsAndProducts().add(this);
+		product.getActions().add(this);
+		chain.getActions().add(this);
 	}
 
 	public Id getId() {
@@ -108,6 +140,36 @@ public class ChainsAndProducts {
 
 	public void setChain(Chain chain) {
 		this.chain = chain;
+	}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public double getDiscount() {
+		return discount;
+	}
+
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+
+	public double getDiscountPrice() {
+		return discountPrice;
+	}
+
+
+	public void setDiscountPrice(double discountPrice) {
+		this.discountPrice = discountPrice;
 	}
 	
 }
