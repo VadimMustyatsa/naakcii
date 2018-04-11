@@ -1,0 +1,17 @@
+<div class="input-field col s8">
+  <select multiple materialize="material_select">
+    <option value="" disabled>Выберете магазин</option>
+
+    <option *ngFor="let storage of storageList"
+            value="{{storage.id}}"
+            >
+      <div class="storageList">
+        <img class="col s2" src="{{storage.imgLogoSmall}}">
+        <span class="storageName">{{storage.name}}</span>
+        <span class="storageGoodCount amber-text">Товаров: {{storage.countGoods}}</span>
+        <span class="storagePercent amber-text">ср.скидка: {{storage.persent}}%</span>
+      </div>
+    </option>
+  </select>
+  <label>Выберете магазин</label>
+</div>

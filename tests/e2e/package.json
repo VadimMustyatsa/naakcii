@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "protractor": "node_modules\\.bin\\protractor protractor-conf.js"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-string": "^1.2.0",
+    "cucumber": "^3.1.0",
+    "protractor": "~5.3.0",
+    "protractor-cucumber-framework": "^4.0.9"
+  }
+}

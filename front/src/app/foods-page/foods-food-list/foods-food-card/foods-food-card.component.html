@@ -1,0 +1,44 @@
+<div class="foodCard col s4 m4">
+  <div class="card sticky-action">
+
+    <div class="card-image">
+      <img src="assets/images/food3.jpg">
+      <div class="foodDiscount red center-align yellow-text z-depth-3">
+        {{curFood.discount}}%
+      </div>
+    </div>
+
+    <div class="card-content">
+      <div class="foodName">
+        {{curFood.name}} <br>
+        {{curFood.boxWeight}}
+      </div>
+      <div class="foodStorage">
+        <div>
+          {{getNameStorage(curFood.idStrore)}}
+        </div>
+        <div>
+          <img src="{{getImgStorage(curFood.idStrore)}}">
+        </div>
+      </div>
+      <div class="foodAllPrice">
+        {{curFood.allPrice | number:"1.2-2"}} руб.
+      </div>
+      <div class="foodTotalPrice">
+        {{curFood.totalPrice | number:"1.2-2"}} руб.
+      </div>
+
+      <div class="amountItem center">
+        <a class="btn-floating btn teal amber" (click)="subItem(curFood)">
+          <i class="material-icons">remove</i>
+        </a>
+        <span class="amber-text">{{curFood.amount}}</span>
+        <a class="btn-floating btn teal amber" (click)="addItem(curFood)">
+          <i class="material-icons">add</i>
+        </a>
+        <a class="selectFood btn waves-block amber" (click)="selectFood(curFood)">Добавить</a>
+      </div>
+
+    </div>
+  </div>
+</div>
