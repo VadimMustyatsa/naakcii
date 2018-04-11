@@ -2,6 +2,7 @@
   margin: 20px auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .carousel {
   height: 160px;
@@ -26,7 +27,6 @@
 }
 .chevron{
   cursor: pointer;
-  padding-top: 30px;
 }
 .chevron i {
   font-size: 48px;

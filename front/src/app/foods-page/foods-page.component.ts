@@ -7,12 +7,11 @@ import {FoodsCategoriesService} from '../shared/category/foods.categories.servic
   styleUrls: ['./foods-page.component.css']
 })
 export class FoodsPageComponent implements OnInit {
-  str: string;
 
-  constructor(private service: FoodsCategoriesService) { }
+  constructor(private service: FoodsCategoriesService) {
+  }
 
   ngOnInit() {
-    this.str = 'asdff';
   }
   isSelectedCategory(): boolean {
     if (!this.service.getSelectCategory()) {

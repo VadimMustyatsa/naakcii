@@ -1,38 +1,15 @@
-.storageList {
-  position: relative;
+.dropdown-button {
+  border-radius: 20px;
+  width: 310px;
 }
-.storageList img {
-  display: block;
-  position: absolute;
-  width: 45px;
-  height: 30px;
-  top: -30px;
-  left: 20px;
+#dropdownStorage {
+  width: 380px!important;
 }
-.storageName {
-  display: block;
-  position: absolute;
-  width: 140px;
-  height: 30px;
-  top: -20px;
-  left: 60px;
+.selectedStorage {
+  margin-left: 10px;
 }
-.storageGoodCount {
-  display: block;
-  position: absolute;
-  width: 100px;
-  height: 30px;
-  top: -20px;
-  left: 200px;
-  font-size: 14px;
-}
-.storagePercent {
-  display: block;
-  position: absolute;
-  width: 100px;
-  height: 30px;
-  top: -20px;
-  left: 300px;
-  font-size: 14px;
+.badge {
+  margin: 15px 10px;
+  padding: 0px 10px;
 }
 

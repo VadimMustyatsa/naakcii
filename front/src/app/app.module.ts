@@ -25,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {FoodsFoodCardComponent} from './foods-page/foods-food-list/foods-food-card/foods-food-card.component';
 import {AppCutStringPipe} from './cutString.pipe';
 import { FoodsStorageListComponent } from './foods-page/foods-storage-list/foods-storage-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes = [
   {path: '', component: HomePageComponent},
@@ -55,7 +56,8 @@ const routes = [
     BrowserModule,
     FormsModule, ReactiveFormsModule,
     MaterializeModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule
   ],
   providers: [FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]

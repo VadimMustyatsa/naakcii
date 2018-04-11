@@ -1,17 +1,35 @@
-<div class="input-field col s8">
-  <select multiple materialize="material_select">
-    <option value="" disabled>Выберете магазин</option>
+<div class="col s1">
+  <br>
+  <a id="menu1" class="waves-effect waves-light btn btn-floating amber"
+     onclick="$('.tapStep1').tapTarget('open')">1</a>
+  <!-- Tap Target Structure -->
+  <div class="tapStep1 tap-target amber" data-activates="menu1">
+    <div class="tap-target-content">
+      <h5 class="white-text">Итак, приступим! C нами экономить легко и просто</h5>
+      <p>Первым делом выберите из списка подходящие Вам торговые сети.</p>
+      <p>Если в дальнейшем вы захотите выбрать другие сети, ничего страшного: на любом шаге можно вернуться к списку
+        сетей и скорректировать его. А мы автоматически всё перестроим)</p><br>
+      <p class="red-text text-accent-2">Ну что, готовы? тогда ВПЕРЕД!!!</p>
+    </div>
+  </div>
+</div>
 
+<div class="input-field col s8">
+  <select multiple materialize="material_select" class="icons">
+    <option disabled>Выберете торговые сети</option>
     <option *ngFor="let storage of storageList"
+            class="row collection left"
             value="{{storage.id}}"
-            >
-      <div class="storageList">
-        <img class="col s2" src="{{storage.imgLogoSmall}}">
-        <span class="storageName">{{storage.name}}</span>
-        <span class="storageGoodCount amber-text">Товаров: {{storage.countGoods}}</span>
-        <span class="storagePercent amber-text">ср.скидка: {{storage.persent}}%</span>
-      </div>
+            [selected]="false"
+            attr.data-icon='{{storage.imgLogoSmall}}'
+            (hide)="selectStorage(storage.id)"
+    >
+      <a href='javascript:void(0);' class="collection-item">
+        <span class="storageName grey-text">{{storage.name}}</span>
+        <span class="new badge amber" data-badge-caption="товаров">{{storage.countGoods}}</span>
+        <span class="new badge amber" data-badge-caption="%">{{storage.percent}}</span>
+      </a>
     </option>
   </select>
-  <label>Выберете магазин</label>
+  <label>1. Выберете торговые сети</label>
 </div>
