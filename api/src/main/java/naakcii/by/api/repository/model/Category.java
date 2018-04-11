@@ -58,8 +58,8 @@ public class Category implements Serializable {
 	@Size(max = 45)
 	private String icon;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY_ID")
+	@OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "CATEGORY_ID")
 	private List<Subcategory> subcategories = new ArrayList<Subcategory>();
 	
 	public Category() {

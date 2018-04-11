@@ -55,15 +55,15 @@ public class Subcategory implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
-			name = "CATEGORY_ID",
-			updatable = false,
-			insertable = false
+			name = "CATEGORY_ID"//,
+			//updatable = false,
+			//insertable = false
 	)
 	@NotNull
 	private Category category;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "SUBCATEGORY_ID")
+	@OneToMany(mappedBy = "subcategory", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+	//@JoinColumn(name = "SUBCATEGORY_ID")
 	private List<Product> products = new ArrayList<Product>();
 	
 	@Column(name = "IS_ACTIVE")

@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import naakcii.by.api.repository.dao.ChainDao;
+import naakcii.by.api.repository.model.Chain;
 import naakcii.by.api.repository.util.DataParser;
 
 @SpringBootApplication
@@ -20,6 +22,7 @@ public class APIApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		dp.parseCategories("src/main/resources/Test_data.xlsx");
 		dp.parseActions("src/main/resources/Test_data.xlsx");
+		
 		//Code to run at application startup
 		/*Category c1 = new Category("c1", true);
 		Category c2 = new Category("c2", true);

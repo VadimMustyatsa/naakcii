@@ -49,7 +49,7 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_NAME")
 	@NotNull
-	@Size(min = 2, max = 45)
+	//@Size(min = 2, max = 45)
 	private String name;
 	
 	@Column(name = "IS_ACTIVE")
@@ -62,9 +62,9 @@ public class Product implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
-			name = "SUBCATEGORY_ID",
-			updatable = false,
-			insertable = false
+			name = "SUBCATEGORY_ID"//,
+			//updatable = false,
+			//insertable = false
 	)
 	@NotNull
 	private Subcategory subcategory;

@@ -47,7 +47,7 @@ public class ProductInfo implements Serializable {
 	private double quantity;
 	
 	@Column(name = "MEASURE")
-	@Size(min = 2, max = 45)
+	//@Size(min = 2, max = 45)
 	@NotNull
 	private String measure;
 	
