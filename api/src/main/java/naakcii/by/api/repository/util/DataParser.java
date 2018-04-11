@@ -116,7 +116,7 @@ public class DataParser {
 						System.out.println(subcategoryCell.getStringCellValue());
 						System.out.println(subcategory.getName());
 						product = new Product(productCell.getStringCellValue(), true, subcategory);
-						productInfo = new ProductInfo(product.getName() + "descr", 1, product.getName() + " measure");
+						productInfo = new ProductInfo(product, product.getName() + "descr", 1, product.getName() + " measure");
 						subcategory.getProducts().add(product);
 						product.setProductInfo(productInfo);
 						productInfo.setProduct(product);

@@ -32,8 +32,8 @@ public class ChainDaoImpl implements ChainDao {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Chain> findAllWithDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Chain> chains = em.createNamedQuery("Chain.findAllWithDetails", Chain.class).getResultList();
+		return chains;
 	}
 
 	@Transactional(readOnly = true)
@@ -47,8 +47,9 @@ public class ChainDaoImpl implements ChainDao {
 	@Transactional(readOnly = true)
 	@Override
 	public Chain findByIdWithDetails(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Chain> query = em.createNamedQuery("Chain.findByIdWithDetails", Chain.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
 	}
 
 	@Override

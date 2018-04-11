@@ -24,13 +24,13 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 	@NamedQuery(name = "Subcategory.findAll", query = "select sub from Subcategory sub"),
 	@NamedQuery(name = "Subcategory.findAllWithDetails", 
-			query = "select sub from Subcategory sub left join fetch sub.category cat"),
+			query = "select sub from Subcategory sub left join fetch sub.category cat left join fetch sub.products p"),
 	@NamedQuery(name = "Subcategory.findById", 
 		query = "select sub from Subcategory sub where sub.id = :id"),
 	@NamedQuery(name = "Subcategory.findByIdWithDetails", 
-	query = "select sub from Subcategory sub left join fetch sub.category cat where sub.id = :id"),
+	query = "select sub from Subcategory sub left join fetch sub.products p left join fetch sub.category cat where sub.id = :id"),
 	@NamedQuery(name = "Subcategory.findByNameAndCategoryNameWithDetails", 
-	query = "select sub from Subcategory sub left join fetch sub.category cat where sub.name = :subcategoryName and sub.category.name = :categoryName"),
+	query = "select sub from Subcategory sub left join fetch sub.products p left join fetch sub.category cat where sub.name = :subcategoryName and sub.category.name = :categoryName"),
 	@NamedQuery(name = "Subcategory.findByCategoryId", 
 	query = "select sub from Subcategory sub left join fetch sub.category cat where cat.id = :id"),
 	@NamedQuery(name = "Subcategory.softDelete", 
@@ -53,17 +53,16 @@ public class Subcategory implements Serializable {
 	@Size(min = 2, max = 45)
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(
-			name = "CATEGORY_ID"//,
-			//updatable = false,
-			//insertable = false
-	)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "CATEGORY_ID")
 	@NotNull
 	private Category category;
 	
-	@OneToMany(mappedBy = "subcategory", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-	//@JoinColumn(name = "SUBCATEGORY_ID")
+	@OneToMany(
+			mappedBy = "subcategory", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch = FetchType.LAZY
+	)
 	private List<Product> products = new ArrayList<Product>();
 	
 	@Column(name = "IS_ACTIVE")

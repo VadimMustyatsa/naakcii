@@ -5,8 +5,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import naakcii.by.api.repository.dao.ActionDao;
+import naakcii.by.api.repository.dao.CategoryDao;
 import naakcii.by.api.repository.dao.ChainDao;
+import naakcii.by.api.repository.dao.ProductDao;
+import naakcii.by.api.repository.dao.SubcategoryDao;
+import naakcii.by.api.repository.model.Action;
+import naakcii.by.api.repository.model.Category;
 import naakcii.by.api.repository.model.Chain;
+import naakcii.by.api.repository.model.Product;
+import naakcii.by.api.repository.model.Subcategory;
 import naakcii.by.api.repository.util.DataParser;
 
 @SpringBootApplication
@@ -14,6 +22,21 @@ public class APIApplication implements CommandLineRunner {
 
 	@Autowired
 	DataParser dp;
+	
+	@Autowired
+	CategoryDao cd;
+	
+	@Autowired
+	SubcategoryDao sd;
+	
+	@Autowired
+	ProductDao pd;
+	
+	@Autowired
+	ChainDao chd;
+	
+	@Autowired
+	ActionDao acd;
 
 	public static void main(String[] args) {
 		SpringApplication.run(APIApplication.class, args);
@@ -22,6 +45,38 @@ public class APIApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		dp.parseCategories("src/main/resources/Test_data.xlsx");
 		dp.parseActions("src/main/resources/Test_data.xlsx");
+		
+		//Find all categories. Fields: categoryId, categoryName.
+		for (Category category : cd.findAll()) {
+			System.out.println("Category: " + category.getName() + "; Id: " + category.getId());
+			//Find all subcategories by categoryId. Fields: subcategoryId, subcategoryName.
+			for (Subcategory subcategory : sd.findByCategoryId(category.getId())) {
+				System.out.println("Subcategory: " + subcategory.getName() + "; Id: " + subcategory.getId());
+			}
+		}
+		
+		//Find all products by categoryId and subcategoryId. Fields: productId, productName, price, discount, discount price, chainId.
+		for (Product product : pd.findByCategoryIdAndSubcategoryIdWithDetails(1030L, 1037L)) {
+			System.out.println("Product : " + product.getName() + "; Id: " + product.getId());
+			System.out.println("Product subcategory: " + product.getSubcategory().getName());
+			System.out.println("Product category: " + cd.findById(1030L).getName());
+			for (Action action : product.getActions()) {
+				System.out.println("Action price: " + action.getPrice());
+				System.out.println("Action discount: " + action.getDiscount());
+				System.out.println("Action discount price: " + action.getDiscountPrice());
+				System.out.println("Action chainId: " + action.getId().getChainId());
+			}
+		}
+		
+		//Find all chains. Fields: chainId, chainName, products, prices, discounts.
+		for (Chain chain : chd.findAllWithDetails()) {
+			System.out.println("Chain : " + chain.getName() + "; Id: " + chain.getId());
+			for (Action action : acd.findByChainIdWithDetails(chain.getId())) {
+				System.out.println("Product : " + action.getProduct().getName() + "; Id: " + action.getProduct().getId());
+				System.out.println("Action price: " + action.getPrice());
+				System.out.println("Action discount: " + action.getDiscount());
+			}
+		}
 		
 		//Code to run at application startup
 		/*Category c1 = new Category("c1", true);

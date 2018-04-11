@@ -21,12 +21,11 @@ import javax.validation.constraints.Size;
 @Table(name = "CHAIN")
 @NamedQueries({
 	@NamedQuery(name = "Chain.findAll", query = "select ch from Chain ch"),
-	//@NamedQuery(name = "Chain.findAllWithDetails", 
-	//query = "select ch from Chain ch left join fetch ch.subcategories sub order by cat.id"), 
-	@NamedQuery(name = "Chain.findById", 
-		query = "select ch from Chain ch where ch.id = :id"),
-	//@NamedQuery(name = "Chain.findByIdWithDetails", 
-	//query = "select cat from Category cat left join fetch cat.subcategories sub where cat.id = :id"),
+	@NamedQuery(name = "Chain.findAllWithDetails", 
+	query = "select distinct ch from Chain ch left join fetch ch.actions ac"), 
+	@NamedQuery(name = "Chain.findById", query = "select ch from Chain ch where ch.id = :id"),
+	@NamedQuery(name = "Chain.findByIdWithDetails", 
+	query = "select ch from Chain ch left join fetch ch.actions ac where ch.id = :id"),
 	@NamedQuery(name = "Chain.softDelete", 
 		query = "update Chain ch set ch.isActive=false where ch.id = :id")
 })

@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery(name = "Action.findByChainIdWithDetails", 
 	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p where ac.id.chainId = :id"),
 	@NamedQuery(name = "Action.findByChainIdAndProductSubcategory", 
-	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p where ac.id.chainId = :id1 and p.subcategory.id = :id2")
+	query = "select ac from Action ac left join fetch ac.chain ch left join fetch ac.product p where ac.id.chainId = :chainId and p.subcategory.id = :subcategoryId")
 })
 @org.hibernate.annotations.Immutable
 public class Action implements Serializable {
@@ -72,6 +72,10 @@ public class Action implements Serializable {
 			return productId.hashCode() + chainId.hashCode();
 		}
 		
+		public Long getChainId() {
+			return chainId;
+		}
+		
 	}
 	
 	@EmbeddedId
@@ -106,7 +110,6 @@ public class Action implements Serializable {
 	public Action() {
 		
 	}
-	
 	
 	public Action(Product product, Chain chain, double price) {
 		this.product = product;

@@ -47,7 +47,7 @@ public class ProductInfo implements Serializable {
 	private double quantity;
 	
 	@Column(name = "MEASURE")
-	//@Size(min = 2, max = 45)
+	@Size(min = 2, max = 200)
 	@NotNull
 	private String measure;
 	
@@ -59,7 +59,8 @@ public class ProductInfo implements Serializable {
 		
 	}
 	
-	public ProductInfo(String description, double quantity, String measure) {
+	public ProductInfo(Product product, String description, double quantity, String measure) {
+		this.product = product;
 		this.description = description;
 		this.quantity = quantity;
 		this.measure = measure;

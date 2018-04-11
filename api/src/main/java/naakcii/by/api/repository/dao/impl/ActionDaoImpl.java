@@ -64,8 +64,8 @@ public class ActionDaoImpl implements ActionDao {
 	@Override
 	public List<Action> findByChainIdAndProductSubcategory(Long chainId, Long subcategoryId) {
 		TypedQuery<Action> query = em.createNamedQuery("Action.findByChainIdAndProductSubcategory", Action.class);
-		query.setParameter("id1", chainId);
-		query.setParameter("id2", subcategoryId);
+		query.setParameter("chainId", chainId);
+		query.setParameter("subcategoryId", subcategoryId);
 		return query.getResultList();
 	}
 

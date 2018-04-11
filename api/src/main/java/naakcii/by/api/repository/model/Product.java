@@ -30,6 +30,8 @@ import javax.validation.constraints.Size;
 		query = "select p from Product p where p.id = :id"),
 	@NamedQuery(name = "Product.findByIdWithDetails", 
 	query = "select p from Product p left join fetch p.productInfo pi left join fetch p.subcategory sub where p.id = :id"),
+	@NamedQuery(name = "Product.findByCategoryIdAndSubcategoryIdWithDetails", 
+	query = "select p from Product p left join fetch p.productInfo pi left join fetch p.subcategory sub left join fetch p.actions ac where sub.id = :subcategoryId and sub.category.id = :categoryId"),
 	@NamedQuery(name = "Product.findBySubcategoryId", 
 	query = "select p from Product p left join fetch p.subcategory sub where sub.id = :id"),
 	@NamedQuery(name = "Product.softDelete", 
@@ -49,7 +51,7 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_NAME")
 	@NotNull
-	//@Size(min = 2, max = 45)
+	@Size(min = 2, max = 200)
 	private String name;
 	
 	@Column(name = "IS_ACTIVE")
@@ -60,12 +62,8 @@ public class Product implements Serializable {
 	@Size(max = 45)
 	private String icon;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(
-			name = "SUBCATEGORY_ID"//,
-			//updatable = false,
-			//insertable = false
-	)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "SUBCATEGORY_ID")
 	@NotNull
 	private Subcategory subcategory;
 	

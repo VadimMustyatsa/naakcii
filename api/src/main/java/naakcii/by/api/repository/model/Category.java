@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,7 +22,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 	@NamedQuery(name = "Category.findAll", query = "select cat from Category cat"),
 	@NamedQuery(name = "Category.findAllWithDetails", 
-	query = "select cat from Category cat left join fetch cat.subcategories sub order by cat.id"), 
+	query = "select cat from Category cat left join fetch cat.subcategories sub"), 
 	@NamedQuery(name = "Category.findById", 
 		query = "select cat from Category cat where cat.id = :id"),
 	@NamedQuery(name = "Category.findByIdWithDetails", 
@@ -58,8 +57,11 @@ public class Category implements Serializable {
 	@Size(max = 45)
 	private String icon;
 	
-	@OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-	//@JoinColumn(name = "CATEGORY_ID")
+	@OneToMany(
+			mappedBy = "category", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch = FetchType.LAZY
+	)
 	private List<Subcategory> subcategories = new ArrayList<Subcategory>();
 	
 	public Category() {

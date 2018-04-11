@@ -76,4 +76,12 @@ public class ProductDaoImpl implements ProductDao {
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Product> findByCategoryIdAndSubcategoryIdWithDetails(Long categoryId, Long subcategoryId) {
+		TypedQuery<Product> query = em.createNamedQuery("Product.findByCategoryIdAndSubcategoryIdWithDetails", Product.class);
+		query.setParameter("categoryId", categoryId);
+		query.setParameter("subcategoryId", subcategoryId);
+		return query.getResultList();
+	}
+
 }
