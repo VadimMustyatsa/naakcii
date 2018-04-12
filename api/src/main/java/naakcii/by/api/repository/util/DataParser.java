@@ -87,7 +87,8 @@ public class DataParser {
 			for (int i = 0; i <= 6; i++) {
 				sheet = book.getSheetAt(i);
 				Iterator<Row> rowIterator = sheet.iterator();
-				rowIterator.next();
+				Row row = rowIterator.next();
+				//rowIterator.next();
 				Subcategory subcategory = null;
 				Product product = null;
 				ProductInfo productInfo = null;
@@ -100,7 +101,6 @@ public class DataParser {
 				Cell priceCell = null;
 				Cell discountCell = null;
 				Cell discountPriceCell = null;
-				Row row = rowIterator.next();
 				while (rowIterator.hasNext()) {
 					row = rowIterator.next();
 					if (row.getCell(0).getStringCellValue() != "" && row.getCell(1).getStringCellValue() != "" && row.getCell(2).getStringCellValue() != "") {

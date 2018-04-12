@@ -68,7 +68,7 @@ public class APIApplication implements CommandLineRunner {
 			}
 		}
 		
-		//Find all chains. Fields: chainId, chainName, products, prices, discounts.
+		//Find all chains. Fields: chainId, chainName, products, price, discount.
 		for (Chain chain : chd.findAllWithDetails()) {
 			System.out.println("Chain : " + chain.getName() + "; Id: " + chain.getId());
 			for (Action action : acd.findByChainIdWithDetails(chain.getId())) {
