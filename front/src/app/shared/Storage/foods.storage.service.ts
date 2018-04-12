@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsStorageService {
-  private storeUrl = 'assets/json/StoreList.json';
-  //private storeUrl = 'api/StorageList';
+  // private storeUrl = 'assets/json/StoreList.json';
+  private storeUrl = 'http://localhost:8080/api/getChain';
 
   private data: Storag[] = [];
 
