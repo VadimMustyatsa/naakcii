@@ -69,9 +69,13 @@
   position: absolute;
   top: 5px;
   left: 10px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 5px;
-  padding: 0 5px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+
+}
+.endStock span {
+  font-size: 10px;
 }
 

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
@@ -13,7 +13,12 @@ export class FoodsTotalItemsComponent implements OnInit {
   private curFoodCard: SelectFoodList;
 
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    stateEvents.subscribe((update) => {
+  }
+
+  ngOnInit() {
+    this.foodTotalList = [];
+
+    this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_FOOD_CARD) {
         console.log('receive TotalItems: ' + update.foodCard.id);
         this.putToTotalList(update.foodCard);
@@ -21,9 +26,6 @@ export class FoodsTotalItemsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.foodTotalList = [];
-  }
   putToTotalList(newFoodCard: SelectFoodList) {
     console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
@@ -31,6 +33,7 @@ export class FoodsTotalItemsComponent implements OnInit {
       return;
     }
   }
+
   isAvailable(newFoodCard: SelectFoodList): boolean {
     for (let i = 0; i < this.foodTotalList.length; i++) {
       console.log('foodTotalList.id: ' + this.foodTotalList[i].id);
@@ -42,6 +45,7 @@ export class FoodsTotalItemsComponent implements OnInit {
     }
     return false;
   }
+
   putNewFoodCard(newFoodCard: SelectFoodList) {
     console.log('putNew.id: ' + newFoodCard.id);
     this.curFoodCard = new SelectFoodList;
@@ -56,6 +60,7 @@ export class FoodsTotalItemsComponent implements OnInit {
     this.curFoodCard.amount = newFoodCard.amount;
     this.foodTotalList.push(this.curFoodCard);
   }
+
   deleteFoodCard(curFood: SelectFoodList) {
     for (let i = 0; i < this.foodTotalList.length; i++) {
       if (this.foodTotalList[i].id === curFood.id) {
@@ -63,11 +68,13 @@ export class FoodsTotalItemsComponent implements OnInit {
       }
     }
   }
+
   subItem(curFood: SelectFoodList) {
     if (curFood.amount > 1) {
       curFood.amount = curFood.amount - 1;
     }
   }
+
   addItem(curFood: SelectFoodList) {
     curFood.amount = curFood.amount + 1;
   }

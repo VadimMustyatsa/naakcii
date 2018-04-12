@@ -8,19 +8,21 @@ import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 @Component({
   selector: 'app-foods-group',
   templateUrl: './foods-category.component.html',
-  styleUrls: ['./foods-category.component.css']
+  styleUrls: ['./foods-category.component.css'],
+  providers: [FoodsCategoriesService]
 })
 export class FoodsCategoryComponent implements OnInit {
-  categories: Category[];
-  private defSelectCategory = 0;
-  private service: FoodsCategoriesService = new FoodsCategoriesService;
-  constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) { }
+  categories: Category[] = [];
+  private defSelectCategory = 1;
+
+  constructor(private service: FoodsCategoriesService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+
+  }
 
   ngOnInit() {
     this.categories = this.service.getAll();
-    // this.selectCategory(this.categories[this.defSelectCategory]);
   }
-  carouselActions = new EventEmitter<string|MaterializeAction>();
+  carouselActions = new EventEmitter<string | MaterializeAction>();
 
   isSelected(id: number): boolean {
     if (!this.service.getSelectCategory()) {
@@ -34,11 +36,12 @@ export class FoodsCategoryComponent implements OnInit {
     this.observer.next(new SharedState(MODES.SELECT_CATEGORY, category));
     console.log('Category: ' + category.id + ':' + category.name);
   }
+
   chevronLeft(this) {
     this.carouselActions.emit({action: 'carousel', params: ['prev']});
   }
+
   chevronRight(this) {
     this.carouselActions.emit({action: 'carousel', params: ['next']});
   }
-
 }

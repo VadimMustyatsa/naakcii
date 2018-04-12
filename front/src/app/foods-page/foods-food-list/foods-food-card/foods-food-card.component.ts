@@ -9,14 +9,19 @@ import {Storag} from '../../../shared/Storage/foods.storage.model';
 @Component({
   selector: 'app-foods-food-card',
   templateUrl: './foods-food-card.component.html',
-  styleUrls: ['./foods-food-card.component.css']
+  styleUrls: ['./foods-food-card.component.css'],
+  providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
   storageList: Storag[];
-  private service: FoodsStorageService = new FoodsStorageService;
+  //private service: FoodsStorageService = new FoodsStorageService();
+  //private service: FoodsStorageService;
+
   @Input() curFood: SelectFoodList;
 
-  constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) { }
+  constructor(private service: FoodsStorageService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+
+  }
 
   ngOnInit() {
     this.storageList = this.service.getAll();

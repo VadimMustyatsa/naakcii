@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
@@ -8,16 +8,20 @@ import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
 @Component({
   selector: 'app-foods-food-list',
   templateUrl: './foods-food-list.component.html',
-  styleUrls: ['./foods-food-list.component.css']
+  styleUrls: ['./foods-food-list.component.css'],
+  providers: [FoodsFoodListService]
 })
 export class FoodsFoodListComponent implements OnInit {
   foodList: SelectFoodList[] = [];
   private curFoodCard: SelectFoodList;
 
-  private service: FoodsFoodListService = new FoodsFoodListService();
+  //private service: FoodsFoodListService = new FoodsFoodListService();
 
-  constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    stateEvents.subscribe((update) => {
+  constructor(private service: FoodsFoodListService,
+              @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) { }
+
+  ngOnInit() {
+    this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
         if (update.subCatList) {
@@ -31,8 +35,6 @@ export class FoodsFoodListComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
   putToFoodList(newFoodList: FoodList[]) {
     for (let i = 0; i < newFoodList.length; i++) {
       this.curFoodCard = new SelectFoodList;
