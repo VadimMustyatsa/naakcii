@@ -13,6 +13,7 @@
   height: auto;
   background-color: white;
   margin: 0 auto;
+  z-index: 100;
 }
 .collapsible {
   /*box-sizing: border-box;*/
