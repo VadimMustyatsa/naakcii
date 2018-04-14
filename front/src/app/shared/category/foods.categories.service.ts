@@ -9,13 +9,11 @@ export class FoodsCategoriesService {
   //private categoryUrl = 'http://localhost:90/api/getCategory';
 
   private data: Category[] = [];
+  private selectedCategory: Category;
 
   constructor(private http: HttpClient) {
     console.log('categoryService - constr');
   }
-
-  private selectedCategory: Category;
-
   getAll() {
     console.log('categoryService - getAll');
     return this.http.get<Category[]>(this.categoryUrl)

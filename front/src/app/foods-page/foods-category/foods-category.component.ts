@@ -13,7 +13,7 @@ import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 })
 export class FoodsCategoryComponent implements OnInit {
   categories: Category[];
-  private defSelectCategory = 2;
+  private defSelectCategory = 0;
 
   constructor(private service: FoodsCategoriesService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     console.log('CategoryComponent - constr');
