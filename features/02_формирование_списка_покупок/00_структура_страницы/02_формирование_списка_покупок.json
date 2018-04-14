@@ -143,7 +143,7 @@
                     "measuredW": "296",
                     "measuredH": "26",
                     "x": "910",
-                    "y": "356",
+                    "y": "248",
                     "properties": {
                         "text": "Панель \"Список акционных товаров\"",
                         "size": "18"
@@ -163,6 +163,162 @@
                         "text": "Панель\n\"Список покупок\"",
                         "align": "center",
                         "size": "13"
+                    }
+                },
+                {
+                    "ID": "16",
+                    "typeID": "Canvas",
+                    "zOrder": "13",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "908",
+                    "y": "280"
+                },
+                {
+                    "ID": "17",
+                    "typeID": "Canvas",
+                    "zOrder": "14",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1008",
+                    "y": "280"
+                },
+                {
+                    "ID": "18",
+                    "typeID": "Canvas",
+                    "zOrder": "15",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1106",
+                    "y": "280"
+                },
+                {
+                    "ID": "19",
+                    "typeID": "Canvas",
+                    "zOrder": "16",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "908",
+                    "y": "390"
+                },
+                {
+                    "ID": "20",
+                    "typeID": "Canvas",
+                    "zOrder": "17",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1008",
+                    "y": "390"
+                },
+                {
+                    "ID": "21",
+                    "typeID": "Canvas",
+                    "zOrder": "18",
+                    "w": "85",
+                    "h": "96",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1106",
+                    "y": "390"
+                },
+                {
+                    "ID": "24",
+                    "typeID": "Paragraph",
+                    "zOrder": "19",
+                    "w": "64",
+                    "h": "36",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "919",
+                    "y": "310",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "26",
+                    "typeID": "Paragraph",
+                    "zOrder": "20",
+                    "w": "60",
+                    "h": "36",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1021",
+                    "y": "310",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "28",
+                    "typeID": "Paragraph",
+                    "zOrder": "21",
+                    "w": "59",
+                    "h": "34",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1119",
+                    "y": "311",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "30",
+                    "typeID": "Paragraph",
+                    "zOrder": "22",
+                    "w": "58",
+                    "h": "37",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "919",
+                    "y": "419",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "32",
+                    "typeID": "Paragraph",
+                    "zOrder": "23",
+                    "w": "62",
+                    "h": "36",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1020",
+                    "y": "420",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
+                    }
+                },
+                {
+                    "ID": "34",
+                    "typeID": "Paragraph",
+                    "zOrder": "24",
+                    "w": "67",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1115",
+                    "y": "422",
+                    "properties": {
+                        "text": "Карточка\nтовара",
+                        "align": "center"
                     }
                 }
             ]
