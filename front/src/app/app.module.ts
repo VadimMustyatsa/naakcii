@@ -49,6 +49,7 @@ const routes = [
     FoodsFoodListComponent,
     FoodsTotalItemsComponent,
     FoodsFoodCardComponent,
+    FoodsStorageListComponent,
     AppCutStringPipe,
     FoodsStorageListComponent
   ],

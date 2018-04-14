@@ -11,24 +11,28 @@ export class FoodsCategoriesService {
   private data: Category[] = [];
 
   constructor(private http: HttpClient) {
-    this.data = [];
-    this.http.get<Category[]>(this.categoryUrl).subscribe(dt => {
-      dt.map(el => {
-        this.data.push({
-          id: el['id'],
-          name: el['name'],
-          img: el['img']
-        });
-      });
-    });
+    console.log('categoryService - constr');
   }
 
   private selectedCategory: Category;
 
-  getAll(): Category[] {
-    return this.data;
+  getAll() {
+    console.log('categoryService - getAll');
+    return this.http.get<Category[]>(this.categoryUrl)
+      .map(categoryList => {
+        return categoryList.map(category => {
+          return {
+            id: category['id'],
+            name: category['name'],
+            img: category['img']
+          };
+        });
+      });
   }
-
+  setCategories(categories: Category[]) {
+    this.data = categories;
+    console.log(this.data);
+  }
   getById(id: number): Category {
     return this.data.find(x => x.id === id);
   }

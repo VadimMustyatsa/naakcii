@@ -12,15 +12,21 @@ import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
   providers: [FoodsCategoriesService]
 })
 export class FoodsCategoryComponent implements OnInit {
-  categories: Category[] = [];
-  private defSelectCategory = 1;
+  categories: Category[];
+  private defSelectCategory = 2;
 
   constructor(private service: FoodsCategoriesService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
-
+    console.log('CategoryComponent - constr');
   }
 
   ngOnInit() {
-    this.categories = this.service.getAll();
+    console.log('CategoryComponent - ngOnInit');
+    this.service.getAll().subscribe(categoryList => {
+      this.categories = categoryList;
+      this.service.setCategories(categoryList);
+      this.selectCategory(this.service.getById(this.defSelectCategory));
+      console.log(this.categories);
+    });
   }
   carouselActions = new EventEmitter<string | MaterializeAction>();
 

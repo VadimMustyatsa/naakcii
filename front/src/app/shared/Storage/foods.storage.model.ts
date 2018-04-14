@@ -6,5 +6,6 @@ export class Storag {
   percent: number;
   imgLogo: string;
   imgLogoSmall: string;
+  selected: boolean;
 }
 

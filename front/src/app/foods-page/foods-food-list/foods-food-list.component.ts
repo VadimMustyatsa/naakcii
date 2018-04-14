@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
 import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service';
 import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
+import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
+import {Storag} from '../../shared/Storage/foods.storage.model';
 
 @Component({
   selector: 'app-foods-food-list',
@@ -14,20 +16,27 @@ import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
 export class FoodsFoodListComponent implements OnInit {
   foodList: SelectFoodList[] = [];
   private curFoodCard: SelectFoodList;
+  chainList: Storag[] = null;
 
-  //private service: FoodsFoodListService = new FoodsFoodListService();
-
-  constructor(private service: FoodsFoodListService,
-              @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) { }
+  constructor(private chainService: FoodsStorageService,
+              private foodsService: FoodsFoodListService,
+              @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
+    console.log('FoodListComponent - constr');
+  }
 
   ngOnInit() {
+    console.log('FoodListComponent - ngOnInit');
+    /*this.chainService.getAll().subscribe(chainList => {
+      console.log(chainList);
+      this.chainList = chainList;
+    });*/
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
         if (update.subCatList) {
           for (let i = 0; i < update.subCatList.length; i++) {
             if (update.subCatList[i].selected) {
-              this.putToFoodList(this.service.getFoodList(update.category.id, update.subCatList[i].id));
+              this.putToFoodList(this.foodsService.getFoodList(update.category.id, update.subCatList[i].id));
             }
           }
         }
