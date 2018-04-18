@@ -4,14 +4,15 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class FoodsSubCategoriesService {
-  private subCtaegoryUrl = 'api/GetSubcategory';
+  private subCategoryUrl = 'http://localhost:8080/api/getSubcategory';
 
   constructor(private http: HttpClient) {
   }
 
   getByCategory(idCategoty) {
+    console.log('SubCategoriesService - getByCategory')
     const dataGet = {id: idCategoty};
-    return this.http.get<SubCategory[]>(this.subCtaegoryUrl, {params: dataGet})
+    return this.http.get<SubCategory[]>(this.subCategoryUrl, {params: dataGet})
       .map(sabCatList => {
         return sabCatList.map(sabCut => {
           return {
