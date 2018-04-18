@@ -1,11 +1,78 @@
 .foods-main-group {
   margin: 20px auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   min-height: 150px;
 }
-.carousel {
+ngu-item {
+  display: block;
+  cursor: pointer;
+  height: 200px;
+  width: 100px;
+}
+ngu-item:hover div {
+  background-color: #ffc107;
+}
+ngu-item:hover div i {
+  color: white;
+}
+ngu-item p {
+  padding-top: 0px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.notSelected {
+  display: flex;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.selected {
+  display: flex;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: solid 1px #ffc107;
+  margin: 0 auto;
+  background-color: #ffc107;
+}
+.notSelected i {
+  margin: auto;
+  font-size: 64px;
+  color: #ffc107;
+}
+.selected i {
+  margin: auto;
+  font-size: 64px;
+  color: white;
+}
+
+.leftRs, .rightRs {
+  position: absolute;
+  margin: auto;
+  top: -60px;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  box-shadow: none;
+  border: none;
+  background-color: white;
+}
+.leftRs {
+  left: -45px;
+}
+.rightRs {
+  right: -45px;
+}
+.leftRs i, .rightRs i {
+  font-size: 48px;
+}
+/******************************************/
+
+/*.carousel {
   height: 160px;
   width: 100%;
 }
@@ -37,7 +104,7 @@
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  /*border: solid 1px #ffc107;*/
+  !*border: solid 1px #ffc107;*!
   margin: 0 auto;
 }
 .selected {
@@ -58,6 +125,6 @@
   margin: auto;
   font-size: 64px;
   color: white;
-}
+}*/
 /*************************************/
 

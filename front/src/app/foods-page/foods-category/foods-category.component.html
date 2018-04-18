@@ -1,4 +1,4 @@
-<div *ngIf="categories" class="container foods-main-group">
+<div *ngIf="categories" class="row foods-main-group">
   <!--<div>
     <a id="menu2" class="waves-effect waves-light btn btn-floating amber"
        onclick="$('.tapStep2').tapTarget('open')">
@@ -13,7 +13,36 @@
       </div>
     </div>
   </div>-->
-    <div class="chevron" (click)="chevronLeft()">
+
+  <div>
+    <ngu-carousel
+      [inputs]="carouselTile"
+      (initData)="initDataFn($event)"
+      (carouselLoad)="carouselTileLoad($event)">
+
+      <button NguCarouselPrev class='leftRs'>
+        <i class="material-icons amber-text">chevron_left</i>
+      </button>
+
+      <ngu-item NguCarouselItem
+                *ngFor="let cat of categories"
+                (click)="selectCategory(cat)"
+      >
+          <div [class.selected]="isSelected(cat.id)" [class.notSelected]="!isSelected(cat.id)">
+            <i class="material-icons">{{cat.img}}</i>
+          </div>
+          <p class="brown-text">{{cat.name}}</p>
+      </ngu-item>
+
+      <button NguCarouselNext class='rightRs'>
+        <i class="material-icons amber-text">chevron_right</i>
+      </button>
+    </ngu-carousel>
+  </div>
+
+
+
+    <!--<div class="chevron" (click)="chevronLeft()">
       <i class="material-icons amber-text">chevron_left</i>
     </div>
 
@@ -27,7 +56,7 @@
         (click)="selectCategory(cat)"
       >
         <div [class.selected]="isSelected(cat.id)" [class.notSelected]="!isSelected(cat.id)">
-          <!--{{cat.id}}-->
+          &lt;!&ndash;{{cat.id}}&ndash;&gt;
           <i class="material-icons">{{cat.img}}</i>
         </div>
         <p class="brown-text">{{cat.name}}</p>
@@ -36,7 +65,9 @@
 
     <div class="chevron" (click)="chevronRight()">
       <i class="material-icons amber-text">chevron_right</i>
-    </div>
+    </div>-->
+
+
 </div>
 <div *ngIf="!categories" class="container foods-main-group">
   <div class="progress amber">

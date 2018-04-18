@@ -29,18 +29,20 @@ export class FoodsSubCategoryComponent implements OnInit {
       if (update.mode === MODES.SELECT_CATEGORY) {
         this.subCategoryList = null;
         this.curCategory = update.category;
+
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
           this.subCategoryList = subCategoryList;
           console.log(this.subCategoryList);
-        });
-        this.setAllItemsByCheckedAll();
-        console.log('stateEvents: ' + update.category.id + ':' + this.curCategory.name);
-        if (!this.isShowedTapStep3) {
-          //setTimeout("$('.tapStep3').tapTarget('open')", 500);
-          this.isShowedTapStep3 = true;
-        } else {
 
-        }
+          this.setAllItemsByCheckedAll();
+          console.log('stateEvents: ' + update.category.id + ':' + this.curCategory.name);
+          if (!this.isShowedTapStep3) {
+            //setTimeout("$('.tapStep3').tapTarget('open')", 500);
+            this.isShowedTapStep3 = true;
+          } else {
+
+          }
+        });
       }
     });
   }
