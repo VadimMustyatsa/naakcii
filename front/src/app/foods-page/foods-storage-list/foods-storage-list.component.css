@@ -1,9 +1,51 @@
-.dropdown-button {
-  border-radius: 20px;
-  width: 310px;
+.chainList {
+  position: relative;
+  width: 400px;
+  height: 30px;
+  overflow: visible;
 }
-#dropdownStorage {
-  width: 380px!important;
+.chainListWrap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  margin: 0 auto;
+  z-index: 100;
+}
+.collapsible {
+  /*box-sizing: border-box;*/
+  margin: 0px;
+}
+.collapsible-body {
+  padding: 0px;
+  border: none;
+}
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  border: solid dimgrey 1px;
+  border-radius: 34px;
+  padding-left: 20px!important;
+}
+.collapsible-header > div:last-child {
+  display: flex;
+  align-items: center;
+}
+.collapsible {
+  border: none;
+  border-radius: 34px;
+}
+.collapsible > li {
+  border-radius: 26px;
+  border: solid dimgrey 3px;
+}
+.collection-item:last-child {
+  margin-bottom: 10px!important;
+}
+.collection-item:hover {
+  background-color: #d9d9d9;
 }
 .selectedStorage {
   margin-left: 10px;
@@ -12,4 +54,97 @@
   margin: 15px 10px;
   padding: 0px 10px;
 }
+.headerSelectChain {
+  display: flex;
+  align-items: center;
+  margin: 0px;
+}
+.collapsible-header {
+  margin: 0;
+  color: white;
+  padding: 10px 10px;
+}
+.collapsible-header div {
+  padding: 0px;
+  font-size: 16px;
+}
+.collapsible-header > div > i {
+  margin: 0px;
+}
+.collection-header {
+  margin: 0;
+}
+.collection-header div span {
+  font-size: 14px;
+  font-weight: bold;
+}
+.collection, .collection-header, .collection-item {
+  border: none!important;
+  padding: 10px 0px!important;
+}
+.collection {
+  padding-bottom: 15px!important;
+}
+.collection-item div {
+  display: flex;
+  align-items: center;
+}
+.collection-item div span {
+  margin: 0 auto
+}
 
+.collection-header div:nth-child(2), .collection-header div:nth-child(3) {
+  text-align: center;
+}
+
+.collapsible-body {
+  z-index: 1000!important;
+}
+.chainName label {
+  height: 100%;
+}
+.chainName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chainName span {
+  position: absolute;
+  top: -3px;
+  left: 80px;
+}
+.chainName img {
+  position: absolute;
+  top: -4px;
+  left: 38px;
+}
+.chainLogo {
+  overflow: auto;
+  width: 30px;
+  height: 30px;
+}
+/*цвет чекбокса******************************/
+.checkbox-color[type="checkbox"] + label:before{
+  border: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color[type="checkbox"]:checked + label:before{
+  border: 2px solid transparent;
+  border-bottom: 2px solid dimgrey;
+  border-right: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color.filled-in[type="checkbox"] + label:after{
+  border: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color.filled-in[type="checkbox"]:checked + label:after{
+  background: dimgrey;
+}
+.checkbox-color.filled-in[type="checkbox"]:checked + label:before{
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+/********************************************/

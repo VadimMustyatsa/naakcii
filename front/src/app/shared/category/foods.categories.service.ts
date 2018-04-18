@@ -5,28 +5,32 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsCategoriesService {
-  // private categoryUrl = 'assets/json/Category.json';
   private categoryUrl = 'http://localhost:8080/api/getCategory';
 
   private data: Category[] = [];
-
-  constructor(private http: HttpClient) {
-    this.data = [];
-    this.http.get<Category[]>(this.categoryUrl).subscribe(dt => {
-      dt.map(el => {
-        this.data.push({
-          id: el['id'],
-          name: el['name'],
-          img: el['img']
-        });
-      });
-    });
-  }
-
   private selectedCategory: Category;
 
-  getAll(): Category[] {
-    return this.data;
+  constructor(private http: HttpClient) {
+    console.log('categoryService - constr');
+  }
+
+  getAll() {
+    console.log('categoryService - getAll');
+    return this.http.get<Category[]>(this.categoryUrl)
+      .map(categoryList => {
+        return categoryList.map(category => {
+          return {
+            id: category['id'],
+            name: category['name'],
+            img: category['icon']
+          };
+        });
+      });
+  }
+
+  setCategories(categories: Category[]) {
+    this.data = categories;
+    console.log(this.data);
   }
 
   getById(id: number): Category {

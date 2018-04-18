@@ -8,30 +8,26 @@ export class FoodsStorageService {
   // private storeUrl = 'assets/json/StoreList.json';
   private storeUrl = 'http://localhost:8080/api/getChain';
 
-  private data: Storag[] = [];
-
   constructor(private http: HttpClient) {
-    this.http.get<Storag[]>(this.storeUrl).subscribe(data => {
-      data.map(el => {
-        this.data.push({
-          id: el['id'],
-          name: el['name'],
-          location: el['location'],
-          countGoods: el['countGoods'],
-          percent: el['percent'],
-          imgLogo: el['imgLogo'],
-          imgLogoSmall: el['imgLogoSmall']
-        });
-      });
-    });
+    console.log('storeService - constr');
   }
 
   getAll() {
-    console.log(this.data);
-    return this.data;
-  }
-
-  getById(id: number): Storag {
-    return this.data.find(x => x.id === id);
+    console.log('storeService - start');
+    return this.http.get<Storag[]>(this.storeUrl)
+      .map(chainList => {
+        return chainList.map(chain => {
+          return {
+            id: chain['id'],
+            name: chain['name'],
+            location: chain['location'],
+            countGoods: chain['countGoods'],
+            percent: chain['percent'],
+            imgLogo: chain['imgLogo'],
+            imgLogoSmall: chain['imgLogoSmall'],
+            selected: false
+          };
+        });
+      });
   }
 }

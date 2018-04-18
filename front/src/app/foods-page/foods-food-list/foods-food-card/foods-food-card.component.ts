@@ -13,21 +13,16 @@ import {Storag} from '../../../shared/Storage/foods.storage.model';
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
-  storageList: Storag[];
-  //private service: FoodsStorageService = new FoodsStorageService();
-  //private service: FoodsStorageService;
-
   @Input() curFood: SelectFoodList;
+  @Input() storageList: Storag[];
 
-  constructor(private service: FoodsStorageService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
-
+  constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+    console.log('FoodCardComponent - constr');
   }
-
   ngOnInit() {
-    this.storageList = this.service.getAll();
+    console.log('FoodCardComponent - ngOnInit');
   }
   getStorageByID(id: number): Storag {
-    // console.log('getStorageByID: ' + id);
     return this.storageList.find(x => x.id === id);
   }
   getNameStorage(id: number): String {

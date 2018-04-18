@@ -2,6 +2,10 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+.chainSearchBlock {
+  height: 60px;
+  margin-top: 20px;
+}
 app-foods-storage-list {
 
 }
