@@ -15,7 +15,6 @@ import {Observer} from 'rxjs/Observer';
 export class FoodsSubCategoryComponent implements OnInit {
   private curCategory: Category;
   private subCategoryList: SubCategory[];
-  //private service: FoodsSubCategoriesService = new FoodsSubCategoriesService();
   checkedAll = false;  //выбор всех подкатегорий
   private isShowedTapStep3 = false;
 
@@ -27,8 +26,12 @@ export class FoodsSubCategoryComponent implements OnInit {
   ngOnInit() {
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
+        this.subCategoryList = null;
         this.curCategory = update.category;
-        this.subCategoryList = this.service.getByCategory(update.category.id);
+        this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
+          this.subCategoryList = subCategoryList;
+          console.log(this.subCategoryList);
+        });
         this.setAllItemsByCheckedAll();
         console.log('stateEvents: ' + update.category.id + ':' + this.curCategory.name);
         if (!this.isShowedTapStep3) {

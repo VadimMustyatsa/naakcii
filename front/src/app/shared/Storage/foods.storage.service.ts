@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Storag} from './foods.storage.model';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import {Http} from '@angular/http';
 
 @Injectable()
 export class FoodsStorageService {
