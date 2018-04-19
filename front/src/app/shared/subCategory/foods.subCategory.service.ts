@@ -4,15 +4,17 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class FoodsSubCategoriesService {
+  private subCategoryLocal = 'assets/json/SubCategoryList.json';
   private subCategoryUrl = 'http://localhost:8080/api/getSubcategory';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
-  getByCategory(idCategoty) {
-    console.log('SubCategoriesService - getByCategory')
-    const dataGet = {id: idCategoty};
-    return this.http.get<SubCategory[]>(this.subCategoryUrl, {params: dataGet})
+  getByCategory(idCategorty) {
+    console.log('SubCategoriesService - getByCategory');
+    const dataGet = {id: idCategorty};
+
+    //return this.http.get<SubCategory[]>(this.subCategoryUrl, {params: dataGet})   //для реального запроса с бэка
+    return this.http.get<SubCategory[]>(this.subCategoryLocal)                      //для отладки - из файла
       .map(sabCatList => {
         return sabCatList.map(sabCut => {
           return {
@@ -23,6 +25,5 @@ export class FoodsSubCategoriesService {
           };
         });
       });
-    //return this.dataCategoryList[idCategoty];
   }
 }

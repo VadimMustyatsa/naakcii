@@ -2,7 +2,6 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import {FoodList} from '../../../shared/foodList/foods.foodList.model';
 import {Observer} from 'rxjs/Observer';
 import {MODES, SHARED_STATE, SharedState} from '../../sharedState.model';
-import {SelectFoodList} from '../../../shared/foodList/foods.selectFoodList.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
 import {Storag} from '../../../shared/Storage/foods.storage.model';
 
@@ -13,7 +12,7 @@ import {Storag} from '../../../shared/Storage/foods.storage.model';
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
-  @Input() curFood: SelectFoodList;
+  @Input() curFood: FoodList;
   @Input() storageList: Storag[];
 
   constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) {
@@ -37,17 +36,17 @@ export class FoodsFoodCardComponent implements OnInit {
     }
     return 'unknown';
   }
-  selectFood(selectFood: SelectFoodList) {
+  selectFood(selectFood: FoodList) {
     console.log('send select: ' + selectFood.id);
     this.observer.next(new SharedState(MODES.SELECT_FOOD_CARD, null, null, selectFood));
-    selectFood.amount = 1;
+    selectFood.selectAmount = 1;
   }
-  subItem(selectFood: SelectFoodList) {
-    if (selectFood.amount > 1) {
-      selectFood.amount = selectFood.amount - 1;
+  subItem(selectFood: FoodList) {
+    if (selectFood.selectAmount > 1) {
+      selectFood.selectAmount = selectFood.selectAmount - 1;
     }
   }
-  addItem(selectFood: SelectFoodList) {
-    selectFood.amount = selectFood.amount + 1;
+  addItem(selectFood: FoodList) {
+    selectFood.selectAmount = selectFood.selectAmount + 1;
   }
 }

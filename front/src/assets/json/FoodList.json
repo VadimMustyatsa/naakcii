@@ -1,0 +1,102 @@
+[
+  {
+    "id": 100,
+    "name": "Макаронные изделия Роллтон",
+    "allPrice": 1.79,
+    "discount": 30,
+    "totalPrice": 1.25,
+    "boxWeight": "400гр",
+    "idStrore": 0,
+    "img": ""
+  },
+  {
+    "id": 101,
+    "name": "Мука пшеничная М54-25 в/с",
+    "allPrice": 1.69,
+    "discount": 24,
+    "totalPrice": 1.29,
+    "boxWeight": "2кг",
+    "idStrore": 1,
+    "img": ""
+  },
+  {
+    "id": 102,
+    "name": "Макароны DONNA VERA, гомити, капелини, пенне, спагетти",
+    "allPrice": 1.99,
+    "discount": 27,
+    "totalPrice": 1.45,
+    "boxWeight": "450гр",
+    "idStrore": 2,
+    "img": ""
+  },
+  {
+    "id": 103,
+    "name": "Макароны GALINA BLANKA, лапша, перья, рожки, спагетти",
+    "allPrice": 2.39,
+    "discount": 29,
+    "totalPrice": 0.169,
+    "boxWeight": "450гр",
+    "idStrore": 3,
+    "img": ""
+  },
+  {
+    "id": 104,
+    "name": "Крупа перловая \"Бабушкина кухня\"",
+    "allPrice": 0.99,
+    "discount": 34,
+    "totalPrice": 0.65,
+    "boxWeight": "900гр",
+    "idStrore": 4,
+    "img": ""
+  },
+  {
+    "id": 105,
+    "name": "Гречка \"Бабушкина кухня\"",
+    "allPrice": 1.39,
+    "discount": 28,
+    "totalPrice": 0.99,
+    "boxWeight": "900гр",
+    "idStrore": 5,
+    "img": ""
+  },
+  {
+    "id": 106,
+    "name": "Бобовые 1",
+    "allPrice": 2.40,
+    "discount": 30,
+    "totalPrice": 1.60,
+    "boxWeight": "",
+    "idStrore": 6,
+    "img": ""
+  },
+  {
+    "id": 107,
+    "name": "Бобовые 2",
+    "allPrice": 2.40,
+    "discount": 30,
+    "totalPrice": 1.60,
+    "boxWeight": "",
+    "idStrore": 4,
+    "img": ""
+  },
+  {
+    "id": 108,
+    "name": "Хлопья овсяные \"Экстра №3\"",
+    "allPrice": 1.18,
+    "discount": 50,
+    "totalPrice": 0.59,
+    "boxWeight": "500гр",
+    "idStrore": 3,
+    "img": ""
+  },
+  {
+    "id": 109,
+    "name": "Готовый завтрак Cini Minis с корицей",
+    "allPrice": 5.05,
+    "discount": 45,
+    "totalPrice": 2.79,
+    "boxWeight": "250гр",
+    "idStrore": 2,
+    "img": ""
+  }
+]

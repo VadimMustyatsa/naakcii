@@ -14,34 +14,19 @@ import { NguCarousel, NguCarouselStore, NguCarouselService } from '@ngu/carousel
 })
 export class FoodsCategoryComponent implements OnInit {
   categories: Category[];
-  private defSelectCategory = 0;
-  private carouselToken: string;
-  public carouselTile: NguCarousel;
+  public carouselCategory: NguCarousel;
 
   constructor(private carousel: NguCarouselService, private service: FoodsCategoriesService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     console.log('CategoryComponent - constr');
   }
-
   ngOnInit() {
     console.log('CategoryComponent - ngOnInit');
+    this.initCarouselCategory();
     this.service.getAll().subscribe(categoryList => {
       this.categories = categoryList;
       this.service.setCategories(categoryList);
-      this.selectCategory(this.service.getById(this.defSelectCategory));
+      this.selectCategory(this.service.getById(this.categories[0].id));
       console.log(this.categories);
-      this.carouselTile = {
-        grid: {xs: 3, sm: 5, md: 5, lg: 7, all: 0},
-        slide: 2,
-        speed: 400,
-        animation: 'lazy',
-        point: {
-          visible: false
-        },
-        load: 2,
-        touch: true,
-        loop: false,
-        custom: 'banner'
-      }
     });
   }
   carouselActions = new EventEmitter<string | MaterializeAction>();
@@ -58,24 +43,25 @@ export class FoodsCategoryComponent implements OnInit {
     this.observer.next(new SharedState(MODES.SELECT_CATEGORY, category));
     console.log('Category: ' + category.id + ':' + category.name);
   }
-
-  chevronLeft(this) {
-    this.carouselActions.emit({action: 'carousel', params: ['prev']});
+  initCarouselCategory() {
+    this.carouselCategory = {
+      grid: {xs: 3, sm: 5, md: 5, lg: 7, all: 0},
+      slide: 2,
+      speed: 200,
+      interval: 4000,
+      animation: 'lazy',
+      point: {
+        visible: false
+      },
+      load: 2,
+      touch: true,
+      loop: false,
+      custom: 'banner'
+    }
   }
-
-  chevronRight(this) {
-    this.carouselActions.emit({action: 'carousel', params: ['next']});
-  }
-
-  initDataFn(key: NguCarouselStore) {
-    this.carouselToken = key.token;
-  }
-
-  resetFn() {
-    this.carousel.reset(this.carouselToken);
-  }
-
-  moveToSlide() {
-    this.carousel.moveToSlide(this.carouselToken, 2, false);
+  public myfunc(event: Event) {
+    // carouselLoad will trigger this funnction when your load value reaches
+    // it is helps to load the data by parts to increase the performance of the app
+    // must use feature to all carousel
   }
 }
