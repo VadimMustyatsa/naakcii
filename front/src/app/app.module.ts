@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterializeModule } from 'angular2-materialize';
+import { NguCarouselModule } from '@ngu/carousel';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -58,7 +59,8 @@ const routes = [
     FormsModule, ReactiveFormsModule,
     MaterializeModule,
     RouterModule.forRoot(routes),
-    HttpClientModule
+    HttpClientModule,
+    NguCarouselModule
   ],
   providers: [FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]

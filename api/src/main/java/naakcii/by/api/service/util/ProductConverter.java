@@ -19,6 +19,9 @@ public class ProductConverter {
         productDTO.setChainId(action.getChain().getId());
         productDTO.setQuantity(product.getProductInfo().getQuantity());
         productDTO.setMeasure(product.getProductInfo().getMeasure());
+        productDTO.setPrice(action.getPrice());
+        productDTO.setDiscount(action.getDiscount());
+        productDTO.setDiscountPrice(action.getDiscountPrice());
         return productDTO;
     }
 }

@@ -23,7 +23,7 @@ export class FoodsCategoriesService {
           return {
             id: category['id'],
             name: category['name'],
-            img: category['picture']
+            img: category['icon']
           };
         });
       });

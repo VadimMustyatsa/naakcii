@@ -10,6 +10,9 @@ public class ProductDTO {
     private Double quantity;
     private String measure;
     private Long chainId;
+    private Double price;
+    private Double discountPrice;
+    private Double discount;
 
     public Long getId() {
         return id;
@@ -73,5 +76,29 @@ public class ProductDTO {
 
     public void setChainId(Long chainId) {
         this.chainId = chainId;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 }

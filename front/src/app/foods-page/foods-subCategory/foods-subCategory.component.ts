@@ -13,8 +13,8 @@ import {Observer} from 'rxjs/Observer';
   providers: [FoodsSubCategoriesService]
 })
 export class FoodsSubCategoryComponent implements OnInit {
-  private curCategory: Category;
-  private subCategoryList: SubCategory[];
+  curCategory: Category;
+  subCategoryList: SubCategory[];
   checkedAll = false;  //выбор всех подкатегорий
   private isShowedTapStep3 = false;
 
@@ -27,20 +27,22 @@ export class FoodsSubCategoryComponent implements OnInit {
     console.log('SubCategoryComponent - ngOnInit');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
+        console.log('stateEvents: ' + update.category.id + ':' + update.category.name);
         this.subCategoryList = null;
         this.curCategory = update.category;
+
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
           this.subCategoryList = subCategoryList;
           console.log(this.subCategoryList);
-        });
-        this.setAllItemsByCheckedAll();
-        console.log('stateEvents: ' + update.category.id + ':' + this.curCategory.name);
-        if (!this.isShowedTapStep3) {
-          //setTimeout("$('.tapStep3').tapTarget('open')", 500);
-          this.isShowedTapStep3 = true;
-        } else {
+          this.setAllItemsByCheckedAll();
+          if (!this.isShowedTapStep3) {
+            //setTimeout("$('.tapStep3').tapTarget('open')", 500);
+            this.isShowedTapStep3 = true;
+          } else {
 
-        }
+          }
+        });
+
       }
     });
   }
@@ -53,7 +55,6 @@ export class FoodsSubCategoryComponent implements OnInit {
     }
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }
-
   onChangeAll() {
     this.checkedAll = !this.checkedAll;
     this.setAllItemsByCheckedAll();

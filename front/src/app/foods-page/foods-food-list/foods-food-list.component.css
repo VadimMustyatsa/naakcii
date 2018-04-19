@@ -2,3 +2,10 @@
   height: 120px;
   text-align: center;
 }
+.collapsible-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+}
+

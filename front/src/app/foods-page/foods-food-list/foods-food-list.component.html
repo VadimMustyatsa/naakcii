@@ -20,9 +20,12 @@
     </ul>
   </div>
 </div>
-
-<div *ngIf="foodList.length == 0" class="card-panel amber">
-  <h5 class="blue-text text-darken-2">2. Выберите подкатегорию товара!</h5>
+<div *ngIf="foodList.length == 0">
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div>Выберите подкатегорию товара!</div>
+    </li>
+  </ul>
 </div>
 
 
