@@ -9,6 +9,7 @@ public interface ActionDao {
 	List<Action> findAll();
 	List<Action> findAllWithDetails();
 	List<Action> findByChainId(Long id);
+	List<Action> findByProductId(Long id);
 	List<Action> findByChainIdWithDetails(Long id);
 	List<Action> findByChainIdAndProductSubcategory(Long chainId, Long subcategoryId);
 	Action save(Action action);

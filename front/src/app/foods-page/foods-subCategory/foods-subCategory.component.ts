@@ -24,12 +24,11 @@ export class FoodsSubCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('start subCategory');
+    console.log('SubCategoryComponent - ngOnInit');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
         this.subCategoryList = null;
         this.curCategory = update.category;
-        console.log(update.category.id);
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
           this.subCategoryList = subCategoryList;
           console.log(this.subCategoryList);

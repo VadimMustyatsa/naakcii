@@ -10,15 +10,15 @@ export class FoodsSubCategoriesService {
   }
 
   getByCategory(idCategoty) {
+    console.log('SubCategoriesService - getByCategory')
     const dataGet = {id: idCategoty};
-    console.log(dataGet);
     return this.http.get<SubCategory[]>(this.subCategoryUrl, {params: dataGet})
       .map(sabCatList => {
         return sabCatList.map(sabCut => {
           return {
             id: sabCut['id'],
             name: sabCut['name'],
-            img: sabCut['picture'],
+            img: sabCut['img'],
             selected: false
           };
         });

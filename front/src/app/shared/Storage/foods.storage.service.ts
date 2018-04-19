@@ -11,7 +11,6 @@ export class FoodsStorageService {
   constructor(private http: HttpClient) {
     console.log('storeService - constr');
   }
-
   getAll() {
     console.log('storeService - start');
     return this.http.get<Storag[]>(this.storeUrl)
