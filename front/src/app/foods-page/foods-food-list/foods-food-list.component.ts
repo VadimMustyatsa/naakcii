@@ -43,11 +43,31 @@ export class FoodsFoodListComponent implements OnInit {
                   this.foodList.push(product);
                 });
               });
-
             }
           }
         }
       }
+      if (update.mode === MODES.SELECT_CHAIN) {
+        this.chainList = update.chainList;
+        this.chainList.map(chain => {
+          //console.log('id: ' + chain.id + ' - ' + chain.selected);
+        });
+      }
     });
+  }
+
+  //проверяем есть ли для выбранных сетей товары
+  isVisibleProd() {
+    let isProduct = false;
+    this.foodList.map(food => {
+      this.chainList.map(chain => {
+        if (chain.id === food.idStrore) {
+          if (chain.selected) {
+            isProduct = true;
+          }
+        }
+      });
+    });
+    return isProduct;
   }
 }

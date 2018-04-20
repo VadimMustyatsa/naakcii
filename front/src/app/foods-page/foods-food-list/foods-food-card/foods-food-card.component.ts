@@ -16,10 +16,10 @@ export class FoodsFoodCardComponent implements OnInit {
   @Input() storageList: Storag[];
 
   constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) {
-    console.log('FoodCardComponent - constr');
+    //console.log('FoodCardComponent - constr');
   }
   ngOnInit() {
-    console.log('FoodCardComponent - ngOnInit');
+    //console.log('FoodCardComponent - ngOnInit');
   }
   getStorageByID(id: number): Storag {
     return this.storageList.find(x => x.id === id);
@@ -48,5 +48,18 @@ export class FoodsFoodCardComponent implements OnInit {
   }
   addItem(selectFood: FoodList) {
     selectFood.selectAmount = selectFood.selectAmount + 1;
+  }
+
+  //проверяем выделена ли сеть данной карточки в фильтре сетей
+  isVisibleChain(idStrore: number) {
+    let selected = false;
+    this.storageList.map(chain => {
+      if (chain.selected) {
+        if (chain.id == idStrore) {
+          selected = true;
+        }
+      }
+    });
+    return selected;
   }
 }

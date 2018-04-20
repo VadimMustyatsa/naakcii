@@ -15,7 +15,7 @@ import {Observer} from 'rxjs/Observer';
 export class FoodsSubCategoryComponent implements OnInit {
   curCategory: Category;
   subCategoryList: SubCategory[];
-  checkedAll = false;  //выбор всех подкатегорий
+  checkedAll = true;  //выбор всех подкатегорий по-умолчанию
   private isShowedTapStep3 = false;
 
   constructor(private service: FoodsSubCategoriesService,
@@ -28,10 +28,9 @@ export class FoodsSubCategoryComponent implements OnInit {
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
         console.log('stateEvents: ' + update.category.id + ':' + update.category.name);
-        this.subCategoryList = null;
-        this.curCategory = update.category;
-
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
+          this.subCategoryList = null;
+          this.curCategory = update.category;
           this.subCategoryList = subCategoryList;
           console.log(this.subCategoryList);
           this.setAllItemsByCheckedAll();
@@ -42,26 +41,30 @@ export class FoodsSubCategoryComponent implements OnInit {
 
           }
         });
-
       }
     });
   }
 
   setAllItemsByCheckedAll() {
-    if (this.subCategoryList) {
-      for (let i = 0; i < this.subCategoryList.length; i++) {
-        this.subCategoryList[i].selected = this.checkedAll;
-      }
-    }
+    this.subCategoryList.map(el => {
+      el.selected = this.checkedAll
+    });
+    console.log('setAllItemsByCheckedAll');
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }
+
   onChangeAll() {
     this.checkedAll = !this.checkedAll;
     this.setAllItemsByCheckedAll();
   }
 
   onChangeItem(idSubCut) {
-    this.subCategoryList[idSubCut].selected = !this.subCategoryList[idSubCut].selected;
+    console.log('onChangeItem: ' + idSubCut);
+    this.subCategoryList.map(el => {
+      if (el.id === idSubCut) {
+        el.selected = !el.selected;
+      }
+    });
     this.correctAllItemsCheck();
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }

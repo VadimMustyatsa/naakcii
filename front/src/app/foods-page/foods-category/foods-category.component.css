@@ -1,10 +1,12 @@
 .foods-main-group {
+  max-width: 1200px;
   margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 150px;
 }
+/*элементы(карточки) слайдера*******/
 ngu-item {
   display: block;
   cursor: pointer;
@@ -22,7 +24,12 @@ ngu-item p {
   font-size: 18px;
   text-align: center;
 }
-
+@media all and (max-width: 899px){
+  ngu-item {
+    width: 60px;
+  }
+}
+/***********************************/
 .notSelected {
   display: flex;
   height: 100px;

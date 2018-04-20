@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsCategoriesService {
-  private categoryUrl = 'assets/json/Category.json';
-  //private categoryUrl = 'http://localhost:8080/api/getCategory';
+  //private categoryUrl = 'assets/json/Category.json';
+  private categoryUrl = 'http://178.124.206.54:8080/api/getCategory';
 
   private data: Category[] = [];
   private selectedCategory: Category;
@@ -22,7 +22,7 @@ export class FoodsCategoriesService {
           return {
             id: category['id'],
             name: category['name'],
-            img: category['img']
+            icon: category['icon']
           };
         });
       });

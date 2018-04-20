@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Inject, OnInit, EventEmitter } from '@angular/core';
 import {MaterializeDirective, MaterializeAction} from 'angular2-materialize';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
+import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
+import {Observer} from 'rxjs/Observer';
 
 @Component({
   selector: 'app-foods-storage-list',
@@ -14,7 +16,7 @@ export class FoodsStorageListComponent implements OnInit {
   chainList: Storag[];
   medianGoods;
   medianPercent;
-  checkedAllChain = true; //выбор всеx сетей
+  checkedAllChain = true; //выбор всеx сетей по-умолчанию
   chainListText = '';
   curChainPercent = '';
   curChainCountGoods = '';
@@ -32,7 +34,7 @@ export class FoodsStorageListComponent implements OnInit {
     }
   ];
 
-  constructor(private service: FoodsStorageService) {
+  constructor(private service: FoodsStorageService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     console.log('store list');
   }
 
@@ -51,6 +53,7 @@ export class FoodsStorageListComponent implements OnInit {
       this.medianPercent = Math.ceil(this.medianPercent / chainList.length);
     });
   }
+
   setAllChains(checked) {
     this.checkedAllChain = checked;
     this.chainList.map(el => {
@@ -58,14 +61,26 @@ export class FoodsStorageListComponent implements OnInit {
     });
     if (checked) {
       this.chainListText = 'Выбраны торовые сети: все';
+      this.curChainPercent = '';
+      this.curChainCountGoods = '';
     } else {
       this.chainListText = 'Выберите торговую сеть';
+      this.curChainPercent = '';
+      this.curChainCountGoods = '';
     }
+    //посылаем в поле карточек список выбранных сетей
+    this.observer.next(new SharedState(MODES.SELECT_CHAIN, null, null, null, this.chainList));
   }
+
   onChangeChain(id) {
-    this.chainList[id].selected = !this.chainList[id].selected;
+    this.chainList.map(el => {
+      if (el.id === id) {
+        el.selected = !el.selected;
+      }
+    });
     this.correctAllChainsCheck();
   }
+
   correctAllChainsCheck() {
     if (this.chainList) {
       let cnt = 0;
@@ -97,12 +112,16 @@ export class FoodsStorageListComponent implements OnInit {
       for (let i = 1; i < this.chainList.length; i++) {
         if (curCheck !== this.chainList[i].selected) {
           this.checkedAllChain = false;
+          this.observer.next(new SharedState(MODES.SELECT_CHAIN, null, null, null, this.chainList));
           return;
         }
       }
       this.setAllChains(curCheck);
     }
+    //посылаем в поле карточек список выбранных сетей
+    this.observer.next(new SharedState(MODES.SELECT_CHAIN, null, null, null, this.chainList));
   }
+
   onChangeAllChains() {
     this.checkedAllChain = !this.checkedAllChain;
     this.setAllChains(this.checkedAllChain);

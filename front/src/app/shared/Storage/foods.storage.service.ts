@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsStorageService {
-  private storeUrl = 'assets/json/StoreList.json';
-  //private storeUrl = 'http://localhost:8080/api/getChain';
+  //private storeUrl = 'assets/json/StoreList.json';
+  private storeUrl = 'http://178.124.206.54:8080/api/getChain';
 
   constructor(private http: HttpClient) {
     console.log('storeService - constr');
@@ -24,9 +24,12 @@ export class FoodsStorageService {
             percent: chain['percent'],
             imgLogo: chain['imgLogo'],
             imgLogoSmall: chain['imgLogoSmall'],
-            selected: false
+            selected: true
           };
         });
       });
   }
 }
+
+
+
