@@ -1,13 +1,19 @@
 {
   "scripts": {
-    "protractor": "node_modules\\.bin\\protractor protractor-conf.js"
+    "protractor": "node_modules\\.bin\\protractor protractor-conf.js",
+    "wd-update": "node_modules\\.bin\\webdriver-manager update",
+    "wd-start": "node_modules\\.bin\\webdriver-manager start",
+    "wd-server": "npm run wd-update && npm run wd-start"
   },
   "devDependencies": {
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
     "chai-string": "^1.2.0",
     "cucumber": "^3.1.0",
-    "protractor": "~5.3.0",
+    "protractor": "^5.3.1",
     "protractor-cucumber-framework": "^4.0.9"
+  },
+  "dependencies": {
+    "webdriver-manager": "^12.0.6"
   }
 }

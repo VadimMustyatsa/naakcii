@@ -1,61 +1,24 @@
 'use strict';
 
-var HomePage = require('../../support/objects/pages/homePage.js');
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-
-chai.use(chaiAsPromised);
-var expect = chai.expect,
-    homePage = new HomePage();
-
+var world = require('../../support/world');
 let cucumber = require('cucumber');
-
 
 cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
 
     setDefaultTimeout(180000);
 
-    Given(/^я перехожу по ссылке "(.+)"$/, async function(pageUrl) {
-        return await homePage.openPageByUrl(pageUrl);
-    });
-    Given(/^я нажимаю на (.+) в верхней части страницы$/, async function(elementName) {
-        return await homePage.clickElement(elementName);
+    Given(/^я нажимаю на (логотип)$/, async function(elementKey) {
+        return await world.pageFactory.currentPage.clickElement(elementKey.toLocaleLowerCase());
     });
 
-    Then(/^должна открыться "(.+)" страница$/, async function (elementName) {
-        var isDisplayed = await homePage.isElementDisplayed(elementName);
-        if(isDisplayed) {
-            return expect(await homePage.getPageUrl()).to.equal(browser.baseUrl);
-        } else {
-            return false;
-        }
+    Then(/^долж(?:но|ны) отобразиться "(\d)" иллюстраций шагов пояснительной (.+)$/, async function (expectedNumber, elementKey) {
+        var actualNumber = await world.pageFactory.currentPage.getNumberOfElements(elementKey.toLocaleLowerCase());
+        return expect(actualNumber).to.equal(Number(expectedNumber));
     });
-    Then(/^должна отобразиться иллюстрация "(.+)"$/, async function (elementName) {
-        var isDisplayed = await homePage.isElementDisplayed(elementName);
-        return expect(isDisplayed).to.equal(true);
-    });
-    Then(/^должно отобразиться "(\d)" иллюстраций пояснительной (.+)$/, async function (expNumber, elementName) {
-        var isDisplayed = await homePage.isElementDisplayed(elementName),
-            actNumber = await homePage.getNumberOfElements(elementName);
-        if(isDisplayed){
-            return expect(actNumber).to.equal(Number(expNumber));
-        } else {
-            return false;
-        }
-    });
-    Then(/^должен отобразиться текст (.+) "(.+)"$/, async function (elementName, expText) {
-        var actText = await homePage.getStepText(elementName);
-        return expect(actText).to.equal(expText);
-    });
-
-    Then(/^должна отобразиться (кнопка) "(.+)"$/, async function (elementName, expText) {
-        var isDisplayed = await homePage.isElementDisplayed(elementName),
-            actText = await homePage.getElementText(elementName);
-        if(isDisplayed){
-            return expect(actText.toLocaleLowerCase()).to.equal(expText.toLocaleLowerCase());
-        } else {
-            return false;
-        }
+    Then(/^должен отобразиться текст (.+) "(.+)"$/, async function (elementKey, elementText) {
+        var actualText = await world.pageFactory.currentPage.getStepText(elementKey.toLocaleLowerCase()),
+            expectedText = elementText.substring(3);
+        return expect(actualText.toLocaleLowerCase()).to.equal(expectedText.toLocaleLowerCase());
     });
 
 });

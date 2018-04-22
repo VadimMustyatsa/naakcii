@@ -4,9 +4,6 @@ exports.config = {
     specs: ['../../features/**/*.feature'],
 
     seleniumAddress: 'http://localhost:4444/wd/hub',
-
-    baseUrl: 'http://178.124.206.54/',
-
     capabilities: {
         browserName: 'chrome',
         'chromeOptions': {
@@ -22,7 +19,15 @@ exports.config = {
     frameworkPath: require.resolve('protractor-cucumber-framework'),
 
     cucumberOpts: {
-        require: 'step_definitions/page_steps/*.js',
+        require: ['support/world.js',
+            'step_definitions/page_steps/*.js',
+            'step_definitions/*.js'],
         keepAlive: false
+    },
+    onPrepare : function() {
+        var chai = require('chai');
+        chaiAsPromised = require('chai-as-promised');
+        expect = chai.expect;
+        chai.use(chaiAsPromised);
     }
 };

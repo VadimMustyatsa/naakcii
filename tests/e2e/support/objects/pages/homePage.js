@@ -1,16 +1,16 @@
 'use strict';
-//var {element, by} = require('protractor');
+
 const Page = require('./page');
 
 class HomePage extends Page{
     constructor(){
         super();
         this.data = {
-            'дескриптор': by.css('app-home-slider>div[class^="homeSlider"]'),
-            'схемы': by.css('app-home-step>div[class="steps-container-block"]'),
-            'шага': by.css('div[class="steps-container"]>app-home-step'),
-            'кнопка': by.css('a[class$="btn"]'),
-            'логотип': by.css('a[class$="brand-logo"]'),
+            'иллюстрация дескриптор': by.css('app-home-slider>div[class^="homeSlider"]'),
+            'схем(?:ы|а)': by.css('app-home-step>div[class="steps-container-block"]'),
+            'шага': by.xpath('.//div[@class="steps-container"]//div[@class="step-title"]//span[2]'),
+            'кнопк(?:а|у) перейти к товарам': by.css('a#goFoodsBtn'),
+            'логотип': by.css('a#logo'),
             'главная': by.css('a[href="/"]')
         };
     }
@@ -27,9 +27,8 @@ class HomePage extends Page{
             };
 
         elementIndex = matches[strArr[0]];
-        return element.all(this.data[strArr[1]]).get(elementIndex).getAttribute('ng-reflect-text');
+        return element.all(this.data[strArr[1]]).get(elementIndex).getText();
     }
 }
 
 module.exports = HomePage;
-
