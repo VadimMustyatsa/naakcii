@@ -1,17 +1,79 @@
-<div class="input-field col s8">
-  <select multiple materialize="material_select">
-    <option value="" disabled>Выберете магазин</option>
+<!--<div class="col s1">
+  <br>
+  <a id="menu1" class="waves-effect waves-light btn btn-floating amber"
+     onclick="$('.tapStep1').tapTarget('open')">1</a>
+  &lt;!&ndash; Tap Target Structure &ndash;&gt;
+  <div class="tapStep1 tap-target amber" data-activates="menu1">
+    <div class="tap-target-content">
+      <h5 class="white-text">Итак, приступим! C нами экономить легко и просто</h5>
+      <p>Первым делом выберите из списка подходящие Вам торговые сети.</p>
+      <p>Если в дальнейшем вы захотите выбрать другие сети, ничего страшного: на любом шаге можно вернуться к списку
+        сетей и скорректировать его. А мы автоматически всё перестроим)</p><br>
+      <p class="red-text text-accent-2">Ну что, готовы? тогда ВПЕРЕД!!!</p>
+    </div>
+  </div>
+</div>-->
+<div class="chainList">
+  <div class="chainListWrap">
+    <ul class="collapsible"
+        materialize="collapsible"
+        [materializeParams]="params"
+        data-collapsible="accordion"
+    >
+      <li>
+        <div class="collapsible-header row grey darken-1">
+          <div class="col m7">{{chainListText}}</div>
+          <div class="col m2">{{curChainPercent}}</div>
+          <div class="col offset-m1 m1">{{curChainCountGoods}}</div>
+          <div class="col m1"><i class="material-icons white-text">{{curentIconCollapsible}}</i></div>
+        </div>
+        <div class="collapsible-body">
+          <ul class="collection with-header">
+            <li class="collection-header row">
+              <div class="col m6"><span>Торговые сети</span></div>
+              <div class="col m3"><span>Средний % скидки</span></div>
+              <div class="col m3"><span>Товаров на акции</span></div>
+            </li>
+            <li class="collection-item row">
+              <div class="col m6">
+                <input type="checkbox" class="checkbox-color" id="chainAll"
+                       [checked]="checkedAllChain"
+                       (change)="onChangeAllChains()"
+                />
+                <label for="chainAll" class="grey-text text-darken-2">
+                  <span>Все</span>
+                </label>
+              </div>
+              <div class="col m3 MedianPercent">
+                <span>{{medianPercent}}</span>
+              </div>
+              <div class="col m3 MedianGoods">
+                <span>{{medianGoods}}</span>
+              </div>
+            </li>
 
-    <option *ngFor="let storage of storageList"
-            value="{{storage.id}}"
+            <li *ngFor="let chain of chainList"
+                class="collection-item row"
             >
-      <div class="storageList">
-        <img class="col s2" src="{{storage.imgLogoSmall}}">
-        <span class="storageName">{{storage.name}}</span>
-        <span class="storageGoodCount amber-text">Товаров: {{storage.countGoods}}</span>
-        <span class="storagePercent amber-text">ср.скидка: {{storage.persent}}%</span>
-      </div>
-    </option>
-  </select>
-  <label>Выберете магазин</label>
+              <div class="chainName col m6">
+                <input type="checkbox" class="checkbox-color" id="chain{{chain.id}}"
+                       (change)="onChangeChain(chain.id)"
+                       [checked]="chain.selected"/>
+                <label for="chain{{chain.id}}" class="grey-text text-darken-2">
+                  <img class="chainLogo" src="{{chain.imgLogoSmall}}">
+                  <span>{{chain.name}}</span>
+                </label>
+              </div>
+              <div class="col m3 chainPercent">
+                <span>{{chain.percent}}</span>
+              </div>
+              <div class="col m3 chainCountGoods">
+                <span>{{chain.countGoods}}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

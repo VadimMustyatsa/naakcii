@@ -1,10 +1,10 @@
 package naakcii.by.api.service.ServiceImpl;
 
+import naakcii.by.api.repository.dao.CategoryDao;
 import naakcii.by.api.repository.model.Category;
-import naakcii.by.api.repository.CategoryRepository;
 import naakcii.by.api.service.CategoryService;
-import naakcii.by.api.service.util.CategoryConverter;
 import naakcii.by.api.service.modelDTO.CategoryDTO;
+import naakcii.by.api.service.util.CategoryConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryConverter categoryConverter = new CategoryConverter();
 
     @Autowired
-    private CategoryRepository repository;
+    private CategoryDao repository;
 
 
     @Override
@@ -29,11 +29,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO delete(int id) {
+    public CategoryDTO delete(Long id) {
         CategoryDTO categoryDTO = findById(id);
         if (categoryDTO != null) {
             Category category = categoryConverter.convert(categoryDTO);
-            repository.delete(category);
+            repository.softDelete(category);
         }
         return categoryDTO;
     }
@@ -49,9 +49,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO findById(int id) {
+    public CategoryDTO findById(Long id) {
         CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO = categoryConverter.convert(repository.findOne(id));
+        categoryDTO = categoryConverter.convert(repository.findById(id));
         return categoryDTO;
     }
 

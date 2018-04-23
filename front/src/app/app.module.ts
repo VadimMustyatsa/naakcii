@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterializeModule } from 'angular2-materialize';
+import { NguCarouselModule } from '@ngu/carousel';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {FoodsFoodCardComponent} from './foods-page/foods-food-list/foods-food-card/foods-food-card.component';
 import {AppCutStringPipe} from './cutString.pipe';
 import { FoodsStorageListComponent } from './foods-page/foods-storage-list/foods-storage-list.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes = [
   {path: '', component: HomePageComponent},
@@ -48,6 +50,7 @@ const routes = [
     FoodsFoodListComponent,
     FoodsTotalItemsComponent,
     FoodsFoodCardComponent,
+    FoodsStorageListComponent,
     AppCutStringPipe,
     FoodsStorageListComponent
   ],
@@ -55,7 +58,9 @@ const routes = [
     BrowserModule,
     FormsModule, ReactiveFormsModule,
     MaterializeModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    NguCarouselModule
   ],
   providers: [FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]

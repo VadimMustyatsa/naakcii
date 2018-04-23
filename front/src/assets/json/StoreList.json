@@ -1,0 +1,65 @@
+[
+  {
+    "id": 0,
+    "name": "Белмаркет",
+    "location": "street 30",
+    "countGoods": 25,
+    "percent": 25,
+    "imgLogo": "assets/images/Storage/Full/Belmarket.png",
+    "imgLogoSmall": "assets/images/Storage/small/Belmarket.png"
+  },
+  {
+    "id": 1,
+    "name": "Prostore",
+    "location": "street 90",
+    "countGoods": 37,
+    "percent": 19,
+    "imgLogo": "assets/images/Storage/Full/Prostore.png",
+    "imgLogoSmall": "assets/images/Storage/small/Prostore.png"
+  },
+  {
+    "id": 2,
+    "name": "Рублевский",
+    "location": "street 85",
+    "countGoods": 47,
+    "percent": 23,
+    "imgLogo": "assets/images/Storage/Full/Rublev.png",
+    "imgLogoSmall": "assets/images/Storage/small/Rublev.png"
+  },
+  {
+    "id": 3,
+    "name": "Соседи",
+    "location": "street 75",
+    "countGoods": 32,
+    "percent": 26,
+    "imgLogo": "assets/images/Storage/Full/Sosedy.png",
+    "imgLogoSmall": "assets/images/Storage/small/Sosedy.png"
+  },
+  {
+    "id": 4,
+    "name": "Виталюр",
+    "location": "street 65",
+    "countGoods": 28,
+    "percent": 14,
+    "imgLogo": "assets/images/Storage/Full/Vitalur.png",
+    "imgLogoSmall": "assets/images/Storage/small/Vitalur.png"
+  },
+  {
+    "id": 5,
+    "name": "Евроопт",
+    "location": "street 40",
+    "countGoods": 32,
+    "percent": 30,
+    "imgLogo": "assets/images/Storage/Full/Evroopt.png",
+    "imgLogoSmall": "assets/images/Storage/small/Evroopt.png"
+  },
+  {
+    "id": 6,
+    "name": "Корона",
+    "location": "street 70",
+    "countGoods": 45,
+    "percent": 15,
+    "imgLogo": "assets/images/Storage/Full/Korona.png",
+    "imgLogoSmall": "assets/images/Storage/small/Korona.png"
+  }
+]
