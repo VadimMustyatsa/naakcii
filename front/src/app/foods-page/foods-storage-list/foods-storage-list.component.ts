@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Inject, OnInit, EventEmitter, ElementRef, HostListener } from '@angular/core';
 import {MaterializeDirective, MaterializeAction} from 'angular2-materialize';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
@@ -34,8 +34,18 @@ export class FoodsStorageListComponent implements OnInit {
     }
   ];
 
-  constructor(private service: FoodsStorageService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+  constructor(private eRef: ElementRef, private service: FoodsStorageService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     console.log('store list');
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {
+    if(this.eRef.nativeElement.contains(event.target)) {
+      //console.log('clicked inside');
+    } else {
+      //console.log('clicked outside');
+      $('.collapsible').collapsible('close', 0);
+    }
   }
 
   ngOnInit() {
