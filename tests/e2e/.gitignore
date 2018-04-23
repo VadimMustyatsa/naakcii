@@ -11,3 +11,4 @@
 *.launch
 .settings/
 *.sublime-workspace
+debug.log
