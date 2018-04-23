@@ -46,6 +46,7 @@ export class FoodsStorageListComponent implements OnInit {
     } else {
       //console.log('clicked outside');
       this.actionsCollapsible.emit({action:"collapsible",params:['close',0]});
+      this.curentIconCollapsible = String(this.iconCollapsible.minimized);
     }
   }
 
