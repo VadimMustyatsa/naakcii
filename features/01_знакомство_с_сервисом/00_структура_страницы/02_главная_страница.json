@@ -1,0 +1,326 @@
+{
+    "mockup": {
+        "controls": {
+            "control": [
+                {
+                    "ID": "0",
+                    "typeID": "BrowserWindow",
+                    "zOrder": "0",
+                    "w": "769",
+                    "h": "530",
+                    "measuredW": "450",
+                    "measuredH": "400",
+                    "x": "678",
+                    "y": "19",
+                    "properties": {
+                        "text": "Сервис экономии – naakcii.by\nhttp://naakcii.by/"
+                    }
+                },
+                {
+                    "ID": "3",
+                    "typeID": "Canvas",
+                    "zOrder": "1",
+                    "w": "769",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "678",
+                    "y": "92"
+                },
+                {
+                    "ID": "5",
+                    "typeID": "Canvas",
+                    "zOrder": "2",
+                    "w": "601",
+                    "h": "164",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "767",
+                    "y": "142"
+                },
+                {
+                    "ID": "6",
+                    "typeID": "Canvas",
+                    "zOrder": "3",
+                    "w": "602",
+                    "h": "131",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "767",
+                    "y": "316"
+                },
+                {
+                    "ID": "9",
+                    "typeID": "Label",
+                    "zOrder": "4",
+                    "measuredW": "107",
+                    "measuredH": "28",
+                    "x": "1004",
+                    "y": "210",
+                    "properties": {
+                        "size": "20",
+                        "text": "Дескриптор"
+                    }
+                },
+                {
+                    "ID": "15",
+                    "typeID": "Paragraph",
+                    "zOrder": "5",
+                    "w": "178",
+                    "h": "25",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "979",
+                    "y": "320",
+                    "properties": {
+                        "text": "Пояснительная схема",
+                        "align": "center",
+                        "size": "17"
+                    }
+                },
+                {
+                    "ID": "16",
+                    "typeID": "Canvas",
+                    "zOrder": "6",
+                    "w": "122",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "990",
+                    "y": "92"
+                },
+                {
+                    "ID": "24",
+                    "typeID": "Paragraph",
+                    "zOrder": "7",
+                    "w": "85",
+                    "h": "27",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1008",
+                    "y": "97",
+                    "properties": {
+                        "text": "Логотип",
+                        "align": "center",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "36",
+                    "typeID": "Button",
+                    "zOrder": "8",
+                    "w": "191",
+                    "h": "39",
+                    "measuredW": "165",
+                    "measuredH": "27",
+                    "x": "972",
+                    "y": "459",
+                    "properties": {
+                        "text": "Кнопка перехода",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "37",
+                    "typeID": "Canvas",
+                    "zOrder": "9",
+                    "w": "92",
+                    "h": "64",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "792",
+                    "y": "351"
+                },
+                {
+                    "ID": "40",
+                    "typeID": "Paragraph",
+                    "zOrder": "10",
+                    "w": "87",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "794",
+                    "y": "367",
+                    "properties": {
+                        "text": "Иллюстрация шага",
+                        "align": "center",
+                        "size": "13"
+                    }
+                },
+                {
+                    "ID": "41",
+                    "typeID": "Label",
+                    "zOrder": "11",
+                    "measuredW": "68",
+                    "measuredH": "21",
+                    "x": "804",
+                    "y": "415",
+                    "properties": {
+                        "text": "Текст шага"
+                    }
+                },
+                {
+                    "ID": "42",
+                    "typeID": "Canvas",
+                    "zOrder": "12",
+                    "w": "92",
+                    "h": "64",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "902",
+                    "y": "351"
+                },
+                {
+                    "ID": "43",
+                    "typeID": "Paragraph",
+                    "zOrder": "13",
+                    "w": "87",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "904",
+                    "y": "367",
+                    "properties": {
+                        "text": "Иллюстрация шага",
+                        "align": "center",
+                        "size": "13"
+                    }
+                },
+                {
+                    "ID": "44",
+                    "typeID": "Label",
+                    "zOrder": "14",
+                    "measuredW": "68",
+                    "measuredH": "21",
+                    "x": "914",
+                    "y": "415",
+                    "properties": {
+                        "text": "Текст шага"
+                    }
+                },
+                {
+                    "ID": "45",
+                    "typeID": "Canvas",
+                    "zOrder": "15",
+                    "w": "92",
+                    "h": "64",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1012",
+                    "y": "351"
+                },
+                {
+                    "ID": "46",
+                    "typeID": "Paragraph",
+                    "zOrder": "16",
+                    "w": "87",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1014",
+                    "y": "367",
+                    "properties": {
+                        "text": "Иллюстрация шага",
+                        "align": "center",
+                        "size": "13"
+                    }
+                },
+                {
+                    "ID": "47",
+                    "typeID": "Label",
+                    "zOrder": "17",
+                    "measuredW": "68",
+                    "measuredH": "21",
+                    "x": "1024",
+                    "y": "415",
+                    "properties": {
+                        "text": "Текст шага"
+                    }
+                },
+                {
+                    "ID": "48",
+                    "typeID": "Canvas",
+                    "zOrder": "18",
+                    "w": "92",
+                    "h": "64",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1127",
+                    "y": "351"
+                },
+                {
+                    "ID": "49",
+                    "typeID": "Paragraph",
+                    "zOrder": "19",
+                    "w": "87",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1129",
+                    "y": "367",
+                    "properties": {
+                        "text": "Иллюстрация шага",
+                        "align": "center",
+                        "size": "13"
+                    }
+                },
+                {
+                    "ID": "50",
+                    "typeID": "Label",
+                    "zOrder": "20",
+                    "measuredW": "68",
+                    "measuredH": "21",
+                    "x": "1139",
+                    "y": "415",
+                    "properties": {
+                        "text": "Текст шага"
+                    }
+                },
+                {
+                    "ID": "51",
+                    "typeID": "Canvas",
+                    "zOrder": "21",
+                    "w": "92",
+                    "h": "64",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "1247",
+                    "y": "351"
+                },
+                {
+                    "ID": "52",
+                    "typeID": "Paragraph",
+                    "zOrder": "22",
+                    "w": "87",
+                    "h": "32",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "1249",
+                    "y": "367",
+                    "properties": {
+                        "text": "Иллюстрация шага",
+                        "align": "center",
+                        "size": "13"
+                    }
+                },
+                {
+                    "ID": "53",
+                    "typeID": "Label",
+                    "zOrder": "23",
+                    "measuredW": "68",
+                    "measuredH": "21",
+                    "x": "1259",
+                    "y": "415",
+                    "properties": {
+                        "text": "Текст шага"
+                    }
+                }
+            ]
+        },
+        "mockupH": "530",
+        "mockupW": "769",
+        "measuredW": "1447",
+        "measuredH": "549",
+        "version": "1.0"
+    }
+}
