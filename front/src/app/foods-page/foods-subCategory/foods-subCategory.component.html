@@ -1,21 +1,80 @@
 <div *ngIf="subCategoryList">
   <ul class="collection with-header">
-    <li class="collection-header amber-text"><p>{{curCategory.name}}</p></li>
+    <li class="collection-header grey-text text-darken-2">
+      <div class="catName">
+        <!--<div>
+          <a id="menu3" class="waves-effect waves-light btn btn-floating amber"
+             onclick="$('.tapStep3').tapTarget('open')">
+            3
+          </a>
+        </div>-->
+        <div>
+          <p>{{curCategory.name}}</p>
+        </div>
+        <div></div>
+      </div>
+    </li>
     <li class="collection-item">
-      <input type="checkbox" class="checkbox-amber" id="allSubCat" [checked]="checkedAll" (change)="onChangeAll()"/>
-      <label for="allSubCat" class="amber-text">ВСЕ</label>
+      <input type="checkbox" class="checkbox-color" id="allSubCat" [checked]="checkedAll" (change)="onChangeAll()"/>
+      <label for="allSubCat" class="grey-text text-darken-2">ВСЕ</label>
     </li>
     <li class="collection-item"
         *ngFor="let subCat of subCategoryList"
     >
-      <input type="checkbox" class="checkbox-amber" id="{{subCat.id}}" (change)="onChangeItem(subCat.id)" [checked]="subCat.selected"/>
-      <label for="{{subCat.id}}" class="amber-text">{{subCat.name}}</label>
+      <input type="checkbox" class="checkbox-color" id="subCat{{subCat.id}}" (change)="onChangeItem(subCat.id)"
+             [checked]="subCat.selected"/>
+      <label for="subCat{{subCat.id}}" class="grey-text text-darken-2">{{subCat.name}}</label>
     </li>
   </ul>
 </div>
 <div *ngIf="!subCategoryList">
-  <div class="card-panel amber">
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div>Выберите подкатегории товаров</div>
+    </li>
+    <li class="collapsible-header amber-text">
+      <div class="preloader-wrapper active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!--<div class="card-panel amber">
     <h5 class="blue-text text-darken-2">1. Выберите категорию!</h5>
-  </div>
+    <div>
+      <div class="preloader-wrapper active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+
 </div>
 
+<!-- Tap Target Structure -->
+<!--<div class="tapStep3 tap-target amber" data-activates="menu3">
+  <div class="tap-target-content">
+    <h5 class="white-text">Ура! почти всё готово!</h5>
+    <p>
+      Мы автоматически подготовили для Вас список подкатегорий товаров, где вы без труда выберите нужные Вам, а мы автоматически сформируем акционные товары.
+    </p><br>
+    <p class="red-text">Вперед! всё готово для экономии!!!</p>
+  </div>
+</div>-->

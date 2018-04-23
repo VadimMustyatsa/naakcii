@@ -1,9 +1,10 @@
-<div class="foodCard col s4 m4">
+<div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard col s4 m4">
   <div class="card sticky-action">
-
     <div class="card-image">
-      <img src="assets/images/food3.jpg">
-      <div class="foodDiscount red center-align yellow-text z-depth-3">
+      <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
+      <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
+      <img *ngIf="curFood.img" src="{{curFood.img}}">
+      <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
         {{curFood.discount}}%
       </div>
     </div>
@@ -14,31 +15,36 @@
         {{curFood.boxWeight}}
       </div>
       <div class="foodStorage">
-        <div>
+        <div class="grey-text">
           {{getNameStorage(curFood.idStrore)}}
         </div>
         <div>
           <img src="{{getImgStorage(curFood.idStrore)}}">
         </div>
       </div>
-      <div class="foodAllPrice">
+      <div *ngIf="curFood.discount > 0" class="foodAllPrice">
         {{curFood.allPrice | number:"1.2-2"}} руб.
       </div>
+      <div *ngIf="curFood.discount == 0" class="foodAllPrice">&nbsp;</div>
       <div class="foodTotalPrice">
         {{curFood.totalPrice | number:"1.2-2"}} руб.
       </div>
 
       <div class="amountItem center">
-        <a class="btn-floating btn teal amber" (click)="subItem(curFood)">
+        <a class="btn-floating btn teal grey darken-1" (click)="subItem(curFood)">
           <i class="material-icons">remove</i>
         </a>
-        <span class="amber-text">{{curFood.amount}}</span>
-        <a class="btn-floating btn teal amber" (click)="addItem(curFood)">
+        <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+        <a class="btn-floating btn teal grey darken-1" (click)="addItem(curFood)">
           <i class="material-icons">add</i>
         </a>
-        <a class="selectFood btn waves-block amber" (click)="selectFood(curFood)">Добавить</a>
+        <a class="selectFood btn waves-block deep-orange" (click)="selectFood(curFood)">Добавить</a>
       </div>
-
+      <div class="endStock">
+        <span class="grey-text">
+          Дата конца акции:
+        </span>
+      </div>
     </div>
   </div>
 </div>
