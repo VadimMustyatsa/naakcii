@@ -1,6 +1,7 @@
 'use strict';
 
-const Page = require('./page');
+var Helper = require('../../helpers/helper'),
+    Page = require('./page');
 
 class CatalogPage extends Page{
     constructor(){
@@ -30,13 +31,13 @@ class CatalogPage extends Page{
                 'торговая_сеть': by.css('app-foods-food-card div[class^="foodStorage"]>div:first-of-type'),
                 'кнопк(?:а|у) добавить': by.css('app-foods-food-card a.selectFood.btn')
             },
-            //'поле поиск товаров': by.css('app-foods-search input'),
             '(панель|панели) список покупок': by.css('app-foods-total-items div li:last-child>div')
         };
+        this.helper = new Helper(this.data);
     }
 
     getElementStatusByIndex(elementKey, index){
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, 'статус'),
+        var elementObj = this.helper.getElementLocator(elementKey, 'статус'),
             statusArr = element.all(elementObj);
         if(elementKey !== 'панель список категорий') {
             return statusArr.get(index).isSelected()
@@ -60,7 +61,7 @@ class CatalogPage extends Page{
     }
 
     isFilterOpened(elementKey){
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, 'состояние_фильтра');
+        var elementObj = this.helper.getElementLocator(elementKey, 'состояние_фильтра');
         return element(elementObj).getAttribute('class')
             .then(function(result){
                 if(result.indexOf('active') !== -1){
@@ -106,7 +107,7 @@ class CatalogPage extends Page{
             }else {
                 valuesArrLength = count;
             }
-            elementObj = this.helper.getElementLocator(this.data, elementKey, elementKeysArr);
+            elementObj = this.helper.getElementLocator(elementKey, elementKeysArr);
             resultArr.push(await element.all(elementObj)
                 .map(function (elements) {
                     return elements.getText();
@@ -123,7 +124,7 @@ class CatalogPage extends Page{
     }
 
     async selectElement(elementKey, subElementKey, textArr){
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey),
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey),
             selected = true,
             textArrLength,
             index;

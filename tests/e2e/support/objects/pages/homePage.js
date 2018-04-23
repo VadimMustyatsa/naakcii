@@ -1,6 +1,7 @@
 'use strict';
 
-const Page = require('./page');
+var Helper = require('../../helpers/helper'),
+    Page = require('./page');
 
 class HomePage extends Page{
     constructor(){
@@ -13,6 +14,7 @@ class HomePage extends Page{
             'логотип': by.css('a#logo'),
             'главная': by.css('a[href="/"]')
         };
+        this.helper = new Helper(this.data);
     }
 
     getStepText(elementName) {

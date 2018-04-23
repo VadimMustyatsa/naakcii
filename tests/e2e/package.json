@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "protractor": "node_modules\\.bin\\protractor protractor-conf.js",
+    "protractor": "node_modules\\.bin\\protractor configs\\protractor-conf.js",
     "wd-update": "node_modules\\.bin\\webdriver-manager update",
     "wd-start": "node_modules\\.bin\\webdriver-manager start",
     "wd-server": "npm run wd-update && npm run wd-start"

@@ -1,10 +1,7 @@
 'use strict';
-var Helper = require('../../helpers/helper');
 
 class Page {
-    constructor(){
-        this.helper = new Helper();
-    };
+    constructor(){};
 
     getPageUrl(){
         return browser.driver.getCurrentUrl();
@@ -23,12 +20,12 @@ class Page {
     }
 
     isElementDisplayed(elementKey, subElementKey = elementKey) {
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element(elementObj).isDisplayed();
     }
 
     getElementText(elementKey, subElementKey = elementKey) {
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element.all(elementObj).map(function (elements) {
             return elements.getText();
         }).then(function (textArr) {
@@ -41,22 +38,22 @@ class Page {
     }
 
     clickElement(elementKey, subElementKey = elementKey) {
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element(elementObj).click();
     }
 
     getNumberOfElements(elementKey, subElementKey = elementKey) {
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element.all(elementObj).count();
     }
 
     getElementValueByIndex(elementKey, subElementKey, index){
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element.all(elementObj).get(index).getText();
     }
 
     getElementIndex(elementKey, subElementKey, textValue){
-        var elementObj = this.helper.getElementLocator(this.data, elementKey, subElementKey);
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         if(Array.isArray(textValue)){
             textValue = textValue[0];
         }
