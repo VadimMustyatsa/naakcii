@@ -9,6 +9,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
+  height: 140px;
+}
+.collapsible-header div p {
+  margin: 10px 0px;
 }
 

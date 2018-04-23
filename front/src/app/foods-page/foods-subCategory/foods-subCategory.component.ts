@@ -33,6 +33,7 @@ export class FoodsSubCategoryComponent implements OnInit {
           this.curCategory = update.category;
           this.subCategoryList = subCategoryList;
           console.log(this.subCategoryList);
+          this.checkedAll = true;
           this.setAllItemsByCheckedAll();
           if (!this.isShowedTapStep3) {
             //setTimeout("$('.tapStep3').tapTarget('open')", 500);

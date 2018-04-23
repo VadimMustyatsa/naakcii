@@ -70,4 +70,15 @@ export class FoodsFoodListComponent implements OnInit {
     });
     return isProduct;
   }
+
+  //проверяем есть ли хоть одна выбранная сеть
+  isCheckedChain() {
+    let isChain = false;
+    this.chainList.map(chain => {
+      if (chain.selected) {
+        isChain = true;
+      }
+    });
+    return isChain;
+  }
 }

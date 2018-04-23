@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes = [
   {path: '', component: HomePageComponent},
-  {path: 'foods', component: FoodsPageComponent}
+  {path: 'form-shopping-list', component: FoodsPageComponent}
 ];
 
 @NgModule({
