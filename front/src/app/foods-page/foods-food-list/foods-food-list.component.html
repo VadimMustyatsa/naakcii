@@ -1,4 +1,4 @@
-<div *ngIf="foodList.length > 0">
+<div *ngIf="foodList.length > 0" class="cards">
   <div *ngIf="isVisibleProd()" class="row">
     <app-foods-food-card
       *ngFor="let food of foodList"
@@ -9,16 +9,14 @@
   </div>
   <ul *ngIf="!isVisibleProd()"class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
-      <div>Для выбранных торговых сетей нет товаров</div>
+      <div>В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории. Попробуйте поискать в других сетях.</div>
     </li>
   </ul>
 </div>
-<div *ngIf="foodList.length == 0">
+<div *ngIf="foodList.length == 0" class="cards">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Выберите товары</div>
     </li>
   </ul>
 </div>
-
-

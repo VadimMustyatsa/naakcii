@@ -2,6 +2,9 @@
   height: 120px;
   text-align: center;
 }
+.cards {
+  height: 2000px;
+}
 .collapsible-header {
   display: flex;
   justify-content: center;

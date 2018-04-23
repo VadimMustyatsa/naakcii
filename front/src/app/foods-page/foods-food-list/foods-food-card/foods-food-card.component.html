@@ -4,7 +4,7 @@
       <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
       <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
       <img *ngIf="curFood.img" src="{{curFood.img}}">
-      <div class="foodDiscount deep-orange center-align white-text z-depth-3">
+      <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
         {{curFood.discount}}%
       </div>
     </div>
@@ -22,9 +22,10 @@
           <img src="{{getImgStorage(curFood.idStrore)}}">
         </div>
       </div>
-      <div class="foodAllPrice">
+      <div *ngIf="curFood.discount > 0" class="foodAllPrice">
         {{curFood.allPrice | number:"1.2-2"}} руб.
       </div>
+      <div *ngIf="curFood.discount == 0" class="foodAllPrice">&nbsp;</div>
       <div class="foodTotalPrice">
         {{curFood.totalPrice | number:"1.2-2"}} руб.
       </div>
@@ -41,7 +42,7 @@
       </div>
       <div class="endStock">
         <span class="grey-text">
-          До конца акции:
+          Дата конца акции:
         </span>
       </div>
     </div>

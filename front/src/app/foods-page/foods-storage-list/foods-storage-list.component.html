@@ -34,7 +34,7 @@
               <div class="col m3"><span>Средний % скидки</span></div>
               <div class="col m3"><span>Товаров на акции</span></div>
             </li>
-            <li class="collection-item row">
+            <li class="collection-item row" (click)="onChangeAllChains()">
               <div class="col m6">
                 <input type="checkbox" class="checkbox-color" id="chainAll"
                        [checked]="checkedAllChain"
@@ -54,6 +54,7 @@
 
             <li *ngFor="let chain of chainList"
                 class="collection-item row"
+                (click)="onChangeChain(chain.id)"
             >
               <div class="chainName col m6">
                 <input type="checkbox" class="checkbox-color" id="chain{{chain.id}}"

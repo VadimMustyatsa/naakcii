@@ -3,6 +3,7 @@
   width: 400px;
   height: 30px;
   overflow: visible;
+  border-radius: 28px;
 }
 .chainListWrap {
   position: absolute;
@@ -15,8 +16,13 @@
   z-index: 100;
 }
 .collapsible {
-  /*box-sizing: border-box;*/
   margin: 0px;
+  border: none;
+  border-radius: 30px;
+}
+.collapsible > li {
+  border-radius: 26px;
+  border: solid #757575 2px;
 }
 .collapsible-body {
   padding: 0px;
@@ -25,27 +31,20 @@
 .collapsible-header {
   display: flex;
   align-items: center;
-  border: solid dimgrey 1px;
-  border-radius: 34px;
+  border: solid #757575 2px;
+  border-radius: 20px;
   padding-left: 20px!important;
 }
 .collapsible-header > div:last-child {
   display: flex;
   align-items: center;
 }
-.collapsible {
-  border: none;
-  border-radius: 34px;
-}
-.collapsible > li {
-  border-radius: 26px;
-  border: solid dimgrey 3px;
-}
 .collection-item:last-child {
   margin-bottom: 10px!important;
 }
 .collection-item:hover {
   background-color: #d9d9d9;
+  cursor: pointer;
 }
 .selectedStorage {
   margin-left: 10px;
@@ -125,21 +124,21 @@
 }
 /*цвет чекбокса******************************/
 .checkbox-color[type="checkbox"] + label:before{
-  border: 2px solid dimgrey;
+  border: 2px solid #757575;
   background: transparent;
 }
 .checkbox-color[type="checkbox"]:checked + label:before{
   border: 2px solid transparent;
-  border-bottom: 2px solid dimgrey;
-  border-right: 2px solid dimgrey;
+  border-bottom: 2px solid #757575;
+  border-right: 2px solid #757575;
   background: transparent;
 }
 .checkbox-color.filled-in[type="checkbox"] + label:after{
-  border: 2px solid dimgrey;
+  border: 2px solid #757575;
   background: transparent;
 }
 .checkbox-color.filled-in[type="checkbox"]:checked + label:after{
-  background: dimgrey;
+  background: #757575;
 }
 .checkbox-color.filled-in[type="checkbox"]:checked + label:before{
   border-top: 2px solid transparent;
