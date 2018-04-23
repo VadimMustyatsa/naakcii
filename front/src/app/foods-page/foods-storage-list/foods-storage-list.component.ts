@@ -13,6 +13,7 @@ import {Observer} from 'rxjs/Observer';
   providers: [FoodsStorageService]
 })
 export class FoodsStorageListComponent implements OnInit {
+  actionsCollapsible = new EventEmitter<string|MaterializeAction>();
   chainList: Storag[];
   medianGoods;
   medianPercent;
@@ -44,7 +45,7 @@ export class FoodsStorageListComponent implements OnInit {
       //console.log('clicked inside');
     } else {
       //console.log('clicked outside');
-      $('.collapsible').collapsible('close', 0);
+      this.actionsCollapsible.emit({action:"collapsible",params:['close',0]});
     }
   }
 
@@ -131,10 +132,8 @@ export class FoodsStorageListComponent implements OnInit {
     //посылаем в поле карточек список выбранных сетей
     this.observer.next(new SharedState(MODES.SELECT_CHAIN, null, null, null, this.chainList));
   }
-
   onChangeAllChains() {
     this.checkedAllChain = !this.checkedAllChain;
     this.setAllChains(this.checkedAllChain);
   }
 }
-
