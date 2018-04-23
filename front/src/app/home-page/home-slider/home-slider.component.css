@@ -5,29 +5,33 @@
   background-image: url("../../../assets/images/descriptor.png");
   background-size: cover;
 }
-@media all and (max-height: 1024px){
+
+@media all and (max-height: 1024px) {
   .homeSlider {
     height: 400px;
   }
 }
-@media all and (max-height: 900px){
+
+@media all and (max-height: 900px) {
   .homeSlider {
     height: 360px;
   }
 }
-@media all and (max-height: 768px){
+
+@media all and (max-height: 768px) {
   .homeSlider {
     height: 300px;
   }
 }
 
-@media all and (max-height: 640px){
+@media all and (max-height: 640px) {
   .homeSlider {
     height: 140px;
+  }
 }
-}
-@media all and (max-height: 380px){
+
+/*@media all and (max-height: 380px) {
   .homeSlider {
     height: 130px;
   }
-}
+}*/
