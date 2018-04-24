@@ -17,9 +17,9 @@ export class FoodsPageComponent implements OnInit {
       || document.documentElement.scrollTop
       || document.body.scrollTop || 0;
     if (verticalOffset > 320) {
-      this.isFixedBlock = true;
+      //this.isFixedBlock = true;
     } else {
-      this.isFixedBlock = false;
+      //this.isFixedBlock = false;
     }
   }
 
