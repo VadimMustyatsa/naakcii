@@ -9,9 +9,13 @@ import naakcii.by.api.service.modelDTO.ChainDTO;
 import naakcii.by.api.service.modelDTO.ProductDTO;
 import naakcii.by.api.service.modelDTO.SubcategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
 @RestController
 @RequestMapping({"/api"})
 public class APIController {
@@ -28,7 +32,6 @@ public class APIController {
     @Autowired
     private ProductService productService;
 
-
     @GetMapping(path = {"/getCategory"})
     public List<CategoryDTO> findAllCategory() {
         return categoryService.findAll();
@@ -40,7 +43,7 @@ public class APIController {
     }
 
     @GetMapping(path = {"/getSubcategory"})
-    public List<SubcategoryDTO> findSubcategoruByCategoryId(@RequestParam("id") Long id) {
+    public List<SubcategoryDTO> findSubcategoryByCategoryId(@RequestParam("id") Long id) {
         return subcategoryService.getSubcategoriesbyCategoryId(id);
     }
 
