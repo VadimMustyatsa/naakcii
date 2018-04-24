@@ -2,15 +2,15 @@ package naakcii.by.api.service.modelDTO;
 
 public class CategoryDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String picture;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -22,11 +22,11 @@ public class CategoryDTO {
         this.name = name;
     }
 
-    public String getPicture() {
+    public String getIcon() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setIcon(String picture) {
         this.picture = picture;
     }
 }

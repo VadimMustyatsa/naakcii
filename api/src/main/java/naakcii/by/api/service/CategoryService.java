@@ -8,11 +8,11 @@ public interface CategoryService {
 
     CategoryDTO create(CategoryDTO categoryDTO);
 
-    CategoryDTO delete(int id);
+    CategoryDTO delete(Long id);
 
     List<CategoryDTO> findAll();
 
-    CategoryDTO findById(int id);
+    CategoryDTO findById(Long id);
 
     CategoryDTO update(CategoryDTO categoryDTO);
 }
