@@ -16,8 +16,8 @@ ngu-item {
 ngu-item:hover div {
   background-color: #ffc107;
 }
-ngu-item:hover div i {
-  color: white;
+ngu-item:hover div div {
+  background-position: 70px 0px;
 }
 ngu-item p {
   padding-top: 0px;
@@ -42,20 +42,24 @@ ngu-item p {
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  border: solid 1px #ffc107;
   margin: 0 auto;
   background-color: #ffc107;
 }
-.notSelected i {
-  margin: auto;
-  font-size: 64px;
-  color: #ffc107;
+
+/**********************************/
+.notSelected .catImage {
+  background-position: 0px 0px;
 }
-.selected i {
-  margin: auto;
-  font-size: 64px;
-  color: white;
+.selected .catImage {
+  background-position: 70px 0px;
 }
+.catImage {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  background-size: cover;
+}
+/*******************************/
 
 .leftRs, .rightRs {
   position: absolute;
@@ -79,59 +83,4 @@ ngu-item p {
 }
 /******************************************/
 
-/*.carousel {
-  height: 160px;
-  width: 100%;
-}
-.carousel-item {
-  cursor: pointer;
-  height: 150px;
-  width: 140px;
-}
-
-.carousel-item:hover div {
-  background-color: #ffc107;
-}
-.carousel-item:hover div i {
-  color: white;
-}
-.carousel-item p {
-  padding-top: 0px;
-  font-size: 18px;
-  text-align: center;
-}
-.chevron{
-  cursor: pointer;
-}
-.chevron i {
-  font-size: 48px;
-}
-.notSelected {
-  display: flex;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  !*border: solid 1px #ffc107;*!
-  margin: 0 auto;
-}
-.selected {
-  display: flex;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  border: solid 1px #ffc107;
-  margin: 0 auto;
-  background-color: #ffc107;
-}
-.notSelected i {
-  margin: auto;
-  font-size: 64px;
-  color: #ffc107;
-}
-.selected i {
-  margin: auto;
-  font-size: 64px;
-  color: white;
-}*/
-/*************************************/
 
