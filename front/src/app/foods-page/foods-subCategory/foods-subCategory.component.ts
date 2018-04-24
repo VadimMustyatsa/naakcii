@@ -1,4 +1,4 @@
-import {Component, Input, Inject, OnInit} from '@angular/core';
+import {Component, Input, Inject, OnInit, HostListener} from '@angular/core';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {SubCategory} from '../../shared/subCategory/foods.subCategory.model';
@@ -13,6 +13,7 @@ import {Observer} from 'rxjs/Observer';
   providers: [FoodsSubCategoriesService]
 })
 export class FoodsSubCategoryComponent implements OnInit {
+  fixedPaddingTop:number = 0;
   curCategory: Category;
   subCategoryList: SubCategory[];
   checkedAll = true;  //выбор всех подкатегорий по-умолчанию
@@ -21,6 +22,17 @@ export class FoodsSubCategoryComponent implements OnInit {
   constructor(private service: FoodsSubCategoriesService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
+  }
+
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    const verticalOffset = window.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop || 0;
+    if (verticalOffset > 320) {
+      this.fixedPaddingTop = verticalOffset - 300;
+    } else {
+      this.fixedPaddingTop = 0;
+    }
   }
 
   ngOnInit() {
@@ -81,5 +93,8 @@ export class FoodsSubCategoryComponent implements OnInit {
       }
       this.checkedAll = curCheck;
     }
+  }
+  getPaddingTop() {
+    return (String(this.fixedPaddingTop) + 'px');
   }
 }

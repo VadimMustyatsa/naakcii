@@ -27,14 +27,14 @@
                 *ngFor="let cat of categories"
                 (click)="selectCategory(cat)"
       >
-          <div [class.selected]="isSelected(cat.id)"
-               [class.notSelected]="!isSelected(cat.id)"
-          >
-            <div class="catImage" [ngStyle]="{'background-image':getImage(cat.id)}">
+        <div [class.selected]="isSelected(cat.id)"
+             [class.notSelected]="!isSelected(cat.id)"
+        >
+          <div class="catImage" [ngStyle]="{'background-image':getImage(cat.id)}">
 
-            </div>
           </div>
-          <p class="grey-text text-darken-3">{{cat.name}}</p>
+        </div>
+        <p class="categoryName grey-text text-darken-3">{{cat.name}}</p>
       </ngu-item>
 
       <button NguCarouselNext class='rightRs'>

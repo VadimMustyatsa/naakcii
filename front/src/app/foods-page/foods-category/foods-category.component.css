@@ -19,9 +19,9 @@ ngu-item:hover div {
 ngu-item:hover div div {
   background-position: 70px 0px;
 }
-ngu-item p {
+.categoryName {
   padding-top: 0px;
-  font-size: 18px;
+  font-size: 14px;
   text-align: center;
 }
 @media all and (max-width: 899px){

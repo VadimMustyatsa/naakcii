@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, HostListener} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
@@ -9,6 +9,7 @@ import {FoodList} from '../../shared/foodList/foods.foodList.model';
   styleUrls: ['./foods-total-items.component.css']
 })
 export class FoodsTotalItemsComponent implements OnInit {
+  fixedPaddingTop:number = 0;
   foodTotalList: FoodList[] = [];
   private curFoodCard: FoodList;
 
@@ -24,6 +25,17 @@ export class FoodsTotalItemsComponent implements OnInit {
         this.putToTotalList(update.foodCard);
       }
     });
+  }
+
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    const verticalOffset = window.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop || 0;
+    if (verticalOffset > 320) {
+      this.fixedPaddingTop = verticalOffset - 300;
+    } else {
+      this.fixedPaddingTop = 0;
+    }
   }
 
   putToTotalList(newFoodCard: FoodList) {
@@ -77,5 +89,8 @@ export class FoodsTotalItemsComponent implements OnInit {
 
   addItem(curFood: FoodList) {
     curFood.selectAmount = curFood.selectAmount + 1;
+  }
+  getPaddingTop() {
+    return (String(this.fixedPaddingTop) + 'px');
   }
 }

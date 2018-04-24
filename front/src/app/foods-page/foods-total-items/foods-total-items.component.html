@@ -1,7 +1,7 @@
-<div *ngIf="foodTotalList.length > 0">
+<div *ngIf="foodTotalList.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
 
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
-    <li class="collapsible-header amber-text">
+    <li class="collapsible-header">
       <div>Список покупок</div>
     </li>
     <li
@@ -53,13 +53,13 @@
   <!--<a class="waves-effect waves btn amber left">PDF</a>-->
   <a class="waves-effect waves btn amber right">К корзине</a>
 </div>
-<div *ngIf="foodTotalList.length == 0">
+<div *ngIf="foodTotalList.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Список покупок</div>
     </li>
     <li class="collapsible-header amber-text">
-      <div class="emptyItemsText">
+      <div class="emptyItemsText grey-text text-darken-2">
         <p>
           Ваш список покупок пока пуст.
         </p>
