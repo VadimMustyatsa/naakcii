@@ -2,4 +2,17 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
+.chainSearchBlock {
+  height: 60px;
+  margin-top: 20px;
+}
+.totalItemsContainer {
+  overflow: hidden;
+}
+.fixedBlock {
+  display: block;
+  position: fixed;
+  height: 100%;
+  padding: 0 10px;
+  top: 70px;
+}

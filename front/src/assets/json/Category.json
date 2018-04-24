@@ -1,0 +1,57 @@
+[
+  {
+    "id": 0,
+    "name": "Бакалея",
+    "icon": "room_service"
+  },
+  {
+    "id": 1,
+    "name": "Детское питание",
+    "icon": "child_care"
+  },
+  {
+    "id": 2,
+    "name": "Молочные продукты, яйца",
+    "icon": "local_drink"
+  },
+  {
+    "id": 3,
+    "name": "Мясо и колбасные изделия",
+    "icon": "local_pizza"
+  },
+  {
+    "id": 4,
+    "name": "Напитки,кофе, чай,соки",
+    "icon": "free_breakfast"
+  },
+  {
+    "id": 5,
+    "name": "Овощи, фрукты",
+    "icon": "spa"
+  },
+  {
+    "id": 6,
+    "name": "Сладости",
+    "icon": "cake"
+  },
+  {
+    "id": 7,
+    "name": "Хлебобулочные изделия",
+    "icon": "filter_drama"
+  },
+  {
+    "id": 8,
+    "name": "Замороженные продукты",
+    "icon": "ac_unit"
+  },
+  {
+    "id": 9,
+    "name": "Рыба и морепродукты",
+    "icon": "kitchen"
+  },
+  {
+    "id": 10,
+    "name": "Собственное производство",
+    "icon": "restaurant_menu"
+  }
+]

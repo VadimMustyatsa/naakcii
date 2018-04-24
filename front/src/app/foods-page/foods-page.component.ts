@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {FoodsCategoriesService} from '../shared/category/foods.categories.service';
 
 @Component({
@@ -7,12 +7,23 @@ import {FoodsCategoriesService} from '../shared/category/foods.categories.servic
   styleUrls: ['./foods-page.component.css']
 })
 export class FoodsPageComponent implements OnInit {
-  str: string;
+  isFixedBlock: boolean = false;
 
-  constructor(private service: FoodsCategoriesService) { }
+  constructor(private service: FoodsCategoriesService) {
+  }
+
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    const verticalOffset = window.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop || 0;
+    if (verticalOffset > 320) {
+      this.isFixedBlock = true;
+    } else {
+      this.isFixedBlock = false;
+    }
+  }
 
   ngOnInit() {
-    this.str = 'asdff';
   }
   isSelectedCategory(): boolean {
     if (!this.service.getSelectCategory()) {

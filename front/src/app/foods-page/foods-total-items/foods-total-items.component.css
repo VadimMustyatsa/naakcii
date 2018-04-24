@@ -3,11 +3,16 @@
   justify-content: space-between;
   align-items: center;
   padding-right: 0px;
+  padding: 0px;
   padding-left: 5px;
 }
+.collapsible-header div {
+  text-align: justify;
+  padding: 10px;
+}
 .card-panel {
-  height: 120px;
-  text-align: center;
+  //height: 120px;
+  text-align: justify;
 }
 .material-icons {
   margin: 0px;
@@ -56,4 +61,13 @@
 }
 .deleteFood a {
   cursor: pointer;
+}
+.emptyItemsText p:first-child {
+  margin-top: 0px;
+}
+.emptyItemsText p {
+  margin: 10px 0px;
+}
+.emptyItemsText p:last-child {
+  margin-bottom: 0px;
 }

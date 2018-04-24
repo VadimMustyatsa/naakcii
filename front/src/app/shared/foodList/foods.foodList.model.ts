@@ -7,4 +7,6 @@ export class FoodList {
   boxWeight: string;
   idStrore: number;
   img: string;
+  selected: boolean;
+  selectAmount:number;
 }

@@ -1,31 +1,42 @@
-.card-panel {
-  height: 120px;
-  text-align: center;
+.collection, .collection li {
+  border: none;
 }
-.collection-header p {
-  text-align: center;
-  font-size: 18px;
+.collapsible-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
 }
-.checkbox-amber[type="checkbox"] + label:before{
-  border: 2px solid #ffc107;
+.preloader-wrapper {
+  margin: 0 auto;
+}
+.catName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/*****************************************************/
+.checkbox-color[type="checkbox"] + label:before{
+  border: 2px solid dimgrey;
   background: transparent;
 }
-.checkbox-amber[type="checkbox"]:checked + label:before{
+.checkbox-color[type="checkbox"]:checked + label:before{
   border: 2px solid transparent;
-  border-bottom: 2px solid #ffc107;
-  border-right: 2px solid #ffc107;
+  border-bottom: 2px solid dimgrey;
+  border-right: 2px solid dimgrey;
   background: transparent;
 }
-.checkbox-amber.filled-in[type="checkbox"] + label:after{
-  border: 2px solid #ffc107;
+.checkbox-color.filled-in[type="checkbox"] + label:after{
+  border: 2px solid dimgrey;
   background: transparent;
 }
-.checkbox-amber.filled-in[type="checkbox"]:checked + label:after{
-  background: #ffc107;
+.checkbox-color.filled-in[type="checkbox"]:checked + label:after{
+  background: dimgrey;
 }
-.checkbox-amber.filled-in[type="checkbox"]:checked + label:before{
+.checkbox-color.filled-in[type="checkbox"]:checked + label:before{
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }
+/*****************************************************/

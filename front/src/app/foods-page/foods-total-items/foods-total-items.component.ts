@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
-import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
+import {FoodList} from '../../shared/foodList/foods.foodList.model';
 
 @Component({
   selector: 'app-foods-total-items',
@@ -9,11 +9,16 @@ import {SelectFoodList} from '../../shared/foodList/foods.selectFoodList.model';
   styleUrls: ['./foods-total-items.component.css']
 })
 export class FoodsTotalItemsComponent implements OnInit {
-  foodTotalList: SelectFoodList[] = [];
-  private curFoodCard: SelectFoodList;
+  foodTotalList: FoodList[] = [];
+  private curFoodCard: FoodList;
 
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    stateEvents.subscribe((update) => {
+  }
+
+  ngOnInit() {
+    this.foodTotalList = [];
+
+    this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_FOOD_CARD) {
         console.log('receive TotalItems: ' + update.foodCard.id);
         this.putToTotalList(update.foodCard);
@@ -21,30 +26,29 @@ export class FoodsTotalItemsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.foodTotalList = [];
-  }
-  putToTotalList(newFoodCard: SelectFoodList) {
+  putToTotalList(newFoodCard: FoodList) {
     console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
       this.putNewFoodCard(newFoodCard);
       return;
     }
   }
-  isAvailable(newFoodCard: SelectFoodList): boolean {
+
+  isAvailable(newFoodCard: FoodList): boolean {
     for (let i = 0; i < this.foodTotalList.length; i++) {
       console.log('foodTotalList.id: ' + this.foodTotalList[i].id);
       console.log('newFoodCard.id: ' + newFoodCard.id);
       if (this.foodTotalList[i].id === newFoodCard.id) {
-        this.foodTotalList[i].amount += newFoodCard.amount;
+        this.foodTotalList[i].selectAmount += newFoodCard.selectAmount;
         return true;
       }
     }
     return false;
   }
-  putNewFoodCard(newFoodCard: SelectFoodList) {
+
+  putNewFoodCard(newFoodCard: FoodList) {
     console.log('putNew.id: ' + newFoodCard.id);
-    this.curFoodCard = new SelectFoodList;
+    this.curFoodCard = new FoodList;
     this.curFoodCard.id = newFoodCard.id;
     this.curFoodCard.name = newFoodCard.name;
     this.curFoodCard.allPrice = newFoodCard.allPrice;
@@ -53,22 +57,25 @@ export class FoodsTotalItemsComponent implements OnInit {
     this.curFoodCard.boxWeight = newFoodCard.boxWeight;
     this.curFoodCard.idStrore = newFoodCard.idStrore;
     this.curFoodCard.img = newFoodCard.img;
-    this.curFoodCard.amount = newFoodCard.amount;
+    this.curFoodCard.selectAmount = newFoodCard.selectAmount;
     this.foodTotalList.push(this.curFoodCard);
   }
-  deleteFoodCard(curFood: SelectFoodList) {
+
+  deleteFoodCard(curFood: FoodList) {
     for (let i = 0; i < this.foodTotalList.length; i++) {
       if (this.foodTotalList[i].id === curFood.id) {
         this.foodTotalList.splice(i, 1);
       }
     }
   }
-  subItem(curFood: SelectFoodList) {
-    if (curFood.amount > 1) {
-      curFood.amount = curFood.amount - 1;
+
+  subItem(curFood: FoodList) {
+    if (curFood.selectAmount > 1) {
+      curFood.selectAmount = curFood.selectAmount - 1;
     }
   }
-  addItem(curFood: SelectFoodList) {
-    curFood.amount = curFood.amount + 1;
+
+  addItem(curFood: FoodList) {
+    curFood.selectAmount = curFood.selectAmount + 1;
   }
 }
