@@ -12,6 +12,7 @@ export class FoodsTotalItemsComponent implements OnInit {
   fixedPaddingTop:number = 0;
   foodTotalList: FoodList[] = [];
   private curFoodCard: FoodList;
+  totalSum = 0;
 
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
@@ -31,8 +32,8 @@ export class FoodsTotalItemsComponent implements OnInit {
     const verticalOffset = window.pageYOffset
       || document.documentElement.scrollTop
       || document.body.scrollTop || 0;
-    if (verticalOffset > 320) {
-      this.fixedPaddingTop = verticalOffset - 300;
+    if (verticalOffset > 280) {
+      this.fixedPaddingTop = verticalOffset - 280;
     } else {
       this.fixedPaddingTop = 0;
     }
@@ -42,8 +43,10 @@ export class FoodsTotalItemsComponent implements OnInit {
     console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
       this.putNewFoodCard(newFoodCard);
+      this.setTotalSum();
       return;
     }
+    this.setTotalSum();
   }
 
   isAvailable(newFoodCard: FoodList): boolean {
@@ -79,18 +82,28 @@ export class FoodsTotalItemsComponent implements OnInit {
         this.foodTotalList.splice(i, 1);
       }
     }
+    this.setTotalSum();
   }
 
   subItem(curFood: FoodList) {
     if (curFood.selectAmount > 1) {
       curFood.selectAmount = curFood.selectAmount - 1;
     }
+    this.setTotalSum();
   }
 
   addItem(curFood: FoodList) {
     curFood.selectAmount = curFood.selectAmount + 1;
+    this.setTotalSum();
   }
   getPaddingTop() {
     return (String(this.fixedPaddingTop) + 'px');
+  }
+
+  setTotalSum() {
+    this.totalSum = 0;
+    this.foodTotalList.map(card => {
+      this.totalSum += (card.totalPrice * card.selectAmount);
+    });
   }
 }

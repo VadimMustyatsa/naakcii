@@ -6,11 +6,14 @@
   align-items: center;
   min-height: 150px;
 }
+.foods-main-group-container {
+  position: relative;
+}
 /*элементы(карточки) слайдера*******/
 ngu-item {
   display: block;
   cursor: pointer;
-  height: 200px;
+  height: 170px;
   width: 100px;
 }
 ngu-item:hover div {
@@ -66,11 +69,12 @@ ngu-item:hover div div {
   margin: auto;
   top: -60px;
   bottom: 0;
-  width: 50px;
+  width: 40px;
   height: 50px;
   box-shadow: none;
   border: none;
   background-color: white;
+  z-index: 110;
 }
 .leftRs {
   left: -45px;
@@ -79,6 +83,32 @@ ngu-item:hover div div {
   right: -45px;
 }
 .leftRs i, .rightRs i {
+  font-size: 48px;
+}
+/******************************************/
+.leftRsDisable, .rightRsDisable {
+  position: absolute;
+  margin: auto;
+  display: block;
+  cursor: not-allowed;
+  width: 40px;
+  height: 50px;
+  top: 30px;
+  left: -45px;
+  border: none;
+  background-color: white;
+  z-index: 100;
+}
+.leftRsDisable {
+  left: -45px;
+  color: #d7d7d7;
+}
+.rightRsDisable {
+  left: auto;
+  right: -45px;
+  color: #d7d7d7;
+}
+.leftRsDisable i, .rightRsDisable i {
   font-size: 48px;
 }
 /******************************************/

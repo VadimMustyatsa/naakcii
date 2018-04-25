@@ -11,7 +11,10 @@
     <li class="collapsible-header amber-text">
       <div *ngIf="isCheckedChain()" class="grey-text text-darken-2">
         <p>
-          В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории. Попробуйте поискать в других сетях.
+          В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории.
+        </p>
+        <p>
+          Попробуйте поискать в других сетях.
         </p>
       </div>
       <div *ngIf="!isCheckedChain()" class="grey-text text-darken-2">
@@ -34,7 +37,13 @@
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div class="grey-text text-darken-2">
-        <p>Выберите товары</p>
+        <p>
+          Не выбрана ни одна подкатегория товаров.
+        </p>
+        <p>
+          Чтобы добавлять акционные товары в список покупок,
+          нужно выбрать хотя бы одну из них.
+        </p>
       </div>
     </li>
   </ul>

@@ -72,7 +72,7 @@ export class FoodsStorageListComponent implements OnInit {
       el.selected = checked;
     });
     if (checked) {
-      this.chainListText = 'Выбраны торовые сети: все';
+      this.chainListText = 'Выбраны торговые сети: все';
       this.curChainPercent = '';
       this.curChainCountGoods = '';
     } else {
@@ -111,7 +111,7 @@ export class FoodsStorageListComponent implements OnInit {
         this.curChainPercent = '';
         this.curChainCountGoods = '';
         if (cnt > 1) {
-          this.chainListText = 'Выбраны торовые сети: ' + String(cnt);
+          this.chainListText = 'Выбраны торговые сети: ' + String(cnt);
         } else if (cnt === 1) {
           this.chainListText = String(curChain.name);
           this.curChainPercent = String(curChain.percent) + ' %';

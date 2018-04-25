@@ -4,6 +4,14 @@
     <li class="collapsible-header">
       <div>Список покупок</div>
     </li>
+    <li class="collapsible-header totalSum">
+      <div class="left">
+        <span>Итог:</span>
+      </div>
+      <div>
+        <span>{{totalSum | number:"1.2-2"}} руб.</span>
+      </div>
+    </li>
     <li
       *ngFor="let curFood of foodTotalList"
     >
@@ -19,6 +27,7 @@
             <i class="material-icons">add</i>
           </a>
         </div>
+
         <i class="material-icons">keyboard_arrow_right</i>
       </div>
 
@@ -51,14 +60,14 @@
     </li>
   </ul>
   <!--<a class="waves-effect waves btn amber left">PDF</a>-->
-  <a class="waves-effect waves btn amber right">К корзине</a>
+  <a class="waves-effect waves btn deep-orange right"><span>Смотреть экономию</span></a>
 </div>
 <div *ngIf="foodTotalList.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Список покупок</div>
     </li>
-    <li class="collapsible-header amber-text">
+    <li class="collapsible-header">
       <div class="emptyItemsText grey-text text-darken-2">
         <p>
           Ваш список покупок пока пуст.
@@ -74,3 +83,7 @@
     </li>
   </ul>
 </div>
+
+
+
+

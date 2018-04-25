@@ -27,12 +27,22 @@
   margin: 0 auto;
   font-size: 16px;
 }
+.totalSum {
+  padding: 0px;
+  background-color: #656565;
+  color: white;
+}
+.totalSum div {
+  margin: 0px;
+  padding: 5px;
+}
 /*------------------------------*/
 .amountItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px;
+  padding: 0px!important;
+  margin: 0px!important;
 }
 .amountItem span {
   font-size: 12px;

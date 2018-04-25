@@ -28,7 +28,7 @@ export class FoodsSubCategoryComponent implements OnInit {
     const verticalOffset = window.pageYOffset
       || document.documentElement.scrollTop
       || document.body.scrollTop || 0;
-    if (verticalOffset > 320) {
+    if (verticalOffset > 280) {
       this.fixedPaddingTop = verticalOffset - 300;
     } else {
       this.fixedPaddingTop = 0;

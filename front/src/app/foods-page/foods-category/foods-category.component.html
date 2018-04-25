@@ -14,7 +14,10 @@
     </div>
   </div>-->
 
-  <div>
+  <div class="foods-main-group-container">
+    <button class='leftRsDisable'>
+      <i class="material-icons">chevron_left</i>
+    </button>
     <ngu-carousel
       [inputs]="carouselCategory"
       (carouselLoad)="myfunc($event)">
@@ -41,6 +44,9 @@
         <i class="material-icons amber-text">chevron_right</i>
       </button>
     </ngu-carousel>
+    <button class='rightRsDisable'>
+      <i class="material-icons">chevron_right</i>
+    </button>
   </div>
 </div>
 <div *ngIf="!categories" class="container foods-main-group">
