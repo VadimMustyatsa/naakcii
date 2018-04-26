@@ -119,4 +119,8 @@ export class FoodsTotalItemsComponent implements OnInit {
       this.totalSum += (card.totalPrice * card.selectAmount);
     });
   }
+
+  onEventStop(event) {
+    event.stopPropagation();
+  }
 }

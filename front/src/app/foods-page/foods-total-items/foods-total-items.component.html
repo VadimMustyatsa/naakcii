@@ -22,7 +22,7 @@
       <div class="collapsible-header currentItem row">
         <div class="foodName left col m7">{{curFood.name | cutString: 17}}</div>
 
-        <div class="amountItem right col m4">
+        <div class="amountItem right col m4" (click)="onEventStop($event)">
           <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
             <i class="material-icons">remove</i>
           </a>
@@ -89,7 +89,3 @@
     </li>
   </ul>
 </div>
-
-
-
-
