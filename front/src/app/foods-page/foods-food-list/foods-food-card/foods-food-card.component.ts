@@ -14,6 +14,7 @@ import {Storag} from '../../../shared/Storage/foods.storage.model';
 export class FoodsFoodCardComponent implements OnInit {
   @Input() curFood: FoodList;
   @Input() storageList: Storag[];
+  nameMaxWidth = 85;
 
   constructor(@Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     //console.log('FoodCardComponent - constr');

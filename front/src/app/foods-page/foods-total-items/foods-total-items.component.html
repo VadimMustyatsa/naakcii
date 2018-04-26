@@ -20,7 +20,7 @@
       *ngFor="let curFood of foodTotalList"
     >
       <div class="collapsible-header currentItem row">
-        <div class="foodName left col m7">{{curFood.name | cutString: 17}}</div>
+        <div class="foodName left col m7">{{curFood.name | cutString: 19}}</div>
 
         <div class="amountItem right col m4" (click)="onEventStop($event)">
           <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
@@ -80,12 +80,13 @@
         </p>
         <p>
           Чтобы добавить в него подходящие акционные товары,
-          используйте кнопку <span class="deep-orange-text">«Добавить»</span> на соответствующих карточках товаров.
+          используйте кнопку <span class="deep-orange-text accentText">«Добавить»</span> на соответствующих карточках товаров.
         </p>
         <p>
-          Чтобы поменять количество товара, используйте кнопки «+» и «-».
+          Чтобы поменять количество товара, используйте кнопки <span class="accentText">«+»</span> и <span class="accentText">«&ndash;»</span>.
         </p>
       </div>
     </li>
   </ul>
 </div>
+
