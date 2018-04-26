@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, HostListener} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
@@ -9,8 +9,23 @@ import {FoodList} from '../../shared/foodList/foods.foodList.model';
   styleUrls: ['./foods-total-items.component.css']
 })
 export class FoodsTotalItemsComponent implements OnInit {
+  fixedPaddingTop:number = 0;
   foodTotalList: FoodList[] = [];
   private curFoodCard: FoodList;
+  totalSum = 0;
+
+  iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
+  curentIconCollapsible = String(this.iconCollapsible.minimized);
+  params = [
+    {
+      onOpen: (el) => {
+        this.curentIconCollapsible = String(this.iconCollapsible.maximized);
+      },
+      onClose: (el) => {
+        this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+      }
+    }
+  ];
 
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
@@ -26,12 +41,25 @@ export class FoodsTotalItemsComponent implements OnInit {
     });
   }
 
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    const verticalOffset = window.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop || 0;
+    if (verticalOffset > 280) {
+      this.fixedPaddingTop = verticalOffset - 280;
+    } else {
+      this.fixedPaddingTop = 0;
+    }
+  }
+
   putToTotalList(newFoodCard: FoodList) {
     console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
       this.putNewFoodCard(newFoodCard);
+      this.setTotalSum();
       return;
     }
+    this.setTotalSum();
   }
 
   isAvailable(newFoodCard: FoodList): boolean {
@@ -67,15 +95,32 @@ export class FoodsTotalItemsComponent implements OnInit {
         this.foodTotalList.splice(i, 1);
       }
     }
+    this.setTotalSum();
   }
 
   subItem(curFood: FoodList) {
     if (curFood.selectAmount > 1) {
       curFood.selectAmount = curFood.selectAmount - 1;
     }
+    this.setTotalSum();
   }
 
   addItem(curFood: FoodList) {
     curFood.selectAmount = curFood.selectAmount + 1;
+    this.setTotalSum();
+  }
+  getPaddingTop() {
+    return (String(this.fixedPaddingTop) + 'px');
+  }
+
+  setTotalSum() {
+    this.totalSum = 0;
+    this.foodTotalList.map(card => {
+      this.totalSum += (card.totalPrice * card.selectAmount);
+    });
+  }
+
+  onEventStop(event) {
+    event.stopPropagation();
   }
 }
