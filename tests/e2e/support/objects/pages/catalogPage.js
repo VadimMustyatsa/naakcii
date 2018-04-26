@@ -39,22 +39,22 @@ class CatalogPage extends Page{
     getElementStatusByIndex(elementKey, index){
         var elementObj = this.helper.getElementLocator(elementKey, 'статус'),
             statusArr = element.all(elementObj);
-        if(elementKey !== 'панель список категорий') {
+        if(elementKey !== 'панель список категорий' && elementKey !== 'панели список категорий') {
             return statusArr.get(index).isSelected()
                 .then(function (selected) {
                     if (selected) {
-                        return 'выбрана';
+                        return 'Выбрана';
                     } else {
-                        return 'не выбрана';
+                        return 'Не выбрана';
                     }
                 });
         } else {
             return statusArr.get(index).getAttribute('class')
                 .then(function(result){
                     if(result === 'selected'){
-                        return 'выбрана';
+                        return 'Выбрана';
                     } else {
-                        return 'не выбрана';
+                        return 'Не выбрана';
                     }
                 });
         }

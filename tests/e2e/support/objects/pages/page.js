@@ -49,7 +49,10 @@ class Page {
 
     getElementValueByIndex(elementKey, subElementKey, index){
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
-        return element.all(elementObj).get(index).getText();
+        return element.all(elementObj).get(index).getText()
+            .then(function (resText) {
+                return resText.replace(/\\['"$.+*|()?]/g,'');
+            });
     }
 
     getElementIndex(elementKey, subElementKey, textValue){

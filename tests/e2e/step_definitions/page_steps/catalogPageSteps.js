@@ -7,7 +7,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
 
     setDefaultTimeout(180000);
 
-    Given(/^я нажимаю на (пункт) "(.+)" в (фильтре) "(.+)"$/, async function(subElementName, selectedText, partElementKey1, partElementKey2) {
+    Given(/^я (?:нажимаю на|выбираю) (пункт|категорию) "(.+)" (?:на|в) (панели|фильтре) "(.+)"$/, async function(subElementName, selectedText, partElementKey1, partElementKey2) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase();
         return await world.pageFactory.currentPage.selectElement(elementKey, subElementName, selectedText);
     });
@@ -31,6 +31,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
     Given(/^(фильтр) "(.+)" раскрыт$/, async function (partElementKey1, partElementKey2) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             actualRes;
+        await world.pageFactory.currentPage.clickElement(elementKey.toLocaleLowerCase());
         actualRes = await world.pageFactory.currentPage.isFilterOpened(elementKey.toLocaleLowerCase());
         return expect(actualRes).to.equal(true);
     });
@@ -65,6 +66,9 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
             actualArr = [];
         actualArr = await world.pageFactory.currentPage.getElementValues(elementKey.toLocaleLowerCase(), expectedArr[0], expectedArr.length - 1);
         expectedArr.shift();
+        if(partElementKey1.indexOf('фильтр') > -1){
+            await world.pageFactory.currentPage.clickElement(elementKey.toLocaleLowerCase());
+        }
         return expect(actualArr).to.deep.equal(expectedArr);
     });
 
