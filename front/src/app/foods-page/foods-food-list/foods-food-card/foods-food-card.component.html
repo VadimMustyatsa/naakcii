@@ -1,0 +1,50 @@
+<div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard col s4 m4">
+  <div class="card sticky-action">
+    <div class="card-image">
+      <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
+      <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
+      <img *ngIf="curFood.img" src="{{curFood.img}}">
+      <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
+        {{curFood.discount}}%
+      </div>
+    </div>
+
+    <div class="card-content">
+      <div class="foodName tooltipped">
+        {{curFood.name}} <br>
+        {{curFood.boxWeight}}
+      </div>
+      <div class="foodStorage">
+        <div class="grey-text">
+          {{getNameStorage(curFood.idStrore)}}
+        </div>
+        <div>
+          <img src="{{getImgStorage(curFood.idStrore)}}">
+        </div>
+      </div>
+      <div *ngIf="curFood.discount > 0" class="foodAllPrice">
+        {{curFood.allPrice | number:"1.2-2"}} руб.
+      </div>
+      <div *ngIf="curFood.discount == 0" class="foodAllPriceNo">&nbsp;</div>
+      <div class="foodTotalPrice">
+        {{curFood.totalPrice | number:"1.2-2"}} руб.
+      </div>
+
+      <div class="amountItem center">
+        <a class="btn-floating btn teal grey darken-1" (click)="subItem(curFood)">
+          <i class="material-icons">remove</i>
+        </a>
+        <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+        <a class="btn-floating btn teal grey darken-1" (click)="addItem(curFood)">
+          <i class="material-icons">add</i>
+        </a>
+        <a class="selectFood btn waves-block deep-orange" (click)="selectFood(curFood)">Добавить</a>
+      </div>
+      <div class="endStock">
+        <span class="grey-text">
+          Окончание акции:
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

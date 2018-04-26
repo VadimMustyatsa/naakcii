@@ -1,0 +1,91 @@
+<div *ngIf="foodTotalList.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+
+  <ul class="collapsible" data-collapsible="accordion"
+      materialize="collapsible"
+      [materializeParams]="params"
+  >
+    <li class="collapsible-header">
+      <div>Список покупок</div>
+    </li>
+    <li class="collapsible-header totalSum">
+      <div class="left">
+        <span>Итог:</span>
+      </div>
+      <div>
+        <span>{{totalSum | number:"1.2-2"}} руб.</span>
+      </div>
+    </li>
+
+    <li
+      *ngFor="let curFood of foodTotalList"
+    >
+      <div class="collapsible-header currentItem row">
+        <div class="foodName left col m7">{{curFood.name | cutString: 17}}</div>
+
+        <div class="amountItem right col m4" (click)="onEventStop($event)">
+          <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
+            <i class="material-icons">remove</i>
+          </a>
+          <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+          <a class="btn-floating btn teal grey" (click)="addItem(curFood)">
+            <i class="material-icons">add</i>
+          </a>
+        </div>
+
+        <div class="col m1 collapsItem">
+          <i class="material-icons">{{curentIconCollapsible}}</i>
+        </div>
+      </div>
+
+      <div class="collapsible-body">
+        <div class="foodName">
+          {{curFood.name}} <br>
+          {{curFood.boxWeight}}
+        </div>
+        <div class="foodAllPrice">
+          Старая цена: {{curFood.allPrice | number:"1.2-2"}} руб.
+        </div>
+        <div class="foodTotalPrice">
+          Новая цена: {{curFood.totalPrice | number:"1.2-2"}} руб.
+        </div>
+
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">
+            <i class="material-icons amber-text">mode_edit</i>
+          </label>
+        </div>
+
+        <div class="deleteFood row">
+          <a class="right" (click)="deleteFoodCard(curFood)">
+            <i class="material-icons center amber-text">delete_forever</i>
+          </a>
+        </div>
+      </div>
+
+    </li>
+  </ul>
+  <!--<a class="waves-effect waves btn amber left">PDF</a>-->
+  <a class="waves-effect waves btn deep-orange right"><span>К списку</span></a>
+</div>
+<div *ngIf="foodTotalList.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div>Список покупок</div>
+    </li>
+    <li class="collapsible-header">
+      <div class="emptyItemsText grey-text text-darken-2">
+        <p>
+          Ваш список покупок пока пуст.
+        </p>
+        <p>
+          Чтобы добавить в него подходящие акционные товары,
+          используйте кнопку <span class="deep-orange-text">«Добавить»</span> на соответствующих карточках товаров.
+        </p>
+        <p>
+          Чтобы поменять количество товара, используйте кнопки «+» и «-».
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>

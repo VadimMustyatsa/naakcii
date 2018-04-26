@@ -1,0 +1,50 @@
+<div *ngIf="foodList.length > 0" class="cards">
+  <div *ngIf="isVisibleProd()" class="row">
+    <app-foods-food-card
+      *ngFor="let food of foodList"
+      [curFood]="food"
+      [storageList]="chainList"
+    >
+    </app-foods-food-card>
+  </div>
+  <ul *ngIf="!isVisibleProd()"class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div *ngIf="isCheckedChain()" class="grey-text text-darken-2">
+        <p>
+          В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории.
+        </p>
+        <p>
+          Попробуйте поискать в других сетях.
+        </p>
+      </div>
+      <div *ngIf="!isCheckedChain()" class="grey-text text-darken-2">
+        <p>
+          Не выбрана ни одна торговая сеть.
+        </p>
+        <p>
+          Чтобы добавлять акционные товары в список покупок,
+          нужно выбрать хотя бы одну из них.
+        </p>
+        <p>
+          Рекомендуем выбирать сети поближе к дому с наибольшим количеством товаров
+          и наибольшим средним процентом скидки.
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
+<div *ngIf="foodList.length == 0" class="cards">
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div class="grey-text text-darken-2">
+        <p>
+          Не выбрана ни одна подкатегория товаров.
+        </p>
+        <p>
+          Чтобы добавлять акционные товары в список покупок,
+          нужно выбрать хотя бы одну из них.
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>

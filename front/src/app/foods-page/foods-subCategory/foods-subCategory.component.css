@@ -1,0 +1,46 @@
+.collection, .collection li {
+  border: none;
+}
+.collapsible-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+}
+.preloader-wrapper {
+  margin: 0 auto;
+}
+.catName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.categoryName {
+  font-size: 16px;
+  font-weight: bold;
+}
+/*****************************************************/
+.checkbox-color[type="checkbox"] + label:before{
+  border: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color[type="checkbox"]:checked + label:before{
+  border: 2px solid transparent;
+  border-bottom: 2px solid dimgrey;
+  border-right: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color.filled-in[type="checkbox"] + label:after{
+  border: 2px solid dimgrey;
+  background: transparent;
+}
+.checkbox-color.filled-in[type="checkbox"]:checked + label:after{
+  background: dimgrey;
+}
+.checkbox-color.filled-in[type="checkbox"]:checked + label:before{
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+/*****************************************************/
