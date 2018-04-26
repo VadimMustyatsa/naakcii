@@ -38,6 +38,7 @@ public class ChainServiceImpl implements ChainService {
             chainDTO.setCountGoods(chainProperties.get("countGoods"));
             chainDTO.setPercent(chainProperties.get("discountSize"));
         }
+        Collections.sort(chainDTOList, Comparator.comparing(ChainDTO::getName));
         return chainDTOList;
     }
 
