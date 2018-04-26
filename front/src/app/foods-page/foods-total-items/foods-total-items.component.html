@@ -1,25 +1,40 @@
-<div *ngIf="foodTotalList.length > 0">
+<div *ngIf="foodTotalList.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
 
-  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
-    <li class="collapsible-header amber-text">
+  <ul class="collapsible" data-collapsible="accordion"
+      materialize="collapsible"
+      [materializeParams]="params"
+  >
+    <li class="collapsible-header">
       <div>Список покупок</div>
     </li>
+    <li class="collapsible-header totalSum">
+      <div class="left">
+        <span>Итог:</span>
+      </div>
+      <div>
+        <span>{{totalSum | number:"1.2-2"}} руб.</span>
+      </div>
+    </li>
+
     <li
       *ngFor="let curFood of foodTotalList"
     >
-      <div class="collapsible-header">
-        <span class="foodName left">{{curFood.name | cutString: 15}}</span>
+      <div class="collapsible-header currentItem row">
+        <div class="foodName left col m7">{{curFood.name | cutString: 17}}</div>
 
-        <div class="amountItem right">
-          <a class="btn-floating btn teal amber" (click)="subItem(curFood)">
+        <div class="amountItem right col m4" (click)="onEventStop($event)">
+          <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
             <i class="material-icons">remove</i>
           </a>
-          <span class="amber-text">{{curFood.selectAmount}}</span>
-          <a class="btn-floating btn teal amber" (click)="addItem(curFood)">
+          <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+          <a class="btn-floating btn teal grey" (click)="addItem(curFood)">
             <i class="material-icons">add</i>
           </a>
         </div>
-        <i class="material-icons">keyboard_arrow_right</i>
+
+        <div class="col m1 collapsItem">
+          <i class="material-icons">{{curentIconCollapsible}}</i>
+        </div>
       </div>
 
       <div class="collapsible-body">
@@ -51,15 +66,15 @@
     </li>
   </ul>
   <!--<a class="waves-effect waves btn amber left">PDF</a>-->
-  <a class="waves-effect waves btn amber right">К корзине</a>
+  <a class="waves-effect waves btn deep-orange right"><span>К списку</span></a>
 </div>
-<div *ngIf="foodTotalList.length == 0">
+<div *ngIf="foodTotalList.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Список покупок</div>
     </li>
-    <li class="collapsible-header amber-text">
-      <div class="emptyItemsText">
+    <li class="collapsible-header">
+      <div class="emptyItemsText grey-text text-darken-2">
         <p>
           Ваш список покупок пока пуст.
         </p>

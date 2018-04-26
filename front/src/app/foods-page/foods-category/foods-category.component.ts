@@ -62,4 +62,7 @@ export class FoodsCategoryComponent implements OnInit {
     // it is helps to load the data by parts to increase the performance of the app
     // must use feature to all carousel
   }
+  getImage(id: number) {
+    return 'url(\'assets/images/Category/sprites/'+this.categories.find(x=> x.id == id).icon+'.svg\')';
+  }
 }

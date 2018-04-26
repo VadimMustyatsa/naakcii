@@ -25,6 +25,11 @@
   font-size: 12px;
   text-decoration: line-through;
 }
+.foodAllPriceNo {
+  text-align: center;
+  font-size: 12px;
+  text-decoration: dashed;
+}
 .foodTotalPrice {
   text-align: center;
   font-weight: bold;

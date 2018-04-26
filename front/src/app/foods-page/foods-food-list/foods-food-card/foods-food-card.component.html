@@ -10,7 +10,7 @@
     </div>
 
     <div class="card-content">
-      <div class="foodName">
+      <div class="foodName tooltipped">
         {{curFood.name}} <br>
         {{curFood.boxWeight}}
       </div>
@@ -25,7 +25,7 @@
       <div *ngIf="curFood.discount > 0" class="foodAllPrice">
         {{curFood.allPrice | number:"1.2-2"}} руб.
       </div>
-      <div *ngIf="curFood.discount == 0" class="foodAllPrice">&nbsp;</div>
+      <div *ngIf="curFood.discount == 0" class="foodAllPriceNo">&nbsp;</div>
       <div class="foodTotalPrice">
         {{curFood.totalPrice | number:"1.2-2"}} руб.
       </div>
@@ -42,7 +42,7 @@
       </div>
       <div class="endStock">
         <span class="grey-text">
-          Дата конца акции:
+          Окончание акции:
         </span>
       </div>
     </div>

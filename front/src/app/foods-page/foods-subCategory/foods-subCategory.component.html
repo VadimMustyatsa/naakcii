@@ -1,4 +1,4 @@
-<div *ngIf="subCategoryList">
+<div *ngIf="subCategoryList" class="subCategoryContainer" [ngStyle]="{'padding-top':getPaddingTop()}">
   <ul class="collection with-header">
     <li class="collection-header grey-text text-darken-2">
       <div class="catName">
@@ -9,14 +9,13 @@
           </a>
         </div>-->
         <div>
-          <p>{{curCategory.name}}</p>
+          <p class="categoryName">{{curCategory.name}}</p>
         </div>
-        <div></div>
       </div>
     </li>
     <li class="collection-item">
       <input type="checkbox" class="checkbox-color" id="allSubCat" [checked]="checkedAll" (change)="onChangeAll()"/>
-      <label for="allSubCat" class="grey-text text-darken-2">ВСЕ</label>
+      <label for="allSubCat" class="grey-text text-darken-2">Все</label>
     </li>
     <li class="collection-item"
         *ngFor="let subCat of subCategoryList"
@@ -27,7 +26,7 @@
     </li>
   </ul>
 </div>
-<div *ngIf="!subCategoryList">
+<div *ngIf="!subCategoryList" class="subCategoryContainer">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Выберите подкатегории товаров</div>

@@ -9,12 +9,15 @@
   </div>
   <ul *ngIf="!isVisibleProd()"class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
-      <div *ngIf="isCheckedChain()">
+      <div *ngIf="isCheckedChain()" class="grey-text text-darken-2">
         <p>
-          В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории. Попробуйте поискать в других сетях.
+          В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории.
+        </p>
+        <p>
+          Попробуйте поискать в других сетях.
         </p>
       </div>
-      <div *ngIf="!isCheckedChain()">
+      <div *ngIf="!isCheckedChain()" class="grey-text text-darken-2">
         <p>
           Не выбрана ни одна торговая сеть.
         </p>
@@ -33,7 +36,15 @@
 <div *ngIf="foodList.length == 0" class="cards">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
-      <div>Выберите товары</div>
+      <div class="grey-text text-darken-2">
+        <p>
+          Не выбрана ни одна подкатегория товаров.
+        </p>
+        <p>
+          Чтобы добавлять акционные товары в список покупок,
+          нужно выбрать хотя бы одну из них.
+        </p>
+      </div>
     </li>
   </ul>
 </div>

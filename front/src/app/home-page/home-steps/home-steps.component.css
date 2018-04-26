@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin: 40px 0px;
+  margin: 50px 0px;
 }
 @media all and (max-height: 768px){
   .steps-container {
@@ -12,5 +12,10 @@
 @media all and (max-height: 640px){
   .steps-container {
     margin: 20px 0px;
+  }
+}
+@media all and (max-height: 500px){
+  .steps-container {
+    margin: 10px 0px;
   }
 }
