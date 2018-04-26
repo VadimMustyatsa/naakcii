@@ -90,7 +90,7 @@ ngu-item:hover div div {
   position: absolute;
   margin: auto;
   display: block;
-  cursor: not-allowed;
+  cursor: default;
   width: 40px;
   height: 50px;
   top: 30px;

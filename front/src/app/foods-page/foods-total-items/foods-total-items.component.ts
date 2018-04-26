@@ -14,6 +14,19 @@ export class FoodsTotalItemsComponent implements OnInit {
   private curFoodCard: FoodList;
   totalSum = 0;
 
+  iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
+  curentIconCollapsible = String(this.iconCollapsible.minimized);
+  params = [
+    {
+      onOpen: (el) => {
+        this.curentIconCollapsible = String(this.iconCollapsible.maximized);
+      },
+      onClose: (el) => {
+        this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+      }
+    }
+  ];
+
   constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
 
