@@ -11,16 +11,19 @@
   <app-foods-group></app-foods-group>
 
   <div class="shopingListConteiner row">
+
     <div class="subCategoryContainer col m3">
-      <app-foods-subCategory [class.fixedBlock]="isFixedBlock"></app-foods-subCategory>
+      <app-foods-subCategory></app-foods-subCategory>
     </div>
+
     <div class="col m6">
       <app-foods-food-list></app-foods-food-list>
     </div>
+
     <div class="totalItemsContainer col m3">
-      <app-foods-total-items [class.fixedBlock]="isFixedBlock"></app-foods-total-items>
+      <app-foods-total-items></app-foods-total-items>
     </div>
-    <div class="col m1"></div>
+
   </div>
 </div>
 

@@ -14,29 +14,39 @@
     </div>
   </div>-->
 
-  <div>
+  <div class="foods-main-group-container">
+    <button class='leftRsDisable'>
+      <i class="material-icons">chevron_left</i>
+    </button>
     <ngu-carousel
       [inputs]="carouselCategory"
       (carouselLoad)="myfunc($event)">
 
       <button NguCarouselPrev class='leftRs'>
-        <i class="material-icons amber-text">chevron_left</i>
+        <i class="material-icons grey-text text-darken-3">chevron_left</i>
       </button>
 
       <ngu-item NguCarouselItem
                 *ngFor="let cat of categories"
                 (click)="selectCategory(cat)"
       >
-          <div [class.selected]="isSelected(cat.id)" [class.notSelected]="!isSelected(cat.id)">
-            <i class="material-icons">{{cat.icon}}</i>
+        <div [class.selected]="isSelected(cat.id)"
+             [class.notSelected]="!isSelected(cat.id)"
+        >
+          <div class="catImage" [ngStyle]="{'background-image':getImage(cat.id)}">
+
           </div>
-          <p class="brown-text">{{cat.name}}</p>
+        </div>
+        <p class="categoryName grey-text text-darken-3">{{cat.name}}</p>
       </ngu-item>
 
       <button NguCarouselNext class='rightRs'>
-        <i class="material-icons amber-text">chevron_right</i>
+        <i class="material-icons grey-text text-darken-3">chevron_right</i>
       </button>
     </ngu-carousel>
+    <button class='rightRsDisable'>
+      <i class="material-icons">chevron_right</i>
+    </button>
   </div>
 </div>
 <div *ngIf="!categories" class="container foods-main-group">

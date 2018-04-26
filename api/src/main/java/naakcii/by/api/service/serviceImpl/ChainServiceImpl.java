@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
 
 @Service
 public class ChainServiceImpl implements ChainService {
@@ -38,6 +40,7 @@ public class ChainServiceImpl implements ChainService {
             chainDTO.setCountGoods(chainProperties.get("countGoods"));
             chainDTO.setPercent(chainProperties.get("discountSize"));
         }
+        Collections.sort(chainDTOList, Comparator.comparing(ChainDTO::getName));
         return chainDTOList;
     }
 
