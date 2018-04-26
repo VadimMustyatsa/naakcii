@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
                 productDTOList.add(converter.convert(product, action));
             }
         }
+        Collections.sort(productDTOList, Comparator.comparing(ProductDTO::getName));
         return productDTOList;
     }
 }
