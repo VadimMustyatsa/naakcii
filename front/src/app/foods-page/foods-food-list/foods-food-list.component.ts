@@ -6,6 +6,7 @@ import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import 'rxjs/add/operator/map';
+import {SubCategory} from '../../shared/subCategory/foods.subCategory.model';
 
 @Component({
   selector: 'app-foods-food-list',
@@ -17,6 +18,8 @@ export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
   private curFoodCard: FoodList;
   chainList: Storag[] = null;
+  firstCard: number = 1;
+  lastCard: number = 100;
 
   constructor(private chainService: FoodsStorageService,
               private foodsService: FoodsFoodListService,
@@ -35,15 +38,19 @@ export class FoodsFoodListComponent implements OnInit {
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
+        let selectedSubCatListID = [];
         if (update.subCatList) {
          for (let i = 0; i < update.subCatList.length; i++) {
             if (update.subCatList[i].selected) {
-              this.foodsService.getFoodList(update.category.id, update.subCatList[i].id).subscribe(productList => {
-                productList.map(product => {
-                  this.foodList.push(product);
-                });
-              });
+              selectedSubCatListID.push({id: update.subCatList[i].id});
             }
+          }
+          if (selectedSubCatListID.length > 0) {
+            this.foodsService.getFoodList(update.category.id, selectedSubCatListID, this.firstCard, this.lastCard).subscribe(productList => {
+              productList.map(product => {
+                this.foodList.push(product);
+              });
+            });
           }
         }
       }

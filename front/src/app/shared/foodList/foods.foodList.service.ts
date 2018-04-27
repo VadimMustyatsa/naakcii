@@ -9,9 +9,9 @@ export class FoodsFoodListService {
 
   constructor(private http: HttpClient) { }
 
-  getFoodList(idCategory, idSubcategory) {  //FoodList[]
+  getFoodList(idCategory, selectedSubCatListID, first, last) {  //FoodList[]
     //console.log('FoodsFoodListService - getFoodList');
-    const dataGet = {idCategory: idCategory, idSubcategory: idSubcategory};
+    const dataGet = {idCategory: idCategory, selectedSubCatListID: selectedSubCatListID, first: first, last: last};
 
     //return this.http.get<FoodList[]>(this.productsLocal)                      //для отладки - из файла
     return this.http.get<FoodList[]>(this.productsUrl, {params: dataGet})   //для реального запроса с бэка
