@@ -4,7 +4,7 @@ public class CategoryDTO {
 
     private Long id;
     private String name;
-    private String picture;
+    private String icon;
 
     public Long getId() {
         return id;
@@ -23,10 +23,10 @@ public class CategoryDTO {
     }
 
     public String getIcon() {
-        return picture;
+        return icon;
     }
 
-    public void setIcon(String picture) {
-        this.picture = picture;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

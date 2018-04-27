@@ -12,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,21 +19,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "SUBCATEGORY")
-@NamedQueries({
-	@NamedQuery(name = "Subcategory.findAll", query = "select sub from Subcategory sub"),
-	@NamedQuery(name = "Subcategory.findAllWithDetails", 
-			query = "select sub from Subcategory sub left join fetch sub.category cat left join fetch sub.products p"),
-	@NamedQuery(name = "Subcategory.findById", 
-		query = "select sub from Subcategory sub where sub.id = :id"),
-	@NamedQuery(name = "Subcategory.findByIdWithDetails", 
-	query = "select sub from Subcategory sub left join fetch sub.products p left join fetch sub.category cat where sub.id = :id"),
-	@NamedQuery(name = "Subcategory.findByNameAndCategoryNameWithDetails", 
-	query = "select sub from Subcategory sub left join fetch sub.products p left join fetch sub.category cat where sub.name = :subcategoryName and sub.category.name = :categoryName"),
-	@NamedQuery(name = "Subcategory.findByCategoryId", 
-	query = "select sub from Subcategory sub left join fetch sub.category cat where cat.id = :id"),
-	@NamedQuery(name = "Subcategory.softDelete", 
-	query = "update Subcategory sub set sub.isActive=false where sub.id = :id")
-})
 public class Subcategory implements Serializable {
 
 	/**
@@ -50,7 +33,7 @@ public class Subcategory implements Serializable {
 	
 	@Column(name = "SUBCATEGORY_NAME")
 	@NotNull
-	@Size(min = 2, max = 45)
+	@Size(min = 3, max = 45)
 	private String name;
 	
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -65,7 +48,7 @@ public class Subcategory implements Serializable {
 	)
 	private List<Product> products = new ArrayList<Product>();
 	
-	@Column(name = "IS_ACTIVE")
+	@Column(name = "SUBCATEGORY_IS_ACTIVE")
 	@NotNull
 	private boolean isActive;
 	
