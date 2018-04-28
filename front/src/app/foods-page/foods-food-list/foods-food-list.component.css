@@ -17,11 +17,7 @@
 .loadingCard {
   display: flex;
   align-items: center;
-  position: fixed;
   width: 100%;
-  height: 80px;
-  top: auto;
-  bottom: 0px;
-  left: 0px;
+  height: 30px;
   z-index: 1000;
 }
