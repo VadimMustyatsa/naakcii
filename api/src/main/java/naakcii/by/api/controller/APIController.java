@@ -61,11 +61,20 @@ public class APIController {
         for (Long subcategoryId : list) {
             productDTOList.addAll(productService.getProductsBySubcategoryID(subcategoryId));
         }
-        Integer size = productDTOList.size() - 1;
-        if (last < size && first < size) {
-            return productDTOList.subList(first, last);
+        if (productDTOList.isEmpty()) {
+            return productDTOList;
         } else {
-            return productDTOList.subList(first, size);
+            Integer size = productDTOList.size();
+            if (last < size && first < size) {
+                return productDTOList.subList(first, last);
+            } else {
+                if (first < size) {
+                    return productDTOList.subList(first, size);
+                } else {
+                    productDTOList = new ArrayList<>();
+                    return productDTOList;
+                }
+            }
         }
     }
 }
