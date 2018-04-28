@@ -21,6 +21,7 @@ export class FoodsFoodListComponent implements OnInit {
   countLoadCard: number = 0;
   loadedCard: number = 6;
   isNextCard: boolean = false;
+  showLoadingCard: boolean = false;
 
   constructor(private chainService: FoodsStorageService,
               private foodsService: FoodsFoodListService,
@@ -77,7 +78,7 @@ export class FoodsFoodListComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
-    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 5)) {
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10)) {
       console.log("scroll end!!");
       this.updateFoodList();
     }
@@ -117,6 +118,7 @@ export class FoodsFoodListComponent implements OnInit {
     let first = this.countLoadCard * this.loadedCard;
     let last = this.loadedCard * (this.countLoadCard + 1);
     console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
+    this.showLoadingCard = true;
     this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
       productList.map(product => {
         this.foodList.push(product);
@@ -127,6 +129,7 @@ export class FoodsFoodListComponent implements OnInit {
       } else {
         this.isNextCard = false;
       }
+      this.showLoadingCard = false;
     });
   }
 }
