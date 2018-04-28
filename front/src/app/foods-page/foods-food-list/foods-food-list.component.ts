@@ -6,7 +6,6 @@ import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import 'rxjs/add/operator/map';
-import {SubCategory} from '../../shared/subCategory/foods.subCategory.model';
 
 @Component({
   selector: 'app-foods-food-list',
@@ -17,9 +16,15 @@ import {SubCategory} from '../../shared/subCategory/foods.subCategory.model';
 export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
   private curFoodCard: FoodList;
+  selectedSubCatListID = [];
   chainList: Storag[] = null;
-  firstCard: number = 1;
-  lastCard: number = 100;
+  countLoadCard: number = 0;
+  loadedCard: number = 6;
+  isNextCard: boolean = false;
+
+  throttle = 50;
+  scrollDistance =2;
+  scrollUpDistance = 1;
 
   constructor(private chainService: FoodsStorageService,
               private foodsService: FoodsFoodListService,
@@ -38,18 +43,28 @@ export class FoodsFoodListComponent implements OnInit {
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
-        let selectedSubCatListID = [];
+        this.selectedSubCatListID = [];
         if (update.subCatList) {
          for (let i = 0; i < update.subCatList.length; i++) {
             if (update.subCatList[i].selected) {
-              selectedSubCatListID.push({id: update.subCatList[i].id});
+              this.selectedSubCatListID.push({id: update.subCatList[i].id});
             }
           }
-          if (selectedSubCatListID.length > 0) {
-            this.foodsService.getFoodList(update.category.id, selectedSubCatListID, this.firstCard, this.lastCard).subscribe(productList => {
+          if (this.selectedSubCatListID.length > 0) {
+            this.countLoadCard = 0;
+            let first = this.countLoadCard * this.loadedCard;
+            let last = this.loadedCard*(this.countLoadCard+1);
+            console.log('first: ' + first + '; last: ' + last);
+            this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
               productList.map(product => {
                 this.foodList.push(product);
               });
+              if (productList.length == this.loadedCard) {
+                this.isNextCard = true;
+                this.countLoadCard += 1;
+              } else {
+                this.isNextCard = false;
+              }
             });
           }
         }
@@ -77,7 +92,6 @@ export class FoodsFoodListComponent implements OnInit {
     });
     return isProduct;
   }
-
   //проверяем есть ли хоть одна выбранная сеть
   isCheckedChain() {
     let isChain = false;
@@ -87,5 +101,29 @@ export class FoodsFoodListComponent implements OnInit {
       }
     });
     return isChain;
+  }
+
+  onScrollDown() {
+    console.log("scrolled!!");
+    if (!this.isNextCard) {
+      return;
+    }
+    let first = this.countLoadCard * this.loadedCard;
+    let last = this.loadedCard*(this.countLoadCard+1);
+    console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
+    this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
+      if (productList) {
+        productList.map(product => {
+          this.foodList.push(product);
+        });
+        if (productList.length == this.loadedCard) {
+          this.isNextCard = true;
+          this.countLoadCard += 1;
+        } else {
+          this.isNextCard = false;
+        }
+      }
+
+    });
   }
 }

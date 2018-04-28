@@ -1,5 +1,11 @@
 <div *ngIf="foodList.length > 0" class="cards">
-  <div *ngIf="isVisibleProd()" class="row">
+  <div *ngIf="isVisibleProd()" class="row"
+       infiniteScroll
+       [infiniteScrollDistance]="scrollDistance"
+       [infiniteScrollUpDistance]="scrollUpDistance"
+       [infiniteScrollThrottle]="throttle"
+       (scrolled)="onScrollDown()"
+  >
     <app-foods-food-card
       *ngFor="let food of foodList"
       [curFood]="food"
