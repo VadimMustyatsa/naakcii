@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, HostListener} from '@angular/core';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
@@ -22,10 +22,6 @@ export class FoodsFoodListComponent implements OnInit {
   loadedCard: number = 6;
   isNextCard: boolean = false;
 
-  throttle = 50;
-  scrollDistance =2;
-  scrollUpDistance = 1;
-
   constructor(private chainService: FoodsStorageService,
               private foodsService: FoodsFoodListService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
@@ -45,7 +41,7 @@ export class FoodsFoodListComponent implements OnInit {
         this.foodList = [];
         this.selectedSubCatListID = [];
         if (update.subCatList) {
-         for (let i = 0; i < update.subCatList.length; i++) {
+          for (let i = 0; i < update.subCatList.length; i++) {
             if (update.subCatList[i].selected) {
               this.selectedSubCatListID.push({id: update.subCatList[i].id});
             }
@@ -53,8 +49,9 @@ export class FoodsFoodListComponent implements OnInit {
           if (this.selectedSubCatListID.length > 0) {
             this.countLoadCard = 0;
             let first = this.countLoadCard * this.loadedCard;
-            let last = this.loadedCard*(this.countLoadCard+1);
+            let last = this.loadedCard * (this.countLoadCard + 1);
             console.log('first: ' + first + '; last: ' + last);
+            this.isNextCard = false;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
               productList.map(product => {
                 this.foodList.push(product);
@@ -78,6 +75,14 @@ export class FoodsFoodListComponent implements OnInit {
     });
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 5)) {
+      console.log("scroll end!!");
+      this.updateFoodList();
+    }
+  }
+
   //проверяем есть ли для выбранных сетей товары
   isVisibleProd() {
     let isProduct = false;
@@ -92,6 +97,7 @@ export class FoodsFoodListComponent implements OnInit {
     });
     return isProduct;
   }
+
   //проверяем есть ли хоть одна выбранная сеть
   isCheckedChain() {
     let isChain = false;
@@ -103,27 +109,24 @@ export class FoodsFoodListComponent implements OnInit {
     return isChain;
   }
 
-  onScrollDown() {
-    console.log("scrolled!!");
+  updateFoodList() {
     if (!this.isNextCard) {
       return;
     }
+    this.isNextCard = false;
     let first = this.countLoadCard * this.loadedCard;
-    let last = this.loadedCard*(this.countLoadCard+1);
+    let last = this.loadedCard * (this.countLoadCard + 1);
     console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
     this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
-      if (productList) {
-        productList.map(product => {
-          this.foodList.push(product);
-        });
-        if (productList.length == this.loadedCard) {
-          this.isNextCard = true;
-          this.countLoadCard += 1;
-        } else {
-          this.isNextCard = false;
-        }
+      productList.map(product => {
+        this.foodList.push(product);
+      });
+      if (productList.length == this.loadedCard) {
+        this.isNextCard = true;
+        this.countLoadCard += 1;
+      } else {
+        this.isNextCard = false;
       }
-
     });
   }
 }
