@@ -11,8 +11,21 @@ class Page {
         return browser.driver.getTitle();
     }
 
-    scrollPageDown(){
-        return browser.executeScript('window.scrollTo(0,document.body.scrollHeight);');
+    async scrollPageDown(isScrolledUp = false){
+        var isPageScrollingEnd = false;
+        while(isPageScrollingEnd === false){
+            await browser.executeScript('window.scrollTo(0,document.body.scrollHeight);');
+            isPageScrollingEnd = await browser.sleep(3000)
+                .then(function () {
+                    return browser.executeScript('return ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10))')
+                        .then(function (result) {
+                            return result;
+                        });
+                });
+            if(isScrolledUp === true){
+                await browser.executeScript('window.scrollTo(0,0);');
+            }
+        }
     }
 
     clickPageDownButton(){

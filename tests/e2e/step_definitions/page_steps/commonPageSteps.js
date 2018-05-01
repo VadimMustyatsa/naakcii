@@ -17,7 +17,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout}) {
     });
 
     Given(/^я прокручиваю страницу до конца$/, async function() {
-        return await world.pageFactory.currentPage.scrollPageDown();
+        return await world.pageFactory.currentPage.scrollPageDown(true);
     });
 
     Then(/^в адресной строке браузера должен отобразиться адрес "(.+)"$/, async function (pageUrl) {

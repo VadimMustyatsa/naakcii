@@ -22,7 +22,7 @@ class CatalogPage extends Page{
             },
             '(панель|панели) список подкатегорий':{
                 '(панель|панели) список подкатегорий': by.css('app-foods-subcategory ul'),
-                'подкатегор(?:ия|ию|ии)': by.css('app-foods-subcategory li label'),
+                'пункт|подкатегор(?:ия|ию|ии)': by.css('app-foods-subcategory li label'),
                 'статус': by.css('app-foods-subcategory li input')
             },
             '(панель|панели) список акционных товаров': {

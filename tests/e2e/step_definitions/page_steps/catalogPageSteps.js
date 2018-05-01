@@ -12,7 +12,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         return await world.pageFactory.currentPage.selectElement(elementKey, subElementName, selectedText);
     });
 
-    Given(/^я выбираю следующие торговые сети в (фильтре) "(.+)":$/, async function(partElementKey1, partElementKey2, dataTable) {
+    Given(/^я выбираю следующие (?:торговые сети в|подкатегории на) (фильтре|панели) "(.+)":$/, async function(partElementKey1, partElementKey2, dataTable) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             subElementKey = dataTable.raw()[0], data = dataTable.raw();
         data.shift();
@@ -28,6 +28,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         actualText = await world.pageFactory.currentPage.getElementText(elementKey);
         return expect(actualText).to.equal(expectedText);
     });
+
     Given(/^(фильтр) "(.+)" раскрыт$/, async function (partElementKey1, partElementKey2) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             actualRes;
@@ -45,6 +46,13 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         return expect(actualArr).to.deep.equal(expectedArr);
     });
 
+    Given(/^на (панели) "(.+)" не отображается ни одной карточки$/, async function (partElementKey1, partElementKey2) {
+        var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
+            actualRes;
+        actualRes = await world.pageFactory.currentPage.getNumberOfElements(elementKey.toLocaleLowerCase());
+        return expect(actualRes).to.equal(Number(1));
+    });
+
     Then(/^на (фильтре) "(.+)" должен отобразиться текст "(.+)"$/, async function (partElementKey1, partElementKey2, expectedText) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             actualText;
@@ -55,8 +63,8 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
     Then(/^на (панели) "(.+)" должен (?:отобразиться|появиться) следующий текст:$/, async function (partElementKey1, partElementKey2, text) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             actualText,expectedText;
-        expectedText = text.replace(/\n/g,'');
-        actualText = (await world.pageFactory.currentPage.getElementText(elementKey)).split('. ').join('.');
+        expectedText = text.replace(/\n/g,'').replace(/, /g,',').replace(/\. /g,'.');
+        actualText = (await world.pageFactory.currentPage.getElementText(elementKey)).replace(/\n/g,'').replace(/, /g,',').replace(/\. /g,'.');
         return expect(actualText).to.equal(expectedText);
     });
 

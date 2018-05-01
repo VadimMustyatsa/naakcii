@@ -15,6 +15,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         var actualNumber = await world.pageFactory.currentPage.getNumberOfElements(elementKey.toLocaleLowerCase());
         return expect(actualNumber).to.equal(Number(expectedNumber));
     });
+
     Then(/^должен отобразиться текст (.+) "(.+)"$/, async function (elementKey, elementText) {
         var actualText = await world.pageFactory.currentPage.getStepText(elementKey.toLocaleLowerCase()),
             expectedText = elementText.substring(3);
