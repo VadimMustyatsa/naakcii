@@ -19,6 +19,7 @@ export class FoodsFoodListComponent implements OnInit {
   selectedSubCatListID = [];
   chainList: Storag[] = null;
   countLoadCard: number = 0;
+  firstLoadedCard: number = 12;
   loadedCard: number = 6;
   isNextCard: boolean = false;
   showLoadingCard: boolean = false;
@@ -49,17 +50,20 @@ export class FoodsFoodListComponent implements OnInit {
           }
           if (this.selectedSubCatListID.length > 0) {
             this.countLoadCard = 0;
-            let first = this.countLoadCard * this.loadedCard;
-            let last = this.loadedCard * (this.countLoadCard + 1);
-            console.log('first: ' + first + '; last: ' + last);
+            let first = this.countLoadCard;
+            let last = this.firstLoadedCard;
+            //console.log('first: ' + first + '; last: ' + last);
             this.isNextCard = false;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
               productList.map(product => {
                 this.foodList.push(product);
               });
-              if (productList.length == this.loadedCard) {
+              if (productList.length == this.firstLoadedCard) {
                 this.isNextCard = true;
-                this.countLoadCard += 1;
+                this.countLoadCard += this.firstLoadedCard;
+                if (this.countVisibleProd() < this.firstLoadedCard) {  //необходимо догрузить
+                  this.updateFoodList();
+                }
               } else {
                 this.isNextCard = false;
               }
@@ -69,9 +73,6 @@ export class FoodsFoodListComponent implements OnInit {
       }
       if (update.mode === MODES.SELECT_CHAIN) {
         this.chainList = update.chainList;
-        this.chainList.map(chain => {
-          //console.log('id: ' + chain.id + ' - ' + chain.selected);
-        });
       }
     });
   }
@@ -79,7 +80,6 @@ export class FoodsFoodListComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10)) {
-      console.log("scroll end!!");
       this.updateFoodList();
     }
   }
@@ -99,7 +99,26 @@ export class FoodsFoodListComponent implements OnInit {
     return isProduct;
   }
 
-  //проверяем есть ли хоть одна выбранная сеть
+  //----------------------------------------------
+
+  //считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
+  countVisibleProd() {
+    let countProduct = 0;
+    this.foodList.map(food => {
+      this.chainList.map(chain => {
+        if (chain.id === food.idStrore) {
+          if (chain.selected) {
+            countProduct += 1;
+          }
+        }
+      });
+    });
+    return countProduct;
+  }
+
+  //-----------------------------------------------------
+
+  //проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
     let isChain = false;
     this.chainList.map(chain => {
@@ -110,14 +129,17 @@ export class FoodsFoodListComponent implements OnInit {
     return isChain;
   }
 
+  //-----------------------------------------------------
+
+  //Догружаем следующую порцию карточек------------------
   updateFoodList() {
     if (!this.isNextCard) {
       return;
     }
     this.isNextCard = false;
-    let first = this.countLoadCard * this.loadedCard;
-    let last = this.loadedCard * (this.countLoadCard + 1);
-    console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
+    let first = this.countLoadCard;
+    let last = this.countLoadCard + this.loadedCard;
+    //console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
     this.showLoadingCard = true;
     this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
       productList.map(product => {
@@ -125,11 +147,17 @@ export class FoodsFoodListComponent implements OnInit {
       });
       if (productList.length == this.loadedCard) {
         this.isNextCard = true;
-        this.countLoadCard += 1;
+        this.countLoadCard += this.loadedCard;
+        if (this.countVisibleProd() < this.firstLoadedCard) {  //необходимо догрузить
+          this.updateFoodList();
+        }
       } else {
         this.isNextCard = false;
       }
+      //console.log('this.isNextCard = ' + this.isNextCard);
       this.showLoadingCard = false;
     });
   }
+
+  //-----------------------------------------------------
 }

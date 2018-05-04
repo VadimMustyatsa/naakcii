@@ -1,3 +1,7 @@
+.collapsible {
+  max-height: 80vh;
+  overflow-y: auto;
+}
 .collapsible-header {
   display: flex;
   justify-content: space-between;
@@ -24,6 +28,10 @@
 .collapsible-body {
   padding: 5px;
 }
+.collapsible-body div {
+  margin: 0px;
+}
+/********************************/
 .totalSum {
   padding: 5px;
   background-color: #656565;
@@ -47,6 +55,7 @@
   font-size: 14px!important;
   font-weight: normal!important;
   padding: 5px!important;
+  margin: 0px!important;
 }
 .amountItem {
   display: flex;
@@ -72,14 +81,9 @@
   transform: scale(0.4);
 }
 /*------------------------------*/
-.foodAllPrice {
-  margin: 10px 0px;
+.chainName div, .actionPrice div, .discount div, .itemSum div {
+  padding: 2px 5px;
   font-size: 12px;
-}
-.foodTotalPrice {
-  margin: 10px 0px;
-  font-size: 12px;
-  font-weight: bold;
 }
 /*-------------------------------*/
 .deleteFood {
@@ -97,3 +101,14 @@
 .emptyItemsText p:last-child {
   margin-bottom: 0px;
 }
+/*********************************/
+.input-field {
+  margin-top: 10px!important;
+  font-size: 12px!important;
+}
+/*********************************/
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #656565;
+  box-shadow: 0 1px 0 0 #656565;
+}
+/*********************************/
