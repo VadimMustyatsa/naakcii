@@ -13,7 +13,7 @@ class CatalogPage extends Page{
                 'средний_%_скидки': by.css('app-foods-storage-list li div[class*="Percent"]>span'),
                 'товаров_на_акции': by.css('app-foods-storage-list li div[class*="Goods"]>span'),
                 'статус': by.css('app-foods-storage-list li input'),
-                'состояние_фильтра': by.css('app-foods-storage-list div[class^="collapsible-header"]')
+                'состояние': by.css('app-foods-storage-list div[class^="collapsible-header"]')
             },
             '(панель|панели) список категорий':{
                 '(панель|панели) список категорий': by.css('app-foods-group div[class$="foods-main-group"]'),
@@ -21,7 +21,7 @@ class CatalogPage extends Page{
                 'статус': by.css('app-foods-group ngu-item>div')
             },
             '(панель|панели) список подкатегорий':{
-                '(панель|панели) список подкатегорий': by.css('app-foods-subcategory ul'),
+                '(панель|панели) список подкатегорий': by.css('app-foods-subcategory ul .categoryName'),
                 'пункт|подкатегор(?:ия|ию|ии)': by.css('app-foods-subcategory li label'),
                 'статус': by.css('app-foods-subcategory li input')
             },
@@ -36,119 +36,76 @@ class CatalogPage extends Page{
         this.helper = new Helper(this.data);
     }
 
-    getElementStatusByIndex(elementKey, index){
-        var elementObj = this.helper.getElementLocator(elementKey, 'статус'),
-            statusArr = element.all(elementObj);
-        if(elementKey !== 'панель список категорий' && elementKey !== 'панели список категорий') {
-            return statusArr.get(index).isSelected()
-                .then(function (selected) {
-                    if (selected) {
+    getElementStatus(elementKey){
+        var elementObj = this.helper.getElementLocator(elementKey, 'статус');
+        if(elementKey.search(/панел(?:ь|и) список категорий/gi) === -1) {
+            return element.all(elementObj).map((elem) => {
+                return elem.isSelected().then((attributeValue) => {
+                    if (attributeValue) {
                         return 'Выбрана';
                     } else {
                         return 'Не выбрана';
                     }
                 });
-        } else {
-            return statusArr.get(index).getAttribute('class')
-                .then(function(result){
-                    if(result === 'selected'){
-                        return 'Выбрана';
-                    } else {
-                        return 'Не выбрана';
-                    }
-                });
-        }
-    }
-
-    isFilterOpened(elementKey){
-        var elementObj = this.helper.getElementLocator(elementKey, 'состояние_фильтра');
-        return element(elementObj).getAttribute('class')
-            .then(function(result){
-                if(result.indexOf('active') !== -1){
-                    return true;
-                } else {
-                    return false;
-                }
             });
-    }
-
-    async getElementValues(elementKey, elementKeysArr, count = 'undefined'){
-        var resultArr = [],
-            valuesArrLength, //количество значений элементов в списке elementNameArr
-            elementKeysArrLength,//количество элементов, для которых вытягиваются значения
-            elementObj;
-
-        if(Array.isArray(elementKeysArr)){
-            elementKeysArrLength = elementKeysArr.length;
-
-            if(count === 'undefined') {
-                valuesArrLength = await this.getNumberOfElements(elementKey, elementKeysArr[0]);
-            }else {
-                valuesArrLength = count;
-            }
-            console.log('Array count = ' + valuesArrLength);
-
-            for(var i = 0; i < valuesArrLength; i += 1){
-                var elem = [];
-                for(var j = 0; j < elementKeysArrLength; j += 1){
-                    if(elementKeysArr[j] !== 'статус') {
-                        elem.push(await this.getElementValueByIndex(elementKey, elementKeysArr[j], i));
-                    }else {
-                        elem.push(await this.getElementStatusByIndex(elementKey, i));
-                    }
-                }
-                resultArr.push(elem);
-            }
-
         } else {
-            //elementKey = this.matchElement(elementKey);
-            if(count === 'undefined') {
-                valuesArrLength = await this.getNumberOfElements(elementKey, elementKeysArr);
-            }else {
-                valuesArrLength = count;
-            }
-            elementObj = this.helper.getElementLocator(elementKey, elementKeysArr);
-            resultArr.push(await element.all(elementObj)
-                .map(function (elements) {
-                    return elements.getText();
-                })
-                .then(function (valuesArr) {
-                    var resArr = [];
-                    for(var i = 0; i < valuesArrLength; i += 1){
-                        resArr.push(valuesArr[i]);
+            return element.all(elementObj).map((elem) => {
+                return elem.getAttribute('class').then((attributeValue) => {
+                    if (attributeValue === 'selected') {
+                        return 'Выбрана';
+                    } else {
+                        return 'Не выбрана';
                     }
-                    return resArr;
-                }));
+                });
+            });
         }
-        return resultArr;
     }
 
-    async selectElement(elementKey, subElementKey, textArr){
+    async getElementText(elementKey, subElementKey){
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey),
-            selected = true,
-            textArrLength,
+            resultArray;
+
+        if(subElementKey === 'статус') {
+            resultArray = (await this.getElementStatus(elementKey)).slice();
+        }else {
+            resultArray = (await element.all(elementObj).map(function (elementArr) {
+                return elementArr.getText().then((elementText) => {
+                    return elementText.replace(/\\['"$.+*|()?]/g,'');
+                });
+            }));
+        }
+        return resultArray;
+    }
+
+    async clickElementByText(elementKey, subElementKey, text, btnName = 'undefined'){
+        var textArray = [],
             index;
-        if(Array.isArray(textArr)){
-            textArrLength = textArr.length;
-            for(var i = 0; i < textArrLength; i += 1){
-                index = await this.getElementIndex(elementKey, subElementKey, textArr[i]);
-                console.log('index = ' + index);
-
-                selected = await this.getElementStatusByIndex(elementKey, index);
-                console.log('selected = ' + selected);
-
-                await element.all(elementObj).get(index).click();
-            }
+        if(Array.isArray(text)){
+            textArray = text.slice();
         } else {
-            index = await this.getElementIndex(elementKey, subElementKey, textArr);
-            console.log('index = ' + index);
-
-            selected = await this.getElementStatusByIndex(elementKey, index);
-            console.log('selected = ' + selected);
-
-            await element.all(elementObj).get(index).click();
+            textArray.push(text);
+        }
+        for(var i = 0; i < textArray.length; i += 1){
+            index = await this.getElementIndex(elementKey, subElementKey, textArray[i]);
+            if(btnName === 'undefined') {
+                await element.all(this.helper.getElementLocator(elementKey, subElementKey)).get(index).click();
+            } else {
+                await element.all(this.helper.getElementLocator(elementKey, btnName)).get(index).click();
+            }
         }
     }
+
+    async getElementIndex(elementKey, subElementKey, textValue){
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey),
+            tempArr1, tempArr2, tempArr3;
+        if (Array.isArray(textValue)) {
+            textValue = textValue[0];
+        }
+        return (await element.all(elementObj).map((elements) => {
+            return elements.getText();
+        })).indexOf(textValue);
+    }
+
 }
 
 module.exports = CatalogPage;

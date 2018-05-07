@@ -12,8 +12,8 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout}) {
         return await world.pageFactory.currentPage.clickElement(elementKey.toLocaleLowerCase());
     });
 
-    Given(/^я нажимаю клавишу "(.+)"$/, async function(keyButton) {
-        return await world.pageFactory.currentPage.clickPageDownButton();
+    Given(/^я нажимаю клавишу "(.+)"$/, async function(buttonName) {
+        return await world.pageFactory.currentPage.clickKeyButton(buttonName);
     });
 
     Given(/^я прокручиваю страницу до конца$/, async function() {
@@ -29,7 +29,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout}) {
     Then(/^долж(?:ен|на|но) отобразиться (фильтр|иллюстрация|кнопка|поле|панель) "(.+)"$/, async function (partElementKey1, partElementKey2) {
         var elementKey = partElementKey1.toLocaleLowerCase() + ' ' + partElementKey2.toLocaleLowerCase(),
             actualResult;
-        actualResult = await world.pageFactory.currentPage.isElementDisplayed(elementKey);
+        actualResult = await world.pageFactory.currentPage.isElementDisplayed(elementKey, elementKey);
         return expect(actualResult).to.equal(true);
     });
 
