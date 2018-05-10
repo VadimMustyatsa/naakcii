@@ -79,4 +79,9 @@
 .finalizeFooterButton div:first-child a span {
   text-decoration: underline;
 }
-
+/************************/
+.allTotalPrice {
+  border: solid 1px white;
+  border-radius: 3px;
+  font-size: 20px;
+}
