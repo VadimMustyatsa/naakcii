@@ -3,7 +3,7 @@
   text-align: center;
 }
 .cards {
-  height: 2000px;
+  height: 900px;
 }
 .collapsible-header {
   display: flex;
@@ -14,4 +14,10 @@
 .collapsible-header div p {
   margin: 10px 0px;
 }
-
+.loadingCard {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  z-index: 1000;
+}

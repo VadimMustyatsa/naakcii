@@ -28,20 +28,9 @@
                     "y": "136"
                 },
                 {
-                    "ID": "2",
-                    "typeID": "Canvas",
-                    "zOrder": "2",
-                    "w": "202",
-                    "h": "32",
-                    "measuredW": "100",
-                    "measuredH": "70",
-                    "x": "1187",
-                    "y": "136"
-                },
-                {
                     "ID": "3",
                     "typeID": "Canvas",
-                    "zOrder": "3",
+                    "zOrder": "2",
                     "w": "652",
                     "h": "64",
                     "measuredW": "100",
@@ -52,7 +41,7 @@
                 {
                     "ID": "4",
                     "typeID": "Canvas",
-                    "zOrder": "4",
+                    "zOrder": "3",
                     "w": "142",
                     "h": "274",
                     "measuredW": "100",
@@ -63,7 +52,7 @@
                 {
                     "ID": "5",
                     "typeID": "Canvas",
-                    "zOrder": "5",
+                    "zOrder": "4",
                     "w": "332",
                     "h": "274",
                     "measuredW": "100",
@@ -74,7 +63,7 @@
                 {
                     "ID": "6",
                     "typeID": "Canvas",
-                    "zOrder": "6",
+                    "zOrder": "5",
                     "w": "138",
                     "h": "274",
                     "measuredW": "100",
@@ -85,7 +74,7 @@
                 {
                     "ID": "7",
                     "typeID": "Label",
-                    "zOrder": "7",
+                    "zOrder": "6",
                     "measuredW": "152",
                     "measuredH": "22",
                     "x": "762",
@@ -96,22 +85,9 @@
                     }
                 },
                 {
-                    "ID": "8",
-                    "typeID": "Label",
-                    "zOrder": "8",
-                    "measuredW": "138",
-                    "measuredH": "22",
-                    "x": "1219",
-                    "y": "141",
-                    "properties": {
-                        "size": "14",
-                        "text": "Поле \"Поиск товаров\""
-                    }
-                },
-                {
                     "ID": "9",
                     "typeID": "Label",
-                    "zOrder": "9",
+                    "zOrder": "7",
                     "measuredW": "246",
                     "measuredH": "28",
                     "x": "940",
@@ -124,7 +100,7 @@
                 {
                     "ID": "12",
                     "typeID": "Paragraph",
-                    "zOrder": "10",
+                    "zOrder": "8",
                     "w": "137",
                     "h": "44",
                     "measuredW": "275",
@@ -139,7 +115,7 @@
                 {
                     "ID": "13",
                     "typeID": "Label",
-                    "zOrder": "11",
+                    "zOrder": "9",
                     "measuredW": "296",
                     "measuredH": "26",
                     "x": "915",
@@ -152,7 +128,7 @@
                 {
                     "ID": "15",
                     "typeID": "Paragraph",
-                    "zOrder": "12",
+                    "zOrder": "10",
                     "w": "138",
                     "h": "42",
                     "measuredW": "275",
@@ -168,7 +144,7 @@
                 {
                     "ID": "16",
                     "typeID": "Canvas",
-                    "zOrder": "13",
+                    "zOrder": "11",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -179,7 +155,7 @@
                 {
                     "ID": "17",
                     "typeID": "Canvas",
-                    "zOrder": "14",
+                    "zOrder": "12",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -190,7 +166,7 @@
                 {
                     "ID": "18",
                     "typeID": "Canvas",
-                    "zOrder": "15",
+                    "zOrder": "13",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -201,7 +177,7 @@
                 {
                     "ID": "19",
                     "typeID": "Canvas",
-                    "zOrder": "16",
+                    "zOrder": "14",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -212,7 +188,7 @@
                 {
                     "ID": "20",
                     "typeID": "Canvas",
-                    "zOrder": "17",
+                    "zOrder": "15",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -223,7 +199,7 @@
                 {
                     "ID": "21",
                     "typeID": "Canvas",
-                    "zOrder": "18",
+                    "zOrder": "16",
                     "w": "85",
                     "h": "96",
                     "measuredW": "100",
@@ -234,7 +210,7 @@
                 {
                     "ID": "24",
                     "typeID": "Paragraph",
-                    "zOrder": "19",
+                    "zOrder": "17",
                     "w": "64",
                     "h": "36",
                     "measuredW": "275",
@@ -249,7 +225,7 @@
                 {
                     "ID": "26",
                     "typeID": "Paragraph",
-                    "zOrder": "20",
+                    "zOrder": "18",
                     "w": "60",
                     "h": "36",
                     "measuredW": "275",
@@ -264,7 +240,7 @@
                 {
                     "ID": "28",
                     "typeID": "Paragraph",
-                    "zOrder": "21",
+                    "zOrder": "19",
                     "w": "59",
                     "h": "34",
                     "measuredW": "275",
@@ -279,7 +255,7 @@
                 {
                     "ID": "30",
                     "typeID": "Paragraph",
-                    "zOrder": "22",
+                    "zOrder": "20",
                     "w": "58",
                     "h": "37",
                     "measuredW": "275",
@@ -294,7 +270,7 @@
                 {
                     "ID": "32",
                     "typeID": "Paragraph",
-                    "zOrder": "23",
+                    "zOrder": "21",
                     "w": "62",
                     "h": "36",
                     "measuredW": "275",
@@ -309,7 +285,7 @@
                 {
                     "ID": "34",
                     "typeID": "Paragraph",
-                    "zOrder": "24",
+                    "zOrder": "22",
                     "w": "67",
                     "h": "32",
                     "measuredW": "275",
@@ -324,7 +300,7 @@
                 {
                     "ID": "35",
                     "typeID": "Canvas",
-                    "zOrder": "25",
+                    "zOrder": "23",
                     "w": "769",
                     "h": "38",
                     "measuredW": "100",
@@ -335,7 +311,7 @@
                 {
                     "ID": "36",
                     "typeID": "Canvas",
-                    "zOrder": "26",
+                    "zOrder": "24",
                     "w": "132",
                     "h": "39",
                     "measuredW": "100",
@@ -346,7 +322,7 @@
                 {
                     "ID": "37",
                     "typeID": "Label",
-                    "zOrder": "27",
+                    "zOrder": "25",
                     "measuredW": "63",
                     "measuredH": "26",
                     "x": "1031",
@@ -354,6 +330,18 @@
                     "properties": {
                         "text": "Логотип",
                         "size": "18"
+                    }
+                },
+                {
+                    "ID": "38",
+                    "typeID": "Button",
+                    "zOrder": "26",
+                    "measuredW": "126",
+                    "measuredH": "27",
+                    "x": "1257",
+                    "y": "497",
+                    "properties": {
+                        "text": "Кнопка перехода"
                     }
                 }
             ]

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterializeModule } from 'angular2-materialize';
 import { NguCarouselModule } from '@ngu/carousel';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -60,7 +61,8 @@ const routes = [
     MaterializeModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    NguCarouselModule
+    NguCarouselModule,
+    InfiniteScrollModule
   ],
   providers: [FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]

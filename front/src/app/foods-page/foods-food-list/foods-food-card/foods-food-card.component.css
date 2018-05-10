@@ -2,6 +2,9 @@
   padding: 5px;
 }
 /*-------------------------------------*/
+.foodCard {
+  padding: 0 5px;
+}
 .foodName {
   font-size: 12px;
   height: 80px;
@@ -42,8 +45,8 @@
   width: 100%;
   padding: 0px;
 }
-.card:hover {
-  box-shadow: 0 0 20px rgba(0,0,0, 0.5);
+.selectFood:hover, .amountItem a:hover {
+  box-shadow: 0 0 15px rgba(0,0,0, 0.5);
   border: none;
   transition: 0.3s all;
   z-index: 100;
@@ -86,4 +89,43 @@
 .endStock span {
   font-size: 10px;
 }
+/************************************************************/
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: block;
+}
 
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 95%;
+  background-color: #656565;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 300;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  top: -100px;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #656565 transparent transparent transparent;
+}
+
+/************************************************************/

@@ -2,14 +2,18 @@ import {Component, Inject, OnInit, HostListener} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
+import {Storag} from '../../shared/Storage/foods.storage.model';
+import {FoodsStorageService} from "../../shared/Storage/foods.storage.service";
 
 @Component({
   selector: 'app-foods-total-items',
   templateUrl: './foods-total-items.component.html',
-  styleUrls: ['./foods-total-items.component.css']
+  styleUrls: ['./foods-total-items.component.css'],
+  providers: [FoodsStorageService]
 })
 export class FoodsTotalItemsComponent implements OnInit {
   fixedPaddingTop:number = 0;
+  chainList: Storag[] = null;
   foodTotalList: FoodList[] = [];
   private curFoodCard: FoodList;
   totalSum = 0;
@@ -27,15 +31,19 @@ export class FoodsTotalItemsComponent implements OnInit {
     }
   ];
 
-  constructor(@Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
+  constructor(private chainService: FoodsStorageService,
+              @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
 
   ngOnInit() {
     this.foodTotalList = [];
 
+    this.chainService.getAll().subscribe(chainList => {
+      this.chainList = chainList;
+    });
+
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_FOOD_CARD) {
-        console.log('receive TotalItems: ' + update.foodCard.id);
         this.putToTotalList(update.foodCard);
       }
     });
@@ -53,7 +61,7 @@ export class FoodsTotalItemsComponent implements OnInit {
   }
 
   putToTotalList(newFoodCard: FoodList) {
-    console.log('put newFoodCard.id:' + newFoodCard.id);
+    //console.log('put newFoodCard.id:' + newFoodCard.id);
     if (!this.isAvailable(newFoodCard)) {
       this.putNewFoodCard(newFoodCard);
       this.setTotalSum();
@@ -64,8 +72,8 @@ export class FoodsTotalItemsComponent implements OnInit {
 
   isAvailable(newFoodCard: FoodList): boolean {
     for (let i = 0; i < this.foodTotalList.length; i++) {
-      console.log('foodTotalList.id: ' + this.foodTotalList[i].id);
-      console.log('newFoodCard.id: ' + newFoodCard.id);
+      //console.log('foodTotalList.id: ' + this.foodTotalList[i].id);
+      //console.log('newFoodCard.id: ' + newFoodCard.id);
       if (this.foodTotalList[i].id === newFoodCard.id) {
         this.foodTotalList[i].selectAmount += newFoodCard.selectAmount;
         return true;
@@ -75,7 +83,7 @@ export class FoodsTotalItemsComponent implements OnInit {
   }
 
   putNewFoodCard(newFoodCard: FoodList) {
-    console.log('putNew.id: ' + newFoodCard.id);
+    //console.log('putNew.id: ' + newFoodCard.id);
     this.curFoodCard = new FoodList;
     this.curFoodCard.id = newFoodCard.id;
     this.curFoodCard.name = newFoodCard.name;
@@ -118,6 +126,15 @@ export class FoodsTotalItemsComponent implements OnInit {
     this.foodTotalList.map(card => {
       this.totalSum += (card.totalPrice * card.selectAmount);
     });
+  }
+  getStorageByID(id: number): Storag {
+    return this.chainList.find(x => x.id === id);
+  }
+  getNameStorage(id: number): String {
+    if (this.getStorageByID(id)) {
+      return this.getStorageByID(id).name;
+    }
+    return 'unknown';
   }
 
   onEventStop(event) {
