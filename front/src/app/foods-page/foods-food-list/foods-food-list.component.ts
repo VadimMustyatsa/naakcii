@@ -34,7 +34,7 @@ export class FoodsFoodListComponent implements OnInit {
     console.log('FoodListComponent - ngOnInit');
 
     this.chainService.getAll().subscribe(chainList => {
-      console.log(chainList);
+      //console.log(chainList);
       this.chainList = chainList;
     });
 
@@ -154,7 +154,6 @@ export class FoodsFoodListComponent implements OnInit {
       } else {
         this.isNextCard = false;
       }
-      //console.log('this.isNextCard = ' + this.isNextCard);
       this.showLoadingCard = false;
     });
   }

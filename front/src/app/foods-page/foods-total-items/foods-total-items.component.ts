@@ -62,7 +62,9 @@ export class FoodsTotalItemsComponent implements OnInit {
   }
 
   getStorageByID(id: number): Storag {
-    return this.chainList.find(x => x.id === id);
+    if (this.chainList) {
+      return this.chainList.find(x => x.id === id);
+    }
   }
   getNameStorage(id: number): String {
     if (this.getStorageByID(id)) {

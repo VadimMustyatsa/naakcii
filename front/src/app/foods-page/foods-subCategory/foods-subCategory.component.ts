@@ -36,15 +36,15 @@ export class FoodsSubCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('SubCategoryComponent - ngOnInit');
+    // console.log('SubCategoryComponent - ngOnInit');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
-        console.log('stateEvents: ' + update.category.id + ':' + update.category.name);
+        // console.log('stateEvents: ' + update.category.id + ':' + update.category.name);
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
           this.subCategoryList = null;
           this.curCategory = update.category;
           this.subCategoryList = subCategoryList;
-          console.log(this.subCategoryList);
+          // console.log(this.subCategoryList);
           this.checkedAll = true;
           this.setAllItemsByCheckedAll();
           if (!this.isShowedTapStep3) {
@@ -62,7 +62,7 @@ export class FoodsSubCategoryComponent implements OnInit {
     this.subCategoryList.map(el => {
       el.selected = this.checkedAll
     });
-    console.log('setAllItemsByCheckedAll');
+    // console.log('setAllItemsByCheckedAll');
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }
 

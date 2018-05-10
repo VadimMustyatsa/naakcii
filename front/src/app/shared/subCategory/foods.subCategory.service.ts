@@ -10,7 +10,7 @@ export class FoodsSubCategoriesService {
   constructor(private http: HttpClient) { }
 
   getByCategory(idCategorty) {
-    console.log('SubCategoriesService - getByCategory');
+    //console.log('SubCategoriesService - getByCategory');
     const dataGet = {id: idCategorty};
 
     return this.http.get<SubCategory[]>(this.subCategoryUrl, {params: dataGet})   //для реального запроса с бэка
