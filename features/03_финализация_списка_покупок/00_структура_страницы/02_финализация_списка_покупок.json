@@ -1,0 +1,385 @@
+{
+    "mockup": {
+        "controls": {
+            "control": [
+                {
+                    "ID": "0",
+                    "typeID": "BrowserWindow",
+                    "zOrder": "0",
+                    "w": "769",
+                    "h": "726",
+                    "measuredW": "450",
+                    "measuredH": "400",
+                    "x": "678",
+                    "y": "19",
+                    "properties": {
+                        "text": "Финализация списка покупок – naakcii.by\nhttp://naakcii.by/finalize-shopping-list/"
+                    }
+                },
+                {
+                    "ID": "3",
+                    "typeID": "Canvas",
+                    "zOrder": "1",
+                    "w": "754",
+                    "h": "48",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "127"
+                },
+                {
+                    "ID": "9",
+                    "typeID": "Label",
+                    "zOrder": "2",
+                    "measuredW": "317",
+                    "measuredH": "28",
+                    "x": "904",
+                    "y": "137",
+                    "properties": {
+                        "size": "20",
+                        "text": "Заголовок таблицы списка покупок",
+                        "bold": "true"
+                    }
+                },
+                {
+                    "ID": "35",
+                    "typeID": "Canvas",
+                    "zOrder": "3",
+                    "w": "769",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "678",
+                    "y": "88"
+                },
+                {
+                    "ID": "36",
+                    "typeID": "Canvas",
+                    "zOrder": "4",
+                    "w": "132",
+                    "h": "39",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "997",
+                    "y": "87"
+                },
+                {
+                    "ID": "37",
+                    "typeID": "Label",
+                    "zOrder": "5",
+                    "measuredW": "63",
+                    "measuredH": "26",
+                    "x": "1031",
+                    "y": "94",
+                    "properties": {
+                        "text": "Логотип",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "39",
+                    "typeID": "Canvas",
+                    "zOrder": "6",
+                    "w": "754",
+                    "h": "48",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "175"
+                },
+                {
+                    "ID": "40",
+                    "typeID": "Label",
+                    "zOrder": "7",
+                    "measuredW": "343",
+                    "measuredH": "26",
+                    "x": "702",
+                    "y": "185",
+                    "properties": {
+                        "size": "18",
+                        "text": "Заголовок группы товаров торговой сети 1",
+                        "bold": "true"
+                    }
+                },
+                {
+                    "ID": "41",
+                    "typeID": "Canvas",
+                    "zOrder": "8",
+                    "w": "754",
+                    "h": "92",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "223"
+                },
+                {
+                    "ID": "43",
+                    "typeID": "Canvas",
+                    "zOrder": "9",
+                    "w": "737",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "694",
+                    "y": "229"
+                },
+                {
+                    "ID": "44",
+                    "typeID": "Label",
+                    "zOrder": "10",
+                    "measuredW": "224",
+                    "measuredH": "24",
+                    "x": "702",
+                    "y": "236",
+                    "properties": {
+                        "size": "16",
+                        "text": "Строка товара торговой сети 1"
+                    }
+                },
+                {
+                    "ID": "45",
+                    "typeID": "Canvas",
+                    "zOrder": "11",
+                    "w": "737",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "694",
+                    "y": "267"
+                },
+                {
+                    "ID": "46",
+                    "typeID": "Label",
+                    "zOrder": "12",
+                    "measuredW": "224",
+                    "measuredH": "24",
+                    "x": "702",
+                    "y": "274",
+                    "properties": {
+                        "size": "16",
+                        "text": "Строка товара торговой сети 1"
+                    }
+                },
+                {
+                    "ID": "47",
+                    "typeID": "Canvas",
+                    "zOrder": "13",
+                    "w": "754",
+                    "h": "48",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "315"
+                },
+                {
+                    "ID": "48",
+                    "typeID": "Label",
+                    "zOrder": "14",
+                    "measuredW": "347",
+                    "measuredH": "26",
+                    "x": "700",
+                    "y": "326",
+                    "properties": {
+                        "size": "18",
+                        "text": "Заголовок группы товаров торговой сети 2",
+                        "bold": "true"
+                    }
+                },
+                {
+                    "ID": "49",
+                    "typeID": "Canvas",
+                    "zOrder": "15",
+                    "w": "754",
+                    "h": "92",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "363"
+                },
+                {
+                    "ID": "50",
+                    "typeID": "Canvas",
+                    "zOrder": "16",
+                    "w": "737",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "694",
+                    "y": "369"
+                },
+                {
+                    "ID": "51",
+                    "typeID": "Label",
+                    "zOrder": "17",
+                    "measuredW": "228",
+                    "measuredH": "24",
+                    "x": "702",
+                    "y": "376",
+                    "properties": {
+                        "size": "16",
+                        "text": "Строка товара торговой сети 2"
+                    }
+                },
+                {
+                    "ID": "52",
+                    "typeID": "Canvas",
+                    "zOrder": "18",
+                    "w": "737",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "694",
+                    "y": "407"
+                },
+                {
+                    "ID": "53",
+                    "typeID": "Label",
+                    "zOrder": "19",
+                    "measuredW": "228",
+                    "measuredH": "24",
+                    "x": "702",
+                    "y": "414",
+                    "properties": {
+                        "size": "16",
+                        "text": "Строка товара торговой сети 2"
+                    }
+                },
+                {
+                    "ID": "54",
+                    "typeID": "Canvas",
+                    "zOrder": "20",
+                    "w": "754",
+                    "h": "48",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "455"
+                },
+                {
+                    "ID": "55",
+                    "typeID": "Label",
+                    "zOrder": "21",
+                    "measuredW": "471",
+                    "measuredH": "26",
+                    "x": "702",
+                    "y": "466",
+                    "properties": {
+                        "size": "18",
+                        "text": "Заголовок группы дополнительных (неакционных) товаров",
+                        "bold": "true"
+                    }
+                },
+                {
+                    "ID": "56",
+                    "typeID": "Canvas",
+                    "zOrder": "22",
+                    "w": "754",
+                    "h": "92",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "503"
+                },
+                {
+                    "ID": "57",
+                    "typeID": "Canvas",
+                    "zOrder": "23",
+                    "w": "737",
+                    "h": "38",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "694",
+                    "y": "509"
+                },
+                {
+                    "ID": "58",
+                    "typeID": "Label",
+                    "zOrder": "24",
+                    "measuredW": "235",
+                    "measuredH": "24",
+                    "x": "702",
+                    "y": "516",
+                    "properties": {
+                        "size": "16",
+                        "text": "Строка дополнительного товара"
+                    }
+                },
+                {
+                    "ID": "61",
+                    "typeID": "TextInput",
+                    "zOrder": "25",
+                    "w": "737",
+                    "measuredW": "328",
+                    "measuredH": "30",
+                    "x": "694",
+                    "y": "556",
+                    "properties": {
+                        "borderStyle": "line",
+                        "text": "Строка для ввода дополнительного товара",
+                        "size": "16"
+                    }
+                },
+                {
+                    "ID": "62",
+                    "typeID": "Button",
+                    "zOrder": "26",
+                    "w": "162",
+                    "h": "33",
+                    "measuredW": "162",
+                    "measuredH": "27",
+                    "x": "885",
+                    "y": "663",
+                    "properties": {
+                        "text": "Кнопка возврата",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "63",
+                    "typeID": "Button",
+                    "zOrder": "27",
+                    "w": "162",
+                    "h": "33",
+                    "measuredW": "158",
+                    "measuredH": "27",
+                    "x": "1094",
+                    "y": "663",
+                    "properties": {
+                        "text": "Кнопка выгрузки",
+                        "size": "18"
+                    }
+                },
+                {
+                    "ID": "64",
+                    "typeID": "Canvas",
+                    "zOrder": "28",
+                    "w": "754",
+                    "h": "48",
+                    "measuredW": "100",
+                    "measuredH": "70",
+                    "x": "686",
+                    "y": "596"
+                },
+                {
+                    "ID": "65",
+                    "typeID": "Label",
+                    "zOrder": "29",
+                    "measuredW": "214",
+                    "measuredH": "26",
+                    "x": "700",
+                    "y": "607",
+                    "properties": {
+                        "size": "18",
+                        "text": "Строка итоговых значений",
+                        "bold": "true"
+                    }
+                }
+            ]
+        },
+        "mockupH": "726",
+        "mockupW": "769",
+        "measuredW": "1447",
+        "measuredH": "745",
+        "version": "1.0"
+    }
+}
