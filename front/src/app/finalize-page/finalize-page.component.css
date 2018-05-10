@@ -2,6 +2,13 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+.finalizePageName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding-top: 20px;
+}
 .finalizeHeader {
   cursor: default;
   margin: 0px;
@@ -9,9 +16,31 @@
 .finalizeHeader div {
   text-align: center;
 }
+.finalizeFooter {
+  display: flex;
+  align-items: center;
+  background-color: #ffc107;
+  color: white;
+}
 .collapsible-header {
   margin: 0px;
   padding: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.chainLogoName {
+  display: flex;
+  align-items: center;
+}
+.chainLogoName div img {
+  overflow: auto;
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+  top: -10px;
+}
+.btn-floating {
+  transform: scale(0.5);
 }
 .collapsible-header div:last-child {
   text-align: right;
@@ -30,10 +59,14 @@
 .chainList {
   display: flex;
   align-items: center;
-
-
+  background-color: #d9d9d9;
 }
 /*Стили нижних кнопок*************************/
+.finalizeFooterButton {
+  padding: 10px;
+  font-weight: normal;
+  font-size: 16px;
+}
 .finalizeFooterButton div:first-child a {
   display: flex;
   align-items: center;

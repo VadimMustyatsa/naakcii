@@ -96,4 +96,12 @@ export class FinalizePageComponent implements OnInit {
     this.cart.removeLine(cartLine.product.id);
     this.chainListExist = this.getExistListChain();
   }
+  subItem(curFood: CartLine) {
+    if (curFood.quantity > 1) {
+      this.cart.updateQuantity(curFood.product, Number(curFood.quantity - 1));
+    }
+  }
+  addItem(curFood: CartLine) {
+    this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
+  }
 }
