@@ -3,7 +3,6 @@
     <div class="row finalizePageName grey-text text-darken-2">
       <span>Список покупок</span>
     </div>
-
     <ul class="collapsible"
         data-collapsible="expandable"
         materialize="collapsible"
@@ -18,6 +17,12 @@
         <div class="col m1">Дата окончания акции</div>
         <div class="col m1"></div>
       </li>
+    </ul>
+    <ul class="collapsible"
+        data-collapsible="expandable"
+        materialize="collapsible"
+        id="result"
+    >
       <li
         *ngFor="let chain of chainListExist"
       >
@@ -67,7 +72,8 @@
           </div>
 
           <div class="col m1 center">
-            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity).toFixed(2)}}</span>
+              <span
+                *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity).toFixed(2)}}</span>
             <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
           </div>
           <div class="col m1 center">
@@ -102,7 +108,11 @@
         <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice.toFixed(2)}} руб.</div>
         <div class="col m1 center"></div>
       </li>
-
+    </ul>
+    <ul class="collapsible"
+        data-collapsible="expandable"
+        materialize="collapsible"
+    >
       <li class="collapsible-header finalizeFooterButton row">
         <div class="col m4 left">
           <a routerLink="/form-shopping-list" class="btnLinkFoods grey-text text-darken-2">
@@ -111,7 +121,9 @@
           </a>
         </div>
         <div class="col m4 center">
-          <a href="javascript:void(0);" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
+          <a href="javascript:void(0);" class="deep-orange waves-effect waves-light btn disable"
+             (click)="createPDF()">Скачать
+            PDF</a>
         </div>
         <div class="col m4 right">
 

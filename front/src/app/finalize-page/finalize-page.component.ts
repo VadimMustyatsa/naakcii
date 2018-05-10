@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {Storag} from '../shared/Storage/foods.storage.model';
@@ -56,28 +58,31 @@ export class FinalizePageComponent implements OnInit {
     });
     return quantity;
   }
+
   getCartAllPriceByChain(idChain: number) {
     let allPrice = 0;
     this.cart.lines.map(line => {
       if (line.product.idStrore == idChain) {
         if (line.product.allPrice > 0) {
-          allPrice += (line.product.allPrice*line.quantity);
-        } else  {
-          allPrice += (line.product.totalPrice*line.quantity);
+          allPrice += (line.product.allPrice * line.quantity);
+        } else {
+          allPrice += (line.product.totalPrice * line.quantity);
         }
       }
     });
     return allPrice;
   }
+
   getCartTotalPriceByChain(idChain: number) {
     let totalPrice = 0;
     this.cart.lines.map(line => {
       if (line.product.idStrore == idChain) {
-        totalPrice += (line.product.totalPrice*line.quantity);
+        totalPrice += (line.product.totalPrice * line.quantity);
       }
     });
     return totalPrice;
   }
+
   getSumDiscount(food: FoodList) {
     return (food.allPrice - food.totalPrice).toFixed(2);
   }
@@ -92,16 +97,30 @@ export class FinalizePageComponent implements OnInit {
     }
     return 'unknown';
   }
+
   deleteCartLine(cartLine: CartLine) {
     this.cart.removeLine(cartLine.product.id);
     this.chainListExist = this.getExistListChain();
   }
+
   subItem(curFood: CartLine) {
     if (curFood.quantity > 1) {
       this.cart.updateQuantity(curFood.product, Number(curFood.quantity - 1));
     }
   }
+
   addItem(curFood: CartLine) {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
+  }
+
+  createPDF() {
+    html2canvas(document.getElementById('result')).then(function (canvas) {
+      console.log(document.getElementById('result').scrollHeight);
+      let resize = document.getElementById('result').scrollHeight / 200;
+      var img = canvas.toDataURL("image/png");
+      var doc = new jsPDF('', 'mm', 'A4');
+      doc.addImage(img, 'JPEG', 5, 5, 200, (30 * resize + 10));
+      doc.save('testCanvas.pdf');
+    });
   }
 }
