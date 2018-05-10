@@ -1,0 +1,125 @@
+<div *ngIf="chainListExist" class="listContainer">
+  <div *ngIf="cart.lines.length > 0">
+    <ul class="collapsible"
+        data-collapsible="expandable"
+        materialize="collapsible"
+    >
+      <li class="collapsible-header finalizeHeader row">
+        <div class="col m2"></div>
+        <div class="col m4">Товарные позиции</div>
+        <div class="col m1">Количество</div>
+        <div class="col m1">Стоимость без скидки</div>
+        <div class="col m1">Скидка руб.(%)</div>
+        <div class="col m1">Стоимость со скидкой</div>
+        <div class="col m1">Дата окончания акции</div>
+        <div class="col m1"></div>
+      </li>
+      <li
+        *ngFor="let chain of chainListExist"
+      >
+        <div class="collapsible-header active row chainList amber white-text">
+          <div class="col m2">{{chain.name}}</div>
+          <div class="col m4 center">{{getCartByChain(chain.id).length}}</div>
+          <div class="col m1 center">{{getCartQuantityByChain(chain.id)}}</div>
+          <div class="col m1 center">
+            <span *ngIf="getCartAllPriceByChain(chain.id) > 0">{{getCartAllPriceByChain(chain.id).toFixed(2)}}</span>
+            <span *ngIf="getCartAllPriceByChain(chain.id) == 0">нет данных</span>
+          </div>
+          <div class="col m1 center">
+            <span>{{(getCartAllPriceByChain(chain.id) - getCartTotalPriceByChain(chain.id)).toFixed(2)}}</span><br>
+            <span>({{( 100 - (getCartTotalPriceByChain(chain.id)/getCartAllPriceByChain(chain.id))*100 ).toFixed(0)}} %)</span>
+          </div>
+          <div class="col m1 center">{{getCartTotalPriceByChain(chain.id).toFixed(2)}}</div>
+          <div class="col m1 center">18 мая</div>
+          <div class="col m1">
+            <i class="material-icons">arrow_drop_down</i>
+          </div>
+        </div>
+
+        <div class="collapsible-body row"
+             *ngFor="let curCart of getCartByChain(chain.id)"
+        >
+          <div class="col m2">
+            <img *ngIf="!curCart.product.img" src="assets/images/noImg.svg">
+            <img *ngIf="curCart.product.img" src="{{curCart.product.img}}">
+          </div>
+          <div class="col m4">{{curCart.product.name}}</div>
+          <div class="col m1 center">{{curCart.quantity}}</div>
+          <div class="col m1 center">
+            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity).toFixed(2)}}</span>
+            <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
+          </div>
+          <div class="col m1 center">
+            <span *ngIf="curCart.product.discount == 0">&ndash;</span>
+            <span *ngIf="curCart.product.discount > 0">{{(curCart.product.allPrice - curCart.product.totalPrice).toFixed(2)}}</span><br>
+            <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
+          </div>
+          <div class="col m1 center">
+            <span>{{(curCart.product.totalPrice*curCart.quantity).toFixed(2)}}</span><br>
+          </div>
+          <div class="col m1 center">18 мая</div>
+          <div class="col m1">
+            <a class="deleteCartLine" (click)="deleteCartLine(curCart)">
+              <i class="material-icons center grey-text text-darken-1">delete_forever</i>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="collapsible-header finalizeFooter row">
+        <div class="col m2">Итого:</div>
+        <div class="col m4 center">{{cart.lines.length}}</div>
+        <div class="col m1 center">{{cart.itemCount}}</div>
+        <div class="col m1 center">
+          <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice).toFixed(2)}}</span>
+          <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
+        </div>
+        <div class="col m1 center">
+          <span>{{(cart.cartAllPrice - cart.cartTotalPrice).toFixed(2)}}</span><br>
+          <span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>
+        </div>
+        <div class="col m1 center">{{cart.cartTotalPrice.toFixed(2)}}</div>
+        <div class="col m1 center"></div>
+        <div class="col m1 center"></div>
+      </li>
+
+      <li class="collapsible-header finalizeFooterButton row">
+        <div class="col m4 left">
+          <a routerLink="/form-shopping-list" class="btnLinkFoods amber-text">
+            <i class="material-icons">arrow_back</i>
+            <span>Вернуться к товарам</span>
+          </a>
+        </div>
+        <div class="col m4 center">
+          <a href="javascript:void(0);" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
+        </div>
+        <div class="col m4 right">
+
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="cart.lines.length == 0">
+    <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+      <li class="collapsible-header amber-text">
+        <div class="grey-text text-darken-2">
+          <p>
+            Не выбран ни один товар.
+          </p>
+          <p>
+            Чтобы просматривать итоговый список покупок,
+            нужно выбрать хотя бы один това.
+          </p>
+        </div>
+      </li>
+      <li class="collapsible-header finalizeFooterButton row">
+        <div class="col m12 left">
+          <a routerLink="/form-shopping-list" class="btnLinkFoods amber-text">
+            <i class="material-icons">arrow_back</i>
+            <span>Вернуться к товарам</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
