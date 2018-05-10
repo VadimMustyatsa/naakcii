@@ -12,14 +12,17 @@
 .finalizeHeader {
   cursor: default;
   margin: 0px;
+  background-color: #656565;
+  color: white;
 }
 .finalizeHeader div {
   text-align: center;
 }
 .finalizeFooter {
+  cursor: default;
   display: flex;
   align-items: center;
-  background-color: #ffc107;
+  background-color: #757575;
   color: white;
 }
 .collapsible-header {
@@ -60,12 +63,14 @@
   display: flex;
   align-items: center;
   background-color: #d9d9d9;
+  border-bottom: solid 1px white;
 }
 /*Стили нижних кнопок*************************/
 .finalizeFooterButton {
-  padding: 10px;
+  padding: 20px 5px;
   font-weight: normal;
   font-size: 16px;
+  cursor: default;
 }
 .finalizeFooterButton div:first-child a {
   display: flex;
