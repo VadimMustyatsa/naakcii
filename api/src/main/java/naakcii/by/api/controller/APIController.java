@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,16 +22,16 @@ import java.util.List;
 public class APIController {
 
     @Autowired
-    private CategoryService categoryService;
+    private ChainService chainService;
 
     @Autowired
-    private ChainService chainService;
+    private ProductService productService;
 
     @Autowired
     private SubcategoryService subcategoryService;
 
     @Autowired
-    private ProductService productService;
+    private CategoryService categoryService;
 
     @GetMapping(path = {"/getCategory"})
     public List<CategoryDTO> findAllCategory() {
@@ -50,5 +51,30 @@ public class APIController {
     @GetMapping(path = {"/getProducts"})
     public List<ProductDTO> findProductBySubcategoryId(@RequestParam("idSubcategory") Long id) {
         return productService.getProductsBySubcategoryID(id);
+    }
+
+    @GetMapping(path = {"/getFoodList"})
+    public List<ProductDTO> findProductBySubcategoryIdLazyLoading(@RequestParam("first") Integer first,
+                                                                  @RequestParam("last") Integer last,
+                                                                  @RequestParam("SubcategoryList") List<Long> list) {
+        List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
+        for (Long subcategoryId : list) {
+            productDTOList.addAll(productService.getProductsBySubcategoryID(subcategoryId));
+        }
+        if (productDTOList.isEmpty()) {
+            return productDTOList;
+        } else {
+            Integer size = productDTOList.size();
+            if (last < size && first < size) {
+                return productDTOList.subList(first, last);
+            } else {
+                if (first < size) {
+                    return productDTOList.subList(first, size);
+                } else {
+                    productDTOList = new ArrayList<>();
+                    return productDTOList;
+                }
+            }
+        }
     }
 }
