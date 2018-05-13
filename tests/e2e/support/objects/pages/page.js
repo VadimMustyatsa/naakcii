@@ -25,7 +25,7 @@ class Page {
         }
     }
 
-    clickKeyButton(buttonName = 'undefined'){
+    clickKeyButton(buttonName = undefined){
         return browser.actions().sendKeys(protractor.Key.END).perform();
     }
 
@@ -34,9 +34,9 @@ class Page {
         return element(elementObj).click();
     }
 
-    async isElementDisplayed(elementKey, subElementKey, elementText = 'undefined') {
+    async isElementDisplayed(elementKey, subElementKey, elementText = undefined) {
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
-        if(elementText === 'undefined') {
+        if(elementText === undefined) {
             return await element(elementObj).isDisplayed();
         } else {
             return ((await element.all(elementObj).map().then((elem) => {return elem.getText();})).indexOf(elementText) > -1)? true: false;
