@@ -4,10 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import naakcii.by.api.repository.dao.ActionDao;
+import naakcii.by.api.repository.dao.CategoryDao;
 import naakcii.by.api.repository.model.Action;
 import naakcii.by.api.repository.model.Category;
 import naakcii.by.api.repository.model.Chain;
@@ -30,7 +32,10 @@ import naakcii.by.api.repository.model.repository.ProductRepository;
 import naakcii.by.api.repository.model.repository.SubcategoryRepository;
 
 @Component
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
 public class DataParser {
+	
+	private static final Logger logger = LogManager.getLogger(DataParser.class);
 	
 	@Autowired
 	ProductDataHandler productDataHandler;
@@ -68,14 +73,14 @@ public class DataParser {
 				categoryName = categoryCell.getStringCellValue();
 				if (categoryName != "") {
 					category = new Category (categoryName, true);
-					System.out.println("Category \"" + category.getName() + "\" was found.");
+					logger.info("New category \"" + category.getName() + "\" was found.");
 					while (rowIterator.hasNext()) {
 						row = rowIterator.next();
 						subcategoryCell = row.getCell(1);
 						subcategoryName = subcategoryCell.getStringCellValue();
 						if (subcategoryName != "") {
 							subcategory = new Subcategory (subcategoryName, true, category);
-							System.out.println("Subcategory \"" + category.getName() + "\"." + subcategory.getName() + "\" was found.");
+							logger.info("New subcategory \"" + category.getName() + "\"." + subcategory.getName() + "\" was found.");
 							category.getSubcategories().add(subcategory);	
 						} else {
 							categoryRepository.save(category);
@@ -84,12 +89,13 @@ public class DataParser {
 					}
 				} else break;
 			}
-		} catch (FileNotFoundException fe) { 
-			fe.printStackTrace(); 
-		} catch (IOException ie) { 
-			ie.printStackTrace();
+		} catch (FileNotFoundException fnfEx) {
+			logger.error("FileNotFoundException: " + fnfEx.getMessage());
+		} catch (IOException ioEx) {
+			logger.error("IOException: " + ioEx.getMessage());
 		}
 	}
+	
 	
 	public void parseActions(String fileName) {
 		try (FileInputStream fis = new FileInputStream(fileName)) { 
@@ -103,6 +109,7 @@ public class DataParser {
 				Product product = null;
 				Action action = null;
 				Chain chain = new Chain(sheet.getSheetName(), sheet.getSheetName() + " link", true);
+				logger.info("New chain \"" + chain.getName() + "\" was found.");
 				chainRepository.save(chain);
 				Cell categoryCell = null;
 				Cell subcategoryCell = null;
@@ -134,40 +141,38 @@ public class DataParser {
 						dateCell = row.getCell(6);
 						price = priceCell.getNumericCellValue();
 						subcategory = subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName);
-						System.out.println("Chain \"" + chain.getName() + "\".");
-						System.out.println("Subcategory \"" + subcategory.getName() + "\".");
 						product = new Product(productDescription, true, subcategory);
-						System.out.println("Product \"" + product.getName() + "\".");
+						logger.info("New product \"" + subcategory.getName() + "\"." + product.getName() + "\" was found.");
 						Map<String, String> quantityAndMeasure =  productDataHandler.parseQuantityAndMeasure(productDescription);
 						if (quantityAndMeasure.containsKey("quantity")) {
 							product.setQuantity(Double.parseDouble(quantityAndMeasure.get("quantity")));
-							System.out.println("Quantity " + product.getQuantity() + ".");
+							logger.info("Quantity " + product.getQuantity() + ".");
 						}
 						if (quantityAndMeasure.containsKey("measure")) {
 							product.setMeasure(quantityAndMeasure.get("measure"));
-							System.out.println("Measure \"" + product.getMeasure() + "\".");
+							logger.info("Measure \"" + product.getMeasure() + "\".");
 						}
 						productRepository.save(product);
 						action = new Action(product, chain, discountPrice);
-						System.out.println("Discount price " + action.getDiscountPrice() + ".");
+						logger.info("Discount price " + action.getDiscountPrice() + ".");
 						if (price != 0) {
 							action.setPrice(price);
-							System.out.println("Base price " + action.getPrice() + ".");
+							logger.info("Base price " + action.getPrice() + ".");
 							discount = (int) (100.0 * (1.0 -discountPrice/price));
 							action.setDiscount(discount);
-							System.out.println("Discount " + action.getDiscount() + "%.");
+							logger.info("Discount " + action.getDiscount() + "%.");
 						}
 						if (dates != "") {
 							Map<String, Calendar> datesMap = productDataHandler.parseDate(dates);
 							if (datesMap.containsKey("start")) {
 								action.setStartDate(datesMap.get("start"));
-								System.out.println("Start date " + action.getStartDate().get(Calendar.DATE) + "." +
+								logger.info("Start date " + action.getStartDate().get(Calendar.DATE) + "." +
 										action.getStartDate().get(Calendar.MONTH) + "." +
 										action.getStartDate().get(Calendar.YEAR) + ".");
 							}
 							if (datesMap.containsKey("end")) {
 								action.setEndDate(datesMap.get("end"));
-								System.out.println("End date " + action.getEndDate().get(Calendar.DATE) + "." +
+								logger.info("End date " + action.getEndDate().get(Calendar.DATE) + "." +
 										action.getEndDate().get(Calendar.MONTH) + "." +
 										action.getEndDate().get(Calendar.YEAR) + ".");
 							}
@@ -176,61 +181,76 @@ public class DataParser {
 					} else break;	
 				}
 			}
-		} catch (FileNotFoundException fe) { 
-			fe.printStackTrace(); 
-		} catch (IOException ie) { 
-			ie.printStackTrace();
+		} catch (FileNotFoundException fnfEx) {
+			logger.error("FileNotFoundException: " + fnfEx.getMessage());
+		} catch (IOException ioEx) {
+			logger.error("IOException: " + ioEx.getMessage());
 		}
 	}
 	
-	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+	@Autowired
+	CategoryDao cd;
+	
+	@Autowired
+	ActionDao ac;
+	
 	public void test() {
-		System.out.println("Chains:");
-		for (Chain ch: chainRepository.findAllByOrderByNameAsc()) {
-			System.out.println(ch.getName());
+		System.out.println("Repository test");
+		for (Category category : categoryRepository.findAll()) {
+			System.out.println("Category " + category.getName());
+			//for (Subcategory subcategory : category.getSubcategories())
+			//System.out.println("Subcategory " + subcategory.getName());
 		}
-		System.out.println("Categories:");
-		for (Category cat: categoryRepository.findAll()) {
-			System.out.println(cat.getName());
+		categoryRepository.softDelete(1064L);
+		categoryRepository.softDelete(1058L);
+		for (Category category : categoryRepository.findAll()) {
+			System.out.println("Category " + category.getName());
+			//for (Subcategory subcategory : category.getSubcategories())
+			//System.out.println("Subcategory " + subcategory.getName());
 		}
-		System.out.println("Subcategories:");
-		for (Subcategory subcat: subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByNameAsc(1009L)) {
-			System.out.println(subcat.getName());
+		/*for (Category category : categoryRepository.findAllByIsActiveTrue()) {
+			System.out.println("Category " + category.getName());
+			for (Subcategory subcategory : category.getSubcategories())
+			System.out.println("Subcategory " + subcategory.getName());
+		}*/
+		/*Calendar currentDate = Calendar.getInstance();
+		for (Action action : actionRepository.findAllBySubcategoryId(1006L, currentDate)) {
+			System.out.println("Action product " + action.getProduct().getName());
+			System.out.println("Action chain " + action.getChain().getName());
 		}
-		//subcategoryRepository.softDelete(1010L);
-		//categoryRepository.softDelete(1000L);
-		//chainRepository.softDelete(1124L);
-		System.out.println("Categories:");
-		for (Category cat: categoryRepository.findAllByIsActiveTrue()) {
-			System.out.println(cat.getName());
+		Set<Long> s = new HashSet<Long>();
+		s.add(1006L);
+		s.add(1007L);*/
+		/*for (Action action : actionRepository.findAllBySubcategoriesIds(s, currentDate)) {
+			System.out.println("Action product " + action.getProduct().getName());
+			System.out.println("Action chain " + action.getChain().getName());
+		}*/
+		System.out.println("Dao test");
+		/*for (Category category : cd.findAll()) {
+			System.out.println("Category " + category.getName());
 		}
-		System.out.println("Chains:");
-		for (Chain ch: chainRepository.findAllByIsActiveTrueOrderByNameAsc()) {
-			System.out.println(ch.getName());
+		for (Category category : cd.findAllWithDetails()) {
+			System.out.println("Category " + category.getName());
+			for (Subcategory subcategory : category.getSubcategories())
+			System.out.println("Subcategory " + subcategory.getName());
+		}*/
+		/*cd.softDelete(1058L);
+		for (Category category : cd.findAllByIsActiveTrue()) {
+			System.out.println("Category " + category.getName());
 		}
-		System.out.println("Subcategories:");
-		for (Subcategory subcat: subcategoryRepository.findByIsActiveTrueAndCategoryId(1009L)) {
-			System.out.println(subcat.getName());
+		for (Category category : cd.findAllByIsActiveTrueWithDetails()) {
+			System.out.println("Category " + category.getName());
+			for (Subcategory subcategory : category.getSubcategories())
+			System.out.println("Subcategory " + subcategory.getName());
+		}*/
+		/*for (Action action : ac.findAllBySubcategoryId(1006L, currentDate)) {
+			System.out.println("Action product " + action.getProduct().getName());
+			System.out.println("Action chain " + action.getChain().getName());
 		}
-		System.out.println("Subcategories:");
-		for (Subcategory subcat: subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByNameDesc(1009L)) {
-			System.out.println(subcat.getName());
-		}
-		Calendar currentDate = Calendar.getInstance();
-		System.out.println("Products:");
-		for (Action action: actionRepository.findAllBySubcategoryId(1030L, currentDate)) {
-			System.out.println(action.getProduct().getName());
-		}
-		Set<Long> set = new HashSet<Long>();
-		set.add(1015L);
-		set.add(1016L);
-		set.add(1029L);
-		set.add(1030L);
-		set.add(1007L);
-		System.out.println("Products:");
-		for (Action action: actionRepository.findAllBySubcategoriesIds(set, currentDate)) {
-			System.out.println(action.getProduct().getName());
-		}
+		for (Action action : ac.findAllBySubcategoriesIds(s, currentDate)) {
+			System.out.println("Action product " + action.getProduct().getName());
+			System.out.println("Action chain " + action.getChain().getName());
+		}*/
 	}
 	
 }

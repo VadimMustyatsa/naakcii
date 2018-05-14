@@ -1,4 +1,4 @@
-package naakcii.by.api.service.ServiceImpl;
+package naakcii.by.api.service.serviceImpl;
 
 import naakcii.by.api.repository.dao.ActionDao;
 import naakcii.by.api.repository.dao.ProductDao;
@@ -32,7 +32,8 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = repository.findBySubcategoryId(id);
         List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
         for (Product product : productList) {
-            List<Action> actionList = actionDao.findByProductId(product.getId());
+            //List<Action> actionList = actionDao.findByProductId(product.getId());
+        	List<Action> actionList = new ArrayList<Action>();
             for (Action action : actionList) {
                 productDTOList.add(converter.convert(product, action));
             }

@@ -10,21 +10,21 @@ public class ChainConverter {
 
     public ChainDTO convert(Chain chain) {
         ChainDTO chainDTO = new ChainDTO();
-        chainDTO.setName(chain.getName());
+        /*chainDTO.setName(chain.getName());
         chainDTO.setImgLogo(chain.getIcon());
         chainDTO.setImgLogoSmall(chain.getSmallIcon());
         chainDTO.setId(chain.getId());
-        chainDTO.setLink(chain.getLink());
+        chainDTO.setLink(chain.getLink());*/
         return chainDTO;
     }
 
     public Chain convert(ChainDTO chainDTO) {
         Chain chain = new Chain();
-        chain.setId(chainDTO.getId());
+        /*chain.setId(chainDTO.getId());
         chain.setLink(chainDTO.getLink());
         chain.setName(chainDTO.getName());
         chain.setLink(chainDTO.getLink());
-        chain.setSmallIcon(chainDTO.getImgLogoSmall());
+        chain.setSmallIcon(chainDTO.getImgLogoSmall());*/
         return chain;
     }
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,7 +50,7 @@ public class Chain implements Serializable {
 	@Size(max = 255)
 	private String link;
 	
-	@OneToMany(mappedBy = "chain", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "chain", fetch = FetchType.LAZY)
 	private Set<Action> actions = new HashSet<Action>();
 	
 	public Chain() {

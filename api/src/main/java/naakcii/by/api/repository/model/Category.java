@@ -10,13 +10,29 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "CATEGORY")
+@NamedQueries({
+	@NamedQuery(name = "Category.findAll", query = "select cat from Category cat"),
+	@NamedQuery(name = "Category.findAllWithDetails", 
+	query = "select distinct cat from Category cat left join fetch cat.subcategories sub"), 
+	@NamedQuery(name = "Category.findAllByIsActiveTrue", 
+		query = "select cat from Category cat where cat.isActive = true"),
+	@NamedQuery(name = "Category.findAllByIsActiveTrueWithDetails", 
+	query = "select distinct cat from Category cat left join fetch cat.subcategories sub where cat.isActive = true"),
+	@NamedQuery(name = "Category.softDelete", 
+		query = "update Category cat set cat.isActive = false where cat.id = :categoryId")
+})
+@Where(clause = "F_CATEGORY_IS_ACTIVE = 1")
 public class Category implements Serializable {
 	
 	/**

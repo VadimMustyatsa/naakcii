@@ -6,10 +6,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductDataHandler {
+	
+	private static final Logger logger = LogManager.getLogger(ProductDataHandler.class);
 	
 	public Map<String, String> parseQuantityAndMeasure(String productDescription) {
 		Map<String, String> resultMap = new HashMap<String, String>();
@@ -17,7 +21,7 @@ public class ProductDataHandler {
 		Matcher generalMatcher = generalPattern.matcher(productDescription);	
 		if (generalMatcher.find()) {
 			String quantityAndMeasure = generalMatcher.group();
-			System.out.println("Quantity and measure string: \"" + quantityAndMeasure + "\".");
+			logger.info("Quantity and measure string: \"" + quantityAndMeasure + "\".");
 			Pattern quantityPattern = Pattern.compile("[0-9]+[.]*[0-9]*");
 			Pattern measurePattern = Pattern.compile("[кгмл]+");
 			Matcher quantityMatcher = quantityPattern.matcher(quantityAndMeasure);

@@ -1,4 +1,4 @@
-package naakcii.by.api.service.ServiceImpl;
+package naakcii.by.api.service.serviceImpl;
 
 import naakcii.by.api.repository.model.Category;
 import naakcii.by.api.repository.model.repository.CategoryRepository;

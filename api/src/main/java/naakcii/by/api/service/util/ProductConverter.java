@@ -11,7 +11,7 @@ public class ProductConverter {
 
     public ProductDTO convert(Product product, Action action) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(product.getId());
+        /*productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getProductInfo().getDescription());
         productDTO.setIcon(product.getIcon());
@@ -21,7 +21,7 @@ public class ProductConverter {
         productDTO.setMeasure(product.getProductInfo().getMeasure());
         productDTO.setPrice(action.getPrice());
         productDTO.setDiscount(action.getDiscount());
-        productDTO.setDiscountPrice(action.getDiscountPrice());
+        productDTO.setDiscountPrice(action.getDiscountPrice());*/
         return productDTO;
     }
 }

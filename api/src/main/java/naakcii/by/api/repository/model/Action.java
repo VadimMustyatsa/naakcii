@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +18,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "ACTION")
 @org.hibernate.annotations.Immutable
+@NamedQuery(name = "Action.findAllBySubcategoryId", query = "select ac from Action ac "
+			+ "left join fetch ac.chain ch "
+			+ "left join fetch ac.product p "
+			+ "where p.subcategory.id = :subcategoryId and :currentDate between ac.startDate and ac.endDate"
+)
 public class Action implements Serializable {
 
 	/**

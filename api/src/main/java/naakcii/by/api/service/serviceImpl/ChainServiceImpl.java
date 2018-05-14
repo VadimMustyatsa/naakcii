@@ -1,4 +1,4 @@
-package naakcii.by.api.service.ServiceImpl;
+package naakcii.by.api.service.serviceImpl;
 
 import naakcii.by.api.repository.dao.ActionDao;
 import naakcii.by.api.repository.dao.ChainDao;
@@ -46,7 +46,8 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public Map<String, Integer> getChainProperties(ChainDTO chainDTO) {
-        List<Action> actionList = actionDao.findByChainId(chainDTO.getId());
+        //List<Action> actionList = actionDao.findByChainId(chainDTO.getId());
+    	List<Action> actionList = new ArrayList<Action>();
         Map<String, Integer> chainProperties = new HashMap<String, Integer>();
         chainProperties.put("countGoods", actionList.size());
         Integer count = 0;

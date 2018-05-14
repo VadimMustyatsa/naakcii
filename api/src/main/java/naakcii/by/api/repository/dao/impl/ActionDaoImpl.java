@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
@@ -31,48 +34,25 @@ public class ActionDaoImpl implements ActionDao {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Action> findAll() {
-        List<Action> actions = em.createNamedQuery("Action.findAll", Action.class).getResultList();
-        return actions;
+    public List<Action> findAllBySubcategoryId(Long subcategoryId, Calendar currentDate) {
+    	TypedQuery<Action> actions = em.createNamedQuery("Action.findAllBySubcategoryId", Action.class);
+    	actions.setParameter("subcategoryId", subcategoryId);
+    	actions.setParameter("currentDate", currentDate);
+        return actions.getResultList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Action> findAllWithDetails() {
-        List<Action> actions = em.createNamedQuery("Action.findAllWithDetails", Action.class).getResultList();
-        return actions;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Action> findByChainId(Long id) {
-        TypedQuery<Action> query = em.createNamedQuery("Action.findByChainId", Action.class);
-        query.setParameter("id", id);
-        return query.getResultList();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Action> findByProductId(Long id) {
-        TypedQuery<Action> query = em.createNamedQuery("Action.findByProductId", Action.class);
-        query.setParameter("id", id);
-        return query.getResultList();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Action> findByChainIdWithDetails(Long id) {
-        TypedQuery<Action> query = em.createNamedQuery("Action.findByChainIdWithDetails", Action.class);
-        query.setParameter("id", id);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Action> findByChainIdAndProductSubcategory(Long chainId, Long subcategoryId) {
-        TypedQuery<Action> query = em.createNamedQuery("Action.findByChainIdAndProductSubcategory", Action.class);
-        query.setParameter("chainId", chainId);
-        query.setParameter("subcategoryId", subcategoryId);
-        return query.getResultList();
+    public List<Action> findAllBySubcategoriesIds(Set<Long> subcategoriesIds, Calendar currentDate) {
+    	TypedQuery<Action> actions = em.createQuery("select ac from Action ac "
+    			+ "left join fetch ac.chain ch "
+    			+ "left join fetch ac.product p "
+    			+ "where p.subcategory.id in :subcategoriesIds "
+    			+ "and :currentDate between ac.startDate and ac.endDate", 
+    	Action.class);
+    	actions.setParameter("subcategoriesIds", subcategoriesIds);
+    	actions.setParameter("currentDate", currentDate);
+        return actions.getResultList();
     }
 
 }

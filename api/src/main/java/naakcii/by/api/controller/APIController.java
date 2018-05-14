@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping({"/api"})
+//@RestController
+//@RequestMapping({"/api"})
 public class APIController {
-
+/*
     @Autowired
     private CategoryService categoryService;
 
@@ -51,4 +51,5 @@ public class APIController {
     public List<ProductDTO> findProductBySubcategoryId(@RequestParam("idSubcategory") Long id) {
         return productService.getProductsBySubcategoryID(id);
     }
+*/
 }

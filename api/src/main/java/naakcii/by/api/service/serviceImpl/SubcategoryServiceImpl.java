@@ -1,4 +1,4 @@
-package naakcii.by.api.service.ServiceImpl;
+package naakcii.by.api.service.serviceImpl;
 
 import naakcii.by.api.repository.dao.SubcategoryDao;
 import naakcii.by.api.repository.model.Subcategory;

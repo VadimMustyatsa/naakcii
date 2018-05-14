@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,7 +55,7 @@ public class Product implements Serializable {
 	@NotNull
 	private Subcategory subcategory;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	private Set<Action> actions = new HashSet<Action>();
 	
 	public Product() {

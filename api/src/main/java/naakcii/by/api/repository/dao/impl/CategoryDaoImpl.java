@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,18 +36,16 @@ public class CategoryDaoImpl implements CategoryDao{
 
 	@Transactional(readOnly = true)
 	@Override
-	public Category findById(Long id) {
-		TypedQuery<Category> query = em.createNamedQuery("Category.findById", Category.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+	public List<Category> findAllByIsActiveTrue() {
+		List<Category> categories = em.createNamedQuery("Category.findAllByIsActiveTrue", Category.class).getResultList();
+		return categories;
 	}
 	
 	@Transactional(readOnly = true)
 	@Override
-	public Category findByIdWithDetails(Long id) {
-		TypedQuery<Category> query = em.createNamedQuery("Category.findByIdWithDetails", Category.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+	public List<Category> findAllByIsActiveTrueWithDetails() {
+		List<Category> categories = em.createNamedQuery("Category.findAllByIsActiveTrueWithDetails", Category.class).getResultList();
+		return categories;
 	}
 	
 	public Category save(Category category) {
@@ -62,18 +58,10 @@ public class CategoryDaoImpl implements CategoryDao{
 	}
 	
 	@Override
-	public void softDelete(Category category) {
+	public void softDelete(Long categoryId) {
 		Query query = em.createNamedQuery("Category.softDelete");
-		query.setParameter("id", category.getId());
+		query.setParameter("categoryId", categoryId);
 		query.executeUpdate();
-	}
-
-	@Transactional(readOnly = true)
-	@Override
-	public Category findByNameWithDetails(String name) {
-		TypedQuery<Category> query = em.createNamedQuery("Category.findByNameWithDetails", Category.class);
-		query.setParameter("name", name);
-		return query.getSingleResult();
 	}
 	
 }
