@@ -6,6 +6,7 @@ import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import 'rxjs/add/operator/map';
+import {Chain} from '../../shared/chain/chain.model';
 
 @Component({
   selector: 'app-foods-food-list',
@@ -17,14 +18,13 @@ export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
   private curFoodCard: FoodList;
   selectedSubCatListID = [];
-  chainList: Storag[] = null;
   countLoadCard: number = 0;
   firstLoadedCard: number = 12;
   loadedCard: number = 6;
   isNextCard: boolean = false;
   showLoadingCard: boolean = false;
 
-  constructor(private chainService: FoodsStorageService,
+  constructor(public  chainLst: Chain,
               private foodsService: FoodsFoodListService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
     console.log('FoodListComponent - constr');
@@ -32,11 +32,6 @@ export class FoodsFoodListComponent implements OnInit {
 
   ngOnInit() {
     console.log('FoodListComponent - ngOnInit');
-
-    this.chainService.getAll().subscribe(chainList => {
-      //console.log(chainList);
-      this.chainList = chainList;
-    });
 
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
@@ -71,9 +66,6 @@ export class FoodsFoodListComponent implements OnInit {
           }
         }
       }
-      if (update.mode === MODES.SELECT_CHAIN) {
-        this.chainList = update.chainList;
-      }
     });
   }
 
@@ -84,13 +76,13 @@ export class FoodsFoodListComponent implements OnInit {
     }
   }
 
-  //проверяем есть ли для выбранных сетей товары
+  //проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
     let isProduct = false;
     this.foodList.map(food => {
-      this.chainList.map(chain => {
-        if (chain.id === food.idStrore) {
-          if (chain.selected) {
+      this.chainLst.lines.map(chain => {
+        if (chain.chain.id === food.idStrore) {
+          if (chain.chain.selected) {
             isProduct = true;
           }
         }
@@ -98,16 +90,15 @@ export class FoodsFoodListComponent implements OnInit {
     });
     return isProduct;
   }
-
-  //----------------------------------------------
+  //--------------------------------------------------
 
   //считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
   countVisibleProd() {
     let countProduct = 0;
     this.foodList.map(food => {
-      this.chainList.map(chain => {
-        if (chain.id === food.idStrore) {
-          if (chain.selected) {
+      this.chainLst.lines.map(chain => {
+        if (chain.chain.id === food.idStrore) {
+          if (chain.chain.selected) {
             countProduct += 1;
           }
         }
@@ -115,20 +106,18 @@ export class FoodsFoodListComponent implements OnInit {
     });
     return countProduct;
   }
-
   //-----------------------------------------------------
 
   //проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
     let isChain = false;
-    this.chainList.map(chain => {
-      if (chain.selected) {
+    this.chainLst.lines.map(chain => {
+      if (chain.chain.selected) {
         isChain = true;
       }
     });
     return isChain;
   }
-
   //-----------------------------------------------------
 
   //Догружаем следующую порцию карточек------------------
@@ -157,6 +146,5 @@ export class FoodsFoodListComponent implements OnInit {
       this.showLoadingCard = false;
     });
   }
-
   //-----------------------------------------------------
 }

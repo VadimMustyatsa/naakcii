@@ -15,7 +15,7 @@ export class Cart {
     if (line != undefined) {
       line.quantity += quantity;
     } else {
-      this.lines.push(new CartLine(product, quantity));
+      this.lines.push(new CartLine(product, quantity, ""));
     }
     this.recalculate();
   }
@@ -62,7 +62,8 @@ export class Cart {
 export class CartLine {
 
   constructor(public product: FoodList,
-              public quantity: number) {}
+              public quantity: number,
+              public comment: string) {}
 
   get lineTotal() {
     return this.quantity * this.product.totalPrice;

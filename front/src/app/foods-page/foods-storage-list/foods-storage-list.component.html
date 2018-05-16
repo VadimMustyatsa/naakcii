@@ -1,18 +1,3 @@
-<!--<div class="col s1">
-  <br>
-  <a id="menu1" class="waves-effect waves-light btn btn-floating amber"
-     onclick="$('.tapStep1').tapTarget('open')">1</a>
-  &lt;!&ndash; Tap Target Structure &ndash;&gt;
-  <div class="tapStep1 tap-target amber" data-activates="menu1">
-    <div class="tap-target-content">
-      <h5 class="white-text">Итак, приступим! C нами экономить легко и просто</h5>
-      <p>Первым делом выберите из списка подходящие Вам торговые сети.</p>
-      <p>Если в дальнейшем вы захотите выбрать другие сети, ничего страшного: на любом шаге можно вернуться к списку
-        сетей и скорректировать его. А мы автоматически всё перестроим)</p><br>
-      <p class="red-text text-accent-2">Ну что, готовы? тогда ВПЕРЕД!!!</p>
-    </div>
-  </div>
-</div>-->
 <div class="chainList">
   <div class="chainListWrap">
     <ul class="collapsible"
@@ -46,31 +31,31 @@
                 </label>
               </div>
               <div class="col m3 MedianPercent">
-                <span>{{medianPercent}}</span>
+                <span>{{chainLst.chainAverageDiscount}}</span>
               </div>
               <div class="col m3 MedianGoods">
-                <span>{{medianGoods}}</span>
+                <span>{{chainLst.itemAllCount}}</span>
               </div>
             </li>
 
-            <li *ngFor="let chain of chainList"
+            <li *ngFor="let chain of chainLst.lines"
                 class="collection-item row"
-                (click)="onChangeChain(chain.id)"
+                (click)="onChangeChain(chain.chain.id)"
             >
               <div class="chainName col m6">
-                <input type="checkbox" class="checkbox-color" id="chain{{chain.id}}"
-                       (change)="onChangeChain(chain.id)"
-                       [checked]="chain.selected"/>
-                <label for="chain{{chain.id}}" class="grey-text text-darken-2">
-                  <img class="chainLogo" src="{{chain.imgLogoSmall}}">
-                  <span>{{chain.name}}</span>
+                <input type="checkbox" class="checkbox-color" id="chain{{chain.chain.id}}"
+                       (change)="onChangeChain(chain.chain.id)"
+                       [checked]="chain.chain.selected"/>
+                <label for="chain{{chain.chain.id}}" class="grey-text text-darken-2">
+                  <img class="chainLogo" src="{{chain.chain.imgLogoSmall}}">
+                  <span>{{chain.chain.name}}</span>
                 </label>
               </div>
               <div class="col m3 chainPercent">
-                <span>{{chain.percent}}</span>
+                <span>{{chain.chain.percent}}</span>
               </div>
               <div class="col m3 chainCountGoods">
-                <span>{{chain.countGoods}}</span>
+                <span>{{chain.chain.countGoods}}</span>
               </div>
             </li>
           </ul>

@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {Storag} from '../shared/Storage/foods.storage.model';
-import {isUndefined} from "util";
-import {FoodList} from "../shared/foodList/foods.foodList.model";
+import {isUndefined} from 'util';
+import {FoodList} from '../shared/foodList/foods.foodList.model';
+import {Chain, ChainLine} from '../shared/chain/chain.model';
 
 @Component({
   selector: 'app-finalize-page',
@@ -12,25 +13,20 @@ import {FoodList} from "../shared/foodList/foods.foodList.model";
   providers: [FoodsStorageService]
 })
 export class FinalizePageComponent implements OnInit {
-  chainList: Storag[] = null;
-  chainListExist: Storag[] = null;
-  math: Math;
+  chainListExist: ChainLine[] = null;
 
-  constructor(private chainService: FoodsStorageService,
+  constructor(public  chainLst: Chain,
               public cart: Cart) {
   }
 
   ngOnInit() {
-    this.chainService.getAll().subscribe(chainList => {
-      this.chainList = chainList;
-      this.chainListExist = this.getExistListChain();
-    });
+    this.chainListExist = this.getExistListChain();
   }
 
   getExistListChain() {
-    let chainListExist: Storag[] = [];
+    let chainListExist: ChainLine[] = [];
     this.cart.lines.map(line => {
-      if (isUndefined(chainListExist.find(x => x.id == line.product.idStrore))) {
+      if (isUndefined(chainListExist.find(x => x.chain.id == line.product.idStrore))) {
         chainListExist.push(this.getStorageByID(line.product.idStrore));
       }
     });
@@ -82,13 +78,13 @@ export class FinalizePageComponent implements OnInit {
     return (food.allPrice - food.totalPrice).toFixed(2);
   }
 
-  getStorageByID(id: number): Storag {
-    return this.chainList.find(x => x.id === id);
+  getStorageByID(id: number): ChainLine {
+    return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
   getNameStorage(id: number): String {
     if (this.getStorageByID(id)) {
-      return this.getStorageByID(id).name;
+      return this.getStorageByID(id).chain.name;
     }
     return 'unknown';
   }

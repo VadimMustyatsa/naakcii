@@ -73,9 +73,20 @@ export class FoodsSubCategoryComponent implements OnInit {
 
   onChangeItem(idSubCut) {
     console.log('onChangeItem: ' + idSubCut);
+    //определяем кол. выбранных подкатегорий---
+    let countSelected = 0;
+    this.subCategoryList.map(el => {
+      if (el.selected) {
+        countSelected += 1;
+      }
+    });
+
     this.subCategoryList.map(el => {
       if (el.id === idSubCut) {
         el.selected = !el.selected;
+      } else
+      if (countSelected == 1) {
+        el.selected = false;
       }
     });
     this.correctAllItemsCheck();

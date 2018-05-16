@@ -24,23 +24,23 @@
         <div class="collapsible-header active row chainList grey-text text-darken-2">
           <div class="col m2 chainLogoName">
             <div>
-              <img src="{{chain.imgLogoSmall}}">
+              <img src="{{chain.chain.imgLogoSmall}}">
             </div>
             <div>
-              {{chain.name}}
+              {{chain.chain.name}}
             </div>
           </div>
-          <div class="col m3 center">{{getCartByChain(chain.id).length}}</div>
-          <div class="col m2 center">{{getCartQuantityByChain(chain.id)}}</div>
+          <div class="col m3 center">{{getCartByChain(chain.chain.id).length}}</div>
+          <div class="col m2 center">{{getCartQuantityByChain(chain.chain.id)}}</div>
           <div class="col m1 center">
-            <span *ngIf="getCartAllPriceByChain(chain.id) > 0">{{getCartAllPriceByChain(chain.id).toFixed(2)}}</span>
-            <span *ngIf="getCartAllPriceByChain(chain.id) == 0">нет данных</span>
+            <span *ngIf="getCartAllPriceByChain(chain.chain.id) > 0">{{getCartAllPriceByChain(chain.chain.id).toFixed(2)}}</span>
+            <span *ngIf="getCartAllPriceByChain(chain.chain.id) == 0">нет данных</span>
           </div>
           <div class="col m1 center">
-            <span>{{(getCartAllPriceByChain(chain.id) - getCartTotalPriceByChain(chain.id)).toFixed(2)}}</span><br>
-            <span>({{( 100 - (getCartTotalPriceByChain(chain.id)/getCartAllPriceByChain(chain.id))*100 ).toFixed(0)}} %)</span>
+            <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)).toFixed(2)}}</span><br>
+            <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ).toFixed(0)}} %)</span>
           </div>
-          <div class="col m1 center">{{getCartTotalPriceByChain(chain.id).toFixed(2)}}</div>
+          <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2)}}</div>
           <div class="col m1 center">18 мая</div>
           <div class="col m1">
             <i class="material-icons">arrow_drop_down</i>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="collapsible-body row"
-             *ngFor="let curCart of getCartByChain(chain.id)"
+             *ngFor="let curCart of getCartByChain(chain.chain.id)"
         >
           <div class="col m2">
             <img *ngIf="!curCart.product.img" src="assets/images/noImg.svg">

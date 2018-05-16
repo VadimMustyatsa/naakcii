@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, HostListener} from '@angular/core';
 import {Storag} from '../../shared/Storage/foods.storage.model';
 import {FoodsStorageService} from "../../shared/Storage/foods.storage.service";
 import {Cart, CartLine} from '../../shared/cart/cart.model';
+import {Chain, ChainLine} from '../../shared/chain/chain.model';
 
 @Component({
   selector: 'app-foods-total-items',
@@ -11,7 +12,6 @@ import {Cart, CartLine} from '../../shared/cart/cart.model';
 })
 export class FoodsTotalItemsComponent implements OnInit {
   fixedPaddingTop:number = 0;
-  chainList: Storag[] = null;
 
   iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
   curentIconCollapsible = String(this.iconCollapsible.minimized);
@@ -25,14 +25,10 @@ export class FoodsTotalItemsComponent implements OnInit {
       }
     }
   ];
-  constructor(private chainService: FoodsStorageService,
+  constructor(public  chainLst: Chain,
               public cart: Cart) {}
 
-  ngOnInit() {
-    this.chainService.getAll().subscribe(chainList => {
-      this.chainList = chainList;
-    });
-  }
+  ngOnInit() { }
 
   @HostListener('window:scroll', ['$event']) onScrollEvent($event){
     const verticalOffset = window.pageYOffset
@@ -61,14 +57,14 @@ export class FoodsTotalItemsComponent implements OnInit {
     return (String(this.fixedPaddingTop) + 'px');
   }
 
-  getStorageByID(id: number): Storag {
-    if (this.chainList) {
-      return this.chainList.find(x => x.id === id);
+  getStorageByID(id: number): ChainLine {
+    if (this.chainLst.lines.length > 0) {
+      return this.chainLst.lines.find(x => x.chain.id === id);
     }
   }
   getNameStorage(id: number): String {
     if (this.getStorageByID(id)) {
-      return this.getStorageByID(id).name;
+      return this.getStorageByID(id).chain.name;
     }
     return 'unknown';
   }

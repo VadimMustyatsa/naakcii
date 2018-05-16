@@ -42,6 +42,9 @@
   margin-right: 15px;
   top: -10px;
 }
+.amountItem {
+  user-select: none;
+}
 .btn-floating {
   transform: scale(0.5);
 }

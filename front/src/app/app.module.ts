@@ -30,6 +30,8 @@ import { FoodsStorageListComponent } from './foods-page/foods-storage-list/foods
 import { HttpClientModule } from '@angular/common/http';
 import {Cart} from './shared/cart/cart.model';
 import { FinalizePageComponent } from './finalize-page/finalize-page.component';
+import {Chain} from './shared/chain/chain.model';
+import {FoodsStorageService} from './shared/Storage/foods.storage.service';
 
 const routes = [
   {path: '', component: HomePageComponent},
@@ -68,7 +70,7 @@ const routes = [
     NguCarouselModule,
     InfiniteScrollModule
   ],
-  providers: [Cart, FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
+  providers: [FoodsStorageService, Chain, Cart, FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
