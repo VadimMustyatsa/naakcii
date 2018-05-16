@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
-import {Storag} from '../shared/Storage/foods.storage.model';
 import {isUndefined} from 'util';
 import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
@@ -14,8 +13,10 @@ import {Chain, ChainLine} from '../shared/chain/chain.model';
 })
 export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
+  widthContainer = "1200px";
 
   constructor(public  chainLst: Chain,
+              private el:ElementRef,
               public cart: Cart) {
   }
 
@@ -99,5 +100,13 @@ export class FinalizePageComponent implements OnInit {
   }
   addItem(curFood: CartLine) {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
+  }
+
+  onResizeContent() {
+    var rootElement = this.el.nativeElement;
+    var childElement = rootElement.firstElementChild;
+    var contentElement =  childElement.firstElementChild;
+
+    this.widthContainer = String(contentElement.clientWidth) + "px";
   }
 }

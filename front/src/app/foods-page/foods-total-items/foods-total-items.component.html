@@ -85,8 +85,8 @@
           </div>
 
           <div class="input-field">
-            <input id="last_name" type="text" class="validate grey-text">
-            <label for="last_name" class="grey-text">Можете добавить комментарий</label>
+            <textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curFood.comment" value="{{curFood.comment}}"></textarea>
+            <label for="textarea1" class="grey-text">Можете добавить комментарий</label>
           </div>
         </div>
 

@@ -18,13 +18,21 @@
 .finalizeHeader div {
   text-align: center;
 }
+.totalList {
+  margin-bottom: 70px;
+}
+/********************************/
 .finalizeFooter {
+  position: fixed;
+  bottom: 0px;
+  z-index: 400;
   cursor: default;
   display: flex;
   align-items: center;
   background-color: #757575;
   color: white;
 }
+/************************************/
 .collapsible-header {
   margin: 0px;
   padding: 5px;
@@ -88,3 +96,13 @@
   border-radius: 3px;
   font-size: 20px;
 }
+/************************/
+.itemComment {
+  font-style: italic;
+}
+/*********************************/
+.itemComment textarea:focus {
+  border-bottom: 1px solid #656565;
+  box-shadow: 0 1px 0 0 #656565;
+}
+/*********************************/
