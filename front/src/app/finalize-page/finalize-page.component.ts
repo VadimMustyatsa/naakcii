@@ -224,7 +224,7 @@ export class FinalizePageComponent implements OnInit {
     docDefinition['styles'] = docStyle;
     //**************************************************************
 
-    // pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition).download('totalList.pdf');
     pdfMake.createPdf(docDefinition).open();
   }
 }
