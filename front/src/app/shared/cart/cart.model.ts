@@ -76,10 +76,10 @@ export class Cart {
       chainSort[chain.chain.name] = curCartList;
     });
 
-    totalSum['sumBefore'] = sumBefore.toFixed(2);
-    totalSum['sumAfter'] = sumAfter.toFixed(2);
-    totalSum['discountSum'] = (sumBefore - sumAfter).toFixed(2);
-    totalSum['discountPersent'] = (100 - (sumAfter/sumBefore)*100).toFixed(0);
+    totalSum['sumBefore'] = sumBefore;
+    totalSum['sumAfter'] = sumAfter;
+    totalSum['discountSum'] = (sumBefore - sumAfter);
+    totalSum['discountPersent'] = (100 - (sumAfter/sumBefore)*100);
 
     pdf['ChainList'] = chainSort;
     pdf['totalSum'] = totalSum;
