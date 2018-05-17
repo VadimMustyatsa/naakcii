@@ -6,6 +6,7 @@ import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import {$NBSP} from "@angular/compiler/src/chars";
 
 @Component({
   selector: 'app-finalize-page',
@@ -21,6 +22,7 @@ export class FinalizePageComponent implements OnInit {
               private el: ElementRef,
               public cart: Cart) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.width = '1400px';
   }
 
   ngOnInit() {
@@ -138,93 +140,143 @@ export class FinalizePageComponent implements OnInit {
     let docDefinition = {};
     let docContent = [];
     let docStyle = {};
-    let sumAfter = 0;
+    let sumAfter = '';
     let benefit = '';
 
     let totalSum = {};
     totalSum = data['totalSum'];
-    sumAfter = totalSum['sumAfter'];
+    sumAfter = (totalSum['sumAfter']).toFixed(2) + ' руб.';
     benefit = (totalSum['discountSum']).toFixed(2) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
-
 
     docContent.push({text: 'Список покупок', style: 'header'});
 
     for (var chain in data['ChainList']) {
-      docContent.push({text: chain, style: 'chainStyle', margin: [0, 20]});  //заголовок текущей сети
+      //заголовок текущей сети
+      //docContent.push({text: chain, style: 'chainStyle', margin: [0, 20]});
+      docContent.push({text: '', margin: [0, 25, 0 ,0]}); //пустая строка
+
+      let table = {}; //обрамление
+      let bodyTable = {};
+      let bodyBodyTable = [];
+
+      let widthParam = [];
+      widthParam.push('100%');
+      bodyTable['width'] = widthParam;
+
+      let tableLine = [];
+      let chainWidth = this.getWidthStr(chain, 100);
+      tableLine.push({text: chainWidth, bold: true, fillColor: '#656565', color: 'white', fontSize: '38', margin: [0, 5]});
+
+      bodyBodyTable.push(tableLine);
+      bodyTable['body'] = bodyBodyTable;
+      table['table'] = bodyTable;
+      docContent.push(table);
+      //--------------------------------------------------------------
+
       data['ChainList'][chain].map(item => {  //перебираем товарные позиции
         let itemColumnList = {}; //строка
         let columns = [];
-        columns.push({width: '60%', text: item['Name'], margin: [0, 10]});
-        columns.push({width: '10%', text: '', margin: [0, 10]});
-        columns.push({width: '10%', text: item['priceOne'], style: 'itemSumStyle', margin: [0, 10]});
-        columns.push({width: '10%', text: '*' + item['amount'], style: 'itemSumStyle', margin: [0, 10]});
-        columns.push({width: '10%', text: item['priceSum'], style: 'itemSumStyle', margin: [0, 10]});
+        let itemNameComment = '';
+        if (item['Comment'] == '') {
+          itemNameComment = item['Name'];
+        } else {
+          itemNameComment = item['Name'] + '\n' + '(' + item['Comment'] + ')';
+        }
+        columns.push({width: '60%', text: itemNameComment, margin: [0, 15]});
+        columns.push({width: '10%', text: '', margin: [0, 15]});
+        columns.push({width: '10%', text: item['priceOne'], style: 'itemSumStyle', alignment: 'center', margin: [0, 15]});
+        columns.push({width: '10%', text: '*' + item['amount'], style: 'itemSumStyle', alignment: 'center', margin: [0, 15]});
+        columns.push({width: '10%', text: item['priceSum'], style: 'itemSumStyle', margin: [0, 15]});
 
         itemColumnList['columns'] = columns;
         itemColumnList['style'] = 'itemStyle';
         docContent.push(itemColumnList);
       });
     }
-    //итоговая сумма---------------------------
+    //итоговая сумма------------------------------
     let itemColumnList = {}; //строка
     let columns = [];
 
-    columns.push({width: '70%', text: 'Итого:', margin: [0, 30, 0, 10]});
-    columns.push({width: '30%', text: (sumAfter).toFixed(2), style: 'itemSumStyle', margin: [0, 30, 0, 10]});
+    columns.push({width: '70%', text: 'Итого:', bold: true, margin: [0, 30, 0, 10]});
+    columns.push({width: '30%', text: sumAfter, bold: true, style: 'itemSumStyle', margin: [0, 30, 0, 10]});
 
     itemColumnList['columns'] = columns;
     itemColumnList['style'] = 'totalStyle';
     docContent.push(itemColumnList);
     //----------------------------------------
 
-    //Ваша выгода---------------------------
-    itemColumnList = {}; //строка
+    //Ваша выгода-----------------------------------
+    docContent.push({text: 'Ваша выгода:    ' + benefit, bold: true, style: 'totalStyle', margin: [0, 20]});
+    /*itemColumnList = {}; //строка
     columns = [];
     columns.push({width: '70%', text: 'Ваша выгода:', margin: [0, 30, 0, 10]});
     columns.push({width: '30%', text: benefit, style: 'itemSumStyle', margin: [0, 30, 0, 10]});
 
     itemColumnList['columns'] = columns;
     itemColumnList['style'] = 'totalStyle';
-    docContent.push(itemColumnList);
-    //----------------------------------------
+    docContent.push(itemColumnList);*/
+    //-----------------------------------------------
+
+    let pageSize = {};
+    pageSize['width'] = 1000;
+    pageSize['height'] = 'auto';
 
     docDefinition['content'] = docContent;
-    //стили********************************************************
+    docDefinition['pageSize'] = pageSize;
+    //docDefinition['pageSize'] = 'A4';
+    //стили***************************************************
     let headerStyle = {};
-    headerStyle['fontSize'] = 22;
+    headerStyle['fontSize'] = 44;
     headerStyle['bold'] = true;
     headerStyle['alignment'] = 'center';
 
-    let chainStyle = {};
-    chainStyle['fontSize'] = 18;
-    chainStyle['width'] = '100%';
+   /* let chainStyle = {};
+    chainStyle['fontSize'] =32;
     chainStyle['bold'] = true;
-    chainStyle['alignment'] = 'center';
+    //chainStyle['alignment'] = 'center';
     chainStyle['color'] = 'white';
-    chainStyle['background'] = '#656565';
+    chainStyle['fillColor'] = '#656565';*/
 
     let itemStyle = {};
+    itemStyle['fontSize'] = 32;
     let itemSumStyle = {};
     itemSumStyle['alignment'] = 'right';
 
     let totalStyle = {};
-    totalStyle['fontSize'] = 18;
-    totalStyle['color'] = 'white';
-    totalStyle['background'] = '#656565';
+    totalStyle['fontSize'] = 38;
+    //totalStyle['color'] = 'white';
+    //totalStyle['background'] = '#656565';
 
     let anotherStyle = {};
     anotherStyle['italic'] = true;
     anotherStyle['alignment'] = 'right';
 
     docStyle['header'] = headerStyle;
-    docStyle['chainStyle'] = chainStyle;
+    //docStyle['chainStyle'] = chainStyle;
+    docStyle['itemStyle'] = itemStyle;
     docStyle['itemSumStyle'] = itemSumStyle;
     docStyle['totalStyle'] = totalStyle;
     docStyle['anotherStyle'] = anotherStyle;
     docDefinition['styles'] = docStyle;
-    //**************************************************************
 
-    pdfMake.createPdf(docDefinition).download('totalList.pdf');
+    //console.log(JSON.stringify(docDefinition));
+    //**************************************************************
+    pdfMake.createPdf(docDefinition).download('Список покупок.pdf');
     pdfMake.createPdf(docDefinition).open();
   }
+
+  getWidthStr(str: string, width: number) {
+    let line = str;
+    let addWidth = width - str.length;
+    console.log('addWidth: ' + addWidth);
+    for (let i=0; i<addWidth; i++) {
+      line += ' ';
+    }
+    line += '.';
+    console.log('lineWidth: ' + line.length);
+
+    return line;
+  }
 }
+
+
