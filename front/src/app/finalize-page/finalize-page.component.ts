@@ -13,10 +13,10 @@ import {Chain, ChainLine} from '../shared/chain/chain.model';
 })
 export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
-  widthContainer = "1200px";
+  widthContainer = 1200;
 
   constructor(public  chainLst: Chain,
-              private el:ElementRef,
+              private el: ElementRef,
               public cart: Cart) {
   }
 
@@ -53,28 +53,31 @@ export class FinalizePageComponent implements OnInit {
     });
     return quantity;
   }
+
   getCartAllPriceByChain(idChain: number) {
     let allPrice = 0;
     this.cart.lines.map(line => {
       if (line.product.idStrore == idChain) {
         if (line.product.allPrice > 0) {
-          allPrice += (line.product.allPrice*line.quantity);
-        } else  {
-          allPrice += (line.product.totalPrice*line.quantity);
+          allPrice += (line.product.allPrice * line.quantity);
+        } else {
+          allPrice += (line.product.totalPrice * line.quantity);
         }
       }
     });
     return allPrice;
   }
+
   getCartTotalPriceByChain(idChain: number) {
     let totalPrice = 0;
     this.cart.lines.map(line => {
       if (line.product.idStrore == idChain) {
-        totalPrice += (line.product.totalPrice*line.quantity);
+        totalPrice += (line.product.totalPrice * line.quantity);
       }
     });
     return totalPrice;
   }
+
   getSumDiscount(food: FoodList) {
     return (food.allPrice - food.totalPrice).toFixed(2);
   }
@@ -89,15 +92,18 @@ export class FinalizePageComponent implements OnInit {
     }
     return 'unknown';
   }
+
   deleteCartLine(cartLine: CartLine) {
     this.cart.removeLine(cartLine.product.id);
     this.chainListExist = this.getExistListChain();
   }
+
   subItem(curFood: CartLine) {
     if (curFood.quantity > 1) {
       this.cart.updateQuantity(curFood.product, Number(curFood.quantity - 1));
     }
   }
+
   addItem(curFood: CartLine) {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
@@ -105,9 +111,21 @@ export class FinalizePageComponent implements OnInit {
   onResizeContent() {
     var rootElement = this.el.nativeElement;
     var childElement = rootElement.firstElementChild;
-    var contentElement =  childElement.firstElementChild;
+    var contentElement = childElement.firstElementChild;
+    this.widthContainer = contentElement.clientWidth;
+  }
 
-    this.widthContainer = String(contentElement.clientWidth) + "px";
+  getPosition() {
+    this.onResizeContent();
+    let clientHeight = document.documentElement.clientHeight; //высота видимой части
+    let offsetHeight = document.documentElement.offsetHeight;
+    if ((offsetHeight - clientHeight) < 60) {
+      //this.positionTotalSum = "";
+      return "";
+    } else {
+      //this.positionTotalSum = "fixed";
+      return "fixed";
+    }
   }
 
   generatePDF() {
@@ -116,5 +134,3 @@ export class FinalizePageComponent implements OnInit {
     console.log(JSON.stringify(data));
   }
 }
-
-

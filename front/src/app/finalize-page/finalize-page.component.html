@@ -1,6 +1,5 @@
 <div *ngIf="chainListExist" class="listContainer">
   <div *ngIf="cart.lines.length > 0"
-       (window:resize)="onResizeContent()"
   >
     <div class="row finalizePageName grey-text text-darken-2">
       <span>Список покупок</span>
@@ -100,7 +99,25 @@
         </div>
       </li>
 
-      <li class="collapsible-header finalizeFooter row" [style.width]="widthContainer">
+      <li class="collapsible-header finalizeFooterButton row">
+        <div class="col m4 left">
+          <a routerLink="/form-shopping-list" class="btnLinkFoods grey-text text-darken-2">
+            <i class="material-icons">arrow_back</i>
+            <span>Вернуться к товарам</span>
+          </a>
+        </div>
+        <div class="col m4 center">
+          <a href="javascript:void(0);" (click)="generatePDF()" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
+        </div>
+        <div class="col m4 right">
+
+        </div>
+      </li>
+
+      <li class="collapsible-header finalizeFooter row"
+          [style.width.px]="widthContainer"
+          [style.position]=getPosition()
+      >
         <div class="col m2">Итого:</div>
         <div class="col m3 center">{{cart.lines.length}}</div>
         <div class="col m2 center">{{cart.itemCount}}</div>
@@ -116,20 +133,6 @@
         <div class="col m1 center"></div>
       </li>
 
-      <li class="collapsible-header finalizeFooterButton row">
-        <div class="col m4 left">
-          <a routerLink="/form-shopping-list" class="btnLinkFoods grey-text text-darken-2">
-            <i class="material-icons">arrow_back</i>
-            <span>Вернуться к товарам</span>
-          </a>
-        </div>
-        <div class="col m4 center">
-          <a href="javascript:void(0);" (click)="generatePDF()" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
-        </div>
-        <div class="col m4 right">
-
-        </div>
-      </li>
     </ul>
 
   </div>

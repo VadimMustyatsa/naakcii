@@ -41,7 +41,7 @@
 }
 /********************************/
 .finalizeFooter {
-  position: fixed;
+  /*position: fixed;*/
   bottom: 0px;
   z-index: 400;
   cursor: default;
