@@ -109,4 +109,12 @@ export class FinalizePageComponent implements OnInit {
 
     this.widthContainer = String(contentElement.clientWidth) + "px";
   }
+
+  generatePDF() {
+    let data = this.cart.generateJsonListPDF(); //сформированный список по сетям
+
+    console.log(JSON.stringify(data));
+  }
 }
+
+

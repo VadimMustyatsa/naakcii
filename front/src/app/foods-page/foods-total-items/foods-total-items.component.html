@@ -85,8 +85,11 @@
           </div>
 
           <div class="input-field">
-            <textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curFood.comment" value="{{curFood.comment}}"></textarea>
-            <label for="textarea1" class="grey-text">Можете добавить комментарий</label>
+            <input placeholder="Можете добавить комментарий"
+                   id="item_comment" type="text" class=""
+                   [(ngModel)] = "curFood.comment" value="{{curFood.comment}}">
+            <!--<textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curFood.comment" value="{{curFood.comment}}"></textarea>
+            <label for="textarea1" class="grey-text">Можете добавить комментарий</label>-->
           </div>
         </div>
 

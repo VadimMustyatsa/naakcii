@@ -49,10 +49,10 @@
           </div>
         </div>
 
-        <div class="collapsible-body row"
+        <div class="collapsible-body row itemLine"
              *ngFor="let curCart of getCartByChain(chain.chain.id)"
         >
-          <div class="col m1">
+          <div class="col m1 itemImg">
             <img *ngIf="!curCart.product.img" src="assets/images/noImg.svg">
             <img *ngIf="curCart.product.img" src="{{curCart.product.img}}">
           </div>
@@ -61,7 +61,10 @@
               {{curCart.product.name}}
             </p>
             <div class="itemComment">
-              <textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curCart.comment" value="{{curCart.comment}}"></textarea>
+              <input placeholder="Можете добавить комментарий"
+                     id="item_comment" type="text" class=""
+                     [(ngModel)] = "curCart.comment" value="{{curCart.comment}}">
+              <!--<textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curCart.comment" value="{{curCart.comment}}"></textarea>-->
               <!--<label for="textarea1" class="grey-text">Можете добавить комментарий</label>-->
             </div>
           </div>
@@ -82,7 +85,7 @@
           </div>
           <div class="col m1 center">
             <span *ngIf="curCart.product.discount == 0">&ndash;</span>
-            <span *ngIf="curCart.product.discount > 0">{{(curCart.product.allPrice - curCart.product.totalPrice).toFixed(2)}}</span><br>
+            <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity).toFixed(2)}}</span><br>
             <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
           </div>
           <div class="col m1 center">
@@ -121,7 +124,7 @@
           </a>
         </div>
         <div class="col m4 center">
-          <a href="javascript:void(0);" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
+          <a href="javascript:void(0);" (click)="generatePDF()" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
         </div>
         <div class="col m4 right">
 
