@@ -59,7 +59,6 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
             newArr = actualArr.slice(0, expectedArr.length);
             expect(newArr).to.eql(expectedArr);
         }
-        //return expect(true).to.deep.equal(true);
     });
 
     Given(/^на (панели) "(.+)" не отображается ни одной карточки$/, async function (partElementKey1, partElementKey2) {
@@ -81,12 +80,7 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
             actualText,expectedText;
         expectedText = textStr.replace(/\n/g,'').replace(/, /g,',').replace(/\. /g,'.');
         actualText = (await world.pageFactory.currentPage.getTextOnElement(elementKey)).replace(/\n/g,'').replace(/, /g,',').replace(/\. /g,'.');
-
-
-        console.log('expectedText = ' + expectedText);
-        console.log('actualText = ' + expectedText);
-        //return expect(actualText).to.equal(expectedText);
-        return expect(true).to.equal(true);
+        return expect(actualText).to.equal(expectedText);
     });
 
     Then(/^(?:на|в) (панели|фильтре) "(.+)" должны отобразиться (?:.+):$/, async function (partElementKey1, partElementKey2, dataTable) {
@@ -116,7 +110,6 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         if(partElementKey1.indexOf('фильтр') > -1){
             await world.pageFactory.currentPage.clickElement(elementKey.toLocaleLowerCase());
         }
-        //return expect(true).to.deep.equal(true);
     });
 
     Then(/^на (панели) "(.+)" должны плавно подгрузиться (?:.+):$/, async function (partElementKey1, partElementKey2, dataTable) {
@@ -145,8 +138,6 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
             }
             expect(newArr).to.eql(expectedArr);
         }
-
-        //return expect(true).to.deep.equal(true);//
     });
 
     Then(/^(фильтр) "(.+)" должен раскрыться$/, async function (partElementKey1, partElementKey2) {

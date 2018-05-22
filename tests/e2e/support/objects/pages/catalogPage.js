@@ -77,35 +77,25 @@ class CatalogPage extends Page{
         return resultArray;
     }
 
-    async clickElementByText(elementKey, subElementKey, text, btnName = 'undefined'){
-        var textArray = [],
-            index;
+    async clickElementByText(elementKey, subElementKey, text, btnName = undefined){
+        var textArray = [];
         if(Array.isArray(text)){
             textArray = text.slice();
         } else {
             textArray.push(text);
         }
         for(var i = 0; i < textArray.length; i += 1){
-            index = await this.getElementIndex(elementKey, subElementKey, textArray[i]);
-            if(btnName === 'undefined') {
-                await element.all(this.helper.getElementLocator(elementKey, subElementKey)).get(index).click();
-            } else {
-                await element.all(this.helper.getElementLocator(elementKey, btnName)).get(index).click();
-            }
+            await element.all(this.helper.getElementLocator(elementKey, subElementKey)).getText()
+                .then((textArr) => {
+                    return textArr.some((elementText, index) => {
+                        if (elementText.indexOf(textArray[i]) > -1) {
+                            return (btnName === undefined) ? element.all(this.helper.getElementLocator(elementKey, subElementKey)).get(index).click()
+                                : element.all(this.helper.getElementLocator(elementKey, btnName)).get(index).click();
+                        }
+                    });
+                });
         }
     }
-
-    async getElementIndex(elementKey, subElementKey, textValue){
-        var elementObj = this.helper.getElementLocator(elementKey, subElementKey),
-            tempArr1, tempArr2, tempArr3;
-        if (Array.isArray(textValue)) {
-            textValue = textValue[0];
-        }
-        return (await element.all(elementObj).map((elements) => {
-            return elements.getText();
-        })).indexOf(textValue);
-    }
-
 }
 
 module.exports = CatalogPage;
