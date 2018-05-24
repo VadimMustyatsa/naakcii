@@ -21,8 +21,9 @@ public class APIApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		//dp.parseCategories("src/main/resources/Test_data.xlsx");
-		//dp.parseActions("src/main/resources/Test_data.xlsx");
-		//dp.test();
+		dp.parseCategories("src/main/resources/Test_data.xlsx");
+		dp.parseChains("src/main/resources/Test_data.xlsx");
+		dp.parseActions("src/main/resources/Test_data.xlsx");
+		dp.test();
 	}
 }

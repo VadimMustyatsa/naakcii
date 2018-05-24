@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,12 @@ import org.hibernate.annotations.Where;
 		query = "update Category cat set cat.isActive = false where cat.id = :categoryId")
 })
 @Where(clause = "F_CATEGORY_IS_ACTIVE = 1")
+@Cacheable
+@org.hibernate.annotations.Cache(
+		usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+		region = "naakcii.by.repository.model.cache.Category"
+)
+@org.hibernate.annotations.NaturalIdCache
 public class Category implements Serializable {
 	
 	/**
@@ -48,6 +55,7 @@ public class Category implements Serializable {
 	@Column(name = "CATEGORY_NAME")
 	@NotNull
 	@Size(min = 3, max = 45)
+	@org.hibernate.annotations.NaturalId(mutable = true)
 	private String name;
 	
 	@Column(name = "CATEGORY_IS_ACTIVE")
@@ -62,6 +70,9 @@ public class Category implements Serializable {
 			mappedBy = "category", 
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch = FetchType.LAZY
+	)
+	@org.hibernate.annotations.Cache(
+			usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE
 	)
 	private List<Subcategory> subcategories = new ArrayList<Subcategory>();
 	

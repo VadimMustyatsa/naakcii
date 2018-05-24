@@ -15,6 +15,7 @@ public interface ChainRepository extends CrudRepository<Chain, Long> {
 	List<Chain> findAllByOrderByNameDesc();
 	List<Chain> findAllByIsActiveTrueOrderByNameAsc();
 	List<Chain> findAllByIsActiveTrueOrderByNameDesc();
+	Chain findByName(String chainName);
 	@Modifying
 	@Query("update Chain chain set chain.isActive = false where chain.id = :chainId")
 	void softDelete(@Param("chainId") Long chainId);

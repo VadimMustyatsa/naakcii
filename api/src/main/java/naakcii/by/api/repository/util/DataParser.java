@@ -57,37 +57,69 @@ public class DataParser {
 	
 	public void parseCategories(String fileName) {
 		try (FileInputStream fis = new FileInputStream(fileName)) { 
-			XSSFWorkbook book = new XSSFWorkbook(fis); 
-			XSSFSheet sheet = book.getSheet("Каталог 0.2");
-			Iterator<Row> rowIterator = sheet.iterator();
-			rowIterator.next();
-			Category category = null;
-			Subcategory subcategory = null;
-			Cell categoryCell = null;
-			Cell subcategoryCell = null;
-			String categoryName = null;
-			String subcategoryName = null;
-			Row row = rowIterator.next();
-			while (rowIterator.hasNext()) {
-				categoryCell = row.getCell(0);
-				categoryName = categoryCell.getStringCellValue();
-				if (categoryName != "") {
-					category = new Category (categoryName, true);
-					logger.info("New category \"" + category.getName() + "\" was found.");
-					while (rowIterator.hasNext()) {
-						row = rowIterator.next();
-						subcategoryCell = row.getCell(1);
-						subcategoryName = subcategoryCell.getStringCellValue();
-						if (subcategoryName != "") {
-							subcategory = new Subcategory (subcategoryName, true, category);
-							logger.info("New subcategory \"" + category.getName() + "\"." + subcategory.getName() + "\" was found.");
-							category.getSubcategories().add(subcategory);	
-						} else {
-							categoryRepository.save(category);
-							break;
+			try (XSSFWorkbook book = new XSSFWorkbook(fis)) { 
+				XSSFSheet sheet = book.getSheet("Каталог 0.2");
+				Iterator<Row> rowIterator = sheet.iterator();
+				rowIterator.next();
+				Category category = null;
+				Subcategory subcategory = null;
+				Cell categoryCell = null;
+				Cell subcategoryCell = null;
+				String categoryName = null;
+				String subcategoryName = null;
+				Row row = rowIterator.next();
+				while (rowIterator.hasNext()) {
+					categoryCell = row.getCell(0);
+					categoryName = categoryCell.getStringCellValue();
+					if (categoryName != "") {
+						category = new Category (categoryName, true);
+						logger.info("New category \"" + category.getName() + "\" was found.");
+						while (rowIterator.hasNext()) {
+							row = rowIterator.next();
+							subcategoryCell = row.getCell(1);
+							subcategoryName = subcategoryCell.getStringCellValue();
+							if (subcategoryName != "") {
+								subcategory = new Subcategory (subcategoryName, true, category);
+								logger.info("New subcategory \"" + category.getName() + "\"." + subcategory.getName() + "\" was found.");
+								category.getSubcategories().add(subcategory);	
+							} else {
+								categoryRepository.save(category);
+								break;
+							}
 						}
+					} else break;
+				}
+			}
+		} catch (FileNotFoundException fnfEx) {
+			logger.error("FileNotFoundException: " + fnfEx.getMessage());
+		} catch (IOException ioEx) {
+			logger.error("IOException: " + ioEx.getMessage());
+		}
+	}
+	
+	public void parseChains(String fileName) {
+		try (FileInputStream fis = new FileInputStream(fileName)) {	
+			try (XSSFWorkbook book = new XSSFWorkbook(fis)) {
+				XSSFSheet sheet = book.getSheet("Сети");
+				Iterator<Row> rowIterator = sheet.iterator();
+				Chain chain = null;
+				Cell chainCell = null;
+				Cell linkCell = null;
+				String chainName = null;
+				String chainLink = null;
+				Row row = rowIterator.next();
+				while (rowIterator.hasNext()) {
+					row = rowIterator.next();
+					chainCell = row.getCell(0);
+					linkCell = row.getCell(1);
+					chainName = chainCell.getStringCellValue();
+					chainLink = linkCell.getStringCellValue();
+					if (chainName != "" && chainLink != "") {
+						chain = new Chain (chainName, chainLink, true);
+						logger.info("New chain \"" + chain.getName() + "\" was found.");
+						chainRepository.save(chain);
 					}
-				} else break;
+				}
 			}
 		} catch (FileNotFoundException fnfEx) {
 			logger.error("FileNotFoundException: " + fnfEx.getMessage());
@@ -99,86 +131,96 @@ public class DataParser {
 	
 	public void parseActions(String fileName) {
 		try (FileInputStream fis = new FileInputStream(fileName)) { 
-			XSSFWorkbook book = new XSSFWorkbook(fis);
-			XSSFSheet sheet;
-			for (int i = 0; i <= 6; i++) {
-				sheet = book.getSheetAt(i);
-				Iterator<Row> rowIterator = sheet.iterator();
-				Row row = rowIterator.next();
-				Subcategory subcategory = null;
-				Product product = null;
-				Action action = null;
-				Chain chain = new Chain(sheet.getSheetName(), sheet.getSheetName() + " link", true);
-				logger.info("New chain \"" + chain.getName() + "\" was found.");
-				chainRepository.save(chain);
-				Cell categoryCell = null;
-				Cell subcategoryCell = null;
-				Cell productCell = null;
-				Cell priceCell = null;
-				Cell discountPriceCell = null;
-				Cell dateCell = null;
-				String categoryName = null;
-				String subcategoryName = null;
-				String productDescription = null;
-				String dates = null;
-				double discountPrice = 0.0;
-				double price = 0.0;
-				int discount = 0;
-				while (rowIterator.hasNext()) {
-					row = rowIterator.next();
-					productCell = row.getCell(0);
-					categoryCell = row.getCell(1);
-					subcategoryCell = row.getCell(2);
-					discountPriceCell = row.getCell(5);
-					dateCell = row.getCell(6);
-					productDescription = productCell.getStringCellValue();
-					categoryName = categoryCell.getStringCellValue();
-					subcategoryName = subcategoryCell.getStringCellValue();
-					discountPrice = discountPriceCell.getNumericCellValue();
-					dates = dateCell.getStringCellValue();
-					if (productDescription != "" && categoryName != "" && subcategoryName != "" && discountPrice != 0) {
-						priceCell = row.getCell(3);
-						dateCell = row.getCell(6);
-						price = priceCell.getNumericCellValue();
-						subcategory = subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName);
-						product = new Product(productDescription, true, subcategory);
-						logger.info("New product \"" + subcategory.getName() + "\"." + product.getName() + "\" was found.");
-						Map<String, String> quantityAndMeasure =  productDataHandler.parseQuantityAndMeasure(productDescription);
-						if (quantityAndMeasure.containsKey("quantity")) {
-							product.setQuantity(Double.parseDouble(quantityAndMeasure.get("quantity")));
-							logger.info("Quantity " + product.getQuantity() + ".");
+			try (XSSFWorkbook book = new XSSFWorkbook(fis)) {
+				XSSFSheet sheet;
+				for (int i = 0; i <= 6; i++) {
+					sheet = book.getSheetAt(i);
+					Chain chain = chainRepository.findByName(sheet.getSheetName());
+					if (chain != null) {
+						logger.info("Searching all actions for chain \"" + chain.getName() + "\".");
+						Iterator<Row> rowIterator = sheet.iterator();
+						Row row = rowIterator.next();
+						Subcategory subcategory = null;
+						Product product = null;
+						Action action = null;
+						Cell categoryCell = null;
+						Cell subcategoryCell = null;
+						Cell productCell = null;
+						Cell priceCell = null;
+						Cell discountPriceCell = null;
+						Cell dateCell = null;
+						String categoryName = null;
+						String subcategoryName = null;
+						String productDescription = null;
+						String dates = null;
+						double discountPrice = 0.0;
+						double price = 0.0;
+						int discount = 0;
+						while (rowIterator.hasNext()) {
+							row = rowIterator.next();
+							productCell = row.getCell(0);
+							categoryCell = row.getCell(1);
+							subcategoryCell = row.getCell(2);
+							discountPriceCell = row.getCell(5);
+							dateCell = row.getCell(6);
+							productDescription = productCell.getStringCellValue();
+							categoryName = categoryCell.getStringCellValue();
+							subcategoryName = subcategoryCell.getStringCellValue();
+							discountPrice = discountPriceCell.getNumericCellValue();
+							dates = dateCell.getStringCellValue();
+							if (productDescription != "" && categoryName != "" && subcategoryName != "" && discountPrice != 0) {
+								priceCell = row.getCell(3);
+								dateCell = row.getCell(6);
+								price = priceCell.getNumericCellValue();
+								subcategory = subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName);
+								if (subcategory != null) {
+									product = new Product(productDescription, true, subcategory);
+									logger.info("New product \"" + subcategory.getName() + "\"." + product.getName() + "\" was found.");
+									Map<String, String> quantityAndMeasure =  productDataHandler.parseQuantityAndMeasure(productDescription);
+									if (quantityAndMeasure.containsKey("quantity")) {
+										product.setQuantity(Double.parseDouble(quantityAndMeasure.get("quantity")));
+										logger.info("Quantity " + product.getQuantity() + ".");
+									}
+									if (quantityAndMeasure.containsKey("measure")) {
+										product.setMeasure(quantityAndMeasure.get("measure"));
+										logger.info("Measure \"" + product.getMeasure() + "\".");
+									}
+									productRepository.save(product);
+									action = new Action(product, chain, discountPrice);
+									logger.info("Discount price " + action.getDiscountPrice() + ".");
+									if (price != 0) {
+										action.setPrice(price);
+										logger.info("Base price " + action.getPrice() + ".");
+										discount = (int) (100.0 * (1.0 -discountPrice/price));
+										action.setDiscount(discount);
+										logger.info("Discount " + action.getDiscount() + "%.");
+									}
+									if (dates != "") {
+										Map<String, Calendar> datesMap = productDataHandler.parseDate(dates);
+										if (datesMap.containsKey("start")) {
+											action.setStartDate(datesMap.get("start"));
+											logger.info("Start date " + action.getStartDate().get(Calendar.DATE) + "." +
+												action.getStartDate().get(Calendar.MONTH) + "." +
+												action.getStartDate().get(Calendar.YEAR) + ".");
+										}
+										if (datesMap.containsKey("end")) {
+											action.setEndDate(datesMap.get("end"));
+											logger.info("End date " + action.getEndDate().get(Calendar.DATE) + "." +
+													action.getEndDate().get(Calendar.MONTH) + "." +
+													action.getEndDate().get(Calendar.YEAR) + ".");
+										}
+									}
+									actionRepository.save(action);
+								} else {
+									logger.info("Product \"" + productDescription + "\" with indentifinite subcaategory \"" + subcategoryName + "\" was found. It will be ignored.");
+									continue;
+								}
+							} else break;	
 						}
-						if (quantityAndMeasure.containsKey("measure")) {
-							product.setMeasure(quantityAndMeasure.get("measure"));
-							logger.info("Measure \"" + product.getMeasure() + "\".");
-						}
-						productRepository.save(product);
-						action = new Action(product, chain, discountPrice);
-						logger.info("Discount price " + action.getDiscountPrice() + ".");
-						if (price != 0) {
-							action.setPrice(price);
-							logger.info("Base price " + action.getPrice() + ".");
-							discount = (int) (100.0 * (1.0 -discountPrice/price));
-							action.setDiscount(discount);
-							logger.info("Discount " + action.getDiscount() + "%.");
-						}
-						if (dates != "") {
-							Map<String, Calendar> datesMap = productDataHandler.parseDate(dates);
-							if (datesMap.containsKey("start")) {
-								action.setStartDate(datesMap.get("start"));
-								logger.info("Start date " + action.getStartDate().get(Calendar.DATE) + "." +
-										action.getStartDate().get(Calendar.MONTH) + "." +
-										action.getStartDate().get(Calendar.YEAR) + ".");
-							}
-							if (datesMap.containsKey("end")) {
-								action.setEndDate(datesMap.get("end"));
-								logger.info("End date " + action.getEndDate().get(Calendar.DATE) + "." +
-										action.getEndDate().get(Calendar.MONTH) + "." +
-										action.getEndDate().get(Calendar.YEAR) + ".");
-							}
-						}
-						actionRepository.save(action);
-					} else break;	
+					} else {
+						logger.info("Indefinite chain \"" + sheet.getSheetName() + "\" was found. Actions for this chain will be ignored.");
+						continue;
+					}
 				}
 			}
 		} catch (FileNotFoundException fnfEx) {
@@ -196,18 +238,18 @@ public class DataParser {
 	
 	public void test() {
 		System.out.println("Repository test");
-		for (Category category : categoryRepository.findAll()) {
-			System.out.println("Category " + category.getName());
+		//for (Category category : categoryRepository.findAll()) {
+		//	System.out.println("Category " + category.getName());
 			//for (Subcategory subcategory : category.getSubcategories())
 			//System.out.println("Subcategory " + subcategory.getName());
-		}
-		categoryRepository.softDelete(1064L);
-		categoryRepository.softDelete(1058L);
-		for (Category category : categoryRepository.findAll()) {
-			System.out.println("Category " + category.getName());
+		//}
+		//categoryRepository.softDelete(1064L);
+		//categoryRepository.softDelete(1058L);
+		//for (Category category : categoryRepository.findAll()) {
+		//	System.out.println("Category " + category.getName());
 			//for (Subcategory subcategory : category.getSubcategories())
 			//System.out.println("Subcategory " + subcategory.getName());
-		}
+		//}
 		/*for (Category category : categoryRepository.findAllByIsActiveTrue()) {
 			System.out.println("Category " + category.getName());
 			for (Subcategory subcategory : category.getSubcategories())
@@ -226,14 +268,14 @@ public class DataParser {
 			System.out.println("Action chain " + action.getChain().getName());
 		}*/
 		System.out.println("Dao test");
-		/*for (Category category : cd.findAll()) {
+		for (Category category : cd.findAll()) {
 			System.out.println("Category " + category.getName());
 		}
 		for (Category category : cd.findAllWithDetails()) {
 			System.out.println("Category " + category.getName());
 			for (Subcategory subcategory : category.getSubcategories())
 			System.out.println("Subcategory " + subcategory.getName());
-		}*/
+		}
 		/*cd.softDelete(1058L);
 		for (Category category : cd.findAllByIsActiveTrue()) {
 			System.out.println("Category " + category.getName());

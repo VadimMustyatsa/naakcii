@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,11 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "SUBCATEGORY")
+@Cacheable
+@org.hibernate.annotations.Cache(
+		usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+		region = "naakcii.by.repository.model.cache.Subcategory"
+)
 public class Subcategory implements Serializable {
 
 	/**
