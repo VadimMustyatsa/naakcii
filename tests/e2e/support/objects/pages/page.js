@@ -43,31 +43,6 @@ class Page {
         }
     }
 
-    isElementOpened(elementKey){
-        var elementObj = this.helper.getElementLocator(elementKey, 'состояние');
-        return element(elementObj).getAttribute('class')
-            .then(function(result){
-                if(result.indexOf('active') !== -1){
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-    }
-
-    getTextOnElement(elementKey, subElementKey = elementKey) {
-        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
-        return element.all(elementObj).map(function (elements) {
-            return elements.getText();
-        }).then(function (textArr) {
-            var textRes = '';
-            for(var i = 0; i < textArr.length; i += 1){
-                textRes += textArr[i] + ' ';
-            }
-            return textRes.trim();
-        });
-    }
-
     getElementsNumber(elementKey, subElementKey = elementKey) {
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element.all(elementObj).count();
