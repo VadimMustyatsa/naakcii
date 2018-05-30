@@ -3,10 +3,9 @@ var Helper = require('../../helpers/helper'),
     Component = require('./component');
 
 class SubcategoryComponent extends Component{
-    constructor(componentRoot){
+    constructor(root){
         super();
-        //this._state = null; //кэширует текущее состояние - через setter ???
-        this.componentRoot = componentRoot;
+        this.root = root;
         this.data = {
             '(панель|панели) список подкатегорий': by.css('ul .categoryName'),
             'пункт|подкатегор(?:ия|ию|ии)': by.css('label[for*="Cat"]'),

@@ -3,10 +3,9 @@ var Helper = require('../../helpers/helper'),
     Component = require('./component');
 
 class ProductCardComponent extends Component{
-    constructor(componentRoot){
+    constructor(root){
         super();
-        this._state = null; //кэширует текущее состояние - через setter ???
-        this.componentRoot = componentRoot;
+        this.root = root;
         this.data = {
             '(панель|панели) список акционных товаров': by.css('div p'),
             'название|карточк(?:а|е)|акционный_товар': by.css('.foodName'),

@@ -3,10 +3,9 @@ var Helper = require('../../helpers/helper'),
     Component = require('./component');
 
 class ChainComponent extends Component{
-    constructor(componentRoot){
+    constructor(root){
         super();
-        //this._state = null; //кэширует текущее состояние - через setter ???
-        this.componentRoot = componentRoot;
+        this.root = root;
         this.data = {
             'название|(фильтр|фильтре) торговые сети': by.css('div[class^="collapsible-header"]>div:not(:last-child)'),
             'пункт|торговая_сеть': by.css('li label>span'),
