@@ -8,7 +8,8 @@ export enum MODES {
   SELECT_CATEGORY,
   SELECT_SUBCATEGORY,
   SELECT_FOOD_CARD,
-  SELECT_CHAIN
+  SELECT_CHAIN,
+  LOADED_CHAIN
 }
 
 export class SharedState {

@@ -28,10 +28,15 @@ import {FoodsFoodCardComponent} from './foods-page/foods-food-list/foods-food-ca
 import {AppCutStringPipe} from './cutString.pipe';
 import { FoodsStorageListComponent } from './foods-page/foods-storage-list/foods-storage-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import {Cart} from './shared/cart/cart.model';
+import { FinalizePageComponent } from './finalize-page/finalize-page.component';
+import {Chain} from './shared/chain/chain.model';
+import {FoodsStorageService} from './shared/Storage/foods.storage.service';
 
 const routes = [
   {path: '', component: HomePageComponent},
-  {path: 'form-shopping-list', component: FoodsPageComponent}
+  {path: 'form-shopping-list', component: FoodsPageComponent},
+  {path: 'finalize-shopping-list', component: FinalizePageComponent}
 ];
 
 @NgModule({
@@ -53,7 +58,8 @@ const routes = [
     FoodsFoodCardComponent,
     FoodsStorageListComponent,
     AppCutStringPipe,
-    FoodsStorageListComponent
+    FoodsStorageListComponent,
+    FinalizePageComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,11 @@ const routes = [
     NguCarouselModule,
     InfiniteScrollModule
   ],
-  providers: [FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
+  providers: [FoodsStorageService, Chain, Cart, FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+

@@ -39,7 +39,6 @@
   font-size: 14px;
 }
 /*-------------------------------------*/
-
 .selectFood {
   font-size: 12px;
   width: 100%;
@@ -55,6 +54,7 @@
   top: auto;
   bottom: 0px;
   padding: 0px 0px 5px 0px;
+  user-select: none;
 }
 .amountItem span {
   font-size: 18px;
@@ -95,7 +95,6 @@
   position: relative;
   display: block;
 }
-
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
@@ -110,13 +109,11 @@
   position: absolute;
   z-index: 300;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
   top: -100px;
 }
-
 .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
@@ -127,5 +124,4 @@
   border-style: solid;
   border-color: #656565 transparent transparent transparent;
 }
-
 /************************************************************/

@@ -1,4 +1,4 @@
-<div *ngIf="foodTotalList.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+<div *ngIf="cart.lines.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
 
   <ul class="collapsible" data-collapsible="accordion"
       materialize="collapsible"
@@ -12,21 +12,21 @@
         <span>Итог:</span>
       </div>
       <div>
-        <span>{{totalSum | number:"1.2-2"}} руб.</span>
+        <span>{{cart.cartTotalPrice | number:"1.2-2"}} руб.</span>
       </div>
     </li>
 
       <li
-        *ngFor="let curFood of foodTotalList"
+        *ngFor="let curFood of cart.lines"
       >
         <div class="collapsible-header currentItem row">
-          <div class="foodName left col m7">{{curFood.name | cutString: 19}}</div>
+          <div class="foodName left col m7">{{curFood.product.name | cutString: 19}}</div>
 
           <div class="amountItem right col m4" (click)="onEventStop($event)">
             <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
               <i class="material-icons">remove</i>
             </a>
-            <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+            <span class="grey-text text-darken-2">{{curFood.quantity}}</span>
             <a class="btn-floating btn teal grey" (click)="addItem(curFood)">
               <i class="material-icons">add</i>
             </a>
@@ -41,8 +41,8 @@
 
           <div class="row">
             <div class="foodName col m10">
-              {{curFood.name}} <br>
-              {{curFood.boxWeight}}
+              {{curFood.product.name}} <br>
+              {{curFood.product.boxWeight}}
             </div>
             <div class="deleteFood col m2">
               <a class="right" (click)="deleteFoodCard(curFood)">
@@ -56,7 +56,7 @@
               Торговая сеть
             </div>
             <div class="col m6">
-              "{{getNameStorage(curFood.idStrore)}}"
+              "{{getNameStorage(curFood.product.idStrore)}}"
             </div>
           </div>
           <div class="actionPrice row">
@@ -64,7 +64,7 @@
               Цена на акции
             </div>
             <div class="col m6">
-              {{curFood.totalPrice | number:"1.2-2"}} руб
+              {{curFood.product.totalPrice | number:"1.2-2"}} руб
             </div>
           </div>
           <div class="discount row">
@@ -72,7 +72,7 @@
               % скидки
             </div>
             <div class="col m6">
-              {{curFood.discount}} %
+              {{curFood.product.discount}} %
             </div>
           </div>
           <div class="itemSum row">
@@ -80,22 +80,27 @@
               Итог
             </div>
             <div class="col m6">
-              {{(curFood.totalPrice * curFood.selectAmount) | number:"1.2-2"}} руб
+              {{(curFood.product.totalPrice * curFood.quantity) | number:"1.2-2"}} руб
             </div>
           </div>
 
           <div class="input-field">
-            <input id="last_name" type="text" class="validate grey-text">
-            <label for="last_name" class="grey-text">Можете добавить комментарий</label>
+            <input placeholder="Тут можно добавить примечание"
+                   id="item_comment" type="text" class=""
+                   [(ngModel)] = "curFood.comment" value="{{curFood.comment}}">
+            <!--<textarea rows="1" id="textarea1" class="materialize-textarea" [(ngModel)] = "curFood.comment" value="{{curFood.comment}}"></textarea>
+            <label for="textarea1" class="grey-text">Можете добавить комментарий</label>-->
           </div>
         </div>
 
       </li>
   </ul>
   <!--<a class="waves-effect waves btn amber left">PDF</a>-->
-  <a class="waves-effect waves btn deep-orange right"><span>К списку</span></a>
+  <a routerLink="/finalize-shopping-list" id="goFoodsBtn" class="deep-orange waves-effect waves btn right"><span>Перейти к списку</span></a>
+
+
 </div>
-<div *ngIf="foodTotalList.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+<div *ngIf="cart.lines.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Список покупок</div>
@@ -118,3 +123,6 @@
     </li>
   </ul>
 </div>
+
+
+

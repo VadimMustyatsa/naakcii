@@ -63,6 +63,7 @@
   align-items: center;
   padding: 0px!important;
   margin: 0px!important;
+  user-select: none;
 }
 .amountItem span {
   font-size: 12px;
@@ -102,12 +103,15 @@
   margin-bottom: 0px;
 }
 /*********************************/
-.input-field {
-  margin-top: 10px!important;
-  font-size: 12px!important;
+.input-field input {
+  margin: 0px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
+  height: 30px;
 }
 /*********************************/
-.input-field input[type=text]:focus {
+.input-field input:focus {
   border-bottom: 1px solid #656565;
   box-shadow: 0 1px 0 0 #656565;
 }
