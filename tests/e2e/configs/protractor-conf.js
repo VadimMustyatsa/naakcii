@@ -28,7 +28,9 @@ exports.config = {
     onPrepare : function() {
         var chai = require('chai');
         chaiAsPromised = require('chai-as-promised');
+        chaiString = require('chai-string');
         expect = chai.expect;
         chai.use(chaiAsPromised);
+        chai.use(chaiString);
     }
 };

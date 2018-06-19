@@ -20,12 +20,18 @@ class ShortListComponent extends Component{
         this.helper = new Helper(this.data);
     }
 
-    getElementText(name){
-        if(name.indexOf('поле') === -1) {
-            return this.root.all(this.matchElement(name)).getText();
-        } else {
-            return this.root.all(this.matchElement(name)).getAttribute('value');
-        }
+    async getElementText(name){
+        var resultText;
+        resultText = (name.indexOf('поле') === -1)? await this.root.all(this.matchElement(name)).getText(): await this.root.all(this.matchElement(name)).getAttribute('value');
+        return (name.indexOf('информация') < 0)? resultText: resultText.reduce((str, elem) => {
+            return str + elem + ' ';
+        }, '');
+    }
+
+    async clickElement(name = undefined){
+        var elem = (name)? this.root.element(this.matchElement(name)): this.root;
+        await browser.executeScript("arguments[0].scrollIntoView(false);", elem.getWebElement());
+        return await elem.click();
     }
 }
 

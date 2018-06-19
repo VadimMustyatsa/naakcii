@@ -17,7 +17,7 @@ class Page {
             await browser.executeScript('window.scrollTo(0,document.body.scrollHeight);');
             isPageScrollingEnd = await browser.wait(() =>{
                 return browser.executeScript('return ((window.innerHeight + window.scrollY) < (document.body.offsetHeight - 10))').then((res) => {return res;});
-            }, 3000).then(() => false, () => true);
+            }, 5000).then(() => false, () => true);
         }
 
         if(isScrolledUp === true){

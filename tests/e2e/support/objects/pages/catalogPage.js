@@ -11,7 +11,7 @@ class CatalogPage extends Page {
     constructor() {
         super();
         this.currentComponent = null;
-        this.currentRow = null;
+        this.currentRoot = null;
         this.data = {
             'кнопк(?:а|у) перейти к списку': by.css('#goFoodsBtn')
         };
@@ -55,15 +55,15 @@ class CatalogPage extends Page {
             throw new Error('Component is not found: ' + this.components[component]);
         }
         if(text){
-            this.currentRow = element(by.css(this.components[component].parentRoot)).all(by.css(this.components[component].childRoot)).filter((row) => {
+            this.currentRoot = element(by.css(this.components[component].parentRoot)).all(by.css(this.components[component].childRoot)).filter((row) => {
                 return row.all(by.css(this.components[component].row)).getText().then((rowText) => {
                     return rowText.indexOf(text) > -1;
                 });
             }).first();
         } else {
-            this.currentRow = element(by.css(this.components[component].parentRoot));
+            this.currentRoot = element(by.css(this.components[component].parentRoot));
         }
-        this.currentComponent = new this.components[component].Class(this.currentRow);
+        this.currentComponent = new this.components[component].Class(this.currentRoot);
         return this.currentComponent;
     }
 }

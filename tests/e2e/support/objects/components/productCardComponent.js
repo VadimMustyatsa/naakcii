@@ -18,6 +18,21 @@ class ProductCardComponent extends Component{
         this.helper = new Helper(this.data);
     }
 
+    async clickElement(name = undefined){
+        var elem = (name)? this.root.element(this.matchElement(name)): this.root,
+            isPres, theEnd = false;
+        isPres = await elem.isPresent();
+        if(isPres) {
+            await browser.executeScript("arguments[0].scrollIntoView(false);", elem.getWebElement());
+        } else {
+            while(!isPres || theEnd){
+                await browser.executeScript('window.scrollTo(0,document.body.scrollHeight);');
+                isPres = await elem.isPresent();
+                theEnd = await browser.executeScript('return ((window.innerHeight + window.scrollY) < (document.body.offsetHeight - 10))')
+            }
+        }
+        return await elem.click();
+    }
 }
 
 module.exports = ProductCardComponent;
