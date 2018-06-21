@@ -10,6 +10,10 @@
     "chai-as-promised": "^7.1.1",
     "chai-string": "^1.2.0",
     "cucumber": "^3.1.0",
+    "cucumber-html-reporter": "^3.0.4",
+    "fs-extra": "^5.0.0",
+    "js-base64": "^2.3.2",
+    "moment": "^2.22.2",
     "protractor": "^5.3.1",
     "protractor-cucumber-framework": "^4.0.9"
   },

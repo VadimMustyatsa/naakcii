@@ -1,3 +1,7 @@
+var moment = require("moment"),
+    fse = require("fs-extra"),
+    reporter = require("cucumber-html-reporter"),
+    reportDir = "reports/report_" + moment().format("YYYYMMDD_HHmmss");
 
 exports.config = {
 
@@ -23,6 +27,7 @@ exports.config = {
         require: ['../support/world.js',
             '../step_definitions/page_steps/*.js',
             '../step_definitions/*.js'],
+        format: ['json:' + reportDir + '/cucumber-report.json'],
         keepAlive: false
     },
     onPrepare : function() {
@@ -32,5 +37,18 @@ exports.config = {
         expect = chai.expect;
         chai.use(chaiAsPromised);
         chai.use(chaiString);
+        fse.mkdirsSync(reportDir);
+    },
+
+    onComplete: function () {
+        var options = {
+            theme: "bootstrap",
+            jsonFile: reportDir + '/cucumber-report.json',
+            output: reportDir + '/cucumber-report.html',
+            ignoreBadJsonFile: true,
+            reportSuiteAsScenarios: true,
+            launchReport: true
+        };
+        reporter.generate(options);
     }
 };
