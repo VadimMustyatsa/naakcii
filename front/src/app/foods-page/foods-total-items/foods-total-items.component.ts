@@ -15,13 +15,23 @@ export class FoodsTotalItemsComponent implements OnInit {
 
   iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
   curentIconCollapsible = String(this.iconCollapsible.minimized);
+  targets = document.getElementsByClassName('.storkRight')[0];
   params = [
     {
       onOpen: (el) => {
-        this.curentIconCollapsible = String(this.iconCollapsible.maximized);
+        if (document.getElementsByClassName('active')[1]) {
+          this.targets = document.getElementsByClassName('active')[1];
+          let collection = document.getElementsByClassName('storkRight');
+          for (let i = 0; i < collection.length; i++) {
+            collection[i].innerHTML = this.iconCollapsible.minimized;
+          }
+          this.targets.querySelector('.storkRight').innerHTML = String(this.iconCollapsible.maximized);
+        }
       },
       onClose: (el) => {
-        this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+        if (this.targets && this.targets !== document.getElementsByClassName('active')[1]) {
+          this.targets.querySelector('.storkRight').innerHTML = String(this.iconCollapsible.minimized);
+        }
       }
     }
   ];
