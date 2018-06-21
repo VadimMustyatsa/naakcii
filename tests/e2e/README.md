@@ -14,10 +14,10 @@
 	
 **Note**: Change the following code to generate reports correctly. Go to  */node_modules/cucumber-html-reporter/lib/reporter.js*:
 
-	var *sanitize* = function (name, find) {
+	var sanitize = function (name, find) {
 		var unsafeCharacters = find || /[/\|:"*?<>]/g;
-		**if (name !== undefined) {**
+		if (name !== undefined) {
 			name = name.trim().replace(unsafeCharacters, '_');
-		**}**
+		}
 		return name;
 	};
