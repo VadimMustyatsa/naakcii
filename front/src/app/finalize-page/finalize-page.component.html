@@ -8,6 +8,7 @@
     <ul class="collapsible totalList"
         data-collapsible="expandable"
         materialize="collapsible"
+        [materializeParams]="params"
     >
       <li class="collapsible-header finalizeHeader row">
         <div class="col m2"></div>
@@ -44,7 +45,7 @@
           <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2)}}</div>
           <div class="col m1 center">18 мая</div>
           <div class="col m1">
-            <i class="material-icons">arrow_drop_down</i>
+            <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
 

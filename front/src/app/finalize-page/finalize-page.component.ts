@@ -18,6 +18,20 @@ export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
   widthContainer = 1200;
 
+  ///curentIconCollapsible = String(this.iconCollapsible.minimized);
+  iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
+  curentIconCollapsible = String(this.iconCollapsible.minimized);
+  params = [
+    {
+      onOpen: (el) => {
+      el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
+      },
+      onClose: (el) => {
+        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_right';
+      }
+    }
+  ];
+
   constructor(public  chainLst: Chain,
               private el: ElementRef,
               public cart: Cart) {
