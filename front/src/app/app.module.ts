@@ -32,6 +32,11 @@ import {Cart} from './shared/cart/cart.model';
 import { FinalizePageComponent } from './finalize-page/finalize-page.component';
 import {Chain} from './shared/chain/chain.model';
 import {FoodsStorageService} from './shared/Storage/foods.storage.service';
+import {LOCALE_ID} from "@angular/core";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/ru';
+
+registerLocaleData(localeFr);
 
 const routes = [
   {path: '', component: HomePageComponent},
@@ -70,7 +75,7 @@ const routes = [
     NguCarouselModule,
     InfiniteScrollModule
   ],
-  providers: [FoodsStorageService, Chain, Cart, FoodsCategoriesService, {provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
+  providers: [FoodsStorageService, Chain, Cart, FoodsCategoriesService,{ provide: LOCALE_ID, useValue: "ru-BY"},{provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
