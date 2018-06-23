@@ -13,24 +13,14 @@ import {Chain, ChainLine} from '../../shared/chain/chain.model';
 export class FoodsTotalItemsComponent implements OnInit {
   fixedPaddingTop:number = 0;
 
-  iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
-  curentIconCollapsible = String(this.iconCollapsible.minimized);
-  targets = document.getElementsByClassName('.storkRight')[0];
   params = [
     {
       onOpen: (el) => {
-        if (document.getElementsByClassName('active')[1]) {
-          this.targets = document.getElementsByClassName('active')[1];
-          let collection = document.getElementsByClassName('storkRight');
-          for (let i = 0; i < collection.length; i++) {
-            collection[i].innerHTML = this.iconCollapsible.minimized;
-          }
-          this.targets.querySelector('.storkRight').innerHTML = String(this.iconCollapsible.maximized);
-        }
+          el.prevObject[0].querySelector('.arrowCollapsibleLite').innerHTML = 'keyboard_arrow_down';
       },
       onClose: (el) => {
-        if (this.targets && this.targets !== document.getElementsByClassName('active')[1]) {
-          this.targets.querySelector('.storkRight').innerHTML = String(this.iconCollapsible.minimized);
+        if( el.prevObject[0]) {
+          el.prevObject[0].querySelector('.arrowCollapsibleLite').innerHTML = 'keyboard_arrow_right';
         }
       }
     }

@@ -18,9 +18,6 @@ export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
   widthContainer = 1200;
 
-  ///curentIconCollapsible = String(this.iconCollapsible.minimized);
-  iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
-  curentIconCollapsible = String(this.iconCollapsible.minimized);
   params = [
     {
       onOpen: (el) => {
