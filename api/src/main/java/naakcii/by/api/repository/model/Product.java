@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +19,11 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "PRODUCT")
+@Cacheable
+@org.hibernate.annotations.Cache(
+		usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_ONLY,
+		region = "naakcii.by.repository.model.cache.Product"
+)
 public class Product implements Serializable {
 
 	/**

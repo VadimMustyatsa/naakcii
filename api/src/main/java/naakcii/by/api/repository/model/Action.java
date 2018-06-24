@@ -2,6 +2,8 @@ package naakcii.by.api.repository.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
@@ -22,6 +24,11 @@ import javax.validation.constraints.NotNull;
 			+ "left join fetch ac.chain ch "
 			+ "left join fetch ac.product p "
 			+ "where p.subcategory.id = :subcategoryId and :currentDate between ac.startDate and ac.endDate"
+)
+@Cacheable
+@org.hibernate.annotations.Cache(
+		usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+		region = "naakcii.by.repository.model.cache.Action"
 )
 public class Action implements Serializable {
 

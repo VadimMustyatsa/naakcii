@@ -52,6 +52,9 @@ public class Subcategory implements Serializable {
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch = FetchType.LAZY
 	)
+	@org.hibernate.annotations.Cache(
+			usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE
+	)
 	private List<Product> products = new ArrayList<Product>();
 	
 	@Column(name = "SUBCATEGORY_IS_ACTIVE")

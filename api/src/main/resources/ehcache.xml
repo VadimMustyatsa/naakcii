@@ -11,27 +11,57 @@
             memoryStoreEvictionPolicy="LRU">
           </defaultCache>
     <cache name="naakcii.by.repository.model.cache.Category"
-           maxElementsInMemory="100"
+           maxElementsInMemory="20"
            eternal="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="30">
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
     </cache>
     <cache name="naakcii.by.repository.model.cache.Category##NaturalId"
-           maxElementsInMemory="100"
+           maxElementsInMemory="20"
            eternal="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="30">
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
     </cache>
     <cache name="naakcii.by.repository.model.cache.Category.subcategories"
            maxElementsInMemory="100"
            eternal="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="30">
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
     </cache>
     <cache name="naakcii.by.repository.model.cache.Subcategory"
            maxElementsInMemory="100"
            eternal="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="30">
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
+    </cache>
+    <cache name="naakcii.by.repository.model.cache.Subcategory.products"
+           maxElementsInMemory="250"
+           eternal="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
+    </cache>
+    <cache name="naakcii.by.repository.model.cache.Product"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
+    </cache>
+    <cache name="naakcii.by.repository.model.cache.Chain"
+           maxElementsInMemory="20"
+           eternal="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
+    </cache>
+    <cache name="naakcii.by.repository.model.cache.Chain##NaturalId"
+           maxElementsInMemory="20"
+           eternal="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
+    </cache>
+    <cache name="naakcii.by.repository.model.cache.Action"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600">
     </cache>
 </ehcache>

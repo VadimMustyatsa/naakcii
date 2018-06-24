@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,12 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "CHAIN")
+@Cacheable
+@org.hibernate.annotations.Cache(
+		usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+		region = "naakcii.by.repository.model.cache.Chain"
+)
+@org.hibernate.annotations.NaturalIdCache
 public class Chain implements Serializable {
 
 	/**
@@ -31,6 +38,7 @@ public class Chain implements Serializable {
 	@Column(name = "CHAIN_NAME")
 	@NotNull
 	@Size(min = 3, max = 45)
+	@org.hibernate.annotations.NaturalId(mutable = true)
 	private String name;
 	
 	@Column(name = "CHAIN_LOGO")

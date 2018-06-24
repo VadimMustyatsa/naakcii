@@ -33,7 +33,7 @@ import org.hibernate.annotations.Where;
 	@NamedQuery(name = "Category.softDelete", 
 		query = "update Category cat set cat.isActive = false where cat.id = :categoryId")
 })
-@Where(clause = "F_CATEGORY_IS_ACTIVE = 1")
+//@Where(clause = "F_CATEGORY_IS_ACTIVE = 1")
 @Cacheable
 @org.hibernate.annotations.Cache(
 		usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,

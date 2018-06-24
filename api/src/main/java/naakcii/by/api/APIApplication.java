@@ -24,6 +24,6 @@ public class APIApplication implements CommandLineRunner {
 		dp.parseCategories("src/main/resources/Test_data.xlsx");
 		dp.parseChains("src/main/resources/Test_data.xlsx");
 		dp.parseActions("src/main/resources/Test_data.xlsx");
-		dp.test();
+		//dp.test();
 	}
 }

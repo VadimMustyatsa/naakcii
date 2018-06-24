@@ -149,10 +149,12 @@ public class DataParser {
 						Cell priceCell = null;
 						Cell discountPriceCell = null;
 						Cell dateCell = null;
+						Cell pictureCell = null;
 						String categoryName = null;
 						String subcategoryName = null;
 						String productDescription = null;
 						String dates = null;
+						String picture = null;
 						double discountPrice = 0.0;
 						double price = 0.0;
 						int discount = 0;
@@ -162,15 +164,16 @@ public class DataParser {
 							categoryCell = row.getCell(1);
 							subcategoryCell = row.getCell(2);
 							discountPriceCell = row.getCell(5);
-							dateCell = row.getCell(6);
 							productDescription = productCell.getStringCellValue();
 							categoryName = categoryCell.getStringCellValue();
 							subcategoryName = subcategoryCell.getStringCellValue();
 							discountPrice = discountPriceCell.getNumericCellValue();
-							dates = dateCell.getStringCellValue();
 							if (productDescription != "" && categoryName != "" && subcategoryName != "" && discountPrice != 0) {
 								priceCell = row.getCell(3);
 								dateCell = row.getCell(6);
+								pictureCell = row.getCell(7);
+								picture = pictureCell.getStringCellValue();
+								dates = dateCell.getStringCellValue();
 								price = priceCell.getNumericCellValue();
 								subcategory = subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName);
 								if (subcategory != null) {
@@ -184,6 +187,9 @@ public class DataParser {
 									if (quantityAndMeasure.containsKey("measure")) {
 										product.setMeasure(quantityAndMeasure.get("measure"));
 										logger.info("Measure \"" + product.getMeasure() + "\".");
+									}
+									if (picture != "") {
+										product.setPicture(categoryName + "/" + subcategoryName + "/" + picture);
 									}
 									productRepository.save(product);
 									action = new Action(product, chain, discountPrice);
@@ -215,7 +221,7 @@ public class DataParser {
 									logger.info("Product \"" + productDescription + "\" with indentifinite subcaategory \"" + subcategoryName + "\" was found. It will be ignored.");
 									continue;
 								}
-							} else break;	
+							} else if (productDescription == "") break;	
 						}
 					} else {
 						logger.info("Indefinite chain \"" + sheet.getSheetName() + "\" was found. Actions for this chain will be ignored.");
@@ -238,11 +244,11 @@ public class DataParser {
 	
 	public void test() {
 		System.out.println("Repository test");
-		//for (Category category : categoryRepository.findAll()) {
-		//	System.out.println("Category " + category.getName());
-			//for (Subcategory subcategory : category.getSubcategories())
-			//System.out.println("Subcategory " + subcategory.getName());
-		//}
+		/*for (Category category : categoryRepository.findAll()) {
+			System.out.println("Category " + category.getName());
+			for (Subcategory subcategory : category.getSubcategories())
+				System.out.println("Subcategory " + subcategory.getName());
+		}*/
 		//categoryRepository.softDelete(1064L);
 		//categoryRepository.softDelete(1058L);
 		//for (Category category : categoryRepository.findAll()) {
@@ -255,6 +261,7 @@ public class DataParser {
 			for (Subcategory subcategory : category.getSubcategories())
 			System.out.println("Subcategory " + subcategory.getName());
 		}*/
+		
 		/*Calendar currentDate = Calendar.getInstance();
 		for (Action action : actionRepository.findAllBySubcategoryId(1006L, currentDate)) {
 			System.out.println("Action product " + action.getProduct().getName());
@@ -267,6 +274,7 @@ public class DataParser {
 			System.out.println("Action product " + action.getProduct().getName());
 			System.out.println("Action chain " + action.getChain().getName());
 		}*/
+		/*
 		System.out.println("Dao test");
 		for (Category category : cd.findAll()) {
 			System.out.println("Category " + category.getName());
@@ -276,6 +284,7 @@ public class DataParser {
 			for (Subcategory subcategory : category.getSubcategories())
 			System.out.println("Subcategory " + subcategory.getName());
 		}
+		*/
 		/*cd.softDelete(1058L);
 		for (Category category : cd.findAllByIsActiveTrue()) {
 			System.out.println("Category " + category.getName());
