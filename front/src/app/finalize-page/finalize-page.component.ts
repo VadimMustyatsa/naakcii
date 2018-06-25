@@ -140,15 +140,32 @@ export class FinalizePageComponent implements OnInit {
     let docDefinition = {};
     let docContent = [];
     let docStyle = {};
+    let chainSum = [];
     let sumAfter = '';
     let benefit = '';
-
+    let day = '';
+    let year = '';
+    let monthString = '';
+    let time = new Date();
+    let month = time.getMonth() + 1;
+    if (time.getDate().toString().length === 1) {
+      day = '0' + time.getDate().toString();
+    } else {
+      day = time.getDate().toString();
+    }
+    if (time.getMonth().toString().length === 1) {
+      monthString = '0' + month.toString();
+    }
+    year = time.getFullYear().toString().substr(2, 4);
     let totalSum = {};
     totalSum = data['totalSum'];
     sumAfter = (totalSum['sumAfter']).toFixed(2) + ' руб.';
     benefit = (totalSum['discountSum']).toFixed(2) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
 
-    docContent.push({text: 'Список покупок', style: 'header'});
+    docContent.push({
+      text: 'Список покупок ' + day + '.' + monthString + '.' + year,
+      style: 'header'
+    });
 
     for (var chain in data['ChainList']) {
       //заголовок текущей сети
@@ -156,14 +173,23 @@ export class FinalizePageComponent implements OnInit {
       let table = {}; //обрамление
       let bodyTable = {};
       let bodyBodyTable = [];
-
+      let sum = 0;
       let widthParam = [];
       widthParam.push('100%');
       bodyTable['widths'] = widthParam;
-
       let tableLine = [];
-      tableLine.push({text: chain, bold: true, fillColor: '#656565', color: 'white', fontSize: '38', margin: [0, 5]});
-
+      data['ChainList'][chain].map(item => {
+        sum = Number(item['priceSum']) + sum;
+      });
+      tableLine.push({
+        alignment: 'left',
+        bold: true,
+        fillColor: '#656565',
+        color: 'white',
+        fontSize: '38',
+        columns: [{width: '70%', text: chain}, {width: '30%', text: 'Итого : ' + sum}]
+      });
+      chainSum.push(sum);
       bodyBodyTable.push(tableLine);
       bodyTable['body'] = bodyBodyTable;
       table['table'] = bodyTable;
@@ -207,7 +233,7 @@ export class FinalizePageComponent implements OnInit {
     let itemColumnList = {}; //строка
     let columns = [];
 
-    columns.push({width: '70%', text: 'Итого:', bold: true, margin: [0, 30, 0, 10]});
+    columns.push({width: '70%', text: 'Общий итог :', bold: true, margin: [0, 30, 0, 10]});
     columns.push({width: '30%', text: sumAfter, bold: true, style: 'itemSumStyle', margin: [0, 30, 0, 10]});
 
     itemColumnList['columns'] = columns;
@@ -216,7 +242,7 @@ export class FinalizePageComponent implements OnInit {
     //----------------------------------------
 
     //Ваша выгода-----------------------------------
-    docContent.push({text: 'Ваша выгода:    ' + benefit, bold: true, style: 'totalStyle', margin: [0, 20]});
+    docContent.push({text: 'Экономия :    ' + benefit, bold: true, style: 'totalStyle', margin: [0, 20]});
     //-----------------------------------------------
 
     //Штампик----------------------------------------
@@ -228,7 +254,8 @@ export class FinalizePageComponent implements OnInit {
     });
     //-----------------------------------------------
 
-    let pageSize = {};    pageSize['width'] = 1000;
+    let pageSize = {};
+    pageSize['width'] = 1000;
     pageSize['height'] = 'auto';
 
     docDefinition['content'] = docContent;
@@ -261,8 +288,7 @@ export class FinalizePageComponent implements OnInit {
     docStyle['anotherStyle'] = anotherStyle;
     docDefinition['styles'] = docStyle;
 
-
-    pdfMake.createPdf(docDefinition).download('Список покупок.pdf');
+    pdfMake.createPdf(docDefinition).download('Список покупок - ' + day + '.' + monthString + '.' + year + '.pdf');
     pdfMake.createPdf(docDefinition).open();
     //**********************************************************************
   }
