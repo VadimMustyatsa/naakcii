@@ -51,6 +51,14 @@ class Component{
     getElementsNumber(name){
         return this.root.all(this.matchElement(name)).count();
     }
+
+    closeTabs(){
+        return browser.getAllWindowHandles().then((handles)=>{
+            browser.switchTo().window(handles[1]);
+            browser.driver.close();
+            browser.switchTo().window(handles[0]);
+        });
+    }
 }
 
 module.exports = Component;

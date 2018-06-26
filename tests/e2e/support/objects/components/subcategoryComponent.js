@@ -8,10 +8,18 @@ class SubcategoryComponent extends Component{
         this.root = root;
         this.data = {
             '(панель|панели) список подкатегорий': by.css('ul .categoryName'),
-            'пункт|подкатегор(?:ия|ию|ии)': by.css('label[for*="Cat"]'),
-            'статус': by.css('input[id*="Cat"]')
+            'пункт|подкатегор(?:ия|ию|ии)': by.css('a'),
+            'статус': by.css('a')
         };
         this.helper = new Helper(this.data);
+    }
+
+    getStatus(name){
+        return this.root.all(this.matchElement(name)).map((elem) => {
+            return elem.getAttribute('class').then((attributeValue) => {
+                return (attributeValue.indexOf('active') > -1)? 'Выбрана' : 'Не выбрана';
+            });
+        });
     }
 }
 

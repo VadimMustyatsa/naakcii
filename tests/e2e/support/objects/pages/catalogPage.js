@@ -31,7 +31,7 @@ class CatalogPage extends Page {
             'список подкатегорий':{
                 parentRoot: 'app-foods-subcategory',
                 childRoot: 'li.collection-item',
-                row: 'label[for*="Cat"]',
+                row: 'a',
                 Class: SubcategoryComponent
             },
             'список акционных товаров': {

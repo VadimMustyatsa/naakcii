@@ -109,4 +109,8 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         }
     });
 
+    Then(/^список должен сохраниться$/, async function () {
+        await world.pageFactory.currentPage.getComponent('список покупок').closeTabs();
+        return await world.pageFactory.getPage('список покупок – naakcii.by');
+    });
 });

@@ -8,7 +8,7 @@ class HomePage extends Page{
         super();
         this.data = {
             'иллюстрация дескриптор': by.css('app-home-slider>div[class^="homeSlider"]'),
-            'схем(?:ы|а)': by.css('app-home-step>div[class="steps-container-block"]'),
+            'схем(?:ы|а)': by.css('div[class="steps-container-block"]'),
             'шага': by.xpath('.//div[@class="steps-container"]//div[@class="step-title"]//span[2]'),
             'кнопк(?:а|у) перейти к товарам': by.css('a#goFoodsBtn'),
             'логотип': by.css('a#logo'),

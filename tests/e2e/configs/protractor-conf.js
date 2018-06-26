@@ -1,7 +1,8 @@
 var moment = require("moment"),
     fse = require("fs-extra"),
     reporter = require("cucumber-html-reporter"),
-    reportDir = "reports/report_" + moment().format("YYYYMMDD_HHmmss");
+    reportDir = "reports/report_" + moment().format("YYYYMMDD_HHmmss"),
+    pdfDir = 'D:\\Desktop\\naakcii\\tests\\e2e\\' + reportDir;
 
 exports.config = {
 
@@ -12,7 +13,14 @@ exports.config = {
         browserName: 'chrome',
         'chromeOptions': {
             args: ['--window-size=1680,1050',
-                    '--no-sandbox']
+                    '--no-sandbox'],
+            prefs: {
+                'download': {
+                    'prompt_for_download': false,
+                    'directory_upgrade': true,
+                    'default_directory': pdfDir
+                }
+            }
         }
     },
     ignoreUncaughtExceptions: true,
@@ -25,6 +33,7 @@ exports.config = {
 
     cucumberOpts: {
         require: ['../support/world.js',
+            '../support/helpers/cucumber-screenshot.js',
             '../step_definitions/page_steps/*.js',
             '../step_definitions/*.js'],
         format: ['json:' + reportDir + '/cucumber-report.json'],
@@ -47,7 +56,9 @@ exports.config = {
             output: reportDir + '/cucumber-report.html',
             ignoreBadJsonFile: true,
             reportSuiteAsScenarios: true,
-            launchReport: true
+            launchReport: true,
+            screenshotsDirectory: reportDir + '/screenshots',
+            storeScreenshots: true
         };
         reporter.generate(options);
     }

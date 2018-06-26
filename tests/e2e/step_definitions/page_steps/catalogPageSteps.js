@@ -54,14 +54,16 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
             for (var i = 0; i < elementKeysArray.length; i += 1) {
                 var newArr;
                 expectedArr = data.map((element) => {
-                    return element[elementKeysArray[i]];
+                    return element[elementKeysArray[i]].toLocaleLowerCase();
                 });
                 if (elementKeysArray[i].indexOf('статус') === -1) {
                     actualArr = await world.pageFactory.currentPage.getComponent(name.toLocaleLowerCase()).getElementText(elementKeysArray[i]);
                 } else {
                     actualArr = await world.pageFactory.currentPage.getComponent(name.toLocaleLowerCase()).getStatus(elementKeysArray[i]);
                 }
-                newArr = actualArr.slice(0, expectedArr.length);
+                newArr = (actualArr.slice(0, expectedArr.length)).map((element) =>{
+                    return element.toLocaleLowerCase();
+                });
                 expect(newArr).to.eql(expectedArr);
             }
         }
@@ -129,14 +131,16 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
         for(var i = 0; i < keys.length; i += 1){
             var newArr;
             expectedArr = data.map((element) => {
-                return element[keys[i]];
+                return element[keys[i]].toLocaleLowerCase();
             });
             if(keys[i].indexOf('статус') === -1) {
                 actualArr = await world.pageFactory.currentPage.getComponent(name.toLocaleLowerCase()).getElementText(keys[i]);
             } else {
                 actualArr = await world.pageFactory.currentPage.getComponent(name.toLocaleLowerCase()).getStatus(keys[i]);
             }
-            newArr = actualArr.slice(0, expectedArr.length);
+            newArr = (actualArr.slice(0, expectedArr.length)).map((element) =>{
+                return element.toLocaleLowerCase();
+            });
             expect(newArr).to.eql(expectedArr);
         }
         //закрытие фильтра
