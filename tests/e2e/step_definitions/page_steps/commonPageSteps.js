@@ -72,9 +72,8 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout}) {
     Then(/^(кнопка) "(.+)" долж(?:ен|на|но) исчезнуть$/, async function (element, name) {
         var elem = element.toLocaleLowerCase() + ' ' + name.toLocaleLowerCase(),
             actualResult;
-
-        return expect(false).to.equal(false);
-        //return expect(actualResult).to.equal(false);
+        actualResult = await world.pageFactory.currentPage.isElementPresent(elem, elem);
+        return expect(actualResult).to.equal(false);
     });
 
     Then(/^долж(?:ен|на|но) отобразиться (фильтр|поле|панель) "(.+)"$/, async function (element, name) {

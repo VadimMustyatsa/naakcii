@@ -43,6 +43,11 @@ class Page {
         }
     }
 
+    isElementPresent(elementKey, subElementKey) {
+        var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
+        return element(elementObj).isPresent();
+    }
+
     getElementsNumber(elementKey, subElementKey = elementKey) {
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey);
         return element.all(elementObj).count();

@@ -200,6 +200,6 @@ cucumber.defineSupportCode(function({ Given, When, Then, setDefaultTimeout }) {
     Then(/^на карточке "(.+)" на панели "(.+)" должно отобразиться (количество) товара "(\d)"$/, async function (text, name, element, expectedQty) {
         var actualQty;
         actualQty = await world.pageFactory.currentPage.getComponent(name.toLocaleLowerCase(), text).getElementText(element);
-        return expect(actualQty.get(0)).to.equalIgnoreSpaces(expectedQty);
+        return expect(actualQty[0]).to.equalIgnoreSpaces(expectedQty);
     });
 });
