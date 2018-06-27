@@ -146,6 +146,7 @@ export class FinalizePageComponent implements OnInit {
     }
   }
 
+
   //*****************************************************************************************
   generatePDF() {
     let data = this.cart.generateJsonListPDF(); //сформированный список по сетям
@@ -156,10 +157,14 @@ export class FinalizePageComponent implements OnInit {
     let sumAfter = '';
     let benefit = '';
 
+    function numberFormater (number:number): string {
+      return number.toString().replace('.',',');
+    }
+
     let totalSum = {};
     totalSum = data['totalSum'];
-    sumAfter = (totalSum['sumAfter']).toFixed(2) + ' руб.';
-    benefit = (totalSum['discountSum']).toFixed(2) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
+    sumAfter = numberFormater((totalSum['sumAfter']).toFixed(2)) + ' руб.';
+    benefit = numberFormater((totalSum['discountSum']).toFixed(2)) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
 
     docContent.push({text: 'Список покупок', style: 'header'});
 
@@ -197,7 +202,7 @@ export class FinalizePageComponent implements OnInit {
         columns.push({width: '10%', text: '', margin: [0, 15]});
         columns.push({
           width: '10%',
-          text: item['priceOne'],
+          text: numberFormater(item['priceOne']),
           style: 'itemSumStyle',
           alignment: 'center',
           margin: [0, 15]
@@ -209,7 +214,7 @@ export class FinalizePageComponent implements OnInit {
           alignment: 'center',
           margin: [0, 15]
         });
-        columns.push({width: '10%', text: item['priceSum'], style: 'itemSumStyle', margin: [0, 15]});
+        columns.push({width: '10%', text: numberFormater(item['priceSum']), style: 'itemSumStyle', margin: [0, 15]});
 
         itemColumnList['columns'] = columns;
         itemColumnList['style'] = 'itemStyle';
