@@ -7,6 +7,7 @@ import {Chain, ChainLine} from '../shared/chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {$NBSP} from "@angular/compiler/src/chars";
+import { Title } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-finalize-page',
@@ -31,13 +32,14 @@ export class FinalizePageComponent implements OnInit {
 
   constructor(public  chainLst: Chain,
               private el: ElementRef,
-              public cart: Cart) {
+              public cart: Cart, private titleService: Title) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     pdfMake.width = '1400px';
   }
 
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
+    this.titleService.setTitle('Список покупок – naakcii.by.');
   }
 
   getExistListChain() {
