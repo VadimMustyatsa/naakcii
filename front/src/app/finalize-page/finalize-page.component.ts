@@ -39,7 +39,7 @@ export class FinalizePageComponent implements OnInit {
 
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
-    this.titleService.setTitle('Список покупок – naakcii.by.');
+    this.titleService.setTitle('Список покупок – naakcii.by');
   }
 
   getExistListChain() {

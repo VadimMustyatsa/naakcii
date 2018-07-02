@@ -11,7 +11,7 @@ export class FoodsPageComponent implements OnInit {
   constructor(private service: FoodsCategoriesService, private titleService: Title) {
   }
   ngOnInit() {
-    this.titleService.setTitle('Формирование списка покупок – naakcii.by.')
+    this.titleService.setTitle('Формирование списка покупок – naakcii.by')
   }
   isSelectedCategory(): boolean {
     if (!this.service.getSelectCategory()) {
