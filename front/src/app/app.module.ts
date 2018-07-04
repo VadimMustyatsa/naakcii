@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MaterializeModule } from 'angular2-materialize';
 import { NguCarouselModule } from '@ngu/carousel';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -75,7 +76,7 @@ const routes = [
     NguCarouselModule,
     InfiniteScrollModule
   ],
-  providers: [FoodsStorageService, Chain, Cart, FoodsCategoriesService,{ provide: LOCALE_ID, useValue: "ru-BY"},{provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},FoodsStorageService, Chain, Cart, FoodsCategoriesService,{ provide: LOCALE_ID, useValue: "ru-BY"},{provide: SHARED_STATE, useValue: new Subject<SharedState>() }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
