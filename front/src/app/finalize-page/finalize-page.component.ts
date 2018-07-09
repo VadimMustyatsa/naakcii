@@ -101,6 +101,7 @@ export class FinalizePageComponent implements OnInit {
   }
 
   getStorageByID(id: number): ChainLine {
+    console.log(this.chainLst);
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
@@ -127,9 +128,9 @@ export class FinalizePageComponent implements OnInit {
   }
 
   onResizeContent() {
-    var rootElement = this.el.nativeElement;
-    var childElement = rootElement.firstElementChild;
-    var contentElement = childElement.firstElementChild;
+    let rootElement = this.el.nativeElement;
+    let childElement = rootElement.firstElementChild;
+    let contentElement = childElement.firstElementChild;
     this.widthContainer = contentElement.clientWidth;
   }
 

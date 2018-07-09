@@ -3,10 +3,11 @@ import {FoodsStorageService} from '../Storage/foods.storage.service';
 import {Storag} from '../Storage/foods.storage.model';
 import {Observer} from 'rxjs/Observer';
 import {SharedState, SHARED_STATE, MODES} from '../../foods-page/sharedState.model';
+const chainStorageKey = 'naakciiChainStorage';
 
 @Injectable()
 export class Chain {
-  public lines: ChainLine[] = [];
+  public lines: ChainLine[] = JSON.parse(localStorage.getItem(chainStorageKey))||[];
   public itemAllCount: number = 0;
   public chainAverageDiscount = 0;    //средний процент скидки по всем сетям
 
@@ -28,6 +29,7 @@ export class Chain {
       this.lines.push(new ChainLine(chain));
     }
     this.recalculate();
+    localStorage.setItem(chainStorageKey, JSON.stringify(this.lines));
   }
 
   clear() {

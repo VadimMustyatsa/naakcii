@@ -2,20 +2,28 @@ import { Injectable } from '@angular/core';
 import {FoodList} from '../foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../chain/chain.model';
 import {isUndefined} from "util";
+const storageKey = "naakciiStorage";
+const storageKeyCount = "naakciiStorageCount";
+const storageCount= JSON.parse(localStorage.getItem(storageKeyCount)) ||
+  { itemCount: 0,
+  cartAllPrice: 0,
+  cartTotalPrice: 0,
+  cartAverageDiscount: 0};
 
 
 @Injectable()
 export class Cart {
-  public lines: CartLine[] = [];
-  public itemCount: number = 0;
-  public cartAllPrice: number = 0;    //без скидок
-  public cartTotalPrice: number = 0;  //с учетом скидок
-  public cartAverageDiscount = 0;    //средний процент скидки по всем карточкам
+  public lines: CartLine[] = JSON.parse(localStorage.getItem(storageKey)) || [];
+  public itemCount: number = storageCount.itemCount;
+  public cartAllPrice: number = storageCount.cartAllPrice;    //без скидок
+  public cartTotalPrice: number = storageCount.cartTotalPrice;  //с учетом скидок
+  public cartAverageDiscount = storageCount.cartAverageDiscount;    //средний процент скидки по всем карточкам
 
   constructor(public  chainLst: Chain) {
   }
 
   addLine(product: FoodList, quantity: number) {
+
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
       line.quantity += quantity;
@@ -112,7 +120,14 @@ export class Cart {
         this.cartAllPrice += (l.quantity * l.product.totalPrice);
       }
       this.cartTotalPrice += (l.quantity * l.product.totalPrice);
-    })
+    });
+    localStorage.setItem(storageKey, JSON.stringify(this.lines));
+    localStorage.setItem(storageKeyCount, JSON.stringify({
+        itemCount: this.itemCount,
+        cartAllPrice: this.cartAllPrice,
+        cartTotalPrice: this.cartTotalPrice,
+      cartAverageDiscount: this.cartAverageDiscount,
+    }));
   }
 }
 export class CartLine {
