@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, EventEmitter} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
@@ -7,7 +7,9 @@ import {Chain, ChainLine} from '../shared/chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {$NBSP} from "@angular/compiler/src/chars";
+import {MaterializeAction} from 'angular2-materialize'
 import { Title } from '@angular/platform-browser'
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-finalize-page',
@@ -29,8 +31,14 @@ export class FinalizePageComponent implements OnInit {
       }
     }
   ];
-
-  constructor(public  chainLst: Chain,
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
+  }
+  constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
               public cart: Cart, private titleService: Title) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -147,7 +155,10 @@ export class FinalizePageComponent implements OnInit {
     }
   }
 
-
+  onRederect(){
+    localStorage.clear();
+    window.location.href = '/form-shopping-list';
+  }
   //*****************************************************************************************
   generatePDF() {
     let data = this.cart.generateJsonListPDF(); //сформированный список по сетям

@@ -108,7 +108,8 @@
           </a>
         </div>
         <div class="col m4 center">
-          <a href="javascript:void(0);" (click)="generatePDF()" class="deep-orange waves-effect waves-light btn disable">Скачать PDF</a>
+          <a href="javascript:void(0);" (click)="generatePDF()" class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn modal-trigger"
+            (click)="openModal()">Скачать PDF</a>
         </div>
         <div class="col m4 right">
 
@@ -137,6 +138,7 @@
     </ul>
 
   </div>
+
   <div *ngIf="cart.lines.length == 0">
     <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
       <li class="collapsible-header amber-text">
@@ -162,4 +164,22 @@
   </div>
 </div>
 
-
+<!-- Modal Structure -->
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <div class="modal-header">
+    <h4>Поздравляем! </h4>
+    <h4>Вы только что скачали свой список покупок. Теперь вы можете:</h4>
+    </div>
+    <ul>
+      <li><a (click)="closeModal()">Продолжить редактирование списка</a></li>
+      <p>Если в скаченном списке обнаружились какие-то недочёты, лучше его доработать, продолжив редактирование.</p>
+      <li><a (click)="onRederect()">Составить новый список покупок</a></li>
+      <p>Если он совсем вам не нравится, можно составить новый список с нуля.</p>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <!--<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Close</a>-->
+  </div>
+</div>
+<!--------------------------->
