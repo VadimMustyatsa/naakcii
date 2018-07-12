@@ -143,6 +143,9 @@
   text-decoration: underline;
 }
 .modal-content p{
+  margin: 7px 0 0 0;
+}
+.modal-content ul p{
   margin: 3px 0;
   color: gray;
   font-size: 12px;
