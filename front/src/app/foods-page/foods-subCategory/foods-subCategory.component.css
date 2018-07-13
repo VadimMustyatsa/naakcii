@@ -19,28 +19,29 @@
   font-size: 16px;
   font-weight: bold;
 }
-/*****************************************************/
-.checkbox-color[type="checkbox"] + label:before{
-  border: 2px solid dimgrey;
-  background: transparent;
+
+.active {
+  color: white;
+  background-color: #FFC107;
 }
-.checkbox-color[type="checkbox"]:checked + label:before{
-  border: 2px solid transparent;
-  border-bottom: 2px solid dimgrey;
-  border-right: 2px solid dimgrey;
-  background: transparent;
+
+.custom-btn {
+  padding: 6px 12px;
+  width: 240px;
+  font-variant: all-small-caps;
+  height: auto;
+  line-height: 20px
 }
-.checkbox-color.filled-in[type="checkbox"] + label:after{
-  border: 2px solid dimgrey;
-  background: transparent;
+
+.custom-btn:hover {
+  background-color: #FFC107;
+  color: white;
 }
-.checkbox-color.filled-in[type="checkbox"]:checked + label:after{
-  background: dimgrey;
+
+.collection.with-header .collection-header {
+  padding: 10px 30px;
 }
-.checkbox-color.filled-in[type="checkbox"]:checked + label:before{
-  border-top: 2px solid transparent;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+
+.collection .collection-item {
+  padding: 2px 20px;
 }
-/*****************************************************/

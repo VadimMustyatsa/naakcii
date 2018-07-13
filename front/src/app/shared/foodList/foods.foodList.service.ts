@@ -5,13 +5,17 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class FoodsFoodListService {
   private productsLocal = 'assets/json/FoodList.json';
-  private productsUrl = 'http://178.124.206.54:8080/api/getProducts';
+  private productsUrl = 'http://localhost:8080/product';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getFoodList(idCategory, idSubcategory) {  //FoodList[]
-    //console.log('FoodsFoodListService - getFoodList');
-    const dataGet = {idCategory: idCategory, idSubcategory: idSubcategory};
+  getFoodList(selectedSubCatListID, first, last) {  //FoodList[]
+    let listID = '';
+    selectedSubCatListID.map(id => {
+      listID += String(id.id) + ',';
+    });
+    const dataGet = {SubcategoryList: listID, first: first, last: last};
 
     //return this.http.get<FoodList[]>(this.productsLocal)                      //для отладки - из файла
     return this.http.get<FoodList[]>(this.productsUrl, {params: dataGet})   //для реального запроса с бэка
@@ -25,7 +29,7 @@ export class FoodsFoodListService {
             totalPrice: product['discountPrice'],
             boxWeight: "",
             idStrore: product['chainId'],
-            img: product['icon'],
+            img: product['picture'],
             selected: false,
             selectAmount: 1
           };
@@ -33,3 +37,5 @@ export class FoodsFoodListService {
       });
   }
 }
+
+

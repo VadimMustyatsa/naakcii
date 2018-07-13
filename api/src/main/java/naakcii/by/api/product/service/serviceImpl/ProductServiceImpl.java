@@ -5,7 +5,7 @@ import naakcii.by.api.action.repository.model.Action;
 import naakcii.by.api.product.repository.ProductRepository;
 import naakcii.by.api.product.repository.model.Product;
 import naakcii.by.api.product.service.ProductService;
-import naakcii.by.api.product.service.moddelDTO.ProductDTO;
+import naakcii.by.api.product.service.modelDTO.ProductDTO;
 import naakcii.by.api.product.service.util.ProductConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

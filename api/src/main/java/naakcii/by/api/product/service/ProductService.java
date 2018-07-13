@@ -1,6 +1,6 @@
 package naakcii.by.api.product.service;
 
-import naakcii.by.api.product.service.moddelDTO.ProductDTO;
+import naakcii.by.api.product.service.modelDTO.ProductDTO;
 
 import java.util.List;
 

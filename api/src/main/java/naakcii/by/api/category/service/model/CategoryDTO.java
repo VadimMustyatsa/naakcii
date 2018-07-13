@@ -14,11 +14,11 @@ public class CategoryDTO {
         Id = id;
     }
 
-    public String getPicture() {
+    public String getIcon() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setIcon(String picture) {
         this.picture = picture;
     }
 

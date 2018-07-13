@@ -3,16 +3,17 @@
     <div class="card-image">
       <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
       <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
-      <img *ngIf="curFood.img" src="{{curFood.img}}">
+      <img *ngIf="curFood.img" src="assets/images/Products/{{curFood.img}}">
       <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
         {{curFood.discount}}%
       </div>
     </div>
 
-    <div class="card-content">
-      <div class="foodName tooltipped">
-        {{curFood.name}} <br>
+    <div class="card-content tooltip">
+      <div class="foodName">
+        {{curFood.name | cutString: nameMaxWidth}} <br>
         {{curFood.boxWeight}}
+        <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
       </div>
       <div class="foodStorage">
         <div class="grey-text">
@@ -42,9 +43,12 @@
       </div>
       <div class="endStock">
         <span class="grey-text">
-          Окончание акции:
+          Окончание акции: 18 мая
         </span>
       </div>
     </div>
   </div>
 </div>
+
+
+

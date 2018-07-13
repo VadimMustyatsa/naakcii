@@ -1,0 +1,219 @@
+{
+  "content": [
+    {
+      "text": "Список покупок",
+      "style": "header"
+    },
+    {
+      "table": {
+        "headerRows": 0,
+        "width": [
+          "100%"
+        ],
+        "body": [
+          [
+            {
+              "text": "Белмаркет",
+              "bold": true
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "columns": [
+        {
+          "width": "60%",
+          "text": "Йогурт \"Оптималь\" Персик, Чернослив-злаки, Черника-Малина 2% жирность 350гр",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "1.09",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "*1",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "1.09",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        }
+      ],
+      "style": "itemStyle"
+    },
+    {
+      "table": {
+        "headerRows": 0,
+        "width": [
+          "100%"
+        ],
+        "body": [
+          [
+            {
+              "text": "Виталюр",
+              "bold": true
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "columns": [
+        {
+          "width": "60%",
+          "text": "Йогурт Савушкин 2%, 120г",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "0.39",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "*1",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        },
+        {
+          "width": "10%",
+          "text": "0.39",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            10
+          ]
+        }
+      ],
+      "style": "itemStyle"
+    },
+    {
+      "columns": [
+        {
+          "width": "70%",
+          "text": "Итого:",
+          "margin": [
+            0,
+            30,
+            0,
+            10
+          ]
+        },
+        {
+          "width": "30%",
+          "text": "1.48 руб.",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            30,
+            0,
+            10
+          ]
+        }
+      ],
+      "style": "totalStyle"
+    },
+    {
+      "columns": [
+        {
+          "width": "70%",
+          "text": "Ваша выгода:",
+          "margin": [
+            0,
+            30,
+            0,
+            10
+          ]
+        },
+        {
+          "width": "30%",
+          "text": "0.37 руб. (20 %)",
+          "style": "itemSumStyle",
+          "margin": [
+            0,
+            30,
+            0,
+            10
+          ]
+        }
+      ],
+      "style": "totalStyle"
+    }
+  ],
+  "pageSize": {
+    "width": 1400,
+    "height": "auto"
+  },
+  "styles": {
+    "header": {
+      "fontSize": 22,
+      "bold": true,
+      "alignment": "center"
+    },
+    "chainStyle": {
+      "fontSize": 18,
+      "width": "100%",
+      "bold": true,
+      "alignment": "center",
+      "color": "white",
+      "background": "#656565"
+    },
+    "itemSumStyle": {
+      "alignment": "right"
+    },
+    "totalStyle": {
+      "fontSize": 18,
+      "color": "white",
+      "background": "#656565"
+    },
+    "anotherStyle": {
+      "italic": true,
+      "alignment": "right"
+    }
+  }
+}

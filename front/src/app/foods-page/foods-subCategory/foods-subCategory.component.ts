@@ -13,11 +13,9 @@ import {Observer} from 'rxjs/Observer';
   providers: [FoodsSubCategoriesService]
 })
 export class FoodsSubCategoryComponent implements OnInit {
-  fixedPaddingTop:number = 0;
+  fixedPaddingTop = 0;
   curCategory: Category;
   subCategoryList: SubCategory[];
-  checkedAll = true;  //выбор всех подкатегорий по-умолчанию
-  private isShowedTapStep3 = false;
 
   constructor(private service: FoodsSubCategoriesService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>,
@@ -36,63 +34,24 @@ export class FoodsSubCategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('SubCategoryComponent - ngOnInit');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_CATEGORY) {
-        console.log('stateEvents: ' + update.category.id + ':' + update.category.name);
         this.service.getByCategory(update.category.id).subscribe(subCategoryList => {
           this.subCategoryList = null;
           this.curCategory = update.category;
           this.subCategoryList = subCategoryList;
-          console.log(this.subCategoryList);
-          this.checkedAll = true;
-          this.setAllItemsByCheckedAll();
-          if (!this.isShowedTapStep3) {
-            //setTimeout("$('.tapStep3').tapTarget('open')", 500);
-            this.isShowedTapStep3 = true;
-          } else {
-
-          }
+          this.subCategoryList[0].selected = true;
+          this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
         });
       }
     });
   }
 
-  setAllItemsByCheckedAll() {
-    this.subCategoryList.map(el => {
-      el.selected = this.checkedAll
-    });
-    console.log('setAllItemsByCheckedAll');
-    this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
-  }
-
-  onChangeAll() {
-    this.checkedAll = !this.checkedAll;
-    this.setAllItemsByCheckedAll();
-  }
-
   onChangeItem(idSubCut) {
-    console.log('onChangeItem: ' + idSubCut);
     this.subCategoryList.map(el => {
-      if (el.id === idSubCut) {
-        el.selected = !el.selected;
-      }
+      el.selected = (el.id === idSubCut);
     });
-    this.correctAllItemsCheck();
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
-  }
-
-  correctAllItemsCheck() {
-    if (this.subCategoryList) {
-      const curCheck = this.subCategoryList[0].selected;
-      for (let i = 1; i < this.subCategoryList.length; i++) {
-        if (curCheck !== this.subCategoryList[i].selected) {
-          this.checkedAll = false;
-          return;
-        }
-      }
-      this.checkedAll = curCheck;
-    }
   }
   getPaddingTop() {
     return (String(this.fixedPaddingTop) + 'px');

@@ -6,6 +6,9 @@
   height: 60px;
   margin-top: 20px;
 }
-.cardList, .totalItemsContainer {
+.subCategoryContainer {
+  padding: 0px;
+}
+.totalItemsContainer {
   padding: 0px;
 }

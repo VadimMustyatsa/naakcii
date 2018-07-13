@@ -16,7 +16,9 @@ export class FoodsCategoryComponent implements OnInit {
   categories: Category[];
   public carouselCategory: NguCarousel;
 
-  constructor(private carousel: NguCarouselService, private service: FoodsCategoriesService, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+  constructor(private carousel: NguCarouselService,
+              private service: FoodsCategoriesService,
+              @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
     console.log('CategoryComponent - constr');
   }
   ngOnInit() {

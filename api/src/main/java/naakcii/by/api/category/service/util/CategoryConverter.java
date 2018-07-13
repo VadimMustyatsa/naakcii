@@ -9,7 +9,7 @@ public class CategoryConverter {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(category.getId());
         categoryDTO.setName(category.getName());
-        categoryDTO.setPicture(category.getName());
+        categoryDTO.setIcon(category.getIcon());
         categoryDTO.setPriority(category.getPriority());
         return categoryDTO;
     }

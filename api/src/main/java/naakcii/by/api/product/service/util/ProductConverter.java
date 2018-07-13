@@ -2,13 +2,15 @@ package naakcii.by.api.product.service.util;
 
 import naakcii.by.api.action.repository.model.Action;
 import naakcii.by.api.product.repository.model.Product;
-import naakcii.by.api.product.service.moddelDTO.ProductDTO;
+import naakcii.by.api.product.service.modelDTO.ProductDTO;
 
 public class ProductConverter {
 
     public ProductDTO convert(Product product, Action action) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
+        productDTO.setChainId(action.getChain().getId());
+        productDTO.setSubcategoryId(product.getSubcategory().getId());
         productDTO.setName(product.getName());
         productDTO.setPrice(action.getPrice());
         productDTO.setDiscount(action.getDiscount());
