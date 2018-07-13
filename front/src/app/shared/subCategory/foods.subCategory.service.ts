@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class FoodsSubCategoriesService {
   private subCategoryLocal = 'assets/json/SubCategoryList.json';
-  private subCategoryUrl = 'http://localhost:8080/subcategory';
+  private subCategoryUrl = 'http://178.124.206.42:8080/api/subcategory';
 
   constructor(private http: HttpClient) {
   }
