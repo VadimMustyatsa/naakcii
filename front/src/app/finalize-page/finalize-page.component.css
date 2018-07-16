@@ -138,9 +138,10 @@
 }
 .modal-content a{
   cursor: pointer;
+  text-decoration: underline;
 }
 .modal-content a:hover{
-  text-decoration: underline;
+  text-decoration: none;
 }
 .modal-content p{
   margin: 7px 0 0 0;

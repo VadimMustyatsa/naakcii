@@ -7,7 +7,7 @@ const chainStorageKey = 'naakciiChainStorage';
 
 @Injectable()
 export class Chain {
-  public lines: ChainLine[] = JSON.parse(localStorage.getItem(chainStorageKey))||[];
+  public lines: ChainLine[] = JSON.parse(sessionStorage.getItem(chainStorageKey))||[];
   public itemAllCount: number = 0;
   public chainAverageDiscount = 0;    //средний процент скидки по всем сетям
 
@@ -29,7 +29,7 @@ export class Chain {
       this.lines.push(new ChainLine(chain));
     }
     this.recalculate();
-    localStorage.setItem(chainStorageKey, JSON.stringify(this.lines));
+    sessionStorage.setItem(chainStorageKey, JSON.stringify(this.lines));
   }
 
   clear() {
