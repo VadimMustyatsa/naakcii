@@ -21,3 +21,7 @@
   height: 30px;
   z-index: 1000;
 }
+
+.infocard {
+  visibility: hidden;
+}

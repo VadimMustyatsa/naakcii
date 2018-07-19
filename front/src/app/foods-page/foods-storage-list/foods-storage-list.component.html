@@ -1,11 +1,10 @@
-<div class="chainList">
+<div class="chainList" #shopList>
   <div class="chainListWrap">
     <ul class="collapsible"
         materialize="collapsible"
         [materializeParams]="params"
         [materializeActions]="actionsCollapsible"
-        data-collapsible="accordion"
-    >
+        data-collapsible="accordion">
       <li>
         <div class="collapsible-header row grey darken-1">
           <div class="col m7">{{chainListText}}</div>
@@ -64,5 +63,14 @@
     </ul>
   </div>
 </div>
-
-
+<div class="overlay" #overlay>
+  <div class="overlay-text" amber-text
+   [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches" 
+   [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches" 
+   [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+   [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+   [class.isPortrait]="(breakPointCheckService.isPortrait | async)?.matches"
+   [class.isLandscape]="(breakPointCheckService.isLandscape | async)?.matches"
+  >Выберите только те торговые сети, которые Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
+  размеру скидки. Тогда Вы сможете выбирать только их товары, не тратя время на рассмотрение товаров других сетей.</div>
+</div>

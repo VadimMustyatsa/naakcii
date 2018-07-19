@@ -5,21 +5,19 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsStorageService {
-  //private storeUrl = 'assets/json/StoreList.json';
-  private storeUrl = 'http://178.124.206.54:8080/api/getChain';
+  private storeUrl = 'http://178.124.206.42:8080/api/chain';
 
   constructor(private http: HttpClient) {
-    console.log('storeService - constr');
   }
+
   getAll() {
-    console.log('storeService - start');
     return this.http.get<Storag[]>(this.storeUrl)
       .map(chainList => {
         return chainList.map(chain => {
           return {
             id: chain['id'],
             name: chain['name'],
-            location: chain['location'],
+            link: chain['link'],
             countGoods: chain['countGoods'],
             percent: chain['percent'],
             imgLogo: chain['imgLogo'],

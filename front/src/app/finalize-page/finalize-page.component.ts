@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+
+import {Component, ElementRef, OnInit, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
@@ -7,13 +8,16 @@ import {Chain, ChainLine} from '../shared/chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {$NBSP} from "@angular/compiler/src/chars";
+import {MaterializeAction} from 'angular2-materialize'
 import { Title } from '@angular/platform-browser'
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-finalize-page',
   templateUrl: './finalize-page.component.html',
   styleUrls: ['./finalize-page.component.css'],
-  providers: [FoodsStorageService]
+  providers: [FoodsStorageService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
@@ -29,8 +33,14 @@ export class FinalizePageComponent implements OnInit {
       }
     }
   ];
-
-  constructor(public  chainLst: Chain,
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
+  }
+  constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
               public cart: Cart, private titleService: Title) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -39,13 +49,13 @@ export class FinalizePageComponent implements OnInit {
 
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
-    this.titleService.setTitle('Список покупок – naakcii.by.');
+    this.titleService.setTitle('Список покупок – naakcii.by');
   }
 
   getExistListChain() {
-    let chainListExist: ChainLine[] = [];
+    const chainListExist: ChainLine[] = [];
     this.cart.lines.map(line => {
-      if (isUndefined(chainListExist.find(x => x.chain.id == line.product.idStrore))) {
+      if (isUndefined(chainListExist.find(x => x.chain.id === line.product.idStrore))) {
         chainListExist.push(this.getStorageByID(line.product.idStrore));
       }
     });
@@ -53,7 +63,7 @@ export class FinalizePageComponent implements OnInit {
   }
 
   getCartByChain(idChain: number): CartLine[] {
-    let cartListByChain: CartLine[] = [];
+    const cartListByChain: CartLine[] = [];
     this.cart.lines.map(line => {
       if (line.product.idStrore == idChain) {
         cartListByChain.push(line);
@@ -65,7 +75,7 @@ export class FinalizePageComponent implements OnInit {
   getCartQuantityByChain(idChain: number) {
     let quantity = 0;
     this.cart.lines.map(line => {
-      if (line.product.idStrore == idChain) {
+      if (line.product.idStrore === idChain) {
         quantity += line.quantity;
       }
     });
@@ -75,7 +85,7 @@ export class FinalizePageComponent implements OnInit {
   getCartAllPriceByChain(idChain: number) {
     let allPrice = 0;
     this.cart.lines.map(line => {
-      if (line.product.idStrore == idChain) {
+      if (line.product.idStrore === idChain) {
         if (line.product.allPrice > 0) {
           allPrice += (line.product.allPrice * line.quantity);
         } else {
@@ -89,7 +99,7 @@ export class FinalizePageComponent implements OnInit {
   getCartTotalPriceByChain(idChain: number) {
     let totalPrice = 0;
     this.cart.lines.map(line => {
-      if (line.product.idStrore == idChain) {
+      if (line.product.idStrore === idChain) {
         totalPrice += (line.product.totalPrice * line.quantity);
       }
     });
@@ -101,6 +111,7 @@ export class FinalizePageComponent implements OnInit {
   }
 
   getStorageByID(id: number): ChainLine {
+    console.log(this.chainLst);
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
@@ -127,35 +138,52 @@ export class FinalizePageComponent implements OnInit {
   }
 
   onResizeContent() {
-    var rootElement = this.el.nativeElement;
-    var childElement = rootElement.firstElementChild;
-    var contentElement = childElement.firstElementChild;
+
+    const rootElement = this.el.nativeElement;
+    const childElement = rootElement.firstElementChild;
+    const contentElement = childElement.firstElementChild;
     this.widthContainer = contentElement.clientWidth;
   }
 
   getPosition() {
     this.onResizeContent();
-    let clientHeight = document.documentElement.clientHeight; //высота видимой части
-    let offsetHeight = document.documentElement.offsetHeight;
+    const clientHeight = document.documentElement.clientHeight; // высота видимой части
+    const offsetHeight = document.documentElement.offsetHeight;
     if ((offsetHeight - clientHeight) < 60) {
-      //this.positionTotalSum = "";
-      return "";
+      return '';
     } else {
-      //this.positionTotalSum = "fixed";
-      return "fixed";
+      return 'fixed';
     }
   }
 
-
+  onRederect(){
+    localStorage.clear();
+    window.location.href = '/form-shopping-list';
+  }
   //*****************************************************************************************
   generatePDF() {
     let data = this.cart.generateJsonListPDF(); //сформированный список по сетям
     console.log(JSON.stringify(data));
-    let docDefinition = {};
-    let docContent = [];
-    let docStyle = {};
+    const docDefinition = {};
+    const docContent = [];
+    const docStyle = {};
+    const chainSum = [];
     let sumAfter = '';
     let benefit = '';
+    let day = '';
+    let year = '';
+    let monthString = '';
+    const time = new Date();
+    const month = time.getMonth() + 1;
+    if (time.getDate().toString().length === 1) {
+      day = '0' + time.getDate().toString();
+    } else {
+      day = time.getDate().toString();
+    }
+    if (time.getMonth().toString().length === 1) {
+      monthString = '0' + month.toString();
+    }
+    year = time.getFullYear().toString().substr(2, 4);
 
     function numberFormater (number:number): string {
       return number.toString().replace('.',',');
@@ -166,7 +194,10 @@ export class FinalizePageComponent implements OnInit {
     sumAfter = numberFormater((totalSum['sumAfter']).toFixed(2)) + ' руб.';
     benefit = numberFormater((totalSum['discountSum']).toFixed(2)) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
 
-    docContent.push({text: 'Список покупок', style: 'header'});
+    docContent.push({
+      text: 'Список покупок ' + day + '.' + monthString + '.' + year,
+      style: 'header'
+    });
 
     for (var chain in data['ChainList']) {
       //заголовок текущей сети
@@ -174,14 +205,23 @@ export class FinalizePageComponent implements OnInit {
       let table = {}; //обрамление
       let bodyTable = {};
       let bodyBodyTable = [];
-
+      let sum = 0;
       let widthParam = [];
       widthParam.push('100%');
       bodyTable['widths'] = widthParam;
-
       let tableLine = [];
-      tableLine.push({text: chain, bold: true, fillColor: '#656565', color: 'white', fontSize: '38', margin: [0, 5]});
-
+      data['ChainList'][chain].map(item => {
+        sum = Number(item['priceSum']) + sum;
+      });
+      tableLine.push({
+        alignment: 'left',
+        bold: true,
+        fillColor: '#656565',
+        color: 'white',
+        fontSize: '38',
+        columns: [{width: '70%', text: chain}, {width: '30%', text: 'Итого : ' + sum}]
+      });
+      chainSum.push(sum);
       bodyBodyTable.push(tableLine);
       bodyTable['body'] = bodyBodyTable;
       table['table'] = bodyTable;
@@ -225,7 +265,7 @@ export class FinalizePageComponent implements OnInit {
     let itemColumnList = {}; //строка
     let columns = [];
 
-    columns.push({width: '70%', text: 'Итого:', bold: true, margin: [0, 30, 0, 10]});
+    columns.push({width: '70%', text: 'Общий итог :', bold: true, margin: [0, 30, 0, 10]});
     columns.push({width: '30%', text: sumAfter, bold: true, style: 'itemSumStyle', margin: [0, 30, 0, 10]});
 
     itemColumnList['columns'] = columns;
@@ -234,7 +274,7 @@ export class FinalizePageComponent implements OnInit {
     //----------------------------------------
 
     //Ваша выгода-----------------------------------
-    docContent.push({text: 'Ваша выгода:    ' + benefit, bold: true, style: 'totalStyle', margin: [0, 20]});
+    docContent.push({text: 'Экономия :    ' + benefit, bold: true, style: 'totalStyle', margin: [0, 20]});
     //-----------------------------------------------
 
     //Штампик----------------------------------------
@@ -246,7 +286,8 @@ export class FinalizePageComponent implements OnInit {
     });
     //-----------------------------------------------
 
-    let pageSize = {};    pageSize['width'] = 1000;
+    let pageSize = {};
+    pageSize['width'] = 1000;
     pageSize['height'] = 'auto';
 
     docDefinition['content'] = docContent;
@@ -279,8 +320,7 @@ export class FinalizePageComponent implements OnInit {
     docStyle['anotherStyle'] = anotherStyle;
     docDefinition['styles'] = docStyle;
 
-
-    pdfMake.createPdf(docDefinition).download('Список покупок.pdf');
+    pdfMake.createPdf(docDefinition).download('Список покупок - ' + day + '.' + monthString + '.' + year + '.pdf');
     pdfMake.createPdf(docDefinition).open();
     //**********************************************************************
   }

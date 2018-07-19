@@ -1,7 +1,19 @@
-<div class="steps-container">
-  <app-home-step
-    *ngFor="let step of steps"
-    [step]="step"
-
-  ></app-home-step>
+<div class="arrows">
+  <div *ngFor="let arrow of arrows">
+    <div class="arrow-image">
+      <img src="{{arrow.img}}">
+    </div>
+  </div>
 </div>
+<div class="steps-container">
+  <div *ngFor="let step of steps" class="steps-container-block">
+    <div class="step-image">
+      <img src="{{step.img}}">
+    </div>
+    <div class="step-title">
+      <span>{{step.id}}.</span><br>
+      <span>{{step.text}}</span>
+    </div>
+  </div>
+</div>
+

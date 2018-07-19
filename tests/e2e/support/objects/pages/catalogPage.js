@@ -13,7 +13,7 @@ class CatalogPage extends Page{
                 'средний_%_скидки': by.css('app-foods-storage-list li div[class*="Percent"]>span'),
                 'товаров_на_акции': by.css('app-foods-storage-list li div[class*="Goods"]>span'),
                 'статус': by.css('app-foods-storage-list li input'),
-                'состояние': by.css('app-foods-storage-list div[class^="collapsible-header"]')
+                'состояние_фильтра': by.css('app-foods-storage-list div[class^="collapsible-header"]')
             },
             '(панель|панели) список категорий':{
                 '(панель|панели) список категорий': by.css('app-foods-group div[class$="foods-main-group"]'),
@@ -21,8 +21,8 @@ class CatalogPage extends Page{
                 'статус': by.css('app-foods-group ngu-item>div')
             },
             '(панель|панели) список подкатегорий':{
-                '(панель|панели) список подкатегорий': by.css('app-foods-subcategory ul .categoryName'),
-                'пункт|подкатегор(?:ия|ию|ии)': by.css('app-foods-subcategory li label'),
+                '(панель|панели) список подкатегорий': by.css('app-foods-subcategory ul'),
+                'подкатегор(?:ия|ию|ии)': by.css('app-foods-subcategory li label'),
                 'статус': by.css('app-foods-subcategory li input')
             },
             '(панель|панели) список акционных товаров': {
@@ -36,64 +36,117 @@ class CatalogPage extends Page{
         this.helper = new Helper(this.data);
     }
 
-    getElementStatus(elementKey){
-        var elementObj = this.helper.getElementLocator(elementKey, 'статус');
-        if(elementKey.search(/панел(?:ь|и) список категорий/gi) === -1) {
-            return element.all(elementObj).map((elem) => {
-                return elem.isSelected().then((attributeValue) => {
-                    if (attributeValue) {
-                        return 'Выбрана';
+    getElementStatusByIndex(elementKey, index){
+        var elementObj = this.helper.getElementLocator(elementKey, 'статус'),
+            statusArr = element.all(elementObj);
+        if(elementKey !== 'панель список категорий') {
+            return statusArr.get(index).isSelected()
+                .then(function (selected) {
+                    if (selected) {
+                        return 'выбрана';
                     } else {
-                        return 'Не выбрана';
+                        return 'не выбрана';
                     }
                 });
-            });
         } else {
-            return element.all(elementObj).map((elem) => {
-                return elem.getAttribute('class').then((attributeValue) => {
-                    if (attributeValue === 'selected') {
-                        return 'Выбрана';
+            return statusArr.get(index).getAttribute('class')
+                .then(function(result){
+                    if(result === 'selected'){
+                        return 'выбрана';
                     } else {
-                        return 'Не выбрана';
+                        return 'не выбрана';
                     }
                 });
-            });
         }
     }
 
-    async getElementText(elementKey, subElementKey){
+    isFilterOpened(elementKey){
+        var elementObj = this.helper.getElementLocator(elementKey, 'состояние_фильтра');
+        return element(elementObj).getAttribute('class')
+            .then(function(result){
+                if(result.indexOf('active') !== -1){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+    }
+
+    async getElementValues(elementKey, elementKeysArr, count = 'undefined'){
+        var resultArr = [],
+            valuesArrLength, //количество значений элементов в списке elementNameArr
+            elementKeysArrLength,//количество элементов, для которых вытягиваются значения
+            elementObj;
+
+        if(Array.isArray(elementKeysArr)){
+            elementKeysArrLength = elementKeysArr.length;
+
+            if(count === 'undefined') {
+                valuesArrLength = await this.getNumberOfElements(elementKey, elementKeysArr[0]);
+            }else {
+                valuesArrLength = count;
+            }
+            console.log('Array count = ' + valuesArrLength);
+
+            for(var i = 0; i < valuesArrLength; i += 1){
+                var elem = [];
+                for(var j = 0; j < elementKeysArrLength; j += 1){
+                    if(elementKeysArr[j] !== 'статус') {
+                        elem.push(await this.getElementValueByIndex(elementKey, elementKeysArr[j], i));
+                    }else {
+                        elem.push(await this.getElementStatusByIndex(elementKey, i));
+                    }
+                }
+                resultArr.push(elem);
+            }
+
+        } else {
+            //elementKey = this.matchElement(elementKey);
+            if(count === 'undefined') {
+                valuesArrLength = await this.getNumberOfElements(elementKey, elementKeysArr);
+            }else {
+                valuesArrLength = count;
+            }
+            elementObj = this.helper.getElementLocator(elementKey, elementKeysArr);
+            resultArr.push(await element.all(elementObj)
+                .map(function (elements) {
+                    return elements.getText();
+                })
+                .then(function (valuesArr) {
+                    var resArr = [];
+                    for(var i = 0; i < valuesArrLength; i += 1){
+                        resArr.push(valuesArr[i]);
+                    }
+                    return resArr;
+                }));
+        }
+        return resultArr;
+    }
+
+    async selectElement(elementKey, subElementKey, textArr){
         var elementObj = this.helper.getElementLocator(elementKey, subElementKey),
-            resultArray;
+            selected = true,
+            textArrLength,
+            index;
+        if(Array.isArray(textArr)){
+            textArrLength = textArr.length;
+            for(var i = 0; i < textArrLength; i += 1){
+                index = await this.getElementIndex(elementKey, subElementKey, textArr[i]);
+                console.log('index = ' + index);
 
-        if(subElementKey === 'статус') {
-            resultArray = (await this.getElementStatus(elementKey)).slice();
-        }else {
-            resultArray = (await element.all(elementObj).map(function (elementArr) {
-                return elementArr.getText().then((elementText) => {
-                    return elementText.replace(/\\['"$.+*|()?]/g,'');
-                });
-            }));
-        }
-        return resultArray;
-    }
+                selected = await this.getElementStatusByIndex(elementKey, index);
+                console.log('selected = ' + selected);
 
-    async clickElementByText(elementKey, subElementKey, text, btnName = undefined){
-        var textArray = [];
-        if(Array.isArray(text)){
-            textArray = text.slice();
+                await element.all(elementObj).get(index).click();
+            }
         } else {
-            textArray.push(text);
-        }
-        for(var i = 0; i < textArray.length; i += 1){
-            await element.all(this.helper.getElementLocator(elementKey, subElementKey)).getText()
-                .then((textArr) => {
-                    return textArr.some((elementText, index) => {
-                        if (elementText.indexOf(textArray[i]) > -1) {
-                            return (btnName === undefined) ? element.all(this.helper.getElementLocator(elementKey, subElementKey)).get(index).click()
-                                : element.all(this.helper.getElementLocator(elementKey, btnName)).get(index).click();
-                        }
-                    });
-                });
+            index = await this.getElementIndex(elementKey, subElementKey, textArr);
+            console.log('index = ' + index);
+
+            selected = await this.getElementStatusByIndex(elementKey, index);
+            console.log('selected = ' + selected);
+
+            await element.all(elementObj).get(index).click();
         }
     }
 }

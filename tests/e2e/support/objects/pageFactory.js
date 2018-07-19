@@ -17,6 +17,7 @@ class PageFactory{
         if(!pages[page]){
             throw new Error('Page is not found: ' + pages[page]);
         }
+        console.log()
         this.currentPage = new pages[page]();
         return this.currentPage;
     }

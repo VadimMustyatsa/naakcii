@@ -1,12 +1,14 @@
-import {Component, Input, Inject, OnInit, EventEmitter, ElementRef, HostListener} from '@angular/core';
-import {MaterializeDirective, MaterializeAction} from 'angular2-materialize';
-import {Storag} from '../../shared/Storage/foods.storage.model';
-import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
+import { Component, Input, Inject, OnInit, EventEmitter, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import { Storag } from '../../shared/Storage/foods.storage.model';
+import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
-import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
-import {Observer} from 'rxjs/Observer';
-import {Chain} from '../../shared/chain/chain.model';
-import {Observable} from "rxjs/Observable";
+import { MODES, SHARED_STATE, SharedState } from '../sharedState.model';
+import { Observer } from 'rxjs/Observer';
+import { Chain } from '../../shared/chain/chain.model';
+import { Observable } from 'rxjs/Observable';
+import { Cart, CartLine } from '../../shared/cart/cart.model';
+import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-storage-list',
@@ -14,12 +16,15 @@ import {Observable} from "rxjs/Observable";
   styleUrls: ['./foods-storage-list.component.css'],
   providers: [FoodsStorageService]
 })
-export class FoodsStorageListComponent implements OnInit {
+export class FoodsStorageListComponent implements OnInit, AfterViewInit {
   actionsCollapsible = new EventEmitter<string | MaterializeAction>();
   checkedAllChain: boolean;
   chainListText = '';
   curChainPercent = '';
   curChainCountGoods = '';
+  @ViewChild('overlay') overlayElement: ElementRef;
+  @ViewChild('shopList') shopListElement: ElementRef;
+
 
   iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
   curentIconCollapsible = String(this.iconCollapsible.minimized);
@@ -35,18 +40,18 @@ export class FoodsStorageListComponent implements OnInit {
   ];
 
   constructor(public  chainLst: Chain,
+              public cart: Cart,
               private eRef: ElementRef,
+              private breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    console.log('store list');
   }
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
-    if (this.eRef.nativeElement.contains(event.target)) {
-      //console.log('clicked inside');
-    } else {
-      console.log('clicked outside');
-      this.actionsCollapsible.emit({action: "collapsible", params: ['close', 0]});
+    if (this.eRef.nativeElement.contains(event.target) && event.target.className !== 'overlay') {
+      this.overlayElement.nativeElement.style.display = 'none';
+    } if (!this.eRef.nativeElement.contains(event.target) && event.target.className !== 'overlay') {
+      this.actionsCollapsible.emit({action: 'collapsible', params: ['close', 0]});
       this.curentIconCollapsible = String(this.iconCollapsible.minimized);
     }
   }
@@ -61,6 +66,14 @@ export class FoodsStorageListComponent implements OnInit {
         this.correctAllChainsCheck();
       }
     });
+  }
+
+  ngAfterViewInit() {
+    const num = +this.chainListText.substr(-1);
+    if (!this.cart.cartTotalPrice && num === 0) {
+      this.overlayElement.nativeElement.style.display = 'block';
+      setTimeout(() => this.actionsCollapsible.emit({action: 'collapsible', params: ['open', 0]}), 200);
+    }
   }
 
   setAllChains(checked) {
@@ -115,9 +128,10 @@ export class FoodsStorageListComponent implements OnInit {
         } else if (cnt === 0) {
           this.chainListText = 'Выберите торговую сеть';
           this.checkedAllChain = false;
-        }this.checkedAllChain = false;
+        }
+          this.checkedAllChain = false;
       }
-      //проверка на однотипность выбора
+      // проверка на однотипность выбора
       const curCheck = this.chainLst.lines[0].chain.selected;
       for (let i = 1; i < this.chainLst.lines.length; i++) {
         if (curCheck !== this.chainLst.lines[i].chain.selected) {
@@ -133,5 +147,3 @@ export class FoodsStorageListComponent implements OnInit {
     this.setAllChains(this.checkedAllChain);
   }
 }
-
-

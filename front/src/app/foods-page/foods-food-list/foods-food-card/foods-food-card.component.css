@@ -9,6 +9,7 @@
   font-size: 12px;
   height: 80px;
   overflow: auto;
+  font-weight: 500;
 }
 .foodStorage {
   display: flex;

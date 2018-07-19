@@ -1,21 +1,32 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {FoodList} from '../foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../chain/chain.model';
 import {isUndefined} from "util";
 
+const storageKey = "naakciiStorage";
+const storageKeyCount = "naakciiStorageCount";
+const storageCount = JSON.parse(localStorage.getItem(storageKeyCount)) ||
+  {
+    itemCount: 0,
+    cartAllPrice: 0,
+    cartTotalPrice: 0,
+    cartAverageDiscount: 0
+  };
+
 
 @Injectable()
 export class Cart {
-  public lines: CartLine[] = [];
-  public itemCount: number = 0;
-  public cartAllPrice: number = 0;    //без скидок
-  public cartTotalPrice: number = 0;  //с учетом скидок
-  public cartAverageDiscount = 0;    //средний процент скидки по всем карточкам
+  public lines: CartLine[] = JSON.parse(localStorage.getItem(storageKey)) || [];
+  public itemCount: number = storageCount.itemCount;
+  public cartAllPrice: number = storageCount.cartAllPrice;    //без скидок
+  public cartTotalPrice: number = storageCount.cartTotalPrice;  //с учетом скидок
+  public cartAverageDiscount = storageCount.cartAverageDiscount;    //средний процент скидки по всем карточкам
 
   constructor(public  chainLst: Chain) {
   }
 
   addLine(product: FoodList, quantity: number) {
+
     let line = this.lines.find(line => line.product.id == product.id);
     if (line != undefined) {
       line.quantity += quantity;
@@ -35,7 +46,7 @@ export class Cart {
 
   removeLine(id: number) {
     let index = this.lines.findIndex(line => line.product.id == id);
-    this.lines.splice(index,1);
+    this.lines.splice(index, 1);
     this.recalculate();
   }
 
@@ -63,14 +74,14 @@ export class Cart {
           curCart['Comment'] = cart.comment;
           curCart['priceOne'] = (cart.product.totalPrice).toFixed(2);
           curCart['amount'] = cart.quantity;
-          curCart['priceSum'] = (cart.product.totalPrice*cart.quantity).toFixed(2);
+          curCart['priceSum'] = (cart.product.totalPrice * cart.quantity).toFixed(2);
           curCartList.push(curCart);
           if (cart.product.allPrice > 0) {
-            sumBefore += cart.product.allPrice*cart.quantity;
-          } else  {
-            sumBefore += cart.product.totalPrice*cart.quantity;
+            sumBefore += cart.product.allPrice * cart.quantity;
+          } else {
+            sumBefore += cart.product.totalPrice * cart.quantity;
           }
-          sumAfter += cart.product.totalPrice*cart.quantity;
+          sumAfter += cart.product.totalPrice * cart.quantity;
         }
       });
       chainSort[chain.chain.name] = curCartList;
@@ -79,7 +90,7 @@ export class Cart {
     totalSum['sumBefore'] = sumBefore;
     totalSum['sumAfter'] = sumAfter;
     totalSum['discountSum'] = (sumBefore - sumAfter);
-    totalSum['discountPersent'] = (100 - (sumAfter/sumBefore)*100);
+    totalSum['discountPersent'] = (100 - (sumAfter / sumBefore) * 100);
 
     pdf['ChainList'] = chainSort;
     pdf['totalSum'] = totalSum;
@@ -89,6 +100,7 @@ export class Cart {
   getStorageByID(id: number): ChainLine {
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
+
   //-------------------------------------------------------------------------
 
   clear() {
@@ -112,14 +124,23 @@ export class Cart {
         this.cartAllPrice += (l.quantity * l.product.totalPrice);
       }
       this.cartTotalPrice += (l.quantity * l.product.totalPrice);
-    })
+    });
+    localStorage.setItem(storageKey, JSON.stringify(this.lines));
+    localStorage.setItem(storageKeyCount, JSON.stringify({
+      itemCount: this.itemCount,
+      cartAllPrice: this.cartAllPrice,
+      cartTotalPrice: this.cartTotalPrice,
+      cartAverageDiscount: this.cartAverageDiscount,
+    }));
   }
 }
+
 export class CartLine {
 
   constructor(public product: FoodList,
               public quantity: number,
-              public comment: string) {}
+              public comment: string) {
+  }
 
   get lineTotal() {
     return this.quantity * this.product.totalPrice;

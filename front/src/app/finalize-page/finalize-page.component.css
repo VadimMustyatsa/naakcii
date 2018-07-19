@@ -126,3 +126,27 @@
   box-shadow: 0 1px 0 0 #656565;
 }
 /*********************************/
+.modal-content .modal-header{
+  margin: 0 0 10px 0;
+}
+.modal-content h4{
+  margin: 3px 0;
+  font-size: large;
+  text-align: center;
+}
+.modal-content li{
+}
+.modal-content a{
+  cursor: pointer;
+}
+.modal-content a:hover{
+  text-decoration: underline;
+}
+.modal-content p{
+  margin: 7px 0 0 0;
+}
+.modal-content ul p{
+  margin: 3px 0;
+  color: gray;
+  font-size: 12px;
+}

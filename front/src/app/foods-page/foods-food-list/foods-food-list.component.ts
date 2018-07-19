@@ -18,21 +18,19 @@ export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
   private curFoodCard: FoodList;
   selectedSubCatListID = [];
-  countLoadCard: number = 0;
-  firstLoadedCard: number = 12;
-  loadedCard: number = 6;
-  isNextCard: boolean = false;
-  showLoadingCard: boolean = false;
+  countLoadCard = 0;
+  firstLoadedCard = 12;
+  loadedCard = 6;
+  isNextCard = false;
+  showLoadingCard = false;
+  isFoodLength = false;
 
   constructor(public  chainLst: Chain,
               private foodsService: FoodsFoodListService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    console.log('FoodListComponent - constr');
   }
 
   ngOnInit() {
-    console.log('FoodListComponent - ngOnInit');
-
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
@@ -45,9 +43,8 @@ export class FoodsFoodListComponent implements OnInit {
           }
           if (this.selectedSubCatListID.length > 0) {
             this.countLoadCard = 0;
-            let first = this.countLoadCard;
-            let last = this.firstLoadedCard;
-            //console.log('first: ' + first + '; last: ' + last);
+            const first = this.countLoadCard;
+            const last = this.firstLoadedCard;
             this.isNextCard = false;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
               productList.map(product => {
@@ -66,8 +63,15 @@ export class FoodsFoodListComponent implements OnInit {
           }
         }
       }
+      this.isFoodLength = false;
+      setTimeout(() => {
+        if (this.foodList && this.foodList.length === 0) {
+          this.isFoodLength = true;
+        }
+      }, 500)
     });
   }
+
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {

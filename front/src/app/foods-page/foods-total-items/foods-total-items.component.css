@@ -12,7 +12,7 @@
   padding-left: 5px;
 }
 .collapsible-header:first-child div {
-  text-align: justify;
+  text-align: left;
   margin: 0 auto;
   padding: 10px;
   font-size: 18px;
