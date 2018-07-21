@@ -42,7 +42,7 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
   constructor(public  chainLst: Chain,
               public cart: Cart,
               private eRef: ElementRef,
-              private breakPointCheckService: BreakPointCheckService,
+              public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
 
