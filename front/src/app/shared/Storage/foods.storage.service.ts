@@ -22,7 +22,7 @@ export class FoodsStorageService {
             percent: chain['percent'],
             imgLogo: chain['imgLogo'],
             imgLogoSmall: chain['imgLogoSmall'],
-            selected: true
+            selected: false
           };
         });
       });

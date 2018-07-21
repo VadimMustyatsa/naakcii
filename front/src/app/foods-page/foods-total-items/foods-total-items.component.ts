@@ -7,7 +7,7 @@ import {Chain, ChainLine} from '../../shared/chain/chain.model';
 @Component({
   selector: 'app-foods-total-items',
   templateUrl: './foods-total-items.component.html',
-  styleUrls: ['./foods-total-items.component.css'],
+  styleUrls: ['./foods-total-items.component.scss'],
   providers: [FoodsStorageService]
 })
 export class FoodsTotalItemsComponent implements OnInit {

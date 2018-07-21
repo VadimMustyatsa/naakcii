@@ -1,3 +1,8 @@
+.steps {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
 .steps-container {
   display: flex;
   justify-content: space-around;
@@ -30,11 +35,11 @@
 }
 
 .step-title {
-    width: 100%;
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-  }
+  width: 100%;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
 
 .step-title > span {
   display: inline-block;
@@ -49,22 +54,31 @@
   padding-left: 110px;
 }
 
-@media screen and (max-width: 1000px) {
-  .arrows {
-    padding-left: 40px;
-  }
+.isNetBook {
   .step-title {
     font-size: 16px;
   }
+  .arrows {
+    padding-left: 50px;
+  }
 }
 
-@media screen and (max-width: 620px) {
+.isTablet {
+  .arrows {
+    padding-left: 30px;
+  }
+}
+
+.isHandset {
   .arrow-image {
     display: none
   }
+  .arrows {
+    padding-left: 30px;
+  }
   .steps-container {
-       margin: 18px 0;
-     }
+    margin: 18px 0;
+  }
   .step-title {
     font-size: 12px;
   }

@@ -13,7 +13,7 @@ import { BreakPointCheckService } from '../../shared/services/breakpoint-check.s
 @Component({
   selector: 'app-foods-storage-list',
   templateUrl: './foods-storage-list.component.html',
-  styleUrls: ['./foods-storage-list.component.css'],
+  styleUrls: ['./foods-storage-list.component.scss'],
   providers: [FoodsStorageService]
 })
 export class FoodsStorageListComponent implements OnInit, AfterViewInit {

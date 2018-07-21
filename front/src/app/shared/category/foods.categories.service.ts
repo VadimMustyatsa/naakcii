@@ -12,11 +12,9 @@ export class FoodsCategoriesService {
   private selectedCategory: Category;
 
   constructor(private http: HttpClient) {
-    console.log('categoryService - constr');
   }
 
   getAll() {
-    console.log('categoryService - getAll');
     return this.http.get<Category[]>(this.categoryUrl)
       .map(categoryList => {
         return categoryList.map(category => {
@@ -31,7 +29,6 @@ export class FoodsCategoriesService {
 
   setCategories(categories: Category[]) {
     this.data = categories;
-    console.log(this.data);
   }
 
   getById(id: number): Category {

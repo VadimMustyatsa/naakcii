@@ -65,12 +65,7 @@
 </div>
 <div class="overlay" #overlay>
   <div class="overlay-text" amber-text
-   [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches" 
-   [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches" 
-   [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
-   [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
-   [class.isPortrait]="(breakPointCheckService.isPortrait | async)?.matches"
-   [class.isLandscape]="(breakPointCheckService.isLandscape | async)?.matches"
-  >Выберите только те торговые сети, которые Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
+   [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+   [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches">Выберите только те торговые сети, которые Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
   размеру скидки. Тогда Вы сможете выбирать только их товары, не тратя время на рассмотрение товаров других сетей.</div>
 </div>

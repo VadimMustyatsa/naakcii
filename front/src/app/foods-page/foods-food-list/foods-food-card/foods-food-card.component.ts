@@ -8,7 +8,7 @@ import {Chain, ChainLine} from '../../../shared/chain/chain.model';
 @Component({
   selector: 'app-foods-food-card',
   templateUrl: './foods-food-card.component.html',
-  styleUrls: ['./foods-food-card.component.css'],
+  styleUrls: ['./foods-food-card.component.scss'],
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
@@ -20,7 +20,6 @@ export class FoodsFoodCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log('FoodCardComponent - ngOnInit');
   }
 
   getStorageByID(id: number): ChainLine {

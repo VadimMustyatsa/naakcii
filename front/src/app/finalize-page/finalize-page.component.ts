@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-finalize-page',
   templateUrl: './finalize-page.component.html',
-  styleUrls: ['./finalize-page.component.css'],
+  styleUrls: ['./finalize-page.component.scss'],
   providers: [FoodsStorageService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -111,7 +111,6 @@ export class FinalizePageComponent implements OnInit {
   }
 
   getStorageByID(id: number): ChainLine {
-    console.log(this.chainLst);
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
@@ -163,7 +162,6 @@ export class FinalizePageComponent implements OnInit {
   //*****************************************************************************************
   generatePDF() {
     let data = this.cart.generateJsonListPDF(); //сформированный список по сетям
-    console.log(JSON.stringify(data));
     const docDefinition = {};
     const docContent = [];
     const docStyle = {};

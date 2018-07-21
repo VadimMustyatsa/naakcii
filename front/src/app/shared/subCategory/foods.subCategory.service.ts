@@ -11,7 +11,6 @@ export class FoodsSubCategoriesService {
   }
 
   getByCategory(idCategory) {
-    //console.log('SubCategoriesService - getByCategory');
     let url = this.subCategoryUrl;
     url = url + '/' + idCategory;
     return this.http.get<SubCategory[]>(url)   //для реального запроса с бэка

@@ -9,7 +9,7 @@ import { NguCarousel, NguCarouselStore, NguCarouselService } from '@ngu/carousel
 @Component({
   selector: 'app-foods-group',
   templateUrl: './foods-category.component.html',
-  styleUrls: ['./foods-category.component.css'],
+  styleUrls: ['./foods-category.component.scss'],
   providers: [FoodsCategoriesService]
 })
 export class FoodsCategoryComponent implements OnInit {
@@ -19,16 +19,13 @@ export class FoodsCategoryComponent implements OnInit {
   constructor(private carousel: NguCarouselService,
               private service: FoodsCategoriesService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
-    console.log('CategoryComponent - constr');
   }
   ngOnInit() {
-    console.log('CategoryComponent - ngOnInit');
     this.initCarouselCategory();
     this.service.getAll().subscribe(categoryList => {
       this.categories = categoryList;
       this.service.setCategories(categoryList);
       this.selectCategory(this.service.getById(this.categories[0].id));
-      console.log(this.categories);
     });
   }
   carouselActions = new EventEmitter<string | MaterializeAction>();
@@ -43,7 +40,6 @@ export class FoodsCategoryComponent implements OnInit {
   selectCategory(category: Category) {
     this.service.setSelectCategory(category);
     this.observer.next(new SharedState(MODES.SELECT_CATEGORY, category));
-    console.log('Category: ' + category.id + ':' + category.name);
   }
   initCarouselCategory() {
     this.carouselCategory = {

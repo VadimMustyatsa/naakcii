@@ -11,7 +11,7 @@ import {Chain} from '../../shared/chain/chain.model';
 @Component({
   selector: 'app-foods-food-list',
   templateUrl: './foods-food-list.component.html',
-  styleUrls: ['./foods-food-list.component.css'],
+  styleUrls: ['./foods-food-list.component.scss'],
   providers: [FoodsFoodListService, FoodsStorageService]
 })
 export class FoodsFoodListComponent implements OnInit {
@@ -46,9 +46,12 @@ export class FoodsFoodListComponent implements OnInit {
             const first = this.countLoadCard;
             const last = this.firstLoadedCard;
             this.isNextCard = false;
+            this.foodList.length = 0;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
               productList.map(product => {
-                this.foodList.push(product);
+                if (!this.checkDuplicate(this.foodList, product)) {
+                  this.foodList.push(product);
+                }
               });
               if (productList.length == this.firstLoadedCard) {
                 this.isNextCard = true;
@@ -132,7 +135,6 @@ export class FoodsFoodListComponent implements OnInit {
     this.isNextCard = false;
     let first = this.countLoadCard;
     let last = this.countLoadCard + this.loadedCard;
-    //console.log('countCard: ' + this.countLoadCard + '; first: ' + first + '; last: ' + last);
     this.showLoadingCard = true;
     this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
       productList.map(product => {
@@ -151,4 +153,7 @@ export class FoodsFoodListComponent implements OnInit {
     });
   }
   //-----------------------------------------------------
+  checkDuplicate(foodList, product) {
+    return foodList.some(el => el.id === product.id)
+  };
 }

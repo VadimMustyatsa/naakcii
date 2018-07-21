@@ -9,7 +9,7 @@ import {Observer} from 'rxjs/Observer';
 @Component({
   selector: 'app-foods-subCategory',
   templateUrl: './foods-subCategory.component.html',
-  styleUrls: ['./foods-subCategory.component.css'],
+  styleUrls: ['./foods-subCategory.component.scss'],
   providers: [FoodsSubCategoriesService]
 })
 export class FoodsSubCategoryComponent implements OnInit {

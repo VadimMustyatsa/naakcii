@@ -1,6 +1,11 @@
-<div class="homeSlider amber">
+<div class="homeSlider amber"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div class="headers">
-    <h2 class="title">Составляйте список покупок и экономьте с нами!</h2>
+    <p class="title">Составляйте список покупок и экономьте с нами!</p>
     <section>
       <div *ngFor="let title of titles" >
         <i class="material-icons">check</i>

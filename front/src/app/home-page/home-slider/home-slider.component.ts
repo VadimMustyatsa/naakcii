@@ -1,18 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
+import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 
 const titles = ['_ ведущих торговых сетей', '_ акционных товаров', '_% - средний размер достигаемой экономии'];
 
 @Component({
   selector: 'app-home-slider',
   templateUrl: './home-slider.component.html',
-  styleUrls: ['./home-slider.component.css']
+  styleUrls: ['./home-slider.component.scss']
 })
 export class HomeSliderComponent implements OnInit {
 
   basicData = [0, 0, 0];
 
-  constructor(private storageService: FoodsStorageService) {}
+  constructor(private storageService: FoodsStorageService, public breakPointCheckService: BreakPointCheckService) {}
 
   ngOnInit() {
     this.storageService.getAll().subscribe(data => {
