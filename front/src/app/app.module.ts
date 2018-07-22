@@ -37,6 +37,7 @@ import {Chain} from './shared/chain/chain.model';
 import {LOCALE_ID} from "@angular/core";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/ru';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeFr);
 
@@ -77,7 +78,8 @@ const routes = [
     HttpClientModule,
     NguCarouselModule,
     InfiniteScrollModule,
-    LayoutModule
+    LayoutModule,
+    BrowserAnimationsModule
   ],
 
   providers: [
