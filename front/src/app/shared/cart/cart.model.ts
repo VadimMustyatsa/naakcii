@@ -5,7 +5,7 @@ import {isUndefined} from "util";
 
 const storageKey = "naakciiStorage";
 const storageKeyCount = "naakciiStorageCount";
-const storageCount = JSON.parse(localStorage.getItem(storageKeyCount)) ||
+const storageCount = JSON.parse(sessionStorage.getItem(storageKeyCount)) ||
   {
     itemCount: 0,
     cartAllPrice: 0,
@@ -16,7 +16,7 @@ const storageCount = JSON.parse(localStorage.getItem(storageKeyCount)) ||
 
 @Injectable()
 export class Cart {
-  public lines: CartLine[] = JSON.parse(localStorage.getItem(storageKey)) || [];
+  public lines: CartLine[] = JSON.parse(sessionStorage.getItem(storageKey)) || [];
   public itemCount: number = storageCount.itemCount;
   public cartAllPrice: number = storageCount.cartAllPrice;    //без скидок
   public cartTotalPrice: number = storageCount.cartTotalPrice;  //с учетом скидок
@@ -125,8 +125,8 @@ export class Cart {
       }
       this.cartTotalPrice += (l.quantity * l.product.totalPrice);
     });
-    localStorage.setItem(storageKey, JSON.stringify(this.lines));
-    localStorage.setItem(storageKeyCount, JSON.stringify({
+    sessionStorage.setItem(storageKey, JSON.stringify(this.lines));
+    sessionStorage.setItem(storageKeyCount, JSON.stringify({
       itemCount: this.itemCount,
       cartAllPrice: this.cartAllPrice,
       cartTotalPrice: this.cartTotalPrice,
