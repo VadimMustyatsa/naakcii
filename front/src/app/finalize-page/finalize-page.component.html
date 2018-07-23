@@ -109,7 +109,7 @@
         </div>
         <div class="col m4 center">
           <a href="javascript:void(0);" (click)="generatePDF()"
-             class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn modal-trigger"
+             class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn"
              (click)="openModal()">Скачать PDF</a>
         </div>
         <div class="col m4 right">
@@ -165,7 +165,7 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+<div id="modal1"  data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <div class="modal-content">
     <div class="modal-header">
