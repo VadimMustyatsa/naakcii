@@ -1,0 +1,85 @@
+.steps {
+  margin: 0 auto;
+  max-width: 1260px;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 25px;
+}
+
+.steps-container-block {
+  width: 19%;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.step-image, .arrow-image {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.step-image img, .arrow-image img {
+  display: block;
+  height: 90%;
+  margin: auto;
+}
+
+.arrow-image img {
+  height: 135%;
+}
+
+.step-title {
+  width: 100%;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.step-title > span {
+  display: inline-block;
+  max-width: 250px;
+}
+
+.arrows {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 91%;
+  padding-left: 110px;
+}
+
+.isNetBook {
+  .step-title {
+    font-size: 16px;
+  }
+  .arrows {
+    padding-left: 50px;
+  }
+}
+
+.isTablet {
+  .arrows {
+    padding-left: 30px;
+  }
+}
+
+.isHandset {
+  .arrow-image {
+    display: none
+  }
+  .arrows {
+    padding-left: 30px;
+  }
+  .steps-container {
+    margin: 18px 0;
+  }
+  .step-title {
+    font-size: 12px;
+  }
+}

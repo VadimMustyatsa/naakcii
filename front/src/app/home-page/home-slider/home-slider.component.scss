@@ -1,0 +1,84 @@
+.homeSlider {
+  height: 380px;
+  background-image: url("../../../assets/images/main.png");
+  background-size: cover;
+}
+
+.title {
+  color: white;
+  max-width: 800px;
+  font-size: 38px;
+  font-family: 'Lobster', cursive;
+}
+
+.headers {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 1px 50px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 90%;
+}
+
+.header {
+  color: white;
+  font-size: 30px;
+}
+
+.material-icons {
+  font-size: 38px;
+  color: white;
+}
+
+.isWeb.homeSlider {
+  height: 320px;
+  .header {
+    font-size: 30px;
+  }
+}
+
+.isNetBook.homeSlider {
+  height: 300px;
+  .headers {
+    padding: 1px 20px 0;
+  }
+  .title {
+    font-size: 34px;
+  }
+  .header {
+    font-size: 24px;
+  }
+  .material-icons {
+    font-size: 28px;
+  }
+}
+
+.isTablet.homeSlider {
+  height: 260px;
+  .title {
+    font-size: 24px;
+  }
+  .header {
+    font-size: 20px;
+  }
+  .material-icons {
+    font-size: 22px;
+  }
+}
+
+.isMobile.homeSlider {
+  height: 140px;
+  .title {
+    display: none;
+  }
+  .headers {
+    padding-top: 10px;
+  }
+  .header {
+    font-size: 16px;
+  }
+  .material-icons {
+    font-size: 18px;
+  }
+}

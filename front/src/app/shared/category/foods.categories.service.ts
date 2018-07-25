@@ -6,16 +6,15 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FoodsCategoriesService {
   //private categoryUrl = 'assets/json/Category.json';
-  private categoryUrl = 'http://178.124.206.54:8080/api/getCategory';
+  private categoryUrl = 'http://178.124.206.42:8080/api/category';
 
   private data: Category[] = [];
   private selectedCategory: Category;
 
   constructor(private http: HttpClient) {
-    console.log('categoryService - constr');
   }
+
   getAll() {
-    console.log('categoryService - getAll');
     return this.http.get<Category[]>(this.categoryUrl)
       .map(categoryList => {
         return categoryList.map(category => {
@@ -27,10 +26,11 @@ export class FoodsCategoriesService {
         });
       });
   }
+
   setCategories(categories: Category[]) {
     this.data = categories;
-    console.log(this.data);
   }
+
   getById(id: number): Category {
     return this.data.find(x => x.id === id);
   }

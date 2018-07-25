@@ -3,9 +3,14 @@
     <app-foods-food-card
       *ngFor="let food of foodList"
       [curFood]="food"
-      [storageList]="chainList"
     >
     </app-foods-food-card>
+
+    <div *ngIf="showLoadingCard" class="loadingCard">
+        <div class="progress amber">
+          <div class="indeterminate deep-orange"></div>
+        </div>
+    </div>
   </div>
   <ul *ngIf="!isVisibleProd()"class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
@@ -33,18 +38,7 @@
     </li>
   </ul>
 </div>
-<div *ngIf="foodList.length == 0" class="cards">
-  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
-    <li class="collapsible-header amber-text">
-      <div class="grey-text text-darken-2">
-        <p>
-          Не выбрана ни одна подкатегория товаров.
-        </p>
-        <p>
-          Чтобы добавлять акционные товары в список покупок,
-          нужно выбрать хотя бы одну из них.
-        </p>
-      </div>
-    </li>
-  </ul>
+<div class="cards" [class.infocard]="!isFoodLength">
 </div>
+
+

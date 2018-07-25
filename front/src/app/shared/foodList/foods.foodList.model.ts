@@ -8,5 +8,5 @@ export class FoodList {
   idStrore: number;
   img: string;
   selected: boolean;
-  selectAmount:number;
+  selectAmount: number;
 }
