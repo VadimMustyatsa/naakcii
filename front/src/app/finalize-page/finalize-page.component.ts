@@ -53,6 +53,15 @@ export class FinalizePageComponent implements OnInit {
 
   }
 
+  setImgStyles(pict) {
+    return {
+      'background-image': `url("assets/images/Products/${pict}")`,
+      'background-size': 'contain',
+      'background-repeat': 'no-repeat',
+      'background-position': 'center'
+    };
+  }
+
   getExistListChain() {
     const chainListExist: ChainLine[] = [];
     this.cart.lines.map(line => {

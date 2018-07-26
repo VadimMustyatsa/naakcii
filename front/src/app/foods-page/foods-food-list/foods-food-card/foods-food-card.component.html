@@ -1,9 +1,7 @@
 <div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard col s4 m4">
   <div class="card sticky-action">
-    <div class="card-image">
-      <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
-      <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
-      <img *ngIf="curFood.img" src="assets/images/Products/{{curFood.img}}">
+    <div class="card-image" [ngStyle]="setImgStyles(curFood)">
+      <!--<img *ngIf="!curFood.img" src="../../../../assets/images/noImg.svg">-->
       <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
         {{curFood.discount}}%
       </div>

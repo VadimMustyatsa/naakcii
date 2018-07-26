@@ -44,7 +44,7 @@
           </div>
           <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</div>
           <div class="col m1 center">18 мая</div>
-          <div class="col m1">http://localhost:4200/form-shopping-list
+          <div class="col m1">
             <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
@@ -52,9 +52,9 @@
         <div class="collapsible-body row itemLine"
              *ngFor="let curCart of getCartByChain(chain.chain.id)"
         >
-          <div class="col m1 itemImg">
-            <img *ngIf="!curCart.product.img" src="assets/images/noImg.svg">
-            <img *ngIf="curCart.product.img" src="assets/images/Products/{{curCart.product.img}}">
+          <div class="col m1 itemImg" [ngStyle]="setImgStyles(curCart.product.img)">
+            <!--<img *ngIf="!curCart.product.img" src="../../assets/images/noImg.svg">-->
+            <!--<img *ngIf="curCart.product.img" src="assets/images/Products/{{curCart.product.img}}">-->
           </div>
           <div class="col m4 itemNameComment">
             <p class="itemName">

@@ -55,6 +55,15 @@ export class FoodsFoodCardComponent implements OnInit {
     selectFood.selectAmount = selectFood.selectAmount + 1;
   }
 
+  setImgStyles(pict) {
+    return {
+      'background-image': `url("assets/images/Products/${pict.img}")`,
+      'background-size': 'contain',
+      'background-repeat': 'no-repeat',
+      'background-position': 'center'
+    };
+  }
+
   //проверяем выделена ли сеть данной карточки в фильтре сетей
   isVisibleChain(idStrore: number) {
     let selected = false;
