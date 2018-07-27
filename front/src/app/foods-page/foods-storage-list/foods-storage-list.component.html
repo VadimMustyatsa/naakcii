@@ -65,7 +65,11 @@
 </div>
 <div class="overlay" #overlay>
   <div class="overlay-text" amber-text
-   [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
-   [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches">Выберите только те торговые сети, которые Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
-  размеру скидки. Тогда Вы сможете выбирать только их товары, не тратя время на рассмотрение товаров других сетей.</div>
+       [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+       [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+       [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+       [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">Выберите только те торговые сети, которые
+    Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
+    размеру скидки. Тогда Вы сможете выбирать только их товары, не тратя время на рассмотрение товаров других сетей.
+  </div>
 </div>

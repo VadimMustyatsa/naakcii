@@ -4,7 +4,6 @@ import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
 import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
-import {Storag} from '../../shared/Storage/foods.storage.model';
 import 'rxjs/add/operator/map';
 import {Chain} from '../../shared/chain/chain.model';
 
@@ -16,14 +15,13 @@ import {Chain} from '../../shared/chain/chain.model';
 })
 export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
-  private curFoodCard: FoodList;
   selectedSubCatListID = [];
   countLoadCard = 0;
   firstLoadedCard = 12;
   loadedCard = 6;
   isNextCard = false;
   showLoadingCard = false;
-  isFoodLength = false;
+  isFoodLength: boolean;
 
   constructor(public  chainLst: Chain,
               private foodsService: FoodsFoodListService,
@@ -71,7 +69,7 @@ export class FoodsFoodListComponent implements OnInit {
         if (this.foodList && this.foodList.length === 0) {
           this.isFoodLength = true;
         }
-      }, 500)
+      }, 100)
     });
   }
 

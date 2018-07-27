@@ -1,10 +1,9 @@
-import { Component, Input, Inject, OnInit, EventEmitter, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
-import { MaterializeDirective, MaterializeAction } from 'angular2-materialize';
+import { Component, Inject, OnInit, EventEmitter, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { MaterializeAction } from 'angular2-materialize';
 import { Storag } from '../../shared/Storage/foods.storage.model';
 import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
 import { MODES, SHARED_STATE, SharedState } from '../sharedState.model';
-import { Observer } from 'rxjs/Observer';
 import { Chain } from '../../shared/chain/chain.model';
 import { Observable } from 'rxjs/Observable';
 import { Cart, CartLine } from '../../shared/cart/cart.model';
