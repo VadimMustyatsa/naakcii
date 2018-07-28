@@ -11,7 +11,8 @@ import {Chain} from '../../shared/chain/chain.model';
   selector: 'app-foods-food-list',
   templateUrl: './foods-food-list.component.html',
   styleUrls: ['./foods-food-list.component.scss'],
-  providers: [FoodsFoodListService, FoodsStorageService]
+  providers: [FoodsFoodListService, FoodsStorageService],
+
 })
 export class FoodsFoodListComponent implements OnInit {
   foodList: FoodList[] = [];
@@ -69,8 +70,9 @@ export class FoodsFoodListComponent implements OnInit {
         if (this.foodList && this.foodList.length === 0) {
           this.isFoodLength = true;
         }
-      }, 100)
+      }, 700);
     });
+
   }
 
 
