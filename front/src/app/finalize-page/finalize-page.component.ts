@@ -167,12 +167,9 @@ export class FinalizePageComponent implements OnInit {
   }
 
   onRederect(){
-    sessionStorage.removeItem('naakciiStorage');
-    sessionStorage.removeItem('naakciiStorageCount');
-    this.cart.lines =[];
+    sessionStorage.clear();
     document.getElementsByClassName('modal-overlay')[0].remove();
-    //window.location.href = '/form-shopping-list';
-    // this.router.navigate(['/form-shopping-list']);
+    this.router.navigate(['/form-shopping-list']);
   }
   //*****************************************************************************************
   generatePDF() {

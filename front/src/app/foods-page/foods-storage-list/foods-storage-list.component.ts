@@ -31,11 +31,9 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
     {
       onOpen: (el) => {
         this.curentIconCollapsible = String(this.iconCollapsible.maximized);
-        console.log('max');
       },
       onClose: (el) => {
         this.curentIconCollapsible = String(this.iconCollapsible.minimized);
-        console.log('min');
       }
     }
   ];
@@ -103,7 +101,6 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
   }
 
   correctAllChainsCheck() {
-    //console.log(this.chainLst.lines);
      sessionStorage.setItem('naakciiChainStorage', JSON.stringify(this.chainLst.lines));
     if (this.chainLst.lines.length > 0) {
       let cnt = 0;
