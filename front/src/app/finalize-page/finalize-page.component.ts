@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./finalize-page.component.scss'],
   providers: [FoodsStorageService],
   changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
@@ -166,8 +167,12 @@ export class FinalizePageComponent implements OnInit {
   }
 
   onRederect(){
-    localStorage.clear();
-    window.location.href = '/form-shopping-list';
+    sessionStorage.removeItem('naakciiStorage');
+    sessionStorage.removeItem('naakciiStorageCount');
+    this.cart.lines =[];
+    document.getElementsByClassName('modal-overlay')[0].remove();
+    //window.location.href = '/form-shopping-list';
+    // this.router.navigate(['/form-shopping-list']);
   }
   //*****************************************************************************************
   generatePDF() {
