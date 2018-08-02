@@ -7,7 +7,6 @@ import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import {$NBSP} from "@angular/compiler/src/chars";
 import {MaterializeAction} from 'angular2-materialize'
 import { Title } from '@angular/platform-browser'
 import {Router} from "@angular/router";
@@ -36,10 +35,10 @@ export class FinalizePageComponent implements OnInit {
   ];
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal() {
-    this.modalActions.emit({action:"modal",params:['open']});
+    this.modalActions.emit({action: 'modal', params: ['open']});
   }
   closeModal() {
-    this.modalActions.emit({action:"modal",params:['close']});
+    this.modalActions.emit({action: 'modal', params: ['close']});
   }
   constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
@@ -166,11 +165,11 @@ export class FinalizePageComponent implements OnInit {
     }
   }
 
-  onRederect(){
+  onRedirect(){
     sessionStorage.clear();
-    this.cart.lines =[];
+    this.cart.lines = [];
     document.getElementsByClassName('modal-overlay')[0].remove();
-    window.location.href = '/form-shopping-list';
+    this.router.navigateByUrl('/form-shopping-list');
   }
   //*****************************************************************************************
   generatePDF() {
