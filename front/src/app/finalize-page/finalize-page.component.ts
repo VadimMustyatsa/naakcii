@@ -168,8 +168,9 @@ export class FinalizePageComponent implements OnInit {
 
   onRederect(){
     sessionStorage.clear();
+    this.cart.lines =[];
     document.getElementsByClassName('modal-overlay')[0].remove();
-    this.router.navigate(['/form-shopping-list']);
+    window.location.href = '/form-shopping-list';
   }
   //*****************************************************************************************
   generatePDF() {
