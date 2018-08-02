@@ -1,3 +1,13 @@
+@font-face {
+font-family: 'Nexa Script Regular';
+src: url('./assets/fonts/NexaScript-Regular.eot');
+src: url('./assets/fonts/NexaScript-Regular.eot?#iefix') format('embedded-opentype'),
+url('./assets/fonts/NexaScript-Regular.woff') format('woff'),
+url('./assets/fonts/NexaScript-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
 * {
   margin: 0px;
   padding: 0px;
