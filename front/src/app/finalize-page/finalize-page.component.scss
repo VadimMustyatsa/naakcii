@@ -129,27 +129,32 @@
 .modal-content .modal-header{
   margin: 0 0 10px 0;
 }
-.modal-content h4{
-  margin: 3px 0;
-  font-size: large;
-  text-align: center;
+.modal-content {
+  h4 {
+    margin: 3px 0;
+    font-size: large;
+    text-align: center;
+  }
+  p {
+    margin: 7px 0 0 0;
+  }
+  li p:first-child{
+    cursor: pointer;
+    color: #3437ff;
+    font-size: 16px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  li p:last-child{
+    color: gray;
+  }
+  ul p{
+    margin: 3px 0;
+    font-size: 12px;
+  }
 }
-.modal-content li{
-}
-.modal-content a{
-  cursor: pointer;
-}
-.modal-content a:hover{
-  text-decoration: underline;
-}
-.modal-content p{
-  margin: 7px 0 0 0;
-}
-.modal-content ul p{
-  margin: 3px 0;
-  color: gray;
-  font-size: 12px;
-}
+
 .orangeLink {
   span {
     color: #ff5722;
