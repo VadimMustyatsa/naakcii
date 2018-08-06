@@ -1,0 +1,34 @@
+div {
+  background: url('../../../assets/images/diplom.jpg') no-repeat;
+  background-size: cover;
+  padding: 0 3% 0 50%;
+  border-top: #EFEFEF solid .1px;
+}
+
+h1 {
+  padding-top: 35%;
+}
+
+.isNetBook {
+  padding: 0 3% 0 67%;
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 26px;
+  }
+}
+
+.isTablet {
+  h1 {
+    display: none;
+  }
+  h5 {
+    display: none;
+  }
+}
+
+.isHandset {
+  display: none;
+}

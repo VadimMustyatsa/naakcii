@@ -1,0 +1,42 @@
+.page-container {
+  padding: 40px;
+}
+
+.info {
+  display: flex;
+}
+
+h5 {
+  padding: 5%;
+}
+
+.isNetBook {
+  padding: 40px 20px 0 20px;
+  h2 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 22px;
+    padding: 2%;
+  }
+}
+
+.isTablet {
+  .info {
+    flex-direction: column;
+  }
+  img {
+    max-width: 330px;
+    margin: 0 auto;
+  }
+}
+
+.isHandset {
+  h2 {
+    font-size: 28px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+}

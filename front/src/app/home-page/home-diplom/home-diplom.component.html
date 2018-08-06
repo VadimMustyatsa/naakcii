@@ -1,0 +1,12 @@
+<div [ngStyle]="{'height': blockHeight + 'px'}"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
+  <h1>Победитель в стартап-конкурсе ВіТесh 2018</h1>
+  <h5>
+    Проект пааксіі.by победил в стартап-конкурсе ВііТесН 2018 в номинации «Симпатия спонсора».
+    Жюри, менторы и спонсоры конкурса высоко оценили идею продукта и тот результат, которого команде удалось достичь всего за несколько месяцев.
+  </h5>
+</div>

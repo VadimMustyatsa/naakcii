@@ -38,6 +38,8 @@ import {LOCALE_ID} from "@angular/core";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeDiplomComponent } from './home-page/home-diplom/home-diplom.component';
+import { HomePartnersComponent } from './home-page/home-partners/home-partners.component';
 
 registerLocaleData(localeFr);
 
@@ -67,7 +69,9 @@ const routes = [
     FoodsStorageListComponent,
     AppCutStringPipe,
     FoodsStorageListComponent,
-    FinalizePageComponent
+    FinalizePageComponent,
+    HomeDiplomComponent,
+    HomePartnersComponent
   ],
   imports: [
     BrowserModule,

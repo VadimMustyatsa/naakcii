@@ -1,0 +1,15 @@
+<div class="page-container" [ngStyle]="{'height': blockHeight + 'px'}"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
+  <h2>Наш партнер благотворительное общественное объединение «Большая семья»</h2>
+  <div class="info">
+    <img src="../../../assets/images/big-family.jpg">
+    <h5>
+      С мая 2018 года проект пааксіі.bу начал совместную работу над подготовкой продукта к официальному запуску с благотворительным общественным объединением «Большая семья», которое представляет интересы многодетных семей города Минска - основной целевой аудитории продукта на текущем этапе его развития.
+    </h5>
+  </div>
+</div>
+

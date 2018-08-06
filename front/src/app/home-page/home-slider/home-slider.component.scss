@@ -1,5 +1,4 @@
 .homeSlider {
-  height: 320px;
   background-image: url("../../../assets/images/main.png");
   background-size: cover;
 }
@@ -32,14 +31,14 @@
 }
 
 .isWeb.homeSlider {
-  height: 320px;
+  max-height: 320px;
   .header {
     font-size: 30px;
   }
 }
 
 .isNetBook.homeSlider {
-  height: 300px;
+  max-height: 300px;
   .headers {
     padding: 1px 20px 0;
   }
@@ -55,7 +54,7 @@
 }
 
 .isTablet.homeSlider {
-  height: 260px;
+  max-height: 260px;
   .title {
     font-size: 24px;
   }
@@ -68,7 +67,7 @@
 }
 
 .isMobile.homeSlider {
-  height: 140px;
+  max-height: 140px;
   .title {
     display: none;
   }
