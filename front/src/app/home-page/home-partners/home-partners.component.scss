@@ -22,6 +22,12 @@ h5 {
   }
 }
 
+a {
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+}
+
 .isTablet {
   .info {
     flex-direction: column;

@@ -9,23 +9,33 @@ h1 {
   padding-top: 35%;
 }
 
+a {
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+}
+
 .isNetBook {
   padding: 0 3% 0 67%;
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
   }
   h5 {
-    font-size: 26px;
+    font-size: 20px;
   }
 }
 
 .isTablet {
+    padding: 0;
   h1 {
     display: none;
   }
   h5 {
     display: none;
+  }
+  a {
+    margin-top: 106%;
   }
 }
 

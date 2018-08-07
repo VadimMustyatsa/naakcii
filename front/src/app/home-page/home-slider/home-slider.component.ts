@@ -58,7 +58,12 @@ export class HomeSliderComponent implements OnInit {
   }
 
   get mainImgHeight() {
-    return screen.availHeight - 380;
+    if (screen.availHeight < 1000) {
+      return screen.availHeight - 380;
+    } else {
+      return screen.availHeight / 2;
+    }
+
   }
 }
 
