@@ -2,13 +2,54 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .chainSearchBlock {
   height: 60px;
   margin-top: 20px;
 }
+
 .subCategoryContainer {
-  padding: 0px;
+  padding: 0;
 }
+
 .totalItemsContainer {
-  padding: 0px;
+  padding: 0;
+}
+
+.shopping-info {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  .subCategoryContainer, .totalItemsContainer {
+    padding: 0 1%;
+    width: 25%;
+  }
+  .totalItemsContainer {
+    width: 35%;
+  }
+}
+
+.shopping-info {
+  .cardList {
+    width: 40%;
+  }
+}
+
+.isTablet {
+  .cardList {
+    font-size: 12px;
+  }
+}
+
+.isHandset {
+  .shopping-info {
+    flex-direction: column;
+    justify-content: center;
+    .cardList {
+      display: none;
+    }
+    div {
+      width: 90%;
+    }
+  }
 }
