@@ -100,40 +100,61 @@
         </div>
       </li>
 
-      <li class="collapsible-header finalizeFooterButton row">
-        <div class="col m4 left">
-          <a routerLink="/form-shopping-list" class="orangeLink">
-            <i class="material-icons">arrow_back</i>
-            <span>Вернуться к товарам</span>
-          </a>
-        </div>
-        <div class="col m4 center">
-          <a href="javascript:void(0);" (click)="generatePDF()"
-             class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn"
-             (click)="openModal()">Скачать PDF</a>
-        </div>
-        <div class="col m4 right">
-
-        </div>
-      </li>
-
-      <li class="collapsible-header finalizeFooter row"
+      <li class="finalizeFooter wrapper"
           [style.width.px]="widthContainer"
           [style.position]=getPosition()>
-        <div class="col m2">Итого:</div>
-        <div class="col m3 center">{{cart.lines.length}}</div>
-        <div class="col m2 center">{{cart.itemCount}}</div>
-        <div class="col m1 center">
+          <div class="row"
+          [style.width.px]="widthContainer">
+          <div class="col m2">Итого:</div>
+          <div class="col m3 center">{{cart.lines.length}}</div>
+          <div class="col m2 center">{{cart.itemCount}}</div>
+          <div class="col m1 center">
           <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice).toFixed(2)| number:"1.2-2"}}</span>
           <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
-        </div>
-        <div class="col m1 center">
+          </div>
+          <div class="col m1 center">
           <span>{{(cart.cartAllPrice - cart.cartTotalPrice).toFixed(2)| number:"1.2-2"}}</span><br>
           <span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>
+          </div>
+          <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice.toFixed(2)| number:"1.2-2"}} руб.</div>
+          <div class="col m1 center"></div>
+          </div>
+        <div class="finalizeFooterButton row"
+             [style.width.px]="widthContainer"
+        >
+          <div class="col m4 left">
+            <a routerLink="/form-shopping-list" class="orangeLink">
+              <i class="material-icons">arrow_back</i>
+              <span>Вернуться к товарам</span>
+            </a>
+          </div>
+          <div class="col m4 center">
+            <a href="javascript:void(0);" (click)="generatePDF()"
+               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn"
+               (click)="openModal()">Скачать PDF</a>
+          </div>
+          <div class="col m4 right">
+          </div>
         </div>
-        <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice.toFixed(2)| number:"1.2-2"}} руб.</div>
-        <div class="col m1 center"></div>
       </li>
+
+      <!--<li class="collapsible-header finalizeFooter row"-->
+          <!--[style.width.px]="widthContainer"-->
+          <!--[style.position]=getPosition()>-->
+        <!--<div class="col m2">Итого:</div>-->
+        <!--<div class="col m3 center">{{cart.lines.length}}</div>-->
+        <!--<div class="col m2 center">{{cart.itemCount}}</div>-->
+        <!--<div class="col m1 center">-->
+          <!--<span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice).toFixed(2)| number:"1.2-2"}}</span>-->
+          <!--<span *ngIf="cart.cartAllPrice == 0">нет данных</span>-->
+        <!--</div>-->
+        <!--<div class="col m1 center">-->
+          <!--<span>{{(cart.cartAllPrice - cart.cartTotalPrice).toFixed(2)| number:"1.2-2"}}</span><br>-->
+          <!--<span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>-->
+        <!--</div>-->
+        <!--<div class="col m2 center allTotalPrice">{{cart.cartTotalPrice.toFixed(2)| number:"1.2-2"}} руб.</div>-->
+        <!--<div class="col m1 center"></div>-->
+      <!--</li>-->
 
     </ul>
 

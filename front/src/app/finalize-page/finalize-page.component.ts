@@ -168,7 +168,6 @@ export class FinalizePageComponent implements OnInit {
   onRedirect(){
     sessionStorage.clear();
     this.cart.lines = [];
-    this.chainLst.lines = [];
     document.getElementsByClassName('modal-overlay')[0].remove();
     this.router.navigateByUrl('/form-shopping-list');
   }
