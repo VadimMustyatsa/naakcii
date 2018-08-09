@@ -1,8 +1,6 @@
 <div *ngIf="foodList.length > 0" class="cards">
   <div *ngIf="isVisibleProd()" class="row">
-    <app-foods-food-card class="block"
-      *ngFor="let food of foodList"
-      [curFood]="food">
+    <app-foods-food-card [foodList]="foodList">
     </app-foods-food-card>
 
     <div *ngIf="showLoadingCard" class="loadingCard">

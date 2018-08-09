@@ -1,4 +1,5 @@
 <div class="foodContainer"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
      [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
      [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"

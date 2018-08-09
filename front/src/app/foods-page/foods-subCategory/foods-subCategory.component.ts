@@ -22,16 +22,16 @@ export class FoodsSubCategoryComponent implements OnInit {
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
 
-  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-    const verticalOffset = window.pageYOffset
-      || document.documentElement.scrollTop
-      || document.body.scrollTop || 0;
-    if (verticalOffset > 280) {
-      this.fixedPaddingTop = verticalOffset - 300;
-    } else {
-      this.fixedPaddingTop = 0;
-    }
-  }
+  // @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+  //   const verticalOffset = window.pageYOffset
+  //     || document.documentElement.scrollTop
+  //     || document.body.scrollTop || 0;
+  //   if (verticalOffset > 280) {
+  //     this.fixedPaddingTop = verticalOffset - 300;
+  //   } else {
+  //     this.fixedPaddingTop = 0;
+  //   }
+  // }
 
   ngOnInit() {
     this.stateEvents.subscribe((update) => {

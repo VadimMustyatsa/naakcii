@@ -25,13 +25,13 @@
     width: 25%;
   }
   .totalItemsContainer {
-    width: 35%;
+    width: 28%;
   }
 }
 
 .shopping-info {
   .cardList {
-    width: 40%;
+    width: 47%;
   }
 }
 
@@ -41,12 +41,27 @@
   }
 }
 
+.isWeb {
+  .cardList, .totalItemsContainer {
+    width: 37%;
+  }
+}
+
+.isTablet {
+  .cardList, .subCategoryContainer, .totalItemsContainer {
+    width: 33%;
+  }
+}
 .isHandset {
   .shopping-info {
     flex-direction: column;
     justify-content: center;
-    .cardList {
-      display: none;
+    .subCategoryContainer, .cardList {
+      display: flex;
+      justify-content: center;
+    }
+    .totalItemsContainer {
+      padding-left: 20px;
     }
     div {
       width: 90%;
