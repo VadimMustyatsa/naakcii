@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class FoodsFoodListService {
   private productsLocal = 'assets/json/FoodList.json';
-  private productsUrl = 'http://178.124.206.42:8080/api/product';
+  private productsUrl = 'http://' + window.location.hostname + ':8080/api/product';
 
   constructor(private http: HttpClient) {
   }
