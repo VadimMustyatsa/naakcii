@@ -1,6 +1,7 @@
 .foodContainer {
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 30px;
 }
 
 .chainSearchBlock {
@@ -36,6 +37,19 @@
 }
 
 .isTablet {
+  .cardList {
+    font-size: 11px;
+  }
+}
+
+.isHandset {
+  .cardList {
+    font-size: 14px;
+    padding-left: 20px;
+  }
+}
+
+.isMobile {
   .cardList {
     font-size: 12px;
   }
