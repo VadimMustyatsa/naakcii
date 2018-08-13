@@ -40,6 +40,15 @@
   justify-content: space-between;
 }
 /********************************/
+.wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width:100%;
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+}
 .finalizeFooter {
   /*position: fixed;*/
   bottom: 0px;
@@ -49,6 +58,10 @@
   align-items: center;
   background-color: #757575;
   color: white;
+  .row{
+    margin-bottom: 0;
+    padding: 10px 0;
+  }
 }
 /************************************/
 .collapsible-header {
@@ -96,14 +109,14 @@
 }
 /*Стили нижних кнопок*************************/
 .finalizeFooterButton {
-  padding: 20px 5px;
+  padding: 5px 5px;
   font-weight: normal;
   font-size: 16px;
   cursor: default;
+  background-color: #fff;
 }
 .finalizeFooterButton div:first-child a {
   display: flex;
-  align-items: center;
 }
 .finalizeFooterButton div:first-child a span {
   text-decoration: underline;
