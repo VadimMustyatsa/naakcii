@@ -2,20 +2,25 @@
   height: 120px;
   text-align: center;
 }
+
 .cards {
-  min-height: 500px;
+  //min-height: 500px;
 }
+
 .collapsible-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 140px;
+  height: 180px;
 }
+
 .collapsible-header div p {
-  margin: 10px 0px;
+  margin: 10px 0;
 }
+
 .loadingCard {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   height: 30px;

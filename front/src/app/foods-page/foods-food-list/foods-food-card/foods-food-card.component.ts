@@ -1,9 +1,9 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FoodList} from '../../../shared/foodList/foods.foodList.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
-import {Storag} from '../../../shared/Storage/foods.storage.model';
 import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
+import { BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-food-card',
@@ -12,10 +12,11 @@ import {Chain, ChainLine} from '../../../shared/chain/chain.model';
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
-  @Input() curFood: FoodList;
+  @Input() foodList: FoodList;
   nameMaxWidth = 85;
 
   constructor(public  chainLst: Chain,
+              public breakPointCheckService: BreakPointCheckService,
               private cart: Cart) {
   }
 

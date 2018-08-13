@@ -1,4 +1,9 @@
-<div *ngIf="cart.lines.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+<div *ngIf="cart.lines.length > 0" [ngStyle]="{'padding-top':getPaddingTop()}"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
 
   <ul class="collapsible" data-collapsible="accordion"
       materialize="collapsible"

@@ -43,7 +43,7 @@ export class FoodsCategoryComponent implements OnInit {
   }
   initCarouselCategory() {
     this.carouselCategory = {
-      grid: {xs: 3, sm: 4, md: 5, lg: 7, all: 0},
+      grid: {xs: 3, sm: 5, md: 8, lg: 10, all: 0},
       slide: 1,
       speed: 500,
       point: {
