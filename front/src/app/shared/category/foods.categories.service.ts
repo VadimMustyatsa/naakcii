@@ -12,7 +12,6 @@ export class FoodsCategoriesService {
   private selectedCategory: Category;
 
   constructor(private http: HttpClient) {
-    console.log(this.categoryUrl);
   }
 
   getAll() {

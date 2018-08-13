@@ -30,6 +30,7 @@
             </div>
             <div>
               {{chain.chain.name}}
+                (<a [attr.href]="'http://' + chain.chain.link">магазины</a>)
             </div>
           </div>
           <div class="col m3 center">{{getCartByChain(chain.chain.id).length}}</div>
@@ -44,7 +45,7 @@
           </div>
           <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</div>
           <div class="col m1 center">18 мая</div>
-          <div class="col m1">
+          <div class="col m1 arrow-container">
             <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
