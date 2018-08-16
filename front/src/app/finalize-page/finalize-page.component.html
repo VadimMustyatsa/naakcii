@@ -11,8 +11,8 @@
         [materializeParams]="params"
     >
       <li class="collapsible-header finalizeHeader row">
-        <div class="col m2"></div>
-        <div class="col m3">Товарные позиции</div>
+        <div class="col m3"></div>
+        <div class="col m2">Товарные позиции</div>
         <div class="col m2">Количество</div>
         <div class="col m1">Стоимость без скидки</div>
         <div class="col m1">Скидка руб.(%)</div>
@@ -24,16 +24,16 @@
         *ngFor="let chain of chainListExist"
       >
         <div class="collapsible-header active row chainList grey-text text-darken-2">
-          <div class="col m2 chainLogoName">
+          <div class="col m3 chainLogoName">
             <div>
               <img src="{{chain.chain.imgLogoSmall}}">
             </div>
             <div>
               {{chain.chain.name}}
-                (<a [attr.href]="'http://' + chain.chain.link">магазины</a>)
+                (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)">магазины</a>)
             </div>
           </div>
-          <div class="col m3 center">{{getCartByChain(chain.chain.id).length}}</div>
+          <div class="col m2 center">{{getCartByChain(chain.chain.id).length}}</div>
           <div class="col m2 center">{{getCartQuantityByChain(chain.chain.id)}}</div>
           <div class="col m1 center">
             <span *ngIf="getCartAllPriceByChain(chain.chain.id) > 0">{{getCartAllPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</span>
