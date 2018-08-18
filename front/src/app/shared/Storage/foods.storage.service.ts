@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsStorageService {
-  private storeUrl = 'http://' + window.location.hostname + ':8080/api/chain';
+  private storeUrl = 'http://178.124.206.42:8080/api/chain';
 
   constructor(private http: HttpClient) {
   }

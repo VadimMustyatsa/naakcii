@@ -62,7 +62,7 @@ registerLocaleData(localeFr);
     FoodsStorageListComponent,
     AppCutStringPipe,
     FoodsStorageListComponent,
-    FinalizePageComponent
+    FinalizePageComponent,
   ],
   imports: [
     BrowserModule,

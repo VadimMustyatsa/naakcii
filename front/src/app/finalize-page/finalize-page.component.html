@@ -30,7 +30,7 @@
             </div>
             <div>
               {{chain.chain.name}}
-                (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)">магазины</a>)
+              (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Адреса магазинов сети">магазины</a>)
             </div>
           </div>
           <div class="col m2 center">{{getCartByChain(chain.chain.id).length}}</div>
