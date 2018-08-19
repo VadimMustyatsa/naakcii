@@ -165,9 +165,6 @@ export class FinalizePageComponent implements OnInit {
     localStorage.clear();
     window.location.href = '/form-shopping-list';
   }
-  onEventStop(event) {
-    event.stopPropagation();
-  }
   generatePDF() {
     this.PDFGenerator.generatePDF();
   }
