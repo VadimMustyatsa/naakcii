@@ -40,6 +40,7 @@ import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PdfGeneratorService} from "./shared/services/pdf-generator.service";
 import {AppRouterModule} from "./shared/modules/router/router.module";
+import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
 
 registerLocaleData(localeFr);
 
@@ -84,6 +85,7 @@ registerLocaleData(localeFr);
     FoodsCategoriesService,
     BreakPointCheckService,
     PdfGeneratorService,
+    FinalizePageGuard,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
   bootstrap: [AppComponent]
