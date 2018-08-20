@@ -31,7 +31,7 @@
             </div>
             <div>
               {{chain.chain.name}}
-              (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" tooltip="Адреса магазинов сети">магазины</a>)
+              (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" tooltip="Адреса и графики работы магазинов сети">магазины</a>)
             </div>
           </div>
           <div class="col m1 center">{{getCartByChain(chain.chain.id).length}}</div>
