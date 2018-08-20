@@ -40,11 +40,8 @@ import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PdfGeneratorService} from "./shared/services/pdf-generator.service";
 import {AppRouterModule} from "./shared/modules/router/router.module";
-<<<<<<< HEAD
 import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
-=======
 import { TooltipDirective } from './shared/derectives/tooltip.directive';
->>>>>>> origin/feature/add-shop-links
 
 registerLocaleData(localeFr);
 
