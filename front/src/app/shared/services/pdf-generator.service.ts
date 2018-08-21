@@ -4,8 +4,6 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Cart} from "../cart/cart.model";
 
-
-
 @Injectable()
 export class PdfGeneratorService {
   constructor(public cart: Cart) {
@@ -21,20 +19,7 @@ export class PdfGeneratorService {
     const chainSum = [];
     let sumAfter = '';
     let benefit = '';
-    let day = '';
-    let year = '';
-    let monthString = '';
-    const time = new Date();
-    const month = time.getMonth() + 1;
-    if (time.getDate().toString().length === 1) {
-      day = '0' + time.getDate().toString();
-    } else {
-      day = time.getDate().toString();
-    }
-    if (time.getMonth().toString().length === 1) {
-      monthString = '0' + month.toString();
-    }
-    year = time.getFullYear().toString().substr(2, 4);
+    const date = new Date().toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
 
     function numberFormater (number:number): string {
       return number.toString().replace('.',',');
@@ -46,7 +31,7 @@ export class PdfGeneratorService {
     benefit = numberFormater((totalSum['discountSum']).toFixed(2)) + ' руб. (' + (totalSum['discountPersent']).toFixed(0) + ' %)';
 
     docContent.push({
-      text: 'Список покупок ' + day + '.' + monthString + '.' + year,
+      text: 'Список покупок ' + date,
       style: 'header'
     });
 
@@ -70,7 +55,7 @@ export class PdfGeneratorService {
         fillColor: '#656565',
         color: 'white',
         fontSize: '38',
-        columns: [{width: '70%', text: chain}, {width: '30%', text: 'Итого : ' + sum}]
+        columns: [{width: '70%', text: chain}, {width: '30%', text: 'Итого : ' + numberFormater(Number(sum.toFixed(2)))}]
       });
       chainSum.push(sum);
       bodyBodyTable.push(tableLine);
@@ -171,7 +156,7 @@ export class PdfGeneratorService {
     docStyle['anotherStyle'] = anotherStyle;
     docDefinition['styles'] = docStyle;
 
-    pdfMake.createPdf(docDefinition).download('Список покупок - ' + day + '.' + monthString + '.' + year + '.pdf');
+    pdfMake.createPdf(docDefinition).download('Список покупок - ' + date + '.pdf');
     pdfMake.createPdf(docDefinition).open();
     //**********************************************************************
   }
