@@ -161,7 +161,7 @@ export class FinalizePageComponent implements OnInit {
     }
   }
 
-  onRederect(){
+  onRedirect(){
     localStorage.clear();
     window.location.href = '/form-shopping-list';
   }
