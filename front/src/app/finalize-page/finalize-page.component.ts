@@ -162,8 +162,10 @@ export class FinalizePageComponent implements OnInit {
   }
 
   onRedirect(){
-    localStorage.clear();
-    window.location.href = '/form-shopping-list';
+    this.closeModal();
+    sessionStorage.clear();
+    this.cart.lines = [];
+    this.router.navigateByUrl('/form-shopping-list');
   }
   generatePDF() {
     this.PDFGenerator.generatePDF();
