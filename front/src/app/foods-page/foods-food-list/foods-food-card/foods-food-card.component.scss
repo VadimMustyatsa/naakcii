@@ -92,12 +92,12 @@
 }
 /************************************************************/
 /* Tooltip container */
-.tooltip {
+.tooltip-container {
   position: relative;
   display: block;
 }
 /* Tooltip text */
-.tooltip .tooltiptext {
+.tooltip-container .tooltiptext {
   visibility: hidden;
   width: 95%;
   background-color: #656565;
@@ -111,11 +111,11 @@
   z-index: 300;
 }
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+.tooltip-container:hover .tooltiptext {
   visibility: visible;
   top: -100px;
 }
-.tooltip .tooltiptext::after {
+.tooltip-container .tooltiptext::after {
   content: " ";
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
