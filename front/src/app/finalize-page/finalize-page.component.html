@@ -173,23 +173,32 @@
      [materializeActions]="modalActions">
   <div class="modal-content">
     <div class="modal-header">
-      <h4>Поздравляем! </h4>
-      <h4>Вы только что скачали свой список покупок. Теперь вы можете:</h4>
+      <h4>Отлично!
+      Вы только что скачали свой список покупок.<br> Теперь вы можете:</h4>
     </div>
-    <ul>
-      <li>
-        <p (click)="closeModal()">Продолжить редактирование списка</p>
+    <div>
+      <div class="modal-item">
+        <div class="modal-item-content">
+        <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/1.png)'}"></div>
         <p>Если в скаченном списке обнаружились какие-то недочёты, лучше его доработать, продолжив редактирование.</p>
-      </li>
-      <li>
-        <p (click)="onRedirect()">Составить новый список покупок</p>
+        </div>
+        <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn" (click)="closeModal()">Продолжить</button>
+      </div>
+      <div class="modal-item">
+        <div class="modal-item-content">
+        <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/2.png)'}"></div>
         <p>Если полученный список совсем вам не нравится, можно составить новый список с нуля.</p>
-      </li>
-    </ul>
-    <p>Если полученный список вас устраивает,
+        </div>
+        <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn" (click)="onRedirect()">Составить новый</button>
+      </div>
+    <div class="modal-item">
+      <div class="modal-item-content">
+      <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/3.png)'}"></div>
+      <p>Если полученный список вас устраивает,
       вы можете завершить работу с сервисом,
-      закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
-  </div>
-  <div class="modal-footer">
+        закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
+    </div>
+    </div>
+    </div>
   </div>
 </div>

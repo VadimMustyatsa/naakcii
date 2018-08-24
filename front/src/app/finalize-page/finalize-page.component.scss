@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .finalizePageName {
   display: flex;
   justify-content: center;
@@ -9,46 +10,55 @@
   font-size: 24px;
   padding-top: 20px;
 }
+
 .finalizeHeader {
   cursor: default;
   margin: 0px;
   background-color: #656565;
   color: white;
 }
+
 .finalizeHeader div {
   text-align: center;
 }
+
 .totalList {
   margin-bottom: 120px;
 }
+
 /********************************/
 .itemLine {
   display: flex;
 }
+
 .itemImg {
   height: 80px;
   padding: 5px;
   align-self: center;
 }
+
 .itemImg img {
   display: block;
   width: 100%;
 }
+
 .itemNameComment {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 /********************************/
-.wrapper{
+.wrapper {
   display: flex;
   flex-wrap: wrap;
   padding: 0;
-  width:100%;
+  width: 100%;
   margin: 0;
   font-weight: bold;
   font-size: 16px;
 }
+
 .finalizeFooter {
   /*position: fixed;*/
   bottom: 0px;
@@ -58,14 +68,15 @@
   align-items: center;
   background-color: #757575;
   color: white;
-  .row{
+  .row {
     margin-bottom: 0;
     padding: 10px 0;
   }
-  span{
+  span {
     margin: 0 2px;
   }
 }
+
 /************************************/
 .collapsible-header {
   margin: 0px;
@@ -73,6 +84,7 @@
   font-weight: bold;
   font-size: 16px;
 }
+
 .chainLogoName {
   display: flex;
   align-items: center;
@@ -80,11 +92,12 @@
   a {
     color: #ff5722;
     text-decoration: underline;
-    &:hover{
-      color:#757575;
+    &:hover {
+      color: #757575;
     }
   }
 }
+
 .chainLogoName div img {
   overflow: auto;
   width: 30px;
@@ -92,25 +105,32 @@
   margin-right: 15px;
   top: -10px;
 }
+
 .amountItem {
   user-select: none;
 }
+
 .btn-floating {
   transform: scale(0.5);
 }
+
 .collapsible-header div:last-child {
 
 }
+
 .collapsible-body {
   margin: 0px;
   padding: 5px;
 }
+
 .collapsible-body div:last-child {
   text-align: right;
 }
+
 .deleteCartLine {
   cursor: pointer;
 }
+
 /*Стиль заголовка сети***********************/
 .chainList {
   display: flex;
@@ -118,6 +138,7 @@
   background-color: #d9d9d9;
   border-bottom: solid 1px white;
 }
+
 /*Стили нижних кнопок*************************/
 .finalizeFooterButton {
   padding: 5px 5px;
@@ -126,18 +147,22 @@
   cursor: default;
   background-color: #fff;
 }
+
 .finalizeFooterButton div:first-child a {
   display: flex;
 }
+
 .finalizeFooterButton div:first-child a span {
   text-decoration: underline;
 }
+
 /************************/
 .allTotalPrice {
   border: solid 1px white;
   border-radius: 3px;
   font-size: 20px;
 }
+
 /*********************************/
 .itemComment input {
   margin: 0px;
@@ -145,37 +170,53 @@
   font-style: italic;
   height: 30px;
 }
+
 .itemComment input:focus {
   border-bottom: 1px solid #656565;
   box-shadow: 0 1px 0 0 #656565;
 }
+
 /*********************************/
-.modal-content .modal-header{
+.modal {
+  max-width: 400px;
+  max-height: 80%;
+}
+
+.modal-content .modal-header {
   margin: 0 0 10px 0;
 }
-.modal-content {
+
+.modal-header {
   h4 {
-    margin: 3px 0;
-    font-size: large;
+    font-size: 16px;
+    text-align: left;
+    font-weight: bold;
+  }
+}
+
+.modal-content {
+  div {
     text-align: center;
   }
+}
+
+.modal-icon {
+  min-width: 60px;
+  height: 60px;
+  flex-basis: 80px;
+  background-size: cover;
+}
+
+.modal-item {
+  margin: 20px 0;
+  font-size: 12px;
+}
+
+.modal-item-content {
+  display: flex;
   p {
-    margin: 7px 0 0 0;
-  }
-  li p:first-child{
-    cursor: pointer;
-    color: #3437ff;
-    font-size: 16px;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  li p:last-child{
-    color: gray;
-  }
-  ul p{
-    margin: 3px 0;
-    font-size: 12px;
+    margin-left: 10px;
+    text-align: left;
   }
 }
 
