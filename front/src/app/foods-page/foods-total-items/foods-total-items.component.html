@@ -7,8 +7,7 @@
 
   <ul class="collapsible" data-collapsible="accordion"
       materialize="collapsible"
-      [materializeParams]="params"
-  >
+      [materializeParams]="params">
     <li class="collapsible-header">
       <div>Список покупок</div>
     </li>
@@ -21,9 +20,7 @@
       </div>
     </li>
 
-      <li
-        *ngFor="let curFood of cart.lines"
-      >
+      <li *ngFor="let curFood of cart.lines">
         <div class="collapsible-header currentItem row">
           <div class="foodName left col m7">{{curFood.product.name | cutString: 19}}</div>
 
