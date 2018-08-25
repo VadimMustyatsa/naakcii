@@ -1,4 +1,4 @@
-<div [ngStyle]="{'height': mainImgHeight + 'px'}" class="homeSlider amber"
+<div  class="homeSlider amber"
      [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
      [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
@@ -15,3 +15,4 @@
     </section>
   </div>
 </div>
+<!--[ngStyle]="{'height': mainImgHeight + 'px'}"-->

@@ -30,16 +30,16 @@ export class FoodsTotalItemsComponent implements OnInit {
 
   ngOnInit() { }
 
-  // @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-  //   const verticalOffset = window.pageYOffset
-  //     || document.documentElement.scrollTop
-  //     || document.body.scrollTop || 0;
-  //   if (verticalOffset > 280) {
-  //     this.fixedPaddingTop = verticalOffset - 280;
-  //   } else {
-  //     this.fixedPaddingTop = 0;
-  //   }
-  // }
+  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
+    const verticalOffset = window.pageYOffset
+      || document.documentElement.scrollTop
+      || document.body.scrollTop || 0;
+    if (verticalOffset > 280) {
+      // this.fixedPaddingTop = verticalOffset - 280;
+    } else {
+      this.fixedPaddingTop = 0;
+    }
+  }
 
   deleteFoodCard(curFood: CartLine) {
     this.cart.removeLine(curFood.product.id);
