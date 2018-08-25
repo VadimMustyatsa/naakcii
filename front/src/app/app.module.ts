@@ -40,15 +40,12 @@ import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeDiplomComponent } from './home-page/home-diplom/home-diplom.component';
 import { HomePartnersComponent } from './home-page/home-partners/home-partners.component';
+import {PdfGeneratorService} from "./shared/services/pdf-generator.service";
+import {AppRouterModule} from "./shared/modules/router/router.module";
+import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
+import { TooltipDirective } from './shared/derectives/tooltip.directive';
 
 registerLocaleData(localeFr);
-
-
-const routes = [
-  {path: '', component: HomePageComponent},
-  {path: 'form-shopping-list', component: FoodsPageComponent},
-  {path: 'finalize-shopping-list', component: FinalizePageComponent}
-];
 
 @NgModule({
   declarations: [
@@ -71,14 +68,15 @@ const routes = [
     FoodsStorageListComponent,
     FinalizePageComponent,
     HomeDiplomComponent,
-    HomePartnersComponent
+    HomePartnersComponent,
+    TooltipDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     MaterializeModule,
-    RouterModule.forRoot(routes),
+    AppRouterModule,
     HttpClientModule,
     NguCarouselModule,
     InfiniteScrollModule,
@@ -92,6 +90,8 @@ const routes = [
     Cart,
     FoodsCategoriesService,
     BreakPointCheckService,
+    PdfGeneratorService,
+    FinalizePageGuard,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
   bootstrap: [AppComponent]

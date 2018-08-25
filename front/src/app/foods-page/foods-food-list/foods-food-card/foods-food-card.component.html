@@ -12,12 +12,15 @@
           {{curFood.discount}}%
         </div>
       </div>
-
-      <div class="card-content tooltip">
-        <div class="foodName">
-          {{curFood.name | cutString: nameMaxWidth}} <br>
-          {{curFood.boxWeight}}
-          <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
+    <div class="card-content tooltip-container">
+      <div class="foodName">
+        {{curFood.name | cutString: nameMaxWidth}} <br>
+        {{curFood.boxWeight}}
+        <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
+      </div>
+      <div class="foodStorage">
+        <div class="grey-text">
+          {{getNameStorage(curFood.idStrore)}}
         </div>
         <div class="foodStorage">
           <div class="grey-text">
@@ -47,7 +50,7 @@
         </div>
         <div class="endStock">
         <span class="grey-text">
-          Окончание акции: 18 мая
+          Окончание акции: 1 сентября
         </span>
         </div>
       </div>
