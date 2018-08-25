@@ -119,42 +119,42 @@
 
 /************************************************************/
 /* Tooltip container */
-.tooltip-container {
-  position: relative;
-  display: block;
-}
+//.tooltip {
+//  position: relative;
+//  display: block;
+//}
 
 /* Tooltip text */
-.tooltip-container .tooltiptext {
-  visibility: hidden;
-  width: 95%;
-  background-color: #656565;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 300;
-}
+//.tooltip .tooltiptext {
+//  visibility: hidden;
+//  width: 95%;
+//  background-color: #656565;
+//  color: #fff;
+//  text-align: center;
+//  padding: 5px 0;
+//  border-radius: 6px;
+//
+//  /* Position the tooltip text - see examples below! */
+//  position: absolute;
+//  z-index: 300;
+//}
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.tooltip-container:hover .tooltiptext {
-  visibility: visible;
-  top: -100px;
-}
+//.tooltip:hover .tooltiptext {
+//  visibility: visible;
+//  top: -100px;
+//}
 
-.tooltip-container .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: #656565 transparent transparent transparent;
-}
+//.tooltip .tooltiptext::after {
+//  content: " ";
+//  position: absolute;
+//  top: 100%; /* At the bottom of the tooltip */
+//  left: 50%;
+//  margin-left: -5px;
+//  border-width: 10px;
+//  border-style: solid;
+//  border-color: #656565 transparent transparent transparent;
+//}
 
 /************************************************************/
 .flex-center {
@@ -166,3 +166,171 @@
   }
 }
 
+//.card-content {
+//  padding: 5px;
+//}
+//
+///*-------------------------------------*/
+//
+//.foodCard {
+//  padding: 0 5px;
+//  width: 180px;
+//  &.isNetBook {
+//    width: 160px;
+//  }
+//  &.isTablet {
+//    width: 200px;
+//    padding-left: 20px;
+//  }
+//}
+//
+//.foodName {
+//  font-size: 12px;
+//  height: 80px;
+//  overflow: auto;
+//  font-weight: 500;
+//}
+//
+//.foodStorage {
+//  display: flex;
+//  justify-content: space-between;
+//  align-items: center;
+//  font-size: 12px;
+//  font-weight: bold;
+//  height: 30px;
+//  overflow: auto;
+//}
+//
+//.foodStorage div img {
+//  width: 30px;
+//  height: 25px;
+//}
+//
+//.foodAllPrice {
+//  text-align: center;
+//  font-size: 12px;
+//  text-decoration: line-through;
+//}
+//
+//.foodAllPriceNo {
+//  text-align: center;
+//  font-size: 12px;
+//  text-decoration: dashed;
+//}
+//
+//.foodTotalPrice {
+//  text-align: center;
+//  font-weight: bold;
+//  font-size: 14px;
+//}
+//
+///*-------------------------------------*/
+//.selectFood {
+//  font-size: 12px;
+//  width: 100%;
+//  padding: 0px;
+//}
+//
+//.selectFood:hover, .amountItem a:hover {
+//  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+//  border: none;
+//  transition: 0.3s all;
+//  z-index: 100;
+//}
+//
+//.amountItem {
+//  top: auto;
+//  bottom: 0px;
+//  padding: 0px 0px 5px 0px;
+//  user-select: none;
+//}
+//
+//.amountItem span {
+//  font-size: 18px;
+//  font-weight: bold;
+//}
+//
+///*-------------------------------*/
+//.btn-floating {
+//  transform: scale(0.7);
+//}
+//
+//.btn-floating:active {
+//  transform: scale(0.6);
+//}
+//
+//.selectFood:active {
+//  transform: scale(0.95);
+//}
+//
+//.card-image {
+//  position: relative;
+//  width: 100%;
+//  height: 125px;
+//  overflow: hidden;
+//}
+//
+//.foodDiscount {
+//  position: absolute;
+//  top: 5px;
+//  left: 10px;
+//  height: 40px;
+//  width: 40px;
+//  line-height: 40px;
+//  border-radius: 50%;
+//
+//}
+//
+//.endStock span {
+//  font-size: 10px;
+//}
+//
+///************************************************************/
+///* Tooltip container */
+//.tooltip-container {
+//  position: relative;
+//  display: block;
+//}
+//
+///* Tooltip text */
+//.tooltip-container .tooltiptext {
+//  visibility: hidden;
+//  width: 95%;
+//  background-color: #656565;
+//  color: #fff;
+//  text-align: center;
+//  padding: 5px 0;
+//  border-radius: 6px;
+//
+//  /* Position the tooltip text - see examples below! */
+//  position: absolute;
+//  z-index: 300;
+//}
+//
+///* Show the tooltip text when you mouse over the tooltip container */
+//.tooltip-container:hover .tooltiptext {
+//  visibility: visible;
+//  top: -100px;
+//}
+//
+//.tooltip-container .tooltiptext::after {
+//  content: " ";
+//  position: absolute;
+//  top: 100%; /* At the bottom of the tooltip */
+//  left: 50%;
+//  margin-left: -5px;
+//  border-width: 10px;
+//  border-style: solid;
+//  border-color: #656565 transparent transparent transparent;
+//}
+//
+///************************************************************/
+//.flex-center {
+//  .foodCard{
+//    .isMobile {
+//      display: flex;
+//      justify-content: center;
+//    }
+//  }
+//}
+//
