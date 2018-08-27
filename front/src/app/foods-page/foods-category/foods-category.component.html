@@ -1,4 +1,9 @@
-<div *ngIf="categories" class="row foods-main-group">
+<div *ngIf="categories" class="row foods-main-group"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div class="foods-main-group-container">
     <button class='leftRsDisable'>
       <i class="material-icons">chevron_left</i>
@@ -13,8 +18,7 @@
 
       <ngu-item NguCarouselItem
                 *ngFor="let cat of categories"
-                (click)="selectCategory(cat)"
-      >
+                (click)="selectCategory(cat)">
         <div [class.selected]="isSelected(cat.id)"
              [class.notSelected]="!isSelected(cat.id)"
         >

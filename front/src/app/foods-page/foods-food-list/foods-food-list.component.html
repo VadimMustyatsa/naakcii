@@ -1,6 +1,11 @@
-<div *ngIf="foodList.length > 0" class="cards">
-  <div *ngIf="isVisibleProd()" class="row">
-    <app-foods-food-card [foodList]="foodList">
+<div *ngIf="foodList.length > 0" class="cards"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+  <div *ngIf="isVisibleProd()">
+    <app-foods-food-card [foodList]="foodList" class="food-cards">
     </app-foods-food-card>
 
     <div *ngIf="showLoadingCard" class="loadingCard">

@@ -6,6 +6,7 @@ import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
 import {Chain} from '../../shared/chain/chain.model';
+import {BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
 
 @Component({
   selector: 'app-foods-food-list',
@@ -26,6 +27,7 @@ export class FoodsFoodListComponent implements OnInit {
 
   constructor(public  chainLst: Chain,
               private foodsService: FoodsFoodListService,
+              public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
 

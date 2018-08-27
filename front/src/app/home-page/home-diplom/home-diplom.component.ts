@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
 
 @Component({
@@ -6,15 +6,8 @@ import {BreakPointCheckService} from "../../shared/services/breakpoint-check.ser
   templateUrl: './home-diplom.component.html',
   styleUrls: ['./home-diplom.component.scss']
 })
-export class HomeDiplomComponent implements OnInit {
+export class HomeDiplomComponent {
 
   constructor(public breakPointCheckService: BreakPointCheckService) { }
-
-  ngOnInit() {
-  }
-
-  get blockHeight() {
-    return screen.availHeight;
-  }
 
 }

@@ -5,6 +5,7 @@ import {Category} from '../../shared/category/foods.category.model';
 import {Observer} from 'rxjs/Observer';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import { NguCarousel, NguCarouselStore, NguCarouselService } from '@ngu/carousel';
+import {BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
 
 @Component({
   selector: 'app-foods-group',
@@ -18,6 +19,7 @@ export class FoodsCategoryComponent implements OnInit {
 
   constructor(private carousel: NguCarouselService,
               private service: FoodsCategoriesService,
+              public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
   }
   ngOnInit() {
@@ -43,7 +45,7 @@ export class FoodsCategoryComponent implements OnInit {
   }
   initCarouselCategory() {
     this.carouselCategory = {
-      grid: {xs: 1, sm: 5, md: 6, lg: 7, all: 0},
+      grid: {xs: 1, sm: 4, md: 5, lg: 7, all: 0},
       slide: 1,
       speed: 500,
       point: {
@@ -51,7 +53,7 @@ export class FoodsCategoryComponent implements OnInit {
       },
       load: 2,
       touch: true,
-      loop: false,
+      loop: true,
       custom: 'banner'
     }
   }

@@ -2,18 +2,10 @@
   padding: 5px;
 }
 
-/*-------------------------------------*/
-
 .foodCard {
   padding: 0 5px;
   width: 180px;
-  &.isNetBook {
-    width: 160px;
-  }
-  &.isTablet {
-    width: 200px;
-    padding-left: 20px;
-  }
+  margin: 0 auto;
 }
 
 .foodName {
@@ -60,7 +52,7 @@
 .selectFood {
   font-size: 12px;
   width: 100%;
-  padding: 0px;
+  padding: 0;
 }
 
 .selectFood:hover, .amountItem a:hover {
@@ -72,8 +64,8 @@
 
 .amountItem {
   top: auto;
-  bottom: 0px;
-  padding: 0px 0px 5px 0px;
+  bottom: 0;
+  padding: 0 0 5px 0;
   user-select: none;
 }
 
@@ -164,4 +156,9 @@
       justify-content: center;
     }
   }
+}
+
+.no-visible {
+  visibility: hidden;
+  height: 2px;
 }

@@ -3,7 +3,7 @@ import {FoodList} from '../../../shared/foodList/foods.foodList.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
 import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
-import { BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
+import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-food-card',
@@ -12,7 +12,7 @@ import { BreakPointCheckService} from '../../../shared/services/breakpoint-check
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
-  @Input() foodList: FoodList;
+  @Input() foodList: FoodList[];
   nameMaxWidth = 85;
 
   constructor(public  chainLst: Chain,
@@ -21,6 +21,10 @@ export class FoodsFoodCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    // если продуктов нечетное количество, добавляем пустышку в массив для кастомного центрирования, т.к. поведение justify-content: center не удовлетворяет
+    if (this.foodList.length % 2 !== 0) {
+      this.foodList.push(this.foodList[0]);
+    }
   }
 
   getStorageByID(id: number): ChainLine {

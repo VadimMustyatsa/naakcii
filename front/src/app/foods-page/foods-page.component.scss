@@ -11,6 +11,7 @@
 
 .subCategoryContainer {
   padding: 0;
+  min-width: 220px;
 }
 
 .totalItemsContainer {
@@ -20,12 +21,12 @@
 .shopping-info {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
   .subCategoryContainer, .totalItemsContainer {
     padding: 0 1%;
     width: 25%;
   }
   .totalItemsContainer {
+    min-width: 320px;
     width: 28%;
   }
 }
@@ -37,8 +38,8 @@
 }
 
 .isTablet {
-  .cardList {
-    font-size: 11px;
+  .totalItemsContainer {
+    min-width: 270px;
   }
 }
 
@@ -55,17 +56,6 @@
   }
 }
 
-.isWeb {
-  .cardList, .totalItemsContainer {
-    width: 37%;
-  }
-}
-
-.isTablet {
-  .cardList, .subCategoryContainer, .totalItemsContainer {
-    width: 33%;
-  }
-}
 .isHandset {
   .shopping-info {
     flex-direction: column;

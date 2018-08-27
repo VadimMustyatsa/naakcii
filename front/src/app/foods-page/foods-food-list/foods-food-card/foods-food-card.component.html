@@ -1,11 +1,11 @@
-<div *ngFor="let curFood of foodList" class="flex-center">
-  <div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard col"
+<div *ngFor="let curFood of foodList; let i = index">
+  <div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard"
        [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
        [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
        [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
        [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
        [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
-    <div class="card sticky-action">
+    <div class="card sticky-action" [class.no-visible] = 'i === foodList.length-1 && foodList[0] === foodList[foodList.length-1]'>
       <div class="card-image" [ngStyle]="setImgStyles(curFood)">
         <!--<img *ngIf="!curFood.img" src="../../../../assets/images/noImg.svg">-->
         <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
@@ -16,8 +16,7 @@
       <div class="card-content tooltip-container">
 
         <div class="foodName"><b>
-
-          {{curFood.name | cutString: nameMaxWidth}} <br>
+          {{curFood.name | cutString: nameMaxWidth}}<br>
           {{curFood.boxWeight}}
           <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
         </b>
@@ -57,5 +56,3 @@
     </div>
   </div>
 </div>
-
-

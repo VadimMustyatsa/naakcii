@@ -3,15 +3,15 @@
   text-align: center;
 }
 
-.cards {
-  //min-height: 500px;
+.food-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .collapsible-header {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 180px;
 }
 
 .collapsible-header div p {
