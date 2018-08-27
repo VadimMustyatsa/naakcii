@@ -19,7 +19,7 @@ export class Cart {
   public cartAverageDiscount: number;
 
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
-  this.lines= this.sessionStorageService.getCartCountFromSessionStorage() || [];
+  this.lines= this.sessionStorageService.getCartFromSessionStorage() || [];
     this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
       {
         itemCount: 0,

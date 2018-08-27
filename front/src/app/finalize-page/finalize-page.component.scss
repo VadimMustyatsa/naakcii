@@ -195,14 +195,15 @@
 }
 
 .modal-content {
+  padding: 24px 24px 15px 24px;
   div {
     text-align: center;
   }
 }
 
 .modal-icon {
-  min-width: 60px;
-  height: 60px;
+  min-width: 55px;
+  height: 55px;
   flex-basis: 80px;
   background-size: cover;
 }

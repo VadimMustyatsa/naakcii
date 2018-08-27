@@ -8,13 +8,13 @@ export class SessionStorageService {
   constructor() {
   }
   getCartFromSessionStorage(){
-    return JSON.parse(sessionStorage.getItem(storageKeyCount));
+    return JSON.parse(sessionStorage.getItem(storageKey));
   }
   setCartToSessionStorage(cart){
     sessionStorage.setItem(storageKey, JSON.stringify(cart));
   }
   getCartCountFromSessionStorage(){
-    return JSON.parse(sessionStorage.getItem(storageKey));
+    return JSON.parse(sessionStorage.getItem(storageKeyCount));
   }
   setCartCountToSessionStorage(count){
      sessionStorage.setItem(storageKeyCount, JSON.stringify(count))
