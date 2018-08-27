@@ -2,45 +2,58 @@
   padding: 40px;
 }
 
-.info {
-  display: flex;
+h5 {
+  padding-bottom: 10%;
 }
 
-h5 {
-  padding: 5%;
+.info-container {
+  display: flex;
+  .img {
+    background-image: url("../../../assets/images/big-family.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex: 1 1 300px;
+  }
+  .description {
+    padding: 5%;
+    flex: 4 4 300px;
+  }
 }
 
 .isNetBook {
   padding: 40px 20px 0 20px;
-  h2 {
+  h3 {
     font-size: 32px;
     font-weight: bold;
   }
   h5 {
     font-size: 22px;
-    padding: 2%;
+  }
+}
+
+.isTablet {
+  padding: 5%;
+  .info-container {
+    flex-direction: column;
+    .img {
+      background-position-x: center;
+    }
+    a {
+      margin: 0 auto;
+    }
+  }
+  .description {
+    padding: 0;
   }
 }
 
 a {
   display: block;
-  margin: 40px auto;
-  max-width: 280px;
-
-}
-
-.isTablet {
-  .info {
-    flex-direction: column;
-  }
-  img {
-    max-width: 330px;
-    margin: 0 auto;
-  }
+  max-width: 260px;
 }
 
 .isHandset {
-  h2 {
+  h3 {
     font-size: 28px;
   }
   h5 {

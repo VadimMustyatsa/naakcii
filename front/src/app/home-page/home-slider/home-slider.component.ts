@@ -57,14 +57,6 @@ export class HomeSliderComponent implements OnInit {
     return titles.map((title, index) => title.replace('_', this.basicData[index].toFixed(0)));
   }
 
-  get mainImgHeight() {
-    if (screen.availHeight < 1000) {
-      return screen.availHeight - 380;
-    } else {
-      return screen.availHeight / 2;
-    }
-
-  }
 }
 
 

@@ -14,10 +14,13 @@
       </div>
 
       <div class="card-content tooltip-container">
-        <div class="foodName">
+
+        <div class="foodName"><b>
+
           {{curFood.name | cutString: nameMaxWidth}} <br>
           {{curFood.boxWeight}}
           <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
+        </b>
         </div>
         <div class="foodStorage">
           <div class="grey-text">

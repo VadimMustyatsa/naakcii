@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsCategoriesService {
-  //private categoryUrl = 'assets/json/Category.json';
+  // private categoryUrl = 'http://' + window.location.hostname +':8080/api/category';
   private categoryUrl = 'http://178.124.206.42:8080/api/category';
 
   private data: Category[] = [];
