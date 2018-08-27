@@ -42,6 +42,7 @@ import {PdfGeneratorService} from "./shared/services/pdf-generator.service";
 import {AppRouterModule} from "./shared/modules/router/router.module";
 import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
 import { TooltipDirective } from './shared/derectives/tooltip.directive';
+import {SessionStorageService} from "./shared/services/session-storage.service";
 
 registerLocaleData(localeFr);
 
@@ -87,6 +88,7 @@ registerLocaleData(localeFr);
     FoodsCategoriesService,
     BreakPointCheckService,
     PdfGeneratorService,
+    SessionStorageService,
     FinalizePageGuard,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
