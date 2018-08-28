@@ -154,7 +154,7 @@ export class FinalizePageComponent implements OnInit {
     this.onResizeContent();
     const clientHeight = document.documentElement.clientHeight; // высота видимой части
     const offsetHeight = document.documentElement.offsetHeight;
-    if ((offsetHeight - clientHeight) < 60) {
+    if ((offsetHeight - clientHeight) < 50) {
       return '';
     } else {
       return 'fixed';
