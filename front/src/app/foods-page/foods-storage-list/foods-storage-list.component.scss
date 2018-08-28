@@ -187,7 +187,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
   opacity: 0.9;
   z-index: 115;
   cursor: pointer;
@@ -223,7 +223,6 @@
   font-size: 17px;
 }
 
-
 .chainPercent {
   padding-left: 130px;
 }
@@ -239,3 +238,32 @@
 .total-goods {
   padding-left: 108px;
 }
+
+.header {
+  font-size: 26px;
+  padding-bottom: 10px;
+}
+
+.text {
+  font-size: 22px;
+}
+
+.isHandset {
+  .header {
+    font-size: 20px;
+  }
+  .text {
+    font-size: 16px;
+  }
+}
+
+.isMobile {
+  .header {
+    font-size: 18px;
+  }
+  .text {
+    font-size: 14px;
+  }
+}
+
+
