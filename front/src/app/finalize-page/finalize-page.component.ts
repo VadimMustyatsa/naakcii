@@ -170,6 +170,9 @@ export class FinalizePageComponent implements OnInit {
   generatePDF() {
     this.PDFGenerator.generatePDF();
   }
+  onEventStop(event) {
+    event.stopPropagation();
+  }
 }
 
 
