@@ -11,27 +11,11 @@ export class TooltipDirective {
   message:string;
 
   @HostListener('mouseenter') mouseIn() {
-    let tooltipElem = document.createElement('div');
-    tooltipElem.className = 'tooltip';
-    tooltipElem.innerHTML = this.message;
-    document.body.appendChild(tooltipElem);
-
-    let coords = this.elementRef.nativeElement.getBoundingClientRect();
-
-    let left = coords.left + (this.elementRef.nativeElement.offsetWidth - tooltipElem.offsetWidth) / 2;
-    if (left < 0) left = 0;
-
-    let top = coords.top - tooltipElem.offsetHeight - 5;
-    if (top < 0) {
-      top = coords.top + this.elementRef.nativeElement.offsetHeight + 5;
-    }
-
-    tooltipElem.style.left = left + 'px';
-    tooltipElem.style.top = top + 'px';
-    this.showingTooltip = tooltipElem;
+    this.elementRef.nativeElement.classList.add("tooltip");
+    this.elementRef.nativeElement.style.setProperty('--halfElemWidth', this.elementRef.nativeElement.getBoundingClientRect().width/2 + 'px');
+    this.elementRef.nativeElement.style.setProperty('--elemWidth', - this.elementRef.nativeElement.getBoundingClientRect().width + 'px');
   }
   @HostListener('mouseleave') mouseOut() {
-    document.body.removeChild(this.showingTooltip);
-    this.showingTooltip = null;
+    this.elementRef.nativeElement.classList.remove("tooltip");
   }
 }

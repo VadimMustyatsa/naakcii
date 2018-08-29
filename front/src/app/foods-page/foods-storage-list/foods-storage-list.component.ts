@@ -8,6 +8,7 @@ import { Chain } from '../../shared/chain/chain.model';
 import { Observable } from 'rxjs/Observable';
 import { Cart, CartLine } from '../../shared/cart/cart.model';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
+import {SessionStorageService} from "../../shared/services/session-storage.service";
 
 @Component({
   selector: 'app-foods-storage-list',
@@ -41,6 +42,7 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
   constructor(public  chainLst: Chain,
               public cart: Cart,
               private eRef: ElementRef,
+              private sessionStorageService:SessionStorageService,
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
@@ -98,6 +100,7 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
       }
     });
     this.correctAllChainsCheck();
+   this.sessionStorageService.setChainToSessionStorage(this.chainLst.lines);
   }
 
   correctAllChainsCheck() {
@@ -145,5 +148,6 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
   onChangeAllChains() {
     this.checkedAllChain = !this.checkedAllChain;
     this.setAllChains(this.checkedAllChain);
+    this.sessionStorageService.setChainToSessionStorage(this.chainLst.lines);
   }
 }
