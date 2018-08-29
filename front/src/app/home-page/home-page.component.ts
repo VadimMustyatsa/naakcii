@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Сервис экономии – naakcii.by')
+    this.titleService.setTitle('Сервис экономии – НаАкции.Бел')
   }
 
   @HostListener('window:scroll', ['$event'])

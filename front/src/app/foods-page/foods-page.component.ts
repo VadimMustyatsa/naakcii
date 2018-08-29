@@ -14,7 +14,7 @@ export class FoodsPageComponent implements OnInit {
     window.scrollTo(0,0);
   }
   ngOnInit() {
-    this.titleService.setTitle('Формирование списка покупок – naakcii.by')
+    this.titleService.setTitle('Формирование списка покупок – НаАкции.Бел')
   }
 }
 
