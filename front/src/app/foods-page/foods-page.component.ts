@@ -11,6 +11,7 @@ import { BreakPointCheckService} from '../shared/services/breakpoint-check.servi
 
 export class FoodsPageComponent implements OnInit {
   constructor(private service: FoodsCategoriesService, private titleService: Title, public breakPointCheckService: BreakPointCheckService,) {
+    window.scrollTo(0,0);
   }
   ngOnInit() {
     this.titleService.setTitle('Формирование списка покупок – naakcii.by')

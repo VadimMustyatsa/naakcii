@@ -28,7 +28,9 @@ export class HomePageComponent implements OnInit {
 
   getData = 'inactive';
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: Title) {
+    window.scrollTo(0,0);
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Сервис экономии – naakcii.by')

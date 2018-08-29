@@ -41,6 +41,7 @@ export class FinalizePageComponent implements OnInit {
   constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
+    window.scrollTo(0,0);
   }
 
   ngOnInit() {
