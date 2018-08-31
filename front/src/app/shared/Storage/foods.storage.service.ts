@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FoodsStorageService {
+
   private storeUrl: string;
 
   constructor(private http: HttpClient) {

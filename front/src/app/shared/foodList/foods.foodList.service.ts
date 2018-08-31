@@ -4,7 +4,9 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class FoodsFoodListService {
+
   private productsUrl: string;
+
   constructor(private http: HttpClient) {
   }
 

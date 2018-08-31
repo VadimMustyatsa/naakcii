@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class FoodsSubCategoriesService {
+
   private subCategoryUrl: string;
 
   constructor(private http: HttpClient) {
