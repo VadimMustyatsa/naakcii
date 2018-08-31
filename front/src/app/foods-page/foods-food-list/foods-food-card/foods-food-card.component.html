@@ -6,18 +6,18 @@
        [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
        [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
     <div class="card sticky-action" [class.no-visible] = 'i === foodList.length-1 && foodList[0] === foodList[foodList.length-1]'>
-      <div class="card-image" [ngStyle]="setImgStyles(curFood)">
+      <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles(curFood)">
         <!--<img *ngIf="!curFood.img" src="../../../../assets/images/noImg.svg">-->
         <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
           {{curFood.discount}}%
         </div>
-        <div *ngIf="curFood.discount === 0" class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
-          <i class="material-icons">thumb_up</i>
+        <div *ngIf="curFood.discount === 0"
+             class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
+          <i tooltip="Товар на акции «Хорошая цена», размер скидки сетью не публикуется" class="material-icons">thumb_up</i>
         </div>
       </div>
 
       <div class="card-content tooltip-container">
-
         <div class="foodName"><b>
           {{curFood.name | cutString: nameMaxWidth}}<br>
           {{curFood.boxWeight}}

@@ -165,7 +165,11 @@
 
 .good-price{
   i{
-    margin: 7px;
+    padding: 7px;
     cursor: default;
   }
+}
+.card-image{
+  overflow: visible;
+  box-sizing: padding-box;
 }
