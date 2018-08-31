@@ -13,7 +13,7 @@ import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.
 })
 export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
-  nameMaxWidth = 85;
+  nameMaxWidth = 80;
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
