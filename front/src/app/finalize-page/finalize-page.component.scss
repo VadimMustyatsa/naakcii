@@ -177,6 +177,28 @@
   border-bottom: 1px solid #656565;
   box-shadow: 0 1px 0 0 #656565;
 }
+/**********************************/
+.undiscount input {
+  border: 1px solid lightgray;
+  margin: 0;
+  height: 2.5rem;
+  width: 100%;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  &:focus {
+    border: 1px solid #656565;
+    box-shadow: 0 0 0 0 #656565;
+  }
+}
+  .undiscount .material-icons{
+    color: lightgray;
+    font-size: 2.5rem;
+    padding-right: 0.75rem;
+    cursor: pointer;
+    &:hover{
+      color:gray;
+    }
+  }
 
 /*********************************/
 .modal {

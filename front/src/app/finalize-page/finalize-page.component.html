@@ -46,7 +46,7 @@
           <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</div>
           <div class="col m1 center">1 сентября</div>
           <div class="col m1">
-            <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
+            <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
           </div>
         </div>
 
@@ -99,6 +99,33 @@
           </div>
         </div>
       </li>
+      <li>
+        <div class="collapsible-header active row chainList grey-text text-darken-2">
+          <div class="col m3 left">
+            Неакционные товары
+          </div>
+          <div class="col m1 center">
+            {{undiscount.length}}
+          </div>
+          <div class="col m7 center">
+          </div>
+          <div class="col m1">
+            <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
+          </div>
+          </div>
+        <div *ngFor="let item of undiscount" class="collapsible-body row itemLine">
+          <div class="col m11 left">
+            {{item.text}}
+          </div>
+          <div class="col m1 left">
+            <a (click)="onRemoveUndiscount($event)" [attr.id]="item.id"><i class="material-icons center grey-text text-darken-1 deleteCartLine">delete_forever</i></a>
+          </div>
+        </div>
+        <div class="collapsible-body row itemLine undiscount">
+          <input type="text" placeholder="Введите товар" (keypress)="AddUndiscountByEnter($event)">
+          <a (click)="onAddUndiscount($event)"><i class="large material-icons">add</i></a>
+        </div>
+      </li>
 
       <li class="finalizeFooter wrapper"
           [style.width.px]="widthContainer"
@@ -106,7 +133,7 @@
         <div class="row"
              [style.width.px]="widthContainer">
           <div class="col m3">Итого:</div>
-          <div class="col m1 center">{{cart.lines.length}}</div>
+          <div class="col m1 center">{{cart.lines.length + undiscount.length}}</div>
           <div class="col m2 center">{{cart.itemCount}}</div>
           <div class="col m1 center">
             <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice).toFixed(2)| number:"1.2-2"}}</span>
