@@ -3,10 +3,11 @@ import {Chain, ChainLine} from '../chain/chain.model';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import {Cart} from "../cart/cart.model";
+import {UndiscountService} from "./undiscount.service";
 
 @Injectable()
 export class PdfGeneratorService {
-  constructor(public cart: Cart) {
+  constructor(public cart: Cart, private undiscountStorage: UndiscountService) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     pdfMake.width = '1400px';
   }
@@ -97,6 +98,47 @@ export class PdfGeneratorService {
         docContent.push(itemColumnList);
       });
     }
+//--------------------------------------------------------------------------
+    let table = {}; //обрамление
+    let bodyTable = {};
+    let bodyBodyTable = [];
+    let sum = 0;
+    let widthParam = [];
+    widthParam.push('100%');
+    bodyTable['widths'] = widthParam;
+    let tableLine = [];
+    tableLine.push({
+      alignment: 'left',
+      bold: true,
+      fillColor: '#656565',
+      color: 'white',
+      fontSize: '38',
+      columns: [{width: '70%', text: "Неакционные товары"}]
+    });
+    chainSum.push(sum);
+    bodyBodyTable.push(tableLine);
+    bodyTable['body'] = bodyBodyTable;
+    table['table'] = bodyTable;
+    table['layout'] = 'noBorders';
+    docContent.push(table);
+//---------------------------------------------------------------------
+
+    this.undiscountStorage.getFromUndiscount().map(item => {
+      let itemColumnList = {}; //строка
+      let columns = [];
+      columns.push({
+        width: '70%',
+        text: item.text,
+        style: 'itemSumStyle',
+        alignment: 'left',
+        margin: [0, 15]
+      });
+
+      itemColumnList['columns'] = columns;
+      itemColumnList['style'] = 'itemStyle';
+      docContent.push(itemColumnList);
+    });
+
     //итоговая сумма------------------------------
     let itemColumnList = {}; //строка
     let columns = [];

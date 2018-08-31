@@ -8,6 +8,7 @@ import {MaterializeAction} from 'angular2-materialize'
 import { Title } from '@angular/platform-browser'
 import {Router} from "@angular/router";
 import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
+import {UndiscountService} from "../shared/services/undiscount.service";
 
 @Component({
   selector: 'app-finalize-page',
@@ -20,6 +21,7 @@ import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
 export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
   widthContainer = 1200;
+  undiscount: Array<{text:string; id: string}> ;
 
   params = [
     {
@@ -40,8 +42,10 @@ export class FinalizePageComponent implements OnInit {
   }
   constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
+              private undiscountStorage:UndiscountService,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
     window.scrollTo(0,0);
+    this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
   }
 
   ngOnInit() {
@@ -159,6 +163,41 @@ export class FinalizePageComponent implements OnInit {
       return '';
     } else {
       return 'fixed';
+    }
+  }
+
+  onRemoveUndiscount(event){
+     this.undiscount.forEach((i,index)=>{
+       if(event.target.parentNode.id === i.id.toString()){
+         this.undiscount.splice(index,1);
+       }
+     });
+    this.undiscountStorage.setToUndiscount(this.undiscount);
+  };
+
+  onAddUndiscount(event){
+    let value = event.target.parentNode.previousElementSibling.value;
+    if( value.length>2 && value.length<50) {
+      this.undiscount.push({
+        text: value,
+        id: event.timeStamp
+      });
+    }
+    event.target.parentNode.previousElementSibling.value='';
+    this.undiscountStorage.setToUndiscount(this.undiscount);
+  }
+
+  AddUndiscountByEnter(event){
+    if(event.keyCode === 13){
+      let value = event.target.value;
+      if( value.length>2 && value.length<50) {
+        this.undiscount.push({
+          text: value,
+          id: event.timeStamp
+        });
+      }
+      event.target.value='';
+      this.undiscountStorage.setToUndiscount(this.undiscount);
     }
   }
 
