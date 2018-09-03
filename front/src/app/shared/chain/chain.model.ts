@@ -3,16 +3,18 @@ import {FoodsStorageService} from '../Storage/foods.storage.service';
 import {Storag} from '../Storage/foods.storage.model';
 import {Observer} from 'rxjs/Observer';
 import {SharedState, SHARED_STATE, MODES} from '../../foods-page/sharedState.model';
-const chainStorageKey = 'naakciiChainStorage';
+import {SessionStorageService} from "../services/session-storage.service";
 
 @Injectable()
 export class Chain {
-  public lines: ChainLine[] = JSON.parse(sessionStorage.getItem(chainStorageKey))||[];
+  public lines: ChainLine[];
   public itemAllCount: number = 0;
   public chainAverageDiscount = 0;    //средний процент скидки по всем сетям
 
   constructor(private chainService: FoodsStorageService,
+              private sessionStorageService: SessionStorageService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
+    this.lines = this.sessionStorageService.getChainFromSessionStorage()||[];
     this.chainService.getAll().subscribe(chainList => {
       chainList.map(line => {
         this.addLine(line);
@@ -28,7 +30,7 @@ export class Chain {
       this.lines.push(new ChainLine(chain));
     }
     this.recalculate();
-    sessionStorage.setItem(chainStorageKey, JSON.stringify(this.lines));
+    this.sessionStorageService.setChainToSessionStorage(this.lines);
   }
 
   clear() {

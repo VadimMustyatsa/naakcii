@@ -4,21 +4,22 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class FoodsFoodListService {
-  private productsLocal = 'assets/json/FoodList.json';
-  private productsUrl = 'http://178.124.206.42:8080/api/product';
+
+  private productsUrl: string;
 
   constructor(private http: HttpClient) {
   }
 
-  getFoodList(selectedSubCatListID, first, last) {  //FoodList[]
+  getFoodList(selectedSubCatListID, first, last) {
+    this.productsUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.42:8080/api/product' : 'http://' + window.location.hostname +':8080/api/product';
+
     let listID = '';
     selectedSubCatListID.map(id => {
       listID += String(id.id) + ',';
     });
     const dataGet = {SubcategoryList: listID, first: first, last: last};
 
-    //return this.http.get<FoodList[]>(this.productsLocal)                      //для отладки - из файла
-    return this.http.get<FoodList[]>(this.productsUrl, {params: dataGet})   //для реального запроса с бэка
+    return this.http.get<FoodList[]>(this.productsUrl, {params: dataGet})
       .map(productList => {
         return productList.map(product => {
           let index = product['picture'].indexOf('%');

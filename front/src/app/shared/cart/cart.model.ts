@@ -2,27 +2,35 @@ import {Injectable} from '@angular/core';
 import {FoodList} from '../foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../chain/chain.model';
 import {isUndefined} from "util";
-
-const storageKey = "naakciiStorage";
-const storageKeyCount = "naakciiStorageCount";
-const storageCount = JSON.parse(sessionStorage.getItem(storageKeyCount)) ||
-  {
-    itemCount: 0,
-    cartAllPrice: 0,
-    cartTotalPrice: 0,
-    cartAverageDiscount: 0
-  };
-
+import {SessionStorageService} from "../services/session-storage.service";
 
 @Injectable()
 export class Cart {
-  public lines: CartLine[] = JSON.parse(sessionStorage.getItem(storageKey)) || [];
-  public itemCount: number = storageCount.itemCount;
-  public cartAllPrice: number = storageCount.cartAllPrice;    //без скидок
-  public cartTotalPrice: number = storageCount.cartTotalPrice;  //с учетом скидок
-  public cartAverageDiscount = storageCount.cartAverageDiscount;    //средний процент скидки по всем карточкам
+  public lines: CartLine[];
+  public storageCount : {
+    itemCount: number;
+    cartAllPrice: number;
+    cartTotalPrice: number;
+    cartAverageDiscount: number;
+  };
+  public itemCount: number;
+  public cartAllPrice: number ;
+  public cartTotalPrice: number;
+  public cartAverageDiscount: number;
 
-  constructor(public  chainLst: Chain) {
+  constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
+  this.lines= this.sessionStorageService.getCartFromSessionStorage() || [];
+    this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
+      {
+        itemCount: 0,
+        cartAllPrice: 0,
+        cartTotalPrice: 0,
+        cartAverageDiscount: 0
+      };
+   this.itemCount = this.storageCount.itemCount;
+    this.cartAllPrice = this.storageCount.cartAllPrice;    //без скидок
+    this.cartTotalPrice = this.storageCount.cartTotalPrice;  //с учетом скидок
+    this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    //средний процент скидки по всем карточкам
   }
 
   addLine(product: FoodList, quantity: number) {
@@ -125,13 +133,13 @@ export class Cart {
       }
       this.cartTotalPrice += (l.quantity * l.product.totalPrice);
     });
-    sessionStorage.setItem(storageKey, JSON.stringify(this.lines));
-    sessionStorage.setItem(storageKeyCount, JSON.stringify({
+    this.sessionStorageService.setCartToSessionStorage(this.lines);
+    this.sessionStorageService.setCartCountToSessionStorage({
       itemCount: this.itemCount,
       cartAllPrice: this.cartAllPrice,
       cartTotalPrice: this.cartTotalPrice,
       cartAverageDiscount: this.cartAverageDiscount,
-    }));
+    });
   }
 }
 

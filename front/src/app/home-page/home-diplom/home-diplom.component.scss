@@ -1,0 +1,60 @@
+div {
+  height: 824px;
+  background: url('../../../assets/images/diplom.jpg') no-repeat;
+  background-size: cover;
+  padding: 0 3% 0 50%;
+  border-top: #EFEFEF solid .1px;
+}
+
+h5 {
+  padding: 10% 0;
+}
+
+h3 {
+  padding-top: 30%;
+  font-weight: bold;
+}
+
+a {
+  display: block;
+  max-width: 250px;
+}
+
+.isNetBook {
+  padding: 0 3% 0 67%;
+  h3 {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 20px;
+  }
+}
+
+.isTablet {
+  height: 350px;
+  background-size: contain;
+  padding: 0 0 0 35%;
+  h3 {
+    padding-top: 0;
+    font-size: 22px;
+  }
+  h5 {
+    padding: 0;
+    font-size: 18px;
+  }
+}
+
+.isHandset {
+  height: 300px;
+  h5 {
+    display: none;
+  }
+}
+
+.isMobile {
+  h3 {
+    font-size: 14px;
+  }
+  height: 150px;
+}

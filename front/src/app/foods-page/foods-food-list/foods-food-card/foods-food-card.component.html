@@ -1,54 +1,61 @@
-<div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard col s4 m4">
-  <div class="card sticky-action">
-    <div class="card-image">
-      <!--<img *ngIf="curFood.img.length == 0" src="assets/images/noImageProduct.png">-->
-      <img *ngIf="!curFood.img" src="assets/images/noImg.svg">
-      <img *ngIf="curFood.img" src="assets/images/Products/{{curFood.img}}">
-      <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
-        {{curFood.discount}}%
-      </div>
-    </div>
-
-    <div class="card-content tooltip">
-      <div class="foodName">
-        {{curFood.name | cutString: nameMaxWidth}} <br>
-        {{curFood.boxWeight}}
-        <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
-      </div>
-      <div class="foodStorage">
-        <div class="grey-text">
-          {{getNameStorage(curFood.idStrore)}}
+<div *ngFor="let curFood of foodList; let i = index">
+  <div *ngIf="isVisibleChain(curFood.idStrore)" class="foodCard"
+       [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+       [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+       [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+       [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+       [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+    <div class="card sticky-action" [class.no-visible] = 'i === foodList.length-1 && foodList[0] === foodList[foodList.length-1]'>
+      <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles(curFood)">
+        <!--<img *ngIf="!curFood.img" src="../../../../assets/images/noImg.svg">-->
+        <div *ngIf="curFood.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
+          {{curFood.discount}}%
         </div>
-        <div>
-          <img src="{{getImgStorage(curFood.idStrore)}}">
+        <div *ngIf="curFood.discount === 0"
+             class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
+          <i tooltip="Товар на акции «Хорошая цена», размер скидки сетью не публикуется" class="material-icons">thumb_up</i>
         </div>
       </div>
-      <div *ngIf="curFood.discount > 0" class="foodAllPrice">
-        {{curFood.allPrice | number:"1.2-2"}} руб.
-      </div>
-      <div *ngIf="curFood.discount == 0" class="foodAllPriceNo">&nbsp;</div>
-      <div class="foodTotalPrice">
-        {{curFood.totalPrice | number:"1.2-2"}} руб.
-      </div>
 
-      <div class="amountItem center">
-        <a class="btn-floating btn teal grey darken-1" (click)="subItem(curFood)">
-          <i class="material-icons">remove</i>
-        </a>
-        <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
-        <a class="btn-floating btn teal grey darken-1" (click)="addItem(curFood)">
-          <i class="material-icons">add</i>
-        </a>
-        <a class="selectFood btn waves-block deep-orange" (click)="selectFood(curFood)">Добавить</a>
-      </div>
-      <div class="endStock">
+      <div class="card-content tooltip-container">
+        <div class="foodName"><b>
+          {{curFood.name | cutString: nameMaxWidth}}<br>
+          {{curFood.boxWeight}}
+          <span *ngIf="curFood.name.length >= nameMaxWidth" class="tooltiptext">{{curFood.name}}</span>
+        </b>
+        </div>
+        <div class="foodStorage">
+          <div class="grey-text">
+            {{getNameStorage(curFood.idStrore)}}
+          </div>
+          <div>
+            <img src="{{getImgStorage(curFood.idStrore)}}">
+          </div>
+        </div>
+        <div *ngIf="curFood.discount > 0" class="foodAllPrice">
+          {{curFood.allPrice | number:"1.2-2"}} руб.
+        </div>
+        <div *ngIf="curFood.discount == 0" class="foodAllPriceNo">&nbsp;</div>
+        <div class="foodTotalPrice">
+          {{curFood.totalPrice | number:"1.2-2"}} руб.
+        </div>
+
+        <div class="amountItem center">
+          <a class="btn-floating btn teal grey darken-1" (click)="subItem(curFood)">
+            <i class="material-icons">remove</i>
+          </a>
+          <span class="grey-text text-darken-2">{{curFood.selectAmount}}</span>
+          <a class="btn-floating btn teal grey darken-1" (click)="addItem(curFood)">
+            <i class="material-icons">add</i>
+          </a>
+          <a class="selectFood btn waves-block deep-orange" (click)="selectFood(curFood)">Добавить</a>
+        </div>
+        <div class="endStock">
         <span class="grey-text">
-          Окончание акции: 18 мая
+          Окончание акции: 1 сентября
         </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-

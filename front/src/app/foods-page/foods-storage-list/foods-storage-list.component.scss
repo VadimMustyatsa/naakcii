@@ -4,10 +4,11 @@
   overflow: visible;
   border-radius: 26px;
 }
+
 .chainListWrap {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: auto;
   background-color: white;
@@ -15,80 +16,99 @@
   z-index: 200;
   border-radius: 28px;
 }
+
 .collapsible {
-  margin: 0px;
+  margin: 0;
   border: none;
   border-radius: 30px;
 }
+
 .collapsible > li {
   border-radius: 26px;
   border: solid #757575 2px;
 }
+
 .collapsible-body {
-  padding: 0px;
+  padding: 0;
   border: none;
 }
+
 .collapsible-header {
   width: 100.5%;
   display: flex;
   align-items: center;
   border: solid #757575 2px;
   border-radius: 25px;
-  padding-left: 20px!important;
+  padding-left: 20px !important;
 }
+
 .collapsible-header > div:last-child {
   display: flex;
   align-items: center;
 }
+
 .collection-item:last-child {
-  margin-bottom: 10px!important;
+  margin-bottom: 10px !important;
 }
+
 .collection-item:hover {
   background-color: #d9d9d9;
   cursor: pointer;
 }
+
 .selectedStorage {
   margin-left: 10px;
 }
+
 .badge {
   margin: 15px 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
+
 .headerSelectChain {
   display: flex;
   align-items: center;
-  margin: 0px;
+  margin: 0;
 }
+
 .collapsible-header {
   margin: 0;
   color: white;
   padding: 10px 10px;
 }
+
 .collapsible-header div {
-  padding: 0px;
+  padding: 0;
   font-size: 16px;
 }
+
 .collapsible-header > div > i {
-  margin: 0px;
+  margin: 0;
 }
+
 .collection-header {
   margin: 0;
 }
+
 .collection-header div span {
   font-size: 14px;
   font-weight: bold;
 }
+
 .collection, .collection-header, .collection-item {
-  border: none!important;
-  padding: 10px 0px!important;
+  border: none !important;
+  padding: 10px 0 !important;
 }
+
 .collection {
-  padding-bottom: 15px!important;
+  padding-bottom: 15px !important;
 }
+
 .collection-item div {
   display: flex;
   align-items: center;
 }
+
 .collection-item div span {
   margin: 0 auto
 }
@@ -98,50 +118,60 @@
 }
 
 .collapsible-body {
-  z-index: 1000!important;
+  z-index: 1000 !important;
 }
+
 .chainName label {
   height: 100%;
 }
+
 .chainName {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .chainName span {
   position: absolute;
   top: -3px;
   left: 80px;
 }
+
 .chainName img {
   position: absolute;
   top: -4px;
   left: 38px;
 }
+
 .chainLogo {
   overflow: auto;
   width: 30px;
   height: 30px;
 }
+
 /*цвет чекбокса******************************/
-.checkbox-color[type="checkbox"] + label:before{
+.checkbox-color[type="checkbox"] + label:before {
   border: 2px solid #757575;
   background: transparent;
 }
-.checkbox-color[type="checkbox"]:checked + label:before{
+
+.checkbox-color[type="checkbox"]:checked + label:before {
   border: 2px solid transparent;
   border-bottom: 2px solid #757575;
   border-right: 2px solid #757575;
   background: transparent;
 }
-.checkbox-color.filled-in[type="checkbox"] + label:after{
+
+.checkbox-color.filled-in[type="checkbox"] + label:after {
   border: 2px solid #757575;
   background: transparent;
 }
-.checkbox-color.filled-in[type="checkbox"]:checked + label:after{
+
+.checkbox-color.filled-in[type="checkbox"]:checked + label:after {
   background: #757575;
 }
-.checkbox-color.filled-in[type="checkbox"]:checked + label:before{
+
+.checkbox-color.filled-in[type="checkbox"]:checked + label:before {
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
   border-right: 2px solid #fff;
@@ -149,35 +179,91 @@
 }
 
 .overlay {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
   opacity: 0.9;
-    z-index: 115;
-    cursor: pointer;
+  z-index: 115;
+  cursor: pointer;
 }
 
 .overlay-text {
-    position: absolute;
-    top: 10%;
-    right: 20%;
-    font-size: 25px;
-    width: 38%;
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  font-size: 25px;
+  width: 38%;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
 }
 
-.overlay-text.isHandset {
+.overlay-text.isNetBook {
   right: 5%;
 }
 
 .overlay-text.isTablet {
-  right: 12%;
+  width: 100%;
+  bottom: 1%;
+  top: auto;
+  right: auto;
 }
+
+.overlay-text.isHandset {
+  font-size: 20px;
+}
+
+.overlay-text.isMobile {
+  font-size: 17px;
+}
+
+.chainPercent {
+  padding-left: 130px;
+}
+
+.chainCountGoods {
+  padding-left: 120px;
+}
+
+.average-percent {
+  padding-left: 120px;
+}
+
+.total-goods {
+  padding-left: 108px;
+}
+
+.header {
+  font-size: 26px;
+  padding-bottom: 10px;
+}
+
+.text {
+  font-size: 22px;
+}
+
+.isHandset {
+  .header {
+    font-size: 20px;
+  }
+  .text {
+    font-size: 16px;
+  }
+}
+
+.isMobile {
+  .header {
+    font-size: 18px;
+  }
+  .text {
+    font-size: 14px;
+  }
+}
+
+

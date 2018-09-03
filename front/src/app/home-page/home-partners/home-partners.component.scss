@@ -1,0 +1,62 @@
+.page-container {
+  padding: 40px;
+}
+
+h5 {
+  padding-bottom: 10%;
+}
+
+.info-container {
+  display: flex;
+  .img {
+    background-image: url("../../../assets/images/big-family.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex: 1 1 300px;
+  }
+  .description {
+    padding: 5%;
+    flex: 4 4 300px;
+  }
+}
+
+.isNetBook {
+  padding: 40px 20px 0 20px;
+  h3 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 22px;
+  }
+}
+
+.isTablet {
+  padding: 5%;
+  .info-container {
+    flex-direction: column;
+    .img {
+      background-position-x: center;
+    }
+    a {
+      margin: 0 auto;
+    }
+  }
+  .description {
+    padding: 0;
+  }
+}
+
+a {
+  display: block;
+  max-width: 260px;
+}
+
+.isHandset {
+  h3 {
+    font-size: 28px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+}

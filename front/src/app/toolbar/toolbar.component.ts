@@ -6,7 +6,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  logoText = 'naakcii.by';
+  logoText = 'НаАкции.Бел';
   foods = 'Продукты';
 
   constructor() { }
