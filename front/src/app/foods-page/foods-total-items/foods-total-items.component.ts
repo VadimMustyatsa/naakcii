@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit, HostListener} from '@angular/core';
-import {Storag} from '../../shared/Storage/foods.storage.model';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {FoodsStorageService} from "../../shared/Storage/foods.storage.service";
 import {Cart, CartLine} from '../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../shared/chain/chain.model';
+import { BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
 
 @Component({
   selector: 'app-foods-total-items',
@@ -25,7 +25,7 @@ export class FoodsTotalItemsComponent implements OnInit {
       }
     }
   ];
-  constructor(public  chainLst: Chain,
+  constructor(public  chainLst: Chain, public breakPointCheckService: BreakPointCheckService,
               public cart: Cart) {}
 
   ngOnInit() { }
@@ -35,7 +35,7 @@ export class FoodsTotalItemsComponent implements OnInit {
       || document.documentElement.scrollTop
       || document.body.scrollTop || 0;
     if (verticalOffset > 280) {
-      this.fixedPaddingTop = verticalOffset - 280;
+      // this.fixedPaddingTop = verticalOffset - 280;
     } else {
       this.fixedPaddingTop = 0;
     }

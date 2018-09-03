@@ -1,14 +1,67 @@
 .homeSlider {
-  height: 380px;
   background-image: url("../../../assets/images/main.png");
   background-size: cover;
+  height: 340px;
+}
+
+.homeSlider {
+  &.isWeb {
+    height: 320px;
+    .header {
+      font-size: 30px;
+    }
+  }
+  &.isNetbook {
+    .headers {
+    padding: 1px 20px 0;
+  }
+    .title {
+      font-size: 34px;
+    }
+    .header {
+      font-size: 24px;
+    }
+    .material-icons {
+      font-size: 28px;
+    }
+  }
+  &.isTablet {
+    height: 300px;
+    .title {
+    font-size: 24px;
+  }
+    .header {
+      font-size: 20px;
+    }
+    .material-icons {
+      font-size: 22px;
+    }
+  }
+  &.isHandset {
+    height: 280px;
+  }
+  &.isMobile {
+    height: 220px;
+    .title {
+      font-size: 20px;
+    }
+    .headers {
+      padding: 5px;
+    }
+    .header {
+      font-size: 16px;
+    }
+    .material-icons {
+      font-size: 18px;
+    }
+  }
 }
 
 .title {
   color: white;
   max-width: 800px;
   font-size: 38px;
-  font-family: 'Lobster', cursive;
+  font-family: 'Nexa Script Regular';
 }
 
 .headers {
@@ -29,56 +82,4 @@
 .material-icons {
   font-size: 38px;
   color: white;
-}
-
-.isWeb.homeSlider {
-  height: 320px;
-  .header {
-    font-size: 30px;
-  }
-}
-
-.isNetBook.homeSlider {
-  height: 300px;
-  .headers {
-    padding: 1px 20px 0;
-  }
-  .title {
-    font-size: 34px;
-  }
-  .header {
-    font-size: 24px;
-  }
-  .material-icons {
-    font-size: 28px;
-  }
-}
-
-.isTablet.homeSlider {
-  height: 260px;
-  .title {
-    font-size: 24px;
-  }
-  .header {
-    font-size: 20px;
-  }
-  .material-icons {
-    font-size: 22px;
-  }
-}
-
-.isMobile.homeSlider {
-  height: 140px;
-  .title {
-    display: none;
-  }
-  .headers {
-    padding-top: 10px;
-  }
-  .header {
-    font-size: 16px;
-  }
-  .material-icons {
-    font-size: 18px;
-  }
 }

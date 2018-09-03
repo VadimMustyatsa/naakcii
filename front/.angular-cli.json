@@ -18,8 +18,11 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "@schematics/angular:component": {
+        "styleext": "scss"
+    },
       "styles": [
-        "styles.css",
+        "styles.scss",
         "../node_modules/materialize-css/dist/css/materialize.css"
       ],
       "scripts": [
@@ -62,6 +65,7 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {
+    }
   }
 }

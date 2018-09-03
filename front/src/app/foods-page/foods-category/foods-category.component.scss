@@ -27,9 +27,31 @@ ngu-item:hover div div {
   font-size: 14px;
   text-align: center;
 }
-@media all and (max-width: 899px){
+
+
+.isWeb {
+  ngu-item {
+    width: 90px;
+  }
+}
+
+.isNetBook {
   ngu-item {
     width: 60px;
+  }
+}
+
+.isTablet {
+  ngu-item {
+    width: 90px;
+  }
+}
+
+@media all and (max-width: 767px){
+  .isTablet {
+       ngu-item {
+         width: 15px;
+       }
   }
 }
 /***********************************/

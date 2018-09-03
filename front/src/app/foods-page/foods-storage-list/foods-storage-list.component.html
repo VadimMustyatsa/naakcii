@@ -15,12 +15,12 @@
         <div class="collapsible-body">
           <ul class="collection with-header">
             <li class="collection-header row">
-              <div class="col m6"><span>Торговые сети</span></div>
-              <div class="col m3"><span>Средний % скидки</span></div>
-              <div class="col m3"><span>Товаров на акции</span></div>
+              <div class="col"><span>Торговые сети</span></div>
+              <div class="col"><span>Средний % скидки</span></div>
+              <div class="col"><span>Товаров на акции</span></div>
             </li>
             <li class="collection-item row" (click)="onChangeAllChains()">
-              <div class="col m6">
+              <div class="col chainName">
                 <input type="checkbox" class="checkbox-color" id="chainAll"
                        [checked]="checkedAllChain"
                        (change)="onChangeAllChains()"
@@ -29,11 +29,11 @@
                   <span>Все</span>
                 </label>
               </div>
-              <div class="col m3 MedianPercent">
-                <span>{{chainLst.chainAverageDiscount}}</span>
+              <div class="col">
+                <span class="average-percent">{{chainLst.chainAverageDiscount}}</span>
               </div>
-              <div class="col m3 MedianGoods">
-                <span>{{chainLst.itemAllCount}}</span>
+              <div class="col">
+                <span class="total-goods">{{chainLst.itemAllCount}}</span>
               </div>
             </li>
 
@@ -41,7 +41,7 @@
                 class="collection-item row"
                 (click)="onChangeChain(chain.chain.id)"
             >
-              <div class="chainName col m6">
+              <div class="chainName col">
                 <input type="checkbox" class="checkbox-color" id="chain{{chain.chain.id}}"
                        (change)="onChangeChain(chain.chain.id)"
                        [checked]="chain.chain.selected"/>
@@ -50,10 +50,10 @@
                   <span>{{chain.chain.name}}</span>
                 </label>
               </div>
-              <div class="col m3 chainPercent">
+              <div class="col chainPercent">
                 <span>{{chain.chain.percent}}</span>
               </div>
-              <div class="col m3 chainCountGoods">
+              <div class="col chainCountGoods">
                 <span>{{chain.chain.countGoods}}</span>
               </div>
             </li>
@@ -65,7 +65,11 @@
 </div>
 <div class="overlay" #overlay>
   <div class="overlay-text" amber-text
-   [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
-   [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches">Выберите только те торговые сети, которые Вам подходят: по доступности, обслуживанию, количеству акционных товаров и среднему
-  размеру скидки. Тогда Вы сможете выбирать только их товары, не тратя время на рассмотрение товаров других сетей.</div>
+       [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+       [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+       [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+       [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+    <p class="header"><b>Выберите подходящие торговые сети, чтобы не тратить время на товары других сетей</b></p>
+    <p class="text">Кроме среднего размера скидки и количества акционных товаров, выведенных в таблице, не забудьте о расстоянии до магазинов и желаемом уровне обслуживания.</p>
+  </div>
 </div>

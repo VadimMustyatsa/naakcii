@@ -1,9 +1,11 @@
-<div *ngIf="foodList.length > 0" class="cards">
-  <div *ngIf="isVisibleProd()" class="row">
-    <app-foods-food-card
-      *ngFor="let food of foodList"
-      [curFood]="food"
-    >
+<div *ngIf="foodList.length > 0" class="cards"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+  <div *ngIf="isVisibleProd()">
+    <app-foods-food-card [foodList]="foodList" class="food-cards">
     </app-foods-food-card>
 
     <div *ngIf="showLoadingCard" class="loadingCard">
@@ -12,7 +14,7 @@
         </div>
     </div>
   </div>
-  <ul *ngIf="!isVisibleProd()"class="collapsible" data-collapsible="accordion" materialize="collapsible">
+  <ul *ngIf="!isVisibleProd()" class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div *ngIf="isCheckedChain()" class="grey-text text-darken-2">
         <p>
@@ -33,6 +35,20 @@
         <p>
           Рекомендуем выбирать сети поближе к дому с наибольшим количеством товаров
           и наибольшим средним процентом скидки.
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!foodList.length && isFoodLength" class="cards">
+  <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+    <li class="collapsible-header amber-text">
+      <div class="grey-text text-darken-2">
+        <p>
+          Товаров данной подкатегории нет на акции ни в одной торговой сети, с которыми мы сотрудничаем.
+        </p>
+        <p>
+          Возможно, они появятся в ближайшее время.
         </p>
       </div>
     </li>

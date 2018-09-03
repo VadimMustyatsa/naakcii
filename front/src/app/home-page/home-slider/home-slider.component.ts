@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 import {
@@ -28,7 +28,6 @@ const titles = ['_ ведущих торговых сетей', '_ акцион�
   ]
 })
 export class HomeSliderComponent implements OnInit {
-
   basicData = [0, 0, 0];
   getData = 'inactive';
 
@@ -57,5 +56,6 @@ export class HomeSliderComponent implements OnInit {
     });
     return titles.map((title, index) => title.replace('_', this.basicData[index].toFixed(0)));
   }
+
 }
 

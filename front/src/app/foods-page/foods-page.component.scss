@@ -1,14 +1,74 @@
 .foodContainer {
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 30px;
 }
+
 .chainSearchBlock {
   height: 60px;
   margin-top: 20px;
 }
+
 .subCategoryContainer {
-  padding: 0px;
+  padding: 0;
+  min-width: 220px;
 }
+
 .totalItemsContainer {
-  padding: 0px;
+  padding: 0;
+}
+
+.shopping-info {
+  display: flex;
+  justify-content: space-around;
+  .subCategoryContainer, .totalItemsContainer {
+    padding: 0 1%;
+    width: 25%;
+  }
+  .totalItemsContainer {
+    min-width: 320px;
+    width: 28%;
+  }
+}
+
+.shopping-info {
+  .cardList {
+    width: 47%;
+  }
+}
+
+.isTablet {
+  .totalItemsContainer {
+    min-width: 270px;
+  }
+}
+
+.isHandset {
+  .cardList {
+    font-size: 14px;
+    padding-left: 20px;
+  }
+}
+
+.isMobile {
+  .cardList {
+    font-size: 12px;
+  }
+}
+
+.isHandset {
+  .shopping-info {
+    flex-direction: column;
+    justify-content: center;
+    .subCategoryContainer, .cardList {
+      display: flex;
+      justify-content: center;
+    }
+    .totalItemsContainer {
+      padding-left: 20px;
+    }
+    div {
+      width: 90%;
+    }
+  }
 }

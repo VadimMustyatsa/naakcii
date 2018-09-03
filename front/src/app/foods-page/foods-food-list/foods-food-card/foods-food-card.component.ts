@@ -1,9 +1,9 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FoodList} from '../../../shared/foodList/foods.foodList.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
-import {Storag} from '../../../shared/Storage/foods.storage.model';
 import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
+import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-food-card',
@@ -12,14 +12,19 @@ import {Chain, ChainLine} from '../../../shared/chain/chain.model';
   providers: [FoodsStorageService]
 })
 export class FoodsFoodCardComponent implements OnInit {
-  @Input() curFood: FoodList;
-  nameMaxWidth = 85;
+  @Input() foodList: FoodList[];
+  nameMaxWidth = 80;
 
   constructor(public  chainLst: Chain,
+              public breakPointCheckService: BreakPointCheckService,
               private cart: Cart) {
   }
 
   ngOnInit() {
+    // если продуктов нечетное количество, добавляем пустышку в массив для кастомного центрирования, т.к. поведение justify-content: center не удовлетворяет
+    if (this.foodList.length % 2 !== 0) {
+      this.foodList.push(this.foodList[0]);
+    }
   }
 
   getStorageByID(id: number): ChainLine {
@@ -53,6 +58,15 @@ export class FoodsFoodCardComponent implements OnInit {
 
   addItem(selectFood: FoodList) {
     selectFood.selectAmount = selectFood.selectAmount + 1;
+  }
+
+  setImgStyles(pict) {
+    return {
+      'background-image': `url("assets/images/Products/${pict.img}")`,
+      'background-size': 'contain',
+      'background-repeat': 'no-repeat',
+      'background-position': 'center'
+    };
   }
 
   //проверяем выделена ли сеть данной карточки в фильтре сетей
