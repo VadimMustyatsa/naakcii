@@ -21,4 +21,7 @@ export class UndiscountService {
     this.undiscount = (undiscount);
     this.sessionStorage.setToUndiscountStorage(undiscount)
   }
+  clearUndiscount(){
+    this.undiscount = [];
+  }
 }

@@ -204,6 +204,7 @@ export class FinalizePageComponent implements OnInit {
   onRedirect(){
     this.closeModal();
     sessionStorage.clear();
+    this.undiscountStorage.clearUndiscount();
     this.cart.lines = [];
     this.router.navigateByUrl('/form-shopping-list');
   }
