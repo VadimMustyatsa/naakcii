@@ -22,6 +22,7 @@ export class FinalizePageComponent implements OnInit {
   chainListExist: ChainLine[] = null;
   widthContainer = 1200;
   undiscount: Array<{text:string; id: string}> ;
+  discountMonth: string;
 
   params = [
     {
@@ -46,6 +47,7 @@ export class FinalizePageComponent implements OnInit {
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
     window.scrollTo(0,0);
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
+    this.discountMonth=this.getDiscountMonth();
   }
 
   ngOnInit() {
@@ -213,6 +215,11 @@ export class FinalizePageComponent implements OnInit {
   }
   onEventStop(event) {
     event.stopPropagation();
+  }
+  getDiscountMonth(){
+    let d = new Date();
+    let months = ['января', 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    return months[d.getMonth()+1];
   }
 }
 

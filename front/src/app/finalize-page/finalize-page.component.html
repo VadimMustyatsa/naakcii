@@ -44,7 +44,7 @@
             <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ).toFixed(0) | number:"1.2-2"}} %)</span>
           </div>
           <div class="col m1 center">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</div>
-          <div class="col m1 center">1 сентября</div>
+          <div class="col m1 center">1 {{discountMonth}}</div>
           <div class="col m1">
             <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
           </div>
@@ -91,7 +91,7 @@
           <div class="col m1 center">
             <span>{{(curCart.product.totalPrice*curCart.quantity).toFixed(2)| number:"1.2-2"}}</span><br>
           </div>
-          <div class="col m1 center">1 сентября</div>
+          <div class="col m1 center">1 {{discountMonth}}</div>
           <div class="col m1">
             <a class="deleteCartLine" (click)="deleteCartLine(curCart)">
               <i class="material-icons center grey-text text-darken-1">delete_forever</i>
