@@ -22,8 +22,8 @@ export class PdfGeneratorService {
     let benefit = '';
     const date = new Date().toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
 
-    function numberFormater (number:number): string {
-      return number.toString().replace('.',',');
+    function numberFormater(number: number): string {
+      return number.toString().replace('.', ',');
     }
 
     let totalSum = {};
@@ -56,7 +56,10 @@ export class PdfGeneratorService {
         fillColor: '#656565',
         color: 'white',
         fontSize: '38',
-        columns: [{width: '70%', text: chain}, {width: '30%', text: 'Итого : ' + numberFormater(Number(sum.toFixed(2)))}]
+        columns: [{width: '70%', text: chain}, {
+          width: '30%',
+          text: 'Итого : ' + numberFormater(Number(sum.toFixed(2)))
+        }]
       });
       chainSum.push(sum);
       bodyBodyTable.push(tableLine);
@@ -120,7 +123,9 @@ export class PdfGeneratorService {
     bodyTable['body'] = bodyBodyTable;
     table['table'] = bodyTable;
     table['layout'] = 'noBorders';
-    docContent.push(table);
+    if (this.undiscountStorage.getFromUndiscount()[0]) {
+      docContent.push(table);
+    }
 //---------------------------------------------------------------------
 
     this.undiscountStorage.getFromUndiscount().map(item => {
@@ -136,7 +141,9 @@ export class PdfGeneratorService {
 
       itemColumnList['columns'] = columns;
       itemColumnList['style'] = 'itemStyle';
-      docContent.push(itemColumnList);
+      if (this.undiscountStorage.getFromUndiscount()[0]) {
+        docContent.push(itemColumnList);
+      }
     });
 
     //итоговая сумма------------------------------
