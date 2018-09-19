@@ -148,18 +148,21 @@
         </div>
         <div class="finalizeFooterButton row"
              [style.width.px]="widthContainer">
-          <div class="col m4 left">
+          <div class="col m3 left">
             <a routerLink="/form-shopping-list" class="orangeLink">
               <i class="material-icons">arrow_back</i>
               <span>Вернуться к товарам</span>
             </a>
           </div>
-          <div class="col m4 center">
+          <div class="col m6 center">
             <a href="javascript:void(0);" (click)="generatePDF()"
-               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn"
-               (click)="openModal()">Скачать PDF</a>
+               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn button-icon-pdf"
+               (click)="openModal()">Скачать<div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div></a>
+            <a href="javascript:void(0);"
+               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn button-icon-viber"
+            >Отправить в <div [ngStyle]="{'background-image':'url(assets/images/viber.svg)'}"></div></a>
           </div>
-          <div class="col m4 right">
+          <div class="col m3 right">
           </div>
         </div>
       </li>
