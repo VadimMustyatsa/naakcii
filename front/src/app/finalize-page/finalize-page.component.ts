@@ -41,6 +41,7 @@ export class FinalizePageComponent implements OnInit {
   closeModal() {
     this.modalActions.emit({action: 'modal', params: ['close']});
   }
+
   constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
               private undiscountStorage:UndiscountService,
