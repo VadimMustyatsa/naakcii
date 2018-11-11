@@ -14,7 +14,7 @@ export class FoodsCategoriesService {
   }
 
   getAll() {
-    this.categoryUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.42:8080/api/category' : 'http://' + window.location.hostname +':8080/api/category';
+    this.categoryUrl = window.location.hostname === 'localhost' ? '//178.124.206.42:8080/api/category' : '//' + window.location.hostname +':8080/api/category';
     return this.http.get<Category[]>(this.categoryUrl)
       .map(categoryList => {
         return categoryList.map(category => {

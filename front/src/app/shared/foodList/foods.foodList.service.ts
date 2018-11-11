@@ -11,7 +11,7 @@ export class FoodsFoodListService {
   }
 
   getFoodList(selectedSubCatListID, first, last) {
-    this.productsUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.42:8080/api/product' : 'http://' + window.location.hostname +':8080/api/product';
+    this.productsUrl = window.location.hostname === 'localhost' ? '//178.124.206.42:8080/api/product' : '//' + window.location.hostname +':8080/api/product';
 
     let listID = '';
     selectedSubCatListID.map(id => {
