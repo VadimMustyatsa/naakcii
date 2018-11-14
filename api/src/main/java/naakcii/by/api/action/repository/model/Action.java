@@ -3,7 +3,17 @@ package naakcii.by.api.action.repository.model;
 import naakcii.by.api.chain.repository.model.Chain;
 import naakcii.by.api.product.repository.model.Product;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -121,6 +131,17 @@ public class Action implements Serializable {
         this.discountPrice = discountPrice;
         this.id.productId = product.getId();
         this.id.chainId = chain.getId();
+        product.getActions().add(this);
+        chain.getActions().add(this);
+    }
+
+    public Action(Product product, Chain chain, String type, Calendar startDate, Calendar endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.product = product;
+        this.chain = chain;
+        this.type = type;
+        this.id = new Id(product.getId(), chain.getId());
         product.getActions().add(this);
         chain.getActions().add(this);
     }

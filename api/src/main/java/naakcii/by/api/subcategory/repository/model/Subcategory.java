@@ -67,7 +67,10 @@ public class Subcategory implements Serializable {
 	@Column(name = "SUBCATEGORY_PRIORITY")
 	@NotNull
 	private int priority;
-
+	
+	public Subcategory() {
+		
+	}
 	
 	public Subcategory(String name, boolean isActive, Category category) {
 		this.name = name;
