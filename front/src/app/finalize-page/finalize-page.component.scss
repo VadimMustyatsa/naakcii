@@ -277,3 +277,72 @@
 div[tooltip]{
   display: inline-block;
 }
+
+
+/*-----------Snackbar-----------------------*/
+.snack-wrap {
+  display:block;
+  position:absolute;
+  top:40px;
+  right:0px;
+  padding:0px;
+  margin: 0 30px;
+  font-size: 15px;
+}
+
+.snackbar {
+  display:block;
+  background: #444444;
+  border:#f2f2f2;
+  padding:10px 40px 10px 20px;
+  color:#fff;
+  font-family:Arial;
+  position:relative;
+  left:0px;
+  top:-70px;
+  transition: bottom 0.5s ease-in-out;
+  z-index:9;
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.animated {
+  animation-name: snackbar-show;
+  animation-duration: 3s;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-delay:1s;
+  animation-fill-mode: forwards;
+}
+
+.animated-hide {
+  display:block;
+  background: #444444;
+  border:#f2f2f2;
+  padding:10px 40px 10px 20px;
+  color:#fff;
+  font-family:Arial;
+  position:relative;
+  left:0px;
+  top:25px;
+  transition: bottom 0.5s ease-in-out;
+  z-index:9;
+  cursor: pointer;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  animation-name: snackbar-hide;
+  animation-duration: 3s;
+  animation-direction: forwards;
+  animation-timing-function: ease-in-out;
+  animation-delay:0.3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes snackbar-show {
+  0%{ top:-70px; }
+  100% {top:25px; }
+}
+@keyframes snackbar-hide {
+  0% {top:25px; }
+  100% {top:-70px; }
+}
+
