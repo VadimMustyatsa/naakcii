@@ -1,4 +1,9 @@
-<div class="chainList" #shopList>
+<div class="chainList" #shopList
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div class="chainListWrap">
     <ul class="collapsible"
         materialize="collapsible"
@@ -7,10 +12,10 @@
         data-collapsible="accordion">
       <li>
         <div class="collapsible-header row grey darken-1">
-          <div class="col m7">{{chainListText}}</div>
-          <div class="col m2">{{curChainPercent}}</div>
-          <div class="col offset-m1 m1">{{curChainCountGoods}}</div>
-          <div class="col m1"><i class="material-icons white-text">{{curentIconCollapsible}}</i></div>
+          <div class="col">{{chainListText}}</div>
+          <div class="col">{{curChainPercent}}</div>
+          <div class="col">{{curChainCountGoods}}</div>
+          <div class="col"><i class="material-icons white-text">{{curentIconCollapsible}}</i></div>
         </div>
         <div class="collapsible-body">
           <ul class="collection with-header">
@@ -39,8 +44,7 @@
 
             <li *ngFor="let chain of chainLst.lines"
                 class="collection-item row"
-                (click)="onChangeChain(chain.chain.id)"
-            >
+                (click)="onChangeChain(chain.chain.id)">
               <div class="chainName col">
                 <input type="checkbox" class="checkbox-color" id="chain{{chain.chain.id}}"
                        (change)="onChangeChain(chain.chain.id)"
@@ -56,6 +60,10 @@
               <div class="col chainCountGoods">
                 <span>{{chain.chain.countGoods}}</span>
               </div>
+            </li>
+            <li class="confirmation-btn">
+              <button type="button" class="waves-effect btn confirm-btn amber"
+                      (click)="close()">Подтвердить</button>
             </li>
           </ul>
         </div>
