@@ -277,3 +277,16 @@
 div[tooltip]{
   display: inline-block;
 }
+
+.isTablet {
+  .mobile-none {
+    display: none;
+  }
+  .chainLogoName, .itemImg {
+     margin-left: 0;
+  }
+  .total-sum {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser'
 import {Router} from "@angular/router";
 import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
 import {UndiscountService} from "../shared/services/undiscount.service";
+import {BreakPointCheckService} from "../shared/services/breakpoint-check.service";
 
 @Component({
   selector: 'app-finalize-page',
@@ -44,6 +45,7 @@ export class FinalizePageComponent implements OnInit {
 
   constructor(private router: Router ,public  chainLst: Chain,
               private el: ElementRef,
+              public breakPointCheckService: BreakPointCheckService,
               private undiscountStorage:UndiscountService,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
     window.scrollTo(0,0);
