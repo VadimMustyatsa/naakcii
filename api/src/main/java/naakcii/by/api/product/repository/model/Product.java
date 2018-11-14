@@ -4,7 +4,9 @@ import naakcii.by.api.action.repository.model.Action;
 import naakcii.by.api.subcategory.repository.model.Subcategory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
@@ -65,7 +67,7 @@ public class Product implements Serializable {
 	private Subcategory subcategory;
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	private Set<Action> actions = new HashSet<Action>();
+	private List<Action> actions = new ArrayList<>();
 	
 	public Product() {
 		
@@ -109,11 +111,11 @@ public class Product implements Serializable {
 		this.subcategory = subcategory;
 	}
 
-	public Set<Action> getActions() {
+	public List<Action> getActions() {
 		return actions;
 	}
 
-	public void setActions(Set<Action> actions) {
+	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
 

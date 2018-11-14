@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getProductsByChainIdAndSubcategoryId(Long subcategoryId) {
         List<Product> productList = productRepository.getBySubcategoryId(subcategoryId);
-        List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
+        List<ProductDTO> productDTOList = new ArrayList<>();
         for (Product product : productList) {
             List<Action> actionList = actionRepository.findAllByProductId(product.getId());
             for (Action action : actionList) {

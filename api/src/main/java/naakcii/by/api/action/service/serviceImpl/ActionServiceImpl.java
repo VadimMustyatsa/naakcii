@@ -17,11 +17,11 @@ public class ActionServiceImpl implements ActionService {
 
     @Autowired
     ActionRepository repository;
-
-    private ChainConverter chainConverter = new ChainConverter();
+    @Autowired
+    private ChainConverter chainConverter;
 
     @Override
-    public List<Integer> getDiscounAndAllActionsByChain(ChainDTO chainDTO) {
+    public List<Integer> getDiscountAndAllActionsByChain(ChainDTO chainDTO) {
         Integer discount = 0;
         int number = 0;
         List<Integer> result = new ArrayList<>();
@@ -29,11 +29,9 @@ public class ActionServiceImpl implements ActionService {
         List<Action> actions = repository.findAllByChain(chain);
         result.add(actions.size());
         for (Action action : actions) {
-            if (action.getPrice() != 0) {
-                if (action.getPrice() > action.getDiscountPrice()) {
-                    number = number + 1;
-                    discount = discount + action.getDiscount();
-                }
+            if (action.getPrice() > action.getDiscountPrice()) {
+                number = number + 1;
+                discount = discount + action.getDiscount();
             }
         }
         discount = discount / number;
