@@ -1,4 +1,4 @@
-package naakcii.by.api;
+package naakcii.by.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
