@@ -14,5 +14,5 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     @Query("update Product product set product.isActive = false where product.id = :productId")
     void softDelete(@Param("productId") Long productId);
 
-    List<Product> getBySubcategoryId(Long chainId);
+    List<Product> getBySubcategoryId(Long subcategoryId);
 }
