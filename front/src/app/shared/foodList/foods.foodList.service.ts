@@ -11,8 +11,9 @@ export class FoodsFoodListService {
   }
 
   getFoodList(selectedSubCatListID, first, last) {
-    this.productsUrl = window.location.hostname === 'localhost' ? '//178.124.206.42:8080/api/product' : '//' + window.location.hostname +':8080/api/product';
-
+    // this.productsUrl = window.location.hostname === 'localhost' ? '//178.124.206.42:8080/api/product' : '//' + window.location.hostname +':8080/api/product';
+    this.productsUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.54:8080/api/product' : 'https://' + window.location.hostname +':443/api/product';
+    // this.productsUrl = window.location.hostname === 'localhost' ? 'https://178.124.206.54:8443/api/product' : 'https://' + window.location.hostname +':443/api/product';
     let listID = '';
     selectedSubCatListID.map(id => {
       listID += String(id.id) + ',';
