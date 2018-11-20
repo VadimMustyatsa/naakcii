@@ -46,7 +46,7 @@ import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
 import { TooltipDirective } from './shared/derectives/tooltip.directive';
 import {SessionStorageService} from "./shared/services/session-storage.service";
 import {UndiscountService} from "./shared/services/undiscount.service";
-
+import {ApiService} from './shared/services/api.service'
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -96,6 +96,7 @@ registerLocaleData(localeFr);
     SessionStorageService,
     UndiscountService,
     FinalizePageGuard,
+    ApiService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
   bootstrap: [AppComponent]
