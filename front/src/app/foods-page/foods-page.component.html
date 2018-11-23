@@ -4,6 +4,7 @@
      [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+
   <div class="chainSearchBlock row">
     <div class="col m7">
       <app-foods-storage-list></app-foods-storage-list>
@@ -29,6 +30,13 @@
     </div>
 
   </div>
+
+  <div class="snack-wrap">
+    <div id = "snackbar" class="snackbar animated">
+      <p>Внимание! На сервисе представлены тестовые данные. Реальные данные появятся к январю.</p>
+    </div>
+  </div>
+
 </div>
 
 
