@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 
-.finalizePageName {
+.list {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,19 +11,26 @@
   padding-top: 20px;
 }
 
-.finalizeHeader {
-  cursor: default;
-  margin: 0px;
+.list-header {
+  display: flex;
   background-color: #656565;
   color: white;
 }
 
-.finalizeHeader div {
+.list-header div {
   text-align: center;
 }
 
-.totalList {
-  margin-bottom: 120px;
+.empty-large {
+  flex: 3;
+}
+.item-position, .item-whole-price, .item-discount-price, .promotional-deadline, .empty-small{
+  flex: 1;
+  text-align: center;
+}
+.item-quantity, .item-discount{
+  flex: 2;
+  text-align: center;
 }
 
 /********************************/
@@ -134,7 +141,7 @@
 }
 
 /*Стиль заголовка сети***********************/
-.chainList {
+.shop-meta-data {
   display: flex;
   align-items: center;
   background-color: #d9d9d9;
@@ -288,5 +295,11 @@ div[tooltip]{
   .total-sum {
     display: flex;
     justify-content: space-between;
+  }
+}
+
+.isNetBook .list-header {
+  div {
+    font-size: 12px;
   }
 }

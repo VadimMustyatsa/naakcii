@@ -5,27 +5,22 @@
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
      [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div *ngIf="cart.lines.length > 0">
-    <div class="row finalizePageName grey-text text-darken-2">
-      <span>Список покупок</span>
-    </div>
+    <div class="list">Список покупок на сумму: {{cart.cartTotalPrice | currency: "BYN": "code-narrow"}}</div>
 
-    <ul class="collapsible totalList"
-        data-collapsible="expandable"
-        materialize="collapsible"
-        [materializeParams]="params">
-      <li class="collapsible-header finalizeHeader row mobile-none">
-        <div class="col m3"></div>
-        <div class="col m1">Товарные позиции</div>
-        <div class="col m2">Количество, шт.</div>
-        <div class="col m1">Стоимость без скидки, руб.</div>
-        <div class="col m2">Скидка, руб.</div>
-        <div class="col m1">Стоимость со скидкой, руб.</div>
-        <div class="col m1">Дата окончания акции</div>
-        <div class="col m1"></div>
+    <ul class="collapsible" data-collapsible="expandable" materialize="collapsible" [materializeParams]="params">
+      <li class="collapsible-header list-header">
+        <div class="empty-large"></div>
+        <div class="item-position mobile-none">Товарные позиции</div>
+        <div class="item-quantity">Количество, шт.</div>
+        <div class="item-whole-price mobile-none">Стоимость без скидки, руб.</div>
+        <div class="item-discount mobile-none">Скидка, руб.</div>
+        <div class="item-discount-price">Стоимость со скидкой, руб.</div>
+        <div class="promotional-deadline mobile-none">Дата окончания акции</div>
+        <div class="empty-small"></div>
       </li>
       <li *ngFor="let chain of chainListExist">
-        <div class="collapsible-header active row chainList grey-text text-darken-2">
-          <div class="col m3 chainLogoName">
+        <div class="collapsible-header active shop-meta-data grey-text text-darken-2">
+          <div class="empty-large chainLogoName">
             <div>
               <img src="{{chain.chain.imgLogoSmall}}">
             </div>
@@ -34,19 +29,19 @@
               (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" tooltip="Адреса и графики работы магазинов сети">магазины</a>)
             </div>
           </div>
-          <div class="col m1 center mobile-none">{{getCartByChain(chain.chain.id).length}}</div>
-          <div class="col m2 center mobile-none">{{getCartQuantityByChain(chain.chain.id)}}</div>
-          <div class="col m1 center mobile-none">
-            <span *ngIf="getCartAllPriceByChain(chain.chain.id) > 0">{{getCartAllPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</span>
+          <div class="item-position mobile-none">{{getCartByChain(chain.chain.id).length}}</div>
+          <div class="item-quantity mobile-none">{{getCartQuantityByChain(chain.chain.id)}}</div>
+          <div class="item-whole-price mobile-none">
+            <span *ngIf="getCartAllPriceByChain(chain.chain.id) > 0">{{getCartAllPriceByChain(chain.chain.id) | currency: "BYN": "code-narrow"}}</span>
             <span *ngIf="getCartAllPriceByChain(chain.chain.id) == 0">нет данных</span>
           </div>
-          <div class="col m2 center mobile-none">
-            <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)).toFixed(2) | number:"1.2-2" }}</span><br>
-            <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ).toFixed(0) | number:"1.2-2"}} %)</span>
+          <div class="item-discount mobile-none">
+            <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)) | currency: "BYN": "code-narrow"}}</span><br>
+            <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ) | number:"1.2-2"}} %)</span>
           </div>
-          <div class="col m1 center mobile-none">{{getCartTotalPriceByChain(chain.chain.id).toFixed(2) | number:"1.2-2"}}</div>
-          <div class="col m1 center mobile-none">1 {{discountMonth}}</div>
-          <div class="col m1">
+          <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN": "code-narrow"}}</div>
+          <div class="promotional-deadline mobile-none">1 {{discountMonth}}</div>
+          <div class="empty-small">
             <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
           </div>
         </div>
@@ -77,16 +72,17 @@
           </div>
 
           <div class="col m1 center mobile-none">
-            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity).toFixed(2)| number:"1.2-2"}}</span>
+            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity)| number:"1.2-2"}}</span>
             <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
           </div>
           <div class="col m2 center mobile-none">
             <span *ngIf="curCart.product.discount == 0">&ndash;</span>
-            <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity).toFixed(2)| number:"1.2-2"}}</span><br>
+            <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity) | number:"1.2-2"}}</span><br>
             <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
+
           </div>
-          <div class="col m1 center mobile-none">
-            <span>{{(curCart.product.totalPrice*curCart.quantity).toFixed(2)| number:"1.2-2"}}</span><br>
+          <div class="col m1 center">
+            <span>{{(curCart.product.totalPrice*curCart.quantity)| number:"1.2-2"}}</span><br>
           </div>
           <div class="col m1 center mobile-none">1 {{discountMonth}}</div>
           <div class="col m1">
@@ -96,6 +92,7 @@
           </div>
         </div>
       </li>
+      <!--отдельный компонент-->
       <li>
         <div class="collapsible-header active row chainList grey-text text-darken-2">
           <div class="col m3 left">
@@ -123,49 +120,52 @@
           <a (click)="onAddUndiscount($event)"><i class="large material-icons">add</i></a>
         </div>
       </li>
-
-      <li class="finalizeFooter wrapper"
-          [style.width.px]="widthContainer"
-          [style.position]=getPosition()>
-        <div class="row"
-             [style.width.px]="widthContainer">
-          <div class="col m3">Итого:</div>
-          <div class="col m1 mobile-none center">{{cart.lines.length + undiscount.length}}</div>
-          <div class="col m2 mobile-none center">{{cart.itemCount}}</div>
-          <div class="col m1 mobile-none center">
-            <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice).toFixed(2)| number:"1.2-2"}}</span>
-            <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
-          </div>
-          <div class="col m2 mobile-none center">
-            <span>{{(cart.cartAllPrice - cart.cartTotalPrice).toFixed(2)| number:"1.2-2"}} </span>
-            <span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>
-          </div>
-          <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice.toFixed(2)| number:"1.2-2"}} руб.</div>
-          <div class="col m1 center mobile-none"></div>
-        </div>
-        <div class="finalizeFooterButton row"
-             [style.width.px]="widthContainer">
-          <div class="col m3 left">
-            <a routerLink="/form-shopping-list" class="orangeLink">
-              <i class="material-icons">arrow_back</i>
-              <span>Вернуться к товарам</span>
-            </a>
-          </div>
-          <div class="col m6 center">
-            <a href="javascript:void(0);" (click)="generatePDF()"
-               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn button-icon-pdf"
-               (click)="openModal()">Скачать<div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div></a>
-            <div tooltip="Эта функция скоро станет доступна"><a href="javascript:void(0);"
-               class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn disabled button-icon-viber"
-            >Отправить в <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div></a></div>
-          </div>
-          <div class="col m3 right">
-          </div>
-        </div>
-      </li>
     </ul>
 
   </div>
+
+
+  <section class="finalizeFooter wrapper">
+      <div class="row"
+           [style.width.px]="widthContainer">
+        <div class="col m3">Итого:</div>
+        <div class="col m1 mobile-none center">{{cart.lines.length + undiscount.length}}</div>
+        <div class="col m2 mobile-none center">{{cart.itemCount}}</div>
+        <div class="col m1 mobile-none center">
+          <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice)| number:"1.2-2"}}</span>
+          <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
+        </div>
+        <div class="col m2 mobile-none center">
+          <span>{{(cart.cartAllPrice - cart.cartTotalPrice)| number:"1.2-2"}} </span>
+          <!--<span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>-->
+        </div>
+        <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice| number:"1.2-2"}} руб.</div>
+        <div class="col m1 center mobile-none"></div>
+      </div>
+      <div class="finalizeFooterButton row"
+           [style.width.px]="widthContainer">
+        <div class="col m3 left">
+          <a routerLink="/form-shopping-list" class="orangeLink">
+            <i class="material-icons">arrow_back</i>
+            <span>Вернуться к товарам</span>
+          </a>
+        </div>
+        <div class="col m6 center">
+          <a href="javascript:void(0);" (click)="generatePDF()"
+             class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn button-icon-pdf"
+             (click)="openModal()">Скачать
+            <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
+          </a>
+          <div tooltip="Эта функция скоро станет доступна"><a href="javascript:void(0);"
+                                                              class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn disabled button-icon-viber"
+          >Отправить в
+            <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
+          </a></div>
+        </div>
+        <div class="col m3 right">
+        </div>
+      </div>
+  </section>
 
   <div *ngIf="cart.lines.length == 0">
     <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
@@ -176,7 +176,7 @@
           </p>
           <p>
             Чтобы просматривать итоговый список покупок,
-            нужно выбрать хотя бы один това.
+            нужно выбрать хотя бы один товар.
           </p>
         </div>
       </li>
@@ -193,6 +193,8 @@
 </div>
 
 <!-- Modal Structure -->
+<!--отдельный компонент-->
+
 <div id="modal1"  data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <div class="modal-content">
