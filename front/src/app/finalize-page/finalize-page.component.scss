@@ -24,7 +24,7 @@
 .empty-large {
   flex: 3;
 }
-.item-position, .item-whole-price, .item-discount-price, .promotional-deadline, .empty-small{
+.item-position, .item-whole-price, .item-discount-price, .promotional-deadline, .empty-small, .arrow-item, .bin-item {
   flex: 1;
   text-align: center;
 }
@@ -34,23 +34,25 @@
 }
 
 /********************************/
-.itemLine {
+.item-info {
   display: flex;
 }
 
-.itemImg {
+.item-image {
+  flex: 1;
   height: 80px;
   padding: 5px;
   align-self: center;
 }
 
-.itemImg img {
+.item-image img {
   display: block;
   width: 100%;
 }
 
-.itemNameComment {
+.item-name-comment {
   display: flex;
+  flex:3;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -94,8 +96,9 @@
   font-size: 16px;
 }
 
-.chainLogoName {
+.shop-name {
   display: flex;
+  flex: 3;
   align-items: center;
   text-align: left;
   a {
@@ -107,7 +110,7 @@
   }
 }
 
-.chainLogoName div img {
+.shop-name div img {
   overflow: auto;
   width: 30px;
   height: 30px;
@@ -115,7 +118,11 @@
   top: -10px;
 }
 
-.amountItem {
+.isTablet .shop-name {
+  flex: 1.8;
+}
+
+.item-quantity {
   user-select: none;
 }
 
@@ -286,15 +293,27 @@ div[tooltip]{
 }
 
 .isTablet {
-  .mobile-none {
+  .tablet-none {
     display: none;
   }
-  .chainLogoName, .itemImg {
-     margin-left: 0;
+  .shop-name {
+     flex: 3.8;
+  }
+  .empty-large {
+    flex: 4;
   }
   .total-sum {
     display: flex;
     justify-content: space-between;
+  }
+  .item-image {
+    flex: .7;
+  }
+}
+
+.isMobile {
+  .mobile-none {
+    display: none;
   }
 }
 

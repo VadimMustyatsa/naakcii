@@ -10,17 +10,17 @@
     <ul class="collapsible" data-collapsible="expandable" materialize="collapsible" [materializeParams]="params">
       <li class="collapsible-header list-header">
         <div class="empty-large"></div>
-        <div class="item-position mobile-none">Товарные позиции</div>
+        <div class="item-position tablet-none">Товарные позиции</div>
         <div class="item-quantity">Количество, шт.</div>
-        <div class="item-whole-price mobile-none">Стоимость без скидки, руб.</div>
-        <div class="item-discount mobile-none">Скидка, руб.</div>
+        <div class="item-whole-price tablet-none">Стоимость без скидки, руб.</div>
+        <div class="item-discount tablet-none">Скидка, руб.</div>
         <div class="item-discount-price">Стоимость со скидкой, руб.</div>
-        <div class="promotional-deadline mobile-none">Дата окончания акции</div>
-        <div class="empty-small"></div>
+        <div class="promotional-deadline tablet-none">Дата окончания акции</div>
+        <div class="empty-small mobile-none"></div>
       </li>
       <li *ngFor="let chain of chainListExist">
         <div class="collapsible-header active shop-meta-data grey-text text-darken-2">
-          <div class="empty-large chainLogoName">
+          <div class="shop-name">
             <div>
               <img src="{{chain.chain.imgLogoSmall}}">
             </div>
@@ -29,28 +29,28 @@
               (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" tooltip="Адреса и графики работы магазинов сети">магазины</a>)
             </div>
           </div>
-          <div class="item-position mobile-none">{{getCartByChain(chain.chain.id).length}}</div>
+          <div class="item-position tablet-none">{{getCartByChain(chain.chain.id).length}}</div>
           <div class="item-quantity mobile-none">{{getCartQuantityByChain(chain.chain.id)}}</div>
-          <div class="item-whole-price mobile-none">
+          <div class="item-whole-price tablet-none">
             <span *ngIf="getCartAllPriceByChain(chain.chain.id) > 0">{{getCartAllPriceByChain(chain.chain.id) | currency: "BYN": "code-narrow"}}</span>
             <span *ngIf="getCartAllPriceByChain(chain.chain.id) == 0">нет данных</span>
           </div>
-          <div class="item-discount mobile-none">
+          <div class="item-discount tablet-none">
             <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)) | currency: "BYN": "code-narrow"}}</span><br>
             <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ) | number:"1.2-2"}} %)</span>
           </div>
           <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN": "code-narrow"}}</div>
-          <div class="promotional-deadline mobile-none">1 {{discountMonth}}</div>
-          <div class="empty-small">
+          <div class="promotional-deadline tablet-none">1 {{discountMonth}}</div>
+          <div class="arrow-item">
             <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
           </div>
         </div>
 
-        <div class="collapsible-body row itemLine"
+        <div class="collapsible-body item-info"
              *ngFor="let curCart of getCartByChain(chain.chain.id)">
-          <div class="col m1 s3 itemImg" [ngStyle]="setImgStyles(curCart.product.img)">
+          <div class="item-image" [ngStyle]="setImgStyles(curCart.product.img)">
           </div>
-          <div class="col m3 s9 itemNameComment">
+          <div class="item-name-comment">
             <p class="itemName">
               {{curCart.product.name}}
             </p>
@@ -61,31 +61,31 @@
             </div>
           </div>
 
-          <div class="amountItem col m2 center">
-            <a class="btn-floating btn teal grey mobile-none" (click)="subItem(curCart)">
+          <div class="item-quantity center">
+            <a class="btn-floating btn teal grey tablet-none" (click)="subItem(curCart)">
               <i class="material-icons">remove</i>
             </a>
             <span>{{curCart.quantity}}</span>
-            <a class="btn-floating btn teal grey mobile-none" (click)="addItem(curCart)">
+            <a class="btn-floating btn teal grey tablet-none" (click)="addItem(curCart)">
               <i class="material-icons">add</i>
             </a>
           </div>
 
-          <div class="col m1 center mobile-none">
+          <div class="item-whole-price tablet-none">
             <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity)| number:"1.2-2"}}</span>
             <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
           </div>
-          <div class="col m2 center mobile-none">
+          <div class="item-discount center tablet-none">
             <span *ngIf="curCart.product.discount == 0">&ndash;</span>
             <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity) | number:"1.2-2"}}</span><br>
             <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
 
           </div>
-          <div class="col m1 center">
+          <div class="item-discount-price center">
             <span>{{(curCart.product.totalPrice*curCart.quantity)| number:"1.2-2"}}</span><br>
           </div>
-          <div class="col m1 center mobile-none">1 {{discountMonth}}</div>
-          <div class="col m1">
+          <div class="promotional-deadline center tablet-none">1 {{discountMonth}}</div>
+          <div class="bin-item">
             <a class="deleteCartLine" (click)="deleteCartLine(curCart)">
               <i class="material-icons center grey-text text-darken-1">delete_forever</i>
             </a>
@@ -129,18 +129,18 @@
       <div class="row"
            [style.width.px]="widthContainer">
         <div class="col m3">Итого:</div>
-        <div class="col m1 mobile-none center">{{cart.lines.length + undiscount.length}}</div>
-        <div class="col m2 mobile-none center">{{cart.itemCount}}</div>
-        <div class="col m1 mobile-none center">
+        <div class="col m1 tablet-none center">{{cart.lines.length + undiscount.length}}</div>
+        <div class="col m2 tablet-none center">{{cart.itemCount}}</div>
+        <div class="col m1 tablet-none center">
           <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice)| number:"1.2-2"}}</span>
           <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
         </div>
-        <div class="col m2 mobile-none center">
+        <div class="col m2 tablet-none center">
           <span>{{(cart.cartAllPrice - cart.cartTotalPrice)| number:"1.2-2"}} </span>
           <!--<span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>-->
         </div>
         <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice| number:"1.2-2"}} руб.</div>
-        <div class="col m1 center mobile-none"></div>
+        <div class="col m1 center tablet-none"></div>
       </div>
       <div class="finalizeFooterButton row"
            [style.width.px]="widthContainer">
