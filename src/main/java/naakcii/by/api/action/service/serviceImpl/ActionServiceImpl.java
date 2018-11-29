@@ -1,11 +1,10 @@
 package naakcii.by.api.action.service.serviceImpl;
 
-import naakcii.by.api.action.repository.ActionRepository;
-import naakcii.by.api.action.repository.model.Action;
+import naakcii.by.api.action.Action;
+import naakcii.by.api.action.ActionRepository;
 import naakcii.by.api.action.service.ActionService;
-import naakcii.by.api.chain.repository.model.Chain;
-import naakcii.by.api.chain.service.modelDTO.ChainDTO;
-import naakcii.by.api.chain.service.util.ChainConverter;
+import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chain.ChainDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

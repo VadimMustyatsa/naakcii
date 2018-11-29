@@ -1,7 +1,7 @@
 package naakcii.by.api.action.service.util;
 
-import naakcii.by.api.action.repository.model.Action;
-import naakcii.by.api.action.service.modelDTO.ActionDTO;
+import naakcii.by.api.action.Action;
+import naakcii.by.api.action.ActionDTO;
 
 public class ActionConverter {
 /*

@@ -1,11 +1,9 @@
 package naakcii.by.api.product.service.serviceImpl;
 
-import naakcii.by.api.action.repository.ActionRepository;
-import naakcii.by.api.action.repository.model.Action;
-import naakcii.by.api.product.repository.ProductRepository;
-import naakcii.by.api.product.repository.model.Product;
-import naakcii.by.api.product.service.ProductService;
-import naakcii.by.api.product.service.modelDTO.ProductDTO;
+import naakcii.by.api.action.Action;
+import naakcii.by.api.action.ActionRepository;
+import naakcii.by.api.product.Product;
+import naakcii.by.api.product.ProductRepository;
 import naakcii.by.api.product.service.util.ProductConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl /*implements ProductService*/ {
 /*
     private ProductConverter productConverter = new ProductConverter();
 

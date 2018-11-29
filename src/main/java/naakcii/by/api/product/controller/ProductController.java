@@ -1,7 +1,5 @@
 package naakcii.by.api.product.controller;
 
-import naakcii.by.api.product.service.ProductService;
-import naakcii.by.api.product.service.modelDTO.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

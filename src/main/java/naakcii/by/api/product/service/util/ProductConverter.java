@@ -1,8 +1,7 @@
 package naakcii.by.api.product.service.util;
 
-import naakcii.by.api.action.repository.model.Action;
-import naakcii.by.api.product.repository.model.Product;
-import naakcii.by.api.product.service.modelDTO.ProductDTO;
+import naakcii.by.api.action.Action;
+import naakcii.by.api.product.Product;
 
 public class ProductConverter {
 /*
