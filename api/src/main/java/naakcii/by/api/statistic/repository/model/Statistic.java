@@ -4,17 +4,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "v_discount_counter")
+@Table(name = "DISCOUNT_COUNTER")
 public class Statistic implements Serializable {
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
-    @Column(name = "id")
+    @Column(name = "ID")
     private Long id;
-    @Column(name = "chain")
+    @Column(name = "CHAIN")
     private Long chainQuantity;
-    @Column(name = "goods")
+    @Column(name = "GOODS")
     private Long discountedGoods;
-    @Column(name = "discount")
+    @Column(name = "DISCOUNT")
     private Long averageDiscount;
 
     public Long getChainQuantity() {
