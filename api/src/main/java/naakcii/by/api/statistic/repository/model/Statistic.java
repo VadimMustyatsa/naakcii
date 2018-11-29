@@ -6,6 +6,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "DISCOUNT_COUNTER")
 public class Statistic implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
     @Column(name = "ID")
