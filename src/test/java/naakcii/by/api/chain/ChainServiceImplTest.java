@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +18,7 @@ import naakcii.by.api.util.ObjectFactory;
 @RunWith(MockitoJUnitRunner.class)
 public class ChainServiceImplTest {
 
-	private ChainServiceImpl chainServiceImpl;
-	private List<Chain> chains;
+	private ChainService chainService;
 	
 	@Mock
 	private ChainRepository chainRepository;
@@ -48,41 +46,35 @@ public class ChainServiceImplTest {
 	
 	@Before
 	public void setUp() {
-		chainServiceImpl = new ChainServiceImpl(chainRepository, objectFactory);
+		chainService = new ChainServiceImpl(chainRepository, objectFactory);
 	}
 	
-	private void createListOfChains() {
-		chains = new ArrayList<>();
+	private List<Chain> createListOfChains() {
+		List<Chain> chains= new ArrayList<>();
 		chains.add(firstChain);
 		chains.add(null);
 		chains.add(secondChain);
 		chains.add(null);
 		chains.add(thirdChain);
+		return chains;
 	}
 	
 	@Test
 	public void test_get_all_chains() {
-		createListOfChains();
 		List<ChainDTO> expectedChainDTOs = new ArrayList<>();
 		expectedChainDTOs.add(firstChainDTO);
 		expectedChainDTOs.add(secondChainDTO);
 		expectedChainDTOs.add(thirdChainDTO);
-		when(chainRepository.findAllByIsActiveTrueOrderByNameAsc()).thenReturn(chains);
+		when(chainRepository.findAllByIsActiveTrueOrderByNameAsc()).thenReturn(createListOfChains());
 		when(objectFactory.getInstance(ChainDTO.class, firstChain)).thenReturn(firstChainDTO);
 		when(objectFactory.getInstance(ChainDTO.class, secondChain)).thenReturn(secondChainDTO);
 		when(objectFactory.getInstance(ChainDTO.class, thirdChain)).thenReturn(thirdChainDTO);
-		List<ChainDTO> resultChainDTOs = chainServiceImpl.getAllChains();
+		List<ChainDTO> resultChainDTOs = chainService.getAllChains();
 		verify(chainRepository).findAllByIsActiveTrueOrderByNameAsc();
 		verify(objectFactory).getInstance(ChainDTO.class, firstChain);
 		verify(objectFactory).getInstance(ChainDTO.class, secondChain);
 		verify(objectFactory).getInstance(ChainDTO.class, thirdChain);
 		assertEquals("Size of the result list of chain data transfer objects should be 3.", resultChainDTOs.size(), 3);
 		assertEquals("Result list of chain data transfer objects should be [firstChainDTO, secondChainDTO, thirdChainDTO]", expectedChainDTOs, resultChainDTOs);
-	}
-	
-	@After
-	public void tearDown() {
-		chainServiceImpl = null;
-		chains = null;
 	}
 }

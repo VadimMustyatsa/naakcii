@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +31,5 @@ public class ChainControllerTest {
 		when(chainService.getAllChains()).thenReturn(chainDTOs);
 		chainController.getAllChains();
 		verify(chainService).getAllChains();
-	}
-	
-	@After
-	public void tearDown() {
-		chainController = null;
 	}
 }

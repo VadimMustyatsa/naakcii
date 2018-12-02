@@ -1,14 +1,28 @@
-package naakcii.by.api.product.controller;
+package naakcii.by.api.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping({"/product"})
 public class ProductController {
+	
+	private ProductService productService;
+	
+	@Autowired
+	public ProductController(ProductService productService) {
+		this.productService = productService;
+	}
+	
+	@GetMapping(path = "/{chainList}/{subcategoryList}")
+    public List<ProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
+    			@RequestParam("subcategoryList") Set<Long> subcategoryIds,
+    			@RequestParam("chainList") Set<Long> chainIds) {
+		return productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds);
+	}
 /*
     @Autowired
     ProductService productService;

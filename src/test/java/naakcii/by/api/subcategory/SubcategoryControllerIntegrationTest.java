@@ -1,9 +1,9 @@
-package naakcii.by.api.category;
+package naakcii.by.api.subcategory;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -29,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import naakcii.by.api.APIApplication;
-import naakcii.by.api.subcategory.Subcategory;
+import naakcii.by.api.category.Category;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = APIApplication.class)
@@ -38,7 +37,9 @@ import naakcii.by.api.subcategory.Subcategory;
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class CategoryControllerIntegrationTest {
+public class SubcategoryControllerIntegrationTest {
+	
+	private Long categoryId;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -52,17 +53,17 @@ public class CategoryControllerIntegrationTest {
 	public void setUp() {
 		objectMapper = new ObjectMapper();
 	}
-		
-	private List<Category> createListOfCategories() {
+	
+	private List<Subcategory> createListOfSubcategories() {
 		Category firstCategory = new Category("First category", true);
 		Category secondCategory = new Category("Second category", true);
 		Category thirdCategory = new Category("Third category", true);
 		firstCategory.setIcon("First category icon");
-		firstCategory.setPriority(7);
+		firstCategory.setPriority(1);
 		secondCategory.setIcon("Second category icon");
 		secondCategory.setPriority(2);
 		thirdCategory.setIcon("Third category icon");
-		thirdCategory.setPriority(4);
+		thirdCategory.setPriority(3);
 		Subcategory firstSubcategory = new Subcategory("1st subcategory", firstCategory, true);
 		firstSubcategory.setPriority(7);
 		Subcategory secondSubcategory = new Subcategory("2nd subcategory", firstCategory, true);
@@ -71,36 +72,40 @@ public class CategoryControllerIntegrationTest {
 		thirdSubcategory.setPriority(5);
 		Subcategory fourthSubcategory = new Subcategory("4th subcategory", thirdCategory, true);
 		fourthSubcategory.setPriority(3);
+		Subcategory fifthSubcategory = new Subcategory("5th subcategory", firstCategory, true);
+		fifthSubcategory.setPriority(9);
 		testEntityManager.persist(firstCategory);
 		testEntityManager.persist(secondCategory);
 		testEntityManager.persist(thirdCategory);
 		testEntityManager.detach(firstCategory);
 		testEntityManager.detach(secondCategory);
 		testEntityManager.detach(thirdCategory);
-		List<Category> categories = new ArrayList<>();
-		categories.add(secondCategory);
-		categories.add(thirdCategory);
-		categories.add(firstCategory);
-		return categories;
+		categoryId = firstCategory.getId();
+		List<Subcategory> subcategories = new ArrayList<>();
+		subcategories.add(secondSubcategory);
+		subcategories.add(firstSubcategory);
+		subcategories.add(fifthSubcategory);
+		return subcategories;
 	}
 	
 	@Test
-	public void test_get_all_categories() throws Exception {
-		List<CategoryDTO> expectedCategoryDTOs = createListOfCategories()
+	public void test_get_all_subcategories_by_category_id() throws Exception {
+		List<SubcategoryDTO> expectedSubcategoryDTOs = createListOfSubcategories()
 				.stream()
-				.map(CategoryDTO::new)
+				.map(SubcategoryDTO::new)
 				.collect(Collectors.toList());
-		String expectedJson = objectMapper.writeValueAsString(expectedCategoryDTOs);
-		MvcResult mvcResult = this.mockMvc.perform(get("/category"))
+		String expectedJson = objectMapper.writeValueAsString(expectedSubcategoryDTOs);
+		MvcResult mvcResult = this.mockMvc.perform(get("/subcategory/" + categoryId))
 								  .andExpect(status().isOk())
 								  .andExpect(content().contentType("application/json;charset=UTF-8"))
 								  .andDo(print())
 								  .andReturn();
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should be: ["
-				   + "{\"name\":\"Second category\",\"priority\":2,\"icon\":\"Second category icon\",\"id\":2},"
-				   + "{\"name\":\"Third category\",\"priority\":4,\"icon\":\"Third category icon\",\"id\":3},"
-				   + "{\"name\":\"First category\",\"priority\":7,\"icon\":\"First category icon\",\"id\":1}"
-				   + "].", expectedJson, resultJson);					
+				   + "{\"id\":1,\"name\":\"2nd subcategory\",\"categoryId\":1,\"priority\":1},"
+				   + "{\"id\":3,\"name\":\"1st subcategory\",\"categoryId\":1,\"priority\":7},"
+				   + "{\"id\":2,\"name\":\"5th subcategory\",\"categoryId\":1,\"priority\":9}"
+				   + "].", expectedJson, resultJson);
+		categoryId = null;
 	}
 }

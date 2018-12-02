@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +30,5 @@ public class CategoryControllerTest {
 		when(categoryService.getAllCategories()).thenReturn(categoryDTOs);
 		categoryController.getAllCategories();
 		verify(categoryService).getAllCategories();
-	}
-	
-	@After
-	public void tearDown() {
-		categoryController = null;
 	}
 }

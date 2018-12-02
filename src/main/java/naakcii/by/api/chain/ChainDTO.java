@@ -14,8 +14,6 @@ public class ChainDTO {
     private String logo;
     private String logoSmall;
     private String link;
-    private Integer numberOfActions;
-    private Integer averageDiscount;
     
     public ChainDTO(Chain chain) {
     	this.id = chain.getId();
