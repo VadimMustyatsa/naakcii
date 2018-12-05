@@ -14,7 +14,7 @@
         <div class="item-quantity">Количество, шт.</div>
         <div class="item-whole-price tablet-none">Стоимость без скидки, руб.</div>
         <div class="item-discount tablet-none">Скидка, руб.</div>
-        <div class="item-discount-price">Стоимость со скидкой, руб.</div>
+        <div class="item-discount-price header">Стоимость со скидкой, руб.</div>
         <div class="promotional-deadline tablet-none">Дата окончания акции</div>
         <div class="empty-small mobile-none"></div>
       </li>
@@ -26,7 +26,8 @@
             </div>
             <div>
               {{chain.chain.name}}
-              (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)" tooltip="Адреса и графики работы магазинов сети">магазины</a>)
+              (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)"
+                  tooltip="Адреса и графики работы магазинов сети">магазины</a>)
             </div>
           </div>
           <div class="item-position tablet-none">{{getCartByChain(chain.chain.id).length}}</div>
@@ -39,29 +40,29 @@
             <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)) | currency: "BYN": "code-narrow"}}</span><br>
             <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ) | number:"1.2-2"}} %)</span>
           </div>
-          <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN": "code-narrow"}}</div>
-          <div class="promotional-deadline tablet-none">1 {{discountMonth}}</div>
+          <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN":
+            "code-narrow"}}
+          </div>
+          <div class="promotional-deadline tablet-none">{{discountMonth | date : "d MMMM"}}</div>
           <div class="arrow-item">
-            <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
+            <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
 
         <div class="collapsible-body item-info"
              *ngFor="let curCart of getCartByChain(chain.chain.id)">
-          <div class="item-image" [ngStyle]="setImgStyles(curCart.product.img)">
-          </div>
+          <div class="item-image" [ngStyle]="setImgStyles(curCart.product.img)"></div>
           <div class="item-name-comment">
             <p class="itemName">
               {{curCart.product.name}}
             </p>
             <div class="itemComment">
-              <input placeholder="Тут можно добавить примечание"
-                     id="item_comment" type="text" class=""
+              <input placeholder="Тут можно добавить примечание" type="text"
                      [(ngModel)]="curCart.comment" value="{{curCart.comment}}">
             </div>
           </div>
 
-          <div class="item-quantity center">
+          <div class="item-quantity">
             <a class="btn-floating btn teal grey tablet-none" (click)="subItem(curCart)">
               <i class="material-icons">remove</i>
             </a>
@@ -72,99 +73,102 @@
           </div>
 
           <div class="item-whole-price tablet-none">
-            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity)| number:"1.2-2"}}</span>
+            <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity)| currency: "BYN": "code-narrow"}}</span>
             <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
           </div>
-          <div class="item-discount center tablet-none">
+          <div class="item-discount tablet-none">
             <span *ngIf="curCart.product.discount == 0">&ndash;</span>
-            <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity) | number:"1.2-2"}}</span><br>
+            <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity) | currency: "BYN": "code-narrow"}}</span><br>
             <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
 
           </div>
-          <div class="item-discount-price center">
-            <span>{{(curCart.product.totalPrice*curCart.quantity)| number:"1.2-2"}}</span><br>
+          <div class="item-discount-price">
+            <span>{{(curCart.product.totalPrice*curCart.quantity)| currency: "BYN": "code-narrow"}}</span><br>
           </div>
-          <div class="promotional-deadline center tablet-none">1 {{discountMonth}}</div>
+          <div class="promotional-deadline tablet-none">{{discountMonth | date : "d MMMM"}}</div>
           <div class="bin-item">
             <a class="deleteCartLine" (click)="deleteCartLine(curCart)">
-              <i class="material-icons center grey-text text-darken-1">delete_forever</i>
+              <i class="material-icons grey-text text-darken-1">delete_forever</i>
             </a>
           </div>
         </div>
       </li>
       <!--отдельный компонент-->
       <li>
-        <div class="collapsible-header active row chainList grey-text text-darken-2">
-          <div class="col m3 left">
+        <div class="collapsible-header active row chainList grey-text text-darken-2 non-discounted-line">
+          <div class="non-discounted-products">
             Неакционные товары
           </div>
-          <div class="col m1 center">
-            {{undiscount.length}}
-          </div>
-          <div class="col m7 center">
-          </div>
-          <div class="col m1">
-            <i class="material-icons arrowCollapsibleBold right">arrow_drop_down</i>
-          </div>
-          </div>
-        <div *ngFor="let item of undiscount" class="collapsible-body row itemLine">
-          <div class="col m11 left">
-            {{item.text}}
-          </div>
-          <div class="col m1 left">
-            <a (click)="onRemoveUndiscount($event)" [attr.id]="item.id"><i class="material-icons center grey-text text-darken-1 deleteCartLine">delete_forever</i></a>
+          <div class="non-discounted-products-quantity tablet-none">{{undiscount.length}}</div>
+          <div class="non-discounted-products-arrow">
+            <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
-        <div class="collapsible-body row itemLine undiscount">
-          <input type="text" placeholder="Введите товар" (keypress)="AddUndiscountByEnter($event)">
-          <a (click)="onAddUndiscount($event)"><i class="large material-icons">add</i></a>
+        <div class="collapsible-body empty">
+          <div></div>
+          <div class="chosen-undiscount-products" *ngFor="let item of undiscount">
+            <div class="chosen-undiscount-products_item">
+              {{item.text}}
+            </div>
+            <div class="chosen-undiscount-products_bin">
+              <a (click)="onRemoveUndiscount($event)" [attr.id]="item.id">
+                <i class="material-icons center grey-text text-darken-1 deleteCartLine">delete_forever</i></a>
+            </div>
+          </div>
+        </div>
+
+      </li>
+      <li>
+        <div class="undiscount">
+          <div class="item-image" [ngStyle]="setImgStyles('customProduct.png')"></div>
+          <div class="input-field undiscount-product-input">
+            <label for="undiscount-products">Дополните список неакционными товарами</label>
+            <input type="text" id="undiscount-products" [(ngModel)]="undiscountProduct"
+                   (keyup.enter)="AddUndiscountProduct()">
+          </div>
+          <span (click)="AddUndiscountProduct()"><i class="material-icons">add</i></span>
         </div>
       </li>
     </ul>
-
   </div>
 
 
-  <section class="finalizeFooter wrapper">
-      <div class="row"
-           [style.width.px]="widthContainer">
-        <div class="col m3">Итого:</div>
-        <div class="col m1 tablet-none center">{{cart.lines.length + undiscount.length}}</div>
-        <div class="col m2 tablet-none center">{{cart.itemCount}}</div>
-        <div class="col m1 tablet-none center">
-          <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice)| number:"1.2-2"}}</span>
-          <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
-        </div>
-        <div class="col m2 tablet-none center">
-          <span>{{(cart.cartAllPrice - cart.cartTotalPrice)| number:"1.2-2"}} </span>
-          <!--<span>({{(100 - (cart.cartTotalPrice/cart.cartAllPrice)*100).toFixed(0)}} %)</span>-->
-        </div>
-        <div class="col m2 center allTotalPrice">{{cart.cartTotalPrice| number:"1.2-2"}} руб.</div>
-        <div class="col m1 center tablet-none"></div>
+  <section>
+    <div class="total-line finalizeFooter wrapper">
+      <div class="empty-large">Итого:</div>
+      <div class="item-position tablet-none">{{cart.lines.length + undiscount.length}}</div>
+      <div class="item-quantity">{{cart.itemCount}}</div>
+      <div class="item-whole-price tablet-none">
+        <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice)| number:"1.2-2"}}</span>
+        <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
       </div>
-      <div class="finalizeFooterButton row"
-           [style.width.px]="widthContainer">
-        <div class="col m3 left">
-          <a routerLink="/form-shopping-list" class="orangeLink">
-            <i class="material-icons">arrow_back</i>
-            <span>Вернуться к товарам</span>
-          </a>
-        </div>
-        <div class="col m6 center">
-          <a href="javascript:void(0);" (click)="generatePDF()"
-             class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn button-icon-pdf"
-             (click)="openModal()">Скачать
-            <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
-          </a>
-          <div tooltip="Эта функция скоро станет доступна"><a href="javascript:void(0);"
-                                                              class="deep-orange waves-effect waves-light btn disable waves-effect waves-light btn disabled button-icon-viber"
-          >Отправить в
-            <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
-          </a></div>
-        </div>
-        <div class="col m3 right">
-        </div>
+      <div class="item-discount tablet-none">{{(cart.cartAllPrice - cart.cartTotalPrice)| currency: "BYN":
+        "code-narrow"}}
       </div>
+      <div class="item-discount-price allTotalPrice">{{cart.cartTotalPrice | currency: "BYN": "code-narrow"}}</div>
+      <div class="empty-small"></div>
+    </div>
+    <div class="finalizeFooterButton">
+      <div class="back-to-products-btn">
+        <a routerLink="/form-shopping-list" class="deep-orange waves-effect btn">
+          <i class="material-icons">arrow_back</i>
+          <span>Вернуться к товарам</span>
+        </a>
+      </div>
+      <div class="pdf-btn">
+        <a href="javascript:void(0);" (click)="generatePDF()"
+           class="deep-orange waves-effect waves-light btn button-icon-pdf"
+           (click)="openModal()">Скачать
+          <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
+        </a>
+      </div>
+      <div>
+        <a href="javascript:void(0);"
+           class="btn tooltipped viber-btn" data-position="top" data-tooltip="Эта функция скоро станет доступна">Отправить
+          в<div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
+        </a>
+      </div>
+    </div>
   </section>
 
   <div *ngIf="cart.lines.length == 0">
@@ -195,38 +199,40 @@
 <!-- Modal Structure -->
 <!--отдельный компонент-->
 
-<div id="modal1"  data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+<div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <div class="modal-content">
     <div class="modal-header">
       <h4>Отлично!
-      Вы только что скачали свой список покупок.<br> Теперь вы можете:</h4>
+        Вы только что скачали свой список покупок.<br> Теперь вы можете:</h4>
     </div>
     <div>
       <div class="modal-item">
         <div class="modal-item-content">
-        <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/1.png)'}"></div>
-        <p>Если в скаченном списке обнаружились какие-то недочёты, лучше его доработать, продолжив редактирование.</p>
+          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/1.png)'}"></div>
+          <p>Если в скаченном списке обнаружились какие-то недочёты, лучше его доработать, продолжив редактирование.</p>
         </div>
         <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn"
-                (click)="closeModal()">Редактировать</button>
+                (click)="closeModal()">Редактировать
+        </button>
       </div>
       <div class="modal-item">
         <div class="modal-item-content">
-        <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/2.png)'}"></div>
-        <p>Если полученный список совсем вам не нравится, можно составить новый список с нуля.</p>
+          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/2.png)'}"></div>
+          <p>Если полученный список совсем вам не нравится, можно составить новый список с нуля.</p>
         </div>
         <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn"
-                (click)="onRedirect()">Составить новый</button>
+                (click)="onRedirect()">Составить новый
+        </button>
       </div>
-    <div class="modal-item">
-      <div class="modal-item-content">
-      <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/3.png)'}"></div>
-      <p>Если полученный список вас устраивает,
-      вы можете завершить работу с сервисом,
-        закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
-    </div>
-    </div>
+      <div class="modal-item">
+        <div class="modal-item-content">
+          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/3.png)'}"></div>
+          <p>Если полученный список вас устраивает,
+            вы можете завершить работу с сервисом,
+            закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

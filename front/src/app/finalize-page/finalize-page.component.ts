@@ -5,7 +5,7 @@ import {isUndefined} from 'util';
 import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
 import {MaterializeAction} from 'angular2-materialize'
-import { Title } from '@angular/platform-browser'
+import {Title} from '@angular/platform-browser'
 import {Router} from "@angular/router";
 import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
 import {UndiscountService} from "../shared/services/undiscount.service";
@@ -20,10 +20,9 @@ import {BreakPointCheckService} from "../shared/services/breakpoint-check.servic
 
 })
 export class FinalizePageComponent implements OnInit {
+  undiscountProduct: any;
   chainListExist: ChainLine[] = null;
-  widthContainer = 1200;
   undiscount: Array<{text:string; id: string}> ;
-  discountMonth: string;
 
   params = [
     {
@@ -43,20 +42,19 @@ export class FinalizePageComponent implements OnInit {
     this.modalActions.emit({action: 'modal', params: ['close']});
   }
 
-  constructor(private router: Router ,public  chainLst: Chain,
+  constructor(private router: Router,
+              public  chainLst: Chain,
               private el: ElementRef,
               public breakPointCheckService: BreakPointCheckService,
-              private undiscountStorage:UndiscountService,
+              private undiscountStorage: UndiscountService,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
     window.scrollTo(0,0);
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
-    this.discountMonth=this.getDiscountMonth();
   }
 
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
-
   }
 
   setImgStyles(pict) {
@@ -152,25 +150,6 @@ export class FinalizePageComponent implements OnInit {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
 
-  onResizeContent() {
-
-    const rootElement = this.el.nativeElement;
-    const childElement = rootElement.firstElementChild;
-    const contentElement = childElement.firstElementChild;
-    this.widthContainer = contentElement.clientWidth;
-  }
-
-  getPosition() {
-    this.onResizeContent();
-    const clientHeight = document.documentElement.clientHeight; // высота видимой части
-    const offsetHeight = document.documentElement.offsetHeight;
-    if ((offsetHeight - clientHeight) < 50) {
-      return '';
-    } else {
-      return 'fixed';
-    }
-  }
-
   onRemoveUndiscount(event){
      this.undiscount.forEach((i,index)=>{
        if(event.target.parentNode.id === i.id.toString()){
@@ -180,29 +159,14 @@ export class FinalizePageComponent implements OnInit {
     this.undiscountStorage.setToUndiscount(this.undiscount);
   };
 
-  onAddUndiscount(event){
-    let value = event.target.parentNode.previousElementSibling.value;
-    if( value.length>2 && value.length<50) {
-      this.undiscount.push({
-        text: value,
-        id: event.timeStamp
+  AddUndiscountProduct() {
+    let { undiscountProduct, undiscount } = this;
+    if( undiscountProduct.length > 2 && undiscountProduct.length<50) {
+      undiscount.push({
+        text: undiscountProduct,
+        id: (+(new Date())).toString()
       });
-    }
-    event.target.parentNode.previousElementSibling.value='';
-    this.undiscountStorage.setToUndiscount(this.undiscount);
-  }
-
-  AddUndiscountByEnter(event){
-    if(event.keyCode === 13){
-      let value = event.target.value;
-      if( value.length>2 && value.length<50) {
-        this.undiscount.push({
-          text: value,
-          id: event.timeStamp
-        });
-      }
-      event.target.value='';
-      this.undiscountStorage.setToUndiscount(this.undiscount);
+      this.undiscountProduct = '';
     }
   }
 
@@ -219,10 +183,9 @@ export class FinalizePageComponent implements OnInit {
   onEventStop(event) {
     event.stopPropagation();
   }
-  getDiscountMonth(){
-    let d = new Date();
-    let months = ['января', 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    return months[d.getMonth()+1];
+
+  get discountMonth () {
+    return Number(new Date()) + 30*24*60*60*1000;
   }
 }
 
