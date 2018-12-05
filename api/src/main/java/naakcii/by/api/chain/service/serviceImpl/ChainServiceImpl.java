@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,14 +27,17 @@ public class ChainServiceImpl implements ChainService {
     @Override
     public List<ChainDTO> findAll() {
         List<Chain> chainList = chainRepository.findAllByOrderByNameAsc();
-        List<ChainDTO> chainDTOList = new ArrayList<ChainDTO>();
+        List<ChainDTO> chainDTOList = new ArrayList<>();
         for (Chain chain : chainList) {
             ChainDTO chainDTO = chainConverter.convert(chain);
-            List<Integer> results = actionService.getDiscounAndAllActionsByChain(chainDTO);
-            chainDTO.setCountGoods(results.get(0));
-            chainDTO.setPercent(results.get(1));
+            List<Integer> results = actionService.getDiscountAndAllActionsByChain(chainDTO);
+            if(results.size() != 0) {
+                chainDTO.setCountGoods(results.get(0));
+                chainDTO.setPercent(results.get(1));
+            }
             chainDTOList.add(chainDTO);
         }
+
         return chainDTOList;
     }
 }

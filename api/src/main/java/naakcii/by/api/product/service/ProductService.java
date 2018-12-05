@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ProductService {
 
-    public List<ProductDTO> getProductsByChainIdAndSubcategoryId(Long subcategoryId);
+    List<ProductDTO> getProductsByChainIdAndSubcategoryId(Long subcategoryId);
 
 }

@@ -1,3 +1,4 @@
+
 CREATE TABLE category (
   id      INTEGER NOT NULL AUTO_INCREMENT,
   name    VARCHAR(255),

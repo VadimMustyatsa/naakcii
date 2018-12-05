@@ -214,4 +214,12 @@ public class Action implements Serializable {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Action{" +
+                "discount=" + discount +
+                ", discountPrice=" + discountPrice +
+                ", chain=" + chain +
+                '}';
+    }
 }

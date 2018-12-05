@@ -3,16 +3,7 @@ package naakcii.by.api.subcategory.repository.model;
 import naakcii.by.api.category.repository.model.Category;
 import naakcii.by.api.product.repository.model.Product;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -28,107 +19,103 @@ import java.util.List;
 //)
 public class Subcategory implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4720680821468502372L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4720680821468502372L;
 
-    @Id
-    @GeneratedValue(generator = "ID_GENERATOR")
-    @Column(name = "SUBCATEGORY_ID")
-    private Long id;
-
-    @Column(name = "SUBCATEGORY_NAME")
-    @NotNull
-    @Size(min = 3, max = 45)
-    private String name;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID")
-    @NotNull
-    private Category category;
-
-    @OneToMany(
-            mappedBy = "subcategory",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY
-    )
+	@Id
+	@GeneratedValue(generator = "ID_GENERATOR")
+	@Column(name = "SUBCATEGORY_ID")
+	private Long id;
+	
+	@Column(name = "SUBCATEGORY_NAME")
+	@NotNull
+	@Size(min = 3, max = 45)
+	private String name;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "CATEGORY_ID")
+	@NotNull
+	private Category category;
+	
+	@OneToMany(
+			mappedBy = "subcategory", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch = FetchType.LAZY
+	)
 //	@org.hibernate.annotations.Cache(
 //			usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE
 //	)
-    private List<Product> products = new ArrayList<Product>();
+	private List<Product> products = new ArrayList<Product>();
+	
+	@Column(name = "SUBCATEGORY_IS_ACTIVE")
+	@NotNull
+	private boolean isActive;
 
-    @Column(name = "SUBCATEGORY_IS_ACTIVE")
-    @NotNull
-    private boolean isActive;
+	@Column(name = "SUBCATEGORY_PRIORITY")
+	@NotNull
+	private int priority;
+	
+	public Subcategory() {
+		
+	}
+	
+	public Subcategory(String name, boolean isActive, Category category) {
+		this.name = name;
+		this.isActive = isActive;
+		this.category = category;
+	}
 
-    @Column(name = "SUBCATEGORY_PRIORITY")
-    @NotNull
-    private int priority;
+	public Subcategory(String name, boolean isActive, Category category, int priority) {
+		this.name = name;
+		this.category = category;
+		this.isActive = isActive;
+		this.priority = priority;
+	}
 
-    public Subcategory() {
+	public Long getId() {
+		return id;
+	}
 
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Subcategory(String name, boolean isActive, Category category) {
-        this.name = name;
-        this.isActive = isActive;
-        this.category = category;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Subcategory(String name, boolean isActive, Category category, int priority) {
-        this.name = name;
-        this.category = category;
-        this.isActive = isActive;
-        this.priority = priority;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Category getCategory() {
+		return category;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public boolean isActive() {
+		return isActive;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
-    public Category getCategory() {
-        return category;
-    }
+	public List<Product> getProducts() {
+		return products;
+	}
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 
-    public boolean isActive() {
-        return isActive;
-    }
+	public int getPriority() { return priority;	}
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
+	public void setPriority(int priority) {	this.priority = priority; }
+	
 }

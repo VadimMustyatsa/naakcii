@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ElementRef, OnInit, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
@@ -50,6 +50,13 @@ export class FinalizePageComponent implements OnInit {
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
     window.scrollTo(0,0);
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
+  }
+
+  @HostListener('click', ['$event.target'])
+  onClick(btn) {
+    if (btn.id === 'snackbar' || btn.parentNode.id === 'snackbar') {
+      document.getElementById('snackbar').classList.add('animated-hide');
+    }
   }
 
   ngOnInit() {

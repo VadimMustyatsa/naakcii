@@ -3,7 +3,9 @@ package naakcii.by.api.product.service.util;
 import naakcii.by.api.action.repository.model.Action;
 import naakcii.by.api.product.repository.model.Product;
 import naakcii.by.api.product.service.modelDTO.ProductDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductConverter {
 
     public ProductDTO convert(Product product, Action action) {

@@ -2,7 +2,9 @@ package naakcii.by.api.action.service.util;
 
 import naakcii.by.api.action.repository.model.Action;
 import naakcii.by.api.action.service.modelDTO.ActionDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ActionConverter {
 
     public ActionDTO converter(Action action) {
