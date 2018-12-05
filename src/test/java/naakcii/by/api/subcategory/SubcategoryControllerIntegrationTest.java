@@ -8,8 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,8 +38,6 @@ import naakcii.by.api.category.Category;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class SubcategoryControllerIntegrationTest {
 	
-	private Long categoryId;
-	
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -48,13 +45,19 @@ public class SubcategoryControllerIntegrationTest {
 	private TestEntityManager testEntityManager;
 	
 	private ObjectMapper objectMapper;
+	private Subcategory firstSubcategory;
+	private Subcategory secondSubcategory;
+	private Subcategory thirdSubcategory;
+	private Subcategory fourthSubcategory;
+	private Subcategory fifthSubcategory;
+	private Long categoryId;
 	
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
 	}
 	
-	private List<Subcategory> createListOfSubcategories() {
+	private void createListOfSubcategories() {
 		Category firstCategory = new Category("First category", true);
 		Category secondCategory = new Category("Second category", true);
 		Category thirdCategory = new Category("Third category", true);
@@ -64,15 +67,15 @@ public class SubcategoryControllerIntegrationTest {
 		secondCategory.setPriority(2);
 		thirdCategory.setIcon("Third category icon");
 		thirdCategory.setPriority(3);
-		Subcategory firstSubcategory = new Subcategory("1st subcategory", firstCategory, true);
+		firstSubcategory = new Subcategory("1st subcategory", firstCategory, true);
 		firstSubcategory.setPriority(7);
-		Subcategory secondSubcategory = new Subcategory("2nd subcategory", firstCategory, true);
+		secondSubcategory = new Subcategory("2nd subcategory", firstCategory, true);
 		secondSubcategory.setPriority(1);
-		Subcategory thirdSubcategory = new Subcategory("3rd subcategory", secondCategory, true);
+		thirdSubcategory = new Subcategory("3rd subcategory", secondCategory, true);
 		thirdSubcategory.setPriority(5);
-		Subcategory fourthSubcategory = new Subcategory("4th subcategory", thirdCategory, true);
+		fourthSubcategory = new Subcategory("4th subcategory", thirdCategory, true);
 		fourthSubcategory.setPriority(3);
-		Subcategory fifthSubcategory = new Subcategory("5th subcategory", firstCategory, true);
+		fifthSubcategory = new Subcategory("5th subcategory", firstCategory, true);
 		fifthSubcategory.setPriority(9);
 		testEntityManager.persist(firstCategory);
 		testEntityManager.persist(secondCategory);
@@ -85,17 +88,17 @@ public class SubcategoryControllerIntegrationTest {
 		subcategories.add(secondSubcategory);
 		subcategories.add(firstSubcategory);
 		subcategories.add(fifthSubcategory);
-		return subcategories;
 	}
 	
 	@Test
 	public void test_get_all_subcategories_by_category_id() throws Exception {
-		List<SubcategoryDTO> expectedSubcategoryDTOs = createListOfSubcategories()
-				.stream()
-				.map(SubcategoryDTO::new)
-				.collect(Collectors.toList());
+		createListOfSubcategories();
+		List<SubcategoryDTO> expectedSubcategoryDTOs = new ArrayList<>();
+		expectedSubcategoryDTOs.add(new SubcategoryDTO(secondSubcategory));
+		expectedSubcategoryDTOs.add(new SubcategoryDTO(firstSubcategory));
+		expectedSubcategoryDTOs.add(new SubcategoryDTO(fifthSubcategory));
 		String expectedJson = objectMapper.writeValueAsString(expectedSubcategoryDTOs);
-		MvcResult mvcResult = this.mockMvc.perform(get("/subcategory/" + categoryId))
+		MvcResult mvcResult = this.mockMvc.perform(get("/subcategory/{categoryId}", categoryId.toString()))
 								  .andExpect(status().isOk())
 								  .andExpect(content().contentType("application/json;charset=UTF-8"))
 								  .andDo(print())
@@ -106,6 +109,16 @@ public class SubcategoryControllerIntegrationTest {
 				   + "{\"id\":3,\"name\":\"1st subcategory\",\"categoryId\":1,\"priority\":7},"
 				   + "{\"id\":2,\"name\":\"5th subcategory\",\"categoryId\":1,\"priority\":9}"
 				   + "].", expectedJson, resultJson);
+	}
+	
+	@After
+	public void tearDown() {
+		objectMapper = null;
+		firstSubcategory = null;
+		secondSubcategory = null;
+		thirdSubcategory = null;
+		fourthSubcategory = null;
+		fifthSubcategory = null;
 		categoryId = null;
 	}
 }

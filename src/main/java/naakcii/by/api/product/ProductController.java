@@ -1,14 +1,21 @@
 package naakcii.by.api.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping({"/product"})
+@RequestMapping({"/products"})
 public class ProductController {
+	
+	private static final Integer DEFAULT_PAGE_NIMBER = 0;
+	private static final Integer DEFAULT_PAGE_SIZE = 12;
+	private static final String DEFAULT_FIELD_FOR_SORTING = "discountPrice";
 	
 	private ProductService productService;
 	
@@ -17,43 +24,21 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
-	@GetMapping(path = "/{chainList}/{subcategoryList}")
+	@GetMapping(path = "/{chainSet}/{subcategorySet}/{page}/{size}")
     public List<ProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
-    			@RequestParam("subcategoryList") Set<Long> subcategoryIds,
-    			@RequestParam("chainList") Set<Long> chainIds) {
-		return productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds);
+    		@PathVariable("chainSet") Set<Long> chainIds,
+    		@PathVariable("subcategorySet") Set<Long> subcategoryIds,
+    		@PathVariable("page") Integer page,
+    		@PathVariable("size") Integer size) {
+		if (page == null || page < 0) {
+			page = DEFAULT_PAGE_NIMBER;
+		}
+		
+		if (size == null || size <= 0) {
+			size = DEFAULT_PAGE_SIZE;
+		}
+		
+		Pageable pageRequest = PageRequest.of(page, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
+		return productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
-/*
-    @Autowired
-    ProductService productService;
-
-    @GetMapping(path = "/{id}")
-    public List<ProductDTO> getProductsBySubcategory(@PathVariable("id") Long subcategoryId) {
-        return productService.getProductsByChainIdAndSubcategoryId(subcategoryId);
-    }
-
-    @GetMapping
-    public List<ProductDTO> findProductBySubcategoryIdLazyLoading(@RequestParam("first") Integer first,
-                                                                  @RequestParam("last") Integer last,
-                                                                  @RequestParam("SubcategoryList") List<Long> list) {
-        List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
-        for (Long subcategoryId : list) {
-            productDTOList.addAll(productService.getProductsByChainIdAndSubcategoryId(subcategoryId));
-        }
-        if (productDTOList.isEmpty()) {
-            return productDTOList;
-        } else {
-            Integer size = productDTOList.size();
-            if (last < size && first < size) {
-                return productDTOList.subList(first, last);
-            } else {
-                if (first < size) {
-                    return productDTOList.subList(first, size);
-                } else {
-                    productDTOList = new ArrayList<>();
-                    return productDTOList;
-                }
-            }
-        }
-    }*/
 }

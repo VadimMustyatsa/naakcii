@@ -1,4 +1,4 @@
-package naakcii.by.actiontype;
+package naakcii.by.api.actiontype;
 
 import static org.junit.Assert.assertEquals;
 

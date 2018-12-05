@@ -58,6 +58,9 @@ public class ProductServiceImplTest {
 	@Mock
 	private Set<Long> chainIds;
 	
+	@Mock
+	private Pageable pageable;
+	
 	@Before
 	public void setUp() {
 		productService = new ProductServiceImpl(actionRepository, objectFactory);
@@ -86,13 +89,13 @@ public class ProductServiceImplTest {
 		expectedProductDTOs.add(firstProductDTO);
 		expectedProductDTOs.add(secondProductDTO);
 		expectedProductDTOs.add(thirdProductDTO);
-		when(actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate()))
+		when(actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable))
 			.thenReturn(createListOfActions());
 		when(objectFactory.getInstance(ProductDTO.class, firstAction)).thenReturn(firstProductDTO);
 		when(objectFactory.getInstance(ProductDTO.class, secondAction)).thenReturn(secondProductDTO);
 		when(objectFactory.getInstance(ProductDTO.class, thirdAction)).thenReturn(thirdProductDTO);
-		List<ProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds);
-		verify(actionRepository).findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate());
+		List<ProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageable);
+		verify(actionRepository).findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable);
 		verify(objectFactory).getInstance(ProductDTO.class, firstAction);
 		verify(objectFactory).getInstance(ProductDTO.class, secondAction);
 		verify(objectFactory).getInstance(ProductDTO.class, thirdAction);

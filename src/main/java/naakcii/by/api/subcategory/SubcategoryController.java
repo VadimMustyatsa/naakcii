@@ -19,8 +19,8 @@ public class SubcategoryController {
     	this.subcategoryService = subcategoryService;
     }
 
-    @GetMapping(path = "/{id}")
-    public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(@PathVariable("id") Long categoryId) {
+    @GetMapping(path = "/{categoryId}")
+    public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(@PathVariable("categoryId") Long categoryId) {
         return subcategoryService.getAllSubcategoriesByCategoryId(categoryId);
     }
 }

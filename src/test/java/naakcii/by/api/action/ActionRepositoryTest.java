@@ -193,7 +193,6 @@ public class ActionRepositoryTest {
 		
 	@Test
 	public void test_find_all_by_subcategory_id() {
-		//List<Action> actions = actionRepository.findAllBySubcategoryId(thirdSubcategoryId, Calendar.getInstance());
 		List<Action> actions = actionRepository.findByProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				thirdSubcategoryId, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 3: [10thAction, 11thAction, 12thAction].", 3, actions.size());
@@ -204,12 +203,11 @@ public class ActionRepositoryTest {
 	
 	@Test
 	public void test_find_all_by_subcategories_ids() {
-		Set<Long> subcategoriesIds = new HashSet<>();
-		subcategoriesIds.add(firstSubcategoryId);
-		subcategoriesIds.add(secondSubcategoryId);
-		//List<Action> actions = actionRepository.findAllBySubcategoriesIds(subcategoriesIds, Calendar.getInstance());
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
 		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-				subcategoriesIds, Calendar.getInstance(), Calendar.getInstance());
+				subcategoryIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 9: "
 				+ "[1stAction, 2ndAction, 3rdAction, 4thAction, 5thAction, 6thAction, 7thAction, 8thAction, 9thAction].", 9, actions.size());
 		assertTrue("Result list of actions should contain 1st action.", actions.contains(firstAction));
@@ -225,16 +223,15 @@ public class ActionRepositoryTest {
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids() {
-		Set<Long> subcategoriesIds = new HashSet<>();
-		subcategoriesIds.add(firstSubcategoryId);
-		subcategoriesIds.add(secondSubcategoryId);
-		subcategoriesIds.add(fourthSubcategoryId);
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
+		subcategoryIds.add(fourthSubcategoryId);
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		//List<Action> actions = actionRepository.findAllBySubcategoriesIdsAndChainIds(subcategoriesIds, chainIds, Calendar.getInstance());
 		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-				subcategoriesIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
+				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 6: "
 				+ "[2ndAction, 3rdAction, 4thAction, 5thAction, 8thAction, 9thAction].", 6, actions.size());
 		assertTrue("Result list of actions should contain 2nd action.", actions.contains(secondAction));
@@ -248,15 +245,15 @@ public class ActionRepositoryTest {
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_1_and_page_size_is_4() {
 		Pageable pageRequest = PageRequest.of(0, 4, Sort.DEFAULT_DIRECTION, "discountPrice");
-		Set<Long> subcategoriesIds = new HashSet<>();
-		subcategoriesIds.add(firstSubcategoryId);
-		subcategoriesIds.add(secondSubcategoryId);
-		subcategoriesIds.add(fourthSubcategoryId);
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
+		subcategoryIds.add(fourthSubcategoryId);
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
 		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-				subcategoriesIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
+				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the first page, should be 4: ["
 				+ "8thAction (discountPrice = 1.75), "
 				+ "3rdAction (discountPrice = 2.25), "
@@ -272,15 +269,15 @@ public class ActionRepositoryTest {
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_2_and_page_size_is_4() {
 		Pageable pageRequest = PageRequest.of(1, 4, Sort.DEFAULT_DIRECTION, "discountPrice");
-		Set<Long> subcategoriesIds = new HashSet<>();
-		subcategoriesIds.add(firstSubcategoryId);
-		subcategoriesIds.add(secondSubcategoryId);
-		subcategoriesIds.add(fourthSubcategoryId);
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
+		subcategoryIds.add(fourthSubcategoryId);
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
 		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-				subcategoriesIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
+				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 2: ["
 				+ "9thAction (discountPrice = 10.75), "
 				+ "4thAction (discountPrice = 12.50), "
@@ -292,15 +289,15 @@ public class ActionRepositoryTest {
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_3_and_page_size_is_4() {
 		Pageable pageRequest = PageRequest.of(2, 4, Sort.DEFAULT_DIRECTION, "discountPrice");
-		Set<Long> subcategoriesIds = new HashSet<>();
-		subcategoriesIds.add(firstSubcategoryId);
-		subcategoriesIds.add(secondSubcategoryId);
-		subcategoriesIds.add(fourthSubcategoryId);
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
+		subcategoryIds.add(fourthSubcategoryId);
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
 		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-				subcategoriesIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
+				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previos pages.", 0, actions.size());
 	}
 	
