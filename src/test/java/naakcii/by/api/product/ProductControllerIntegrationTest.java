@@ -106,55 +106,65 @@ public class ProductControllerIntegrationTest {
 		//Creation of action types.
 		ActionType firstActionType = new ActionType("First action type");
 		firstActionType.setIcon("First action type icon");
+		firstActionType.setTooltipText("First action type tooltip text.");
 		ActionType secondActionType = new ActionType("Second action type");
 		secondActionType.setIcon("Second action type icon");
+		secondActionType.setTooltipText("Second action type tooltip text.");
 		//Creation of products.
 		Product firstProduct = new Product("10000000000000", "First product", true, firstSubcategory);
 		firstProduct.setQuantity(new BigDecimal("250"));
-		firstProduct.setMeasure("g");
+		firstProduct.setUnit(Unit.KG);
 		firstProduct.setManufacturer("First product manufacturer");
+		firstProduct.setBrand("First product brand");
 		firstProduct.setCountryOfOrigin("Belarus");
 		firstProduct.setPicture("Path to the picture of the first product");
 		Product secondProduct = new Product("20000000000000", "Second product", true, firstSubcategory);
 		secondProduct.setQuantity(new BigDecimal("500"));
-		secondProduct.setMeasure("ml");
+		secondProduct.setUnit(Unit.PC);
 		secondProduct.setManufacturer("Second product manufacturer");
+		secondProduct.setBrand("First product brand");
 		secondProduct.setCountryOfOrigin("Belarus");
 		secondProduct.setPicture("Path to the picture of the second product");
 		Product thirdProduct = new Product("30000000000000", "Third product", true, firstSubcategory);
 		thirdProduct.setQuantity(new BigDecimal("950"));
-		thirdProduct.setMeasure("ml");
+		thirdProduct.setUnit(Unit.KG);
 		thirdProduct.setManufacturer("Third product manufacturer");
+		thirdProduct.setBrand("First product brand");
 		thirdProduct.setCountryOfOrigin("Belarus");
 		thirdProduct.setPicture("Path to the picture of the third product");
 		Product fourthProduct = new Product("40000000000000", "Fourth product", true, secondSubcategory);
 		fourthProduct.setQuantity(new BigDecimal("1"));
-		fourthProduct.setMeasure("kg");
+		fourthProduct.setUnit(Unit.PC);
 		fourthProduct.setManufacturer("Fourth product manufacturer");
+		fourthProduct.setBrand("First product brand");
 		fourthProduct.setCountryOfOrigin("Belarus");
 		fourthProduct.setPicture("Path to the picture of the fourth product");
 		Product fifthProduct = new Product("50000000000000", "Fifth product", true, secondSubcategory);
 		fifthProduct.setQuantity(new BigDecimal("2"));
-		fifthProduct.setMeasure("l");
+		fifthProduct.setUnit(Unit.KG);
 		fifthProduct.setManufacturer("Fifth product manufacturer");
+		fifthProduct.setBrand("First product brand");
 		fifthProduct.setCountryOfOrigin("Belarus");
 		fifthProduct.setPicture("Path to the picture of the fifth product");
 		Product sixthProduct = new Product("60000000000000", "Sixth product", true, thirdSubcategory);
 		sixthProduct.setQuantity(new BigDecimal("0.500"));
-		sixthProduct.setMeasure("kg");
+		sixthProduct.setUnit(Unit.PC);
 		sixthProduct.setManufacturer("Sixth product manufacturer");
+		sixthProduct.setBrand("First product brand");
 		sixthProduct.setCountryOfOrigin("Russia");
 		sixthProduct.setPicture("Path to the picture of the sixth product");
 		Product seventhProduct = new Product("70000000000000", "Seventh product", true, thirdSubcategory);
 		seventhProduct.setQuantity(new BigDecimal("200"));
-		seventhProduct.setMeasure("g");
+		seventhProduct.setUnit(Unit.KG);
 		seventhProduct.setManufacturer("Seventh product manufacturer");
+		seventhProduct.setBrand("First product brand");
 		seventhProduct.setCountryOfOrigin("Latvia");
 		seventhProduct.setPicture("Path to the picture of the seventh product");
 		Product eighthProduct = new Product("80000000000000", "Eighth product", true, fourthSubcategory);
 		eighthProduct.setQuantity(new BigDecimal("2.5"));
-		eighthProduct.setMeasure("kg");
+		eighthProduct.setUnit(Unit.PC);
 		eighthProduct.setManufacturer("Eighth product manufacturer");
+		eighthProduct.setBrand("First product brand");
 		eighthProduct.setCountryOfOrigin("Poland");
 		eighthProduct.setPicture("Path to the picture of the eighth product");
 		//Saving of all entities.
@@ -172,98 +182,98 @@ public class ProductControllerIntegrationTest {
 		Calendar firstEndDate = getCurrentDate();
 		firstEndDate.add(Calendar.DAY_OF_MONTH, 7);
 		firstAction = new Action(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
-		firstAction.setPrice(new BigDecimal("6.05"));
-		firstAction.setDiscount(new BigDecimal("9"));
+		firstAction.setBasePrice(new BigDecimal("6.05"));
+		firstAction.setDiscountPercent(new BigDecimal("9"));
 		Calendar secondStartDate = getCurrentDate();
 		secondStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar secondEndDate = getCurrentDate();
 		secondEndDate.add(Calendar.DAY_OF_MONTH, 7);
 		secondAction = new Action(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
-		secondAction.setPrice(new BigDecimal("8.10"));
-		secondAction.setDiscount(new BigDecimal("17"));
+		secondAction.setBasePrice(new BigDecimal("8.10"));
+		secondAction.setDiscountPercent(new BigDecimal("17"));
 		Calendar thirdStartDate = getCurrentDate();
 		Calendar thirdEndDate = getCurrentDate();
 		thirdEndDate.add(Calendar.DAY_OF_MONTH, 14);
 		thirdAction = new Action(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
-		thirdAction.setPrice(new BigDecimal("5.50"));
-		thirdAction.setDiscount(new BigDecimal("50"));
+		thirdAction.setBasePrice(new BigDecimal("5.50"));
+		thirdAction.setDiscountPercent(new BigDecimal("50"));
 		Calendar fourthStartDate = getCurrentDate();
 		fourthStartDate.add(Calendar.MONTH, -1);
 		Calendar fourthEndDate = getCurrentDate();
 		fourthEndDate.add(Calendar.MONTH, 1);
 		fourthAction = new Action(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
-		fourthAction.setPrice(new BigDecimal("14.50"));
-		fourthAction.setDiscount(new BigDecimal("14"));
+		fourthAction.setBasePrice(new BigDecimal("14.50"));
+		fourthAction.setDiscountPercent(new BigDecimal("14"));
 		Calendar fifthStartDate = getCurrentDate();
 		fifthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar fifthEndDate = getCurrentDate();
 		fifthEndDate.add(Calendar.DAY_OF_MONTH, 5);
 		fifthAction = new Action(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
-		fifthAction.setPrice(new BigDecimal("7.35"));
-		fifthAction.setDiscount(new BigDecimal("29"));
+		fifthAction.setBasePrice(new BigDecimal("7.35"));
+		fifthAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar sixthStartDate = getCurrentDate();
 		sixthStartDate.add(Calendar.DAY_OF_MONTH, -10);
 		Calendar sixthEndDate = getCurrentDate();
 		sixthEndDate.add(Calendar.DAY_OF_MONTH, 10);
 		sixthAction = new Action(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
-		sixthAction.setPrice(new BigDecimal("17.05"));
-		sixthAction.setDiscount(new BigDecimal("9"));
+		sixthAction.setBasePrice(new BigDecimal("17.05"));
+		sixthAction.setDiscountPercent(new BigDecimal("9"));
 		Calendar seventhStartDate = getCurrentDate();
 		seventhStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar seventhEndDate = getCurrentDate();
 		seventhEndDate.add(Calendar.DAY_OF_MONTH, 15);
 		seventhAction = new Action(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
-		seventhAction.setPrice(new BigDecimal("3.50"));
-		seventhAction.setDiscount(new BigDecimal("29"));
+		seventhAction.setBasePrice(new BigDecimal("3.50"));
+		seventhAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar eighthStartDate = getCurrentDate();
 		eighthStartDate.add(Calendar.DAY_OF_MONTH, -20);
 		Calendar eighthEndDate = getCurrentDate();
 		eighthEndDate.add(Calendar.DAY_OF_MONTH, 20);
 		eighthAction = new Action(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
-		eighthAction.setPrice(new BigDecimal("3.50"));
-		eighthAction.setDiscount(new BigDecimal("50"));
+		eighthAction.setBasePrice(new BigDecimal("3.50"));
+		eighthAction.setDiscountPercent(new BigDecimal("50"));
 		Calendar ninthStartDate = getCurrentDate();
 		ninthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar ninthEndDate = getCurrentDate();
 		ninthEndDate.add(Calendar.DAY_OF_MONTH, 14);
 		ninthAction = new Action(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
-		ninthAction.setPrice(new BigDecimal("15.05"));
-		ninthAction.setDiscount(new BigDecimal("29"));
+		ninthAction.setBasePrice(new BigDecimal("15.05"));
+		ninthAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar tenthStartDate = getCurrentDate();
 		tenthStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar tenthEndDate = getCurrentDate();
 		tenthEndDate.add(Calendar.DAY_OF_MONTH, 7);
 		tenthAction = new Action(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
-		tenthAction.setPrice(new BigDecimal("7.15"));
-		tenthAction.setDiscount(new BigDecimal("23"));
+		tenthAction.setBasePrice(new BigDecimal("7.15"));
+		tenthAction.setDiscountPercent(new BigDecimal("23"));
 		Calendar eleventhStartDate = getCurrentDate();
 		eleventhStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar eleventhEndDate = getCurrentDate();
 		eleventhEndDate.add(Calendar.DAY_OF_MONTH, 5);
 		eleventhAction = new Action(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
-		eleventhAction.setPrice(new BigDecimal("10.00"));
-		eleventhAction.setDiscount(new BigDecimal("23"));
+		eleventhAction.setBasePrice(new BigDecimal("10.00"));
+		eleventhAction.setDiscountPercent(new BigDecimal("23"));
 		Calendar twelvethStartDate = getCurrentDate();
 		twelvethStartDate.add(Calendar.DAY_OF_MONTH, -21);
 		Calendar twelvethEndDate = getCurrentDate();
 		twelvethEndDate.add(Calendar.DAY_OF_MONTH, 21);
 		twelvethAction = new Action(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
-		twelvethAction.setPrice(new BigDecimal("1.50"));
-		twelvethAction.setDiscount(new BigDecimal("33"));
+		twelvethAction.setBasePrice(new BigDecimal("1.50"));
+		twelvethAction.setDiscountPercent(new BigDecimal("33"));
 		Calendar thirteenthStartDate = getCurrentDate();
 		thirteenthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar thirteenthEndDate = getCurrentDate();
 		thirteenthEndDate.add(Calendar.DAY_OF_MONTH, 21);
 		thirteenthAction = new Action(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
-		thirteenthAction.setPrice(new BigDecimal("7.50"));
-		thirteenthAction.setDiscount(new BigDecimal("47"));
+		thirteenthAction.setBasePrice(new BigDecimal("7.50"));
+		thirteenthAction.setDiscountPercent(new BigDecimal("47"));
 		Calendar fourteenthStartDate = getCurrentDate();
 		fourteenthStartDate.add(Calendar.DAY_OF_MONTH, -28);
 		Calendar fourteenthEndDate = getCurrentDate();
 		fourteenthEndDate.add(Calendar.DAY_OF_MONTH, 28);
 		fourteenthAction = new Action(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
 		fourteenthAction.setDiscountPrice(new BigDecimal("20.00"));
-		fourteenthAction.setDiscount(new BigDecimal("25"));
+		fourteenthAction.setDiscountPercent(new BigDecimal("25"));
 		testEntityManager.flush();
 		//Subcategory and action IDs saving.
 		firstSubcategoryId = firstSubcategory.getId();
@@ -316,9 +326,9 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain: ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"measure\":\"g\",\"manufacturer\":\"Seventh product manufacturer\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"price\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"measure\":\"kg\",\"manufacturer\":\"Eighth product manufacturer\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"price\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"measure\":\"l\",\"manufacturer\":\"Fifth product manufacturer\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"price\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"measure\":\"KG\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"measure\":\"PC\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"measure\":\"KG\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	
@@ -384,9 +394,9 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"measure\":\"g\",\"manufacturer\":\"Seventh product manufacturer\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"price\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"measure\":\"kg\",\"manufacturer\":\"Eighth product manufacturer\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"price\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"measure\":\"l\",\"manufacturer\":\"Fifth product manufacturer\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"price\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"unit\":\"KG\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"unit\":\"PC\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"unit\":\"KG\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	

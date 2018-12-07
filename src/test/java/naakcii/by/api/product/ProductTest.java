@@ -195,9 +195,12 @@ private static Validator validator;
 	public void test_product_is_valid() {
 		Product product = new Product("1000123456789", "Product name", true, getSubcategory());
 		createActions(product);
-		product.setMeasure("l");
+		product.setUnit(Unit.KG);
 		product.setPicture("Path to picture");
 		product.setQuantity(new BigDecimal("1000.500"));
+		product.setManufacturer("Manufacturer");
+		product.setBrand("Brand");
+		product.setCountryOfOrigin("Country of origin");
 		Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as product is valid:", 0, constraintViolations.size());
 	}

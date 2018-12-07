@@ -12,14 +12,12 @@ public class ChainDTO {
     private Long id;
     private String name;
     private String logo;
-    private String logoSmall;
     private String link;
     
     public ChainDTO(Chain chain) {
     	this.id = chain.getId();
     	this.name = chain.getName();
     	this.logo = chain.getLogo();
-    	this.logoSmall = chain.getLogoSmall();
     	this.link = chain.getLink();
     }
 }

@@ -88,37 +88,37 @@ public class Action implements Serializable {
     @EmbeddedId
     private Id id = new Id();
 
-    @Column(name = "ACTION_PRICE")
+    @Column(name = "ACTION_BASE_PRICE")
     @Digits(
     	integer = 2, 
     	fraction = 2,
-    	message = "Price of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    	message = "Base price of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
     	value = "25", 
     	inclusive = true,
-    	message = "Price of the action product '${validatedValue}' must be lower than '{value}'."
+    	message = "Base price of the action product '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
        	value = "0.20", 
        	inclusive = true,
-       	message = "Price of the action product '${validatedValue}' must be higher than '{value}'."
+       	message = "Base price of the action product '${validatedValue}' must be higher than '{value}'."
     )
-    private BigDecimal price;
+    private BigDecimal basePrice;
 
-    @Column(name = "ACTION_DISCOUNT")
+    @Column(name = "ACTION_DISCOUNT_PERCENT")
     @Digits(
     	integer = 2, 
     	fraction = 0,
-    	message = "Discount of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    	message = "Discount percent of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
         value = "50", 
         inclusive = true,
-        message = "Discount of the action product '${validatedValue}' must be lower than '{value}'."
+        message = "Discount percent of the action product '${validatedValue}' must be lower than '{value}'."
     )
-    @PositiveOrZero(message = "Discount of the action product '${validatedValue}' mustn't be negative.")
-    private BigDecimal discount;
+    @PositiveOrZero(message = "Discount percent of the action product '${validatedValue}' mustn't be negative.")
+    private BigDecimal discountPercent;
 
     @Column(name = "ACTION_DISCOUNT_PRICE")
     @NotNull(message = "Discount price of the action product mustn't be null.")
@@ -169,7 +169,7 @@ public class Action implements Serializable {
     private Chain chain;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
+    @JoinColumn(name = "ACTION_TYPE_ID")
     @NotNull(message = "Action must have type.")
     @Valid
     private ActionType type;

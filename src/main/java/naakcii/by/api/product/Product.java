@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +35,7 @@ import naakcii.by.api.util.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "quantity", "measure", "actions", "manufacturer", "countryOfOrigin"})
+@EqualsAndHashCode(exclude = {"id", "picture", "quantity", "unit", "actions", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -64,10 +66,6 @@ public class Product implements Serializable {
     )
 	private String name;
 	
-	@Column(name = "PRODUCT_IS_ACTIVE")
-	@NotNull(message = "Product must have field 'isActive' defined.")
-	private Boolean isActive;
-	
 	@Column(name = "PRODUCT_PICTURE")
 	@Size(
 	    	max = 255, 
@@ -84,12 +82,9 @@ public class Product implements Serializable {
 	)
 	private BigDecimal quantity;
 	
-	@Column(name = "PRODUCT_MEASURE")
-	@Size(
-	   	max = 255,
-	   	message = "Measure of the product '${validatedValue}' mustn't be more than '{max}' characters long."
-	)
-	private String measure;
+	@Column(name = "PRODUCT_UNIT")
+	@Enumerated(EnumType.STRING)
+	private Unit unit;
 	
 	@Column(name = "PRODUCT_MANUFACTURER")
 	@Size(
@@ -97,6 +92,13 @@ public class Product implements Serializable {
 	   	message = "Manufacturer of the product '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String manufacturer;
+	
+	@Column(name = "PRODUCT_BRAND")
+	@Size(
+	   	max = 50,
+	   	message = "Brand of the product '${validatedValue}' mustn't be more than '{max}' characters long."
+	)
+	private String brand;
 	
 	@Column(name = "PRODUCT_COUNTRY_OF_ORIGIN")
 	@Size(
@@ -116,6 +118,10 @@ public class Product implements Serializable {
 		@Valid
 		@NotNull(message = "Action mustn't be null.")
 		Action> actions = new HashSet<Action>();
+	
+	@Column(name = "PRODUCT_IS_ACTIVE")
+	@NotNull(message = "Product must have field 'isActive' defined.")
+	private Boolean isActive;
 	
 	public Product(String barcode, String name, Boolean isActive) {
 		this.barcode = barcode;

@@ -44,57 +44,57 @@ public class ActionTest {
 	}
 	
 	@Test
-	public void test_action_price_has_too_many_fraction_digits() {
+	public void test_action_base_price_has_too_many_fraction_digits() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setPrice(new BigDecimal("10.575"));
+		action.setBasePrice(new BigDecimal("10.575"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action price has too many fraction digits:", 1, constraintViolations.size());
-        assertEquals("Price of the action product '10.575' must have up to '2' integer digits and '2' fraction digits.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Base price of the action product '10.575' must have up to '2' integer digits and '2' fraction digits.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_price_is_too_high() {
+	public void test_action_base_price_is_too_high() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setPrice(new BigDecimal("27.50"));
+		action.setBasePrice(new BigDecimal("27.50"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action price is too high:", 1, constraintViolations.size());
-        assertEquals("Price of the action product '27.50' must be lower than '25'.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Base price of the action product '27.50' must be lower than '25'.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_price_is_too_low() {
+	public void test_action_base_price_is_too_low() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setPrice(new BigDecimal("0.15"));
+		action.setBasePrice(new BigDecimal("0.15"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action price is too low:", 1, constraintViolations.size());
-        assertEquals("Price of the action product '0.15' must be higher than '0.20'.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Base price of the action product '0.15' must be higher than '0.20'.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_discount_has_too_many_fraction_digits() {
+	public void test_action_discount_percent_has_too_many_fraction_digits() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setDiscount(new BigDecimal("25.50"));
+		action.setDiscountPercent(new BigDecimal("25.50"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action discount has too many fraction digits:", 1, constraintViolations.size());
-        assertEquals("Discount of the action product '25.50' must have up to '2' integer digits and '0' fraction digits.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Discount percent of the action product '25.50' must have up to '2' integer digits and '0' fraction digits.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_discount_is_too_high() {
+	public void test_action_discount_percent_is_too_high() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setDiscount(new BigDecimal("75"));
+		action.setDiscountPercent(new BigDecimal("75"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action discount is too high:", 1, constraintViolations.size());
-        assertEquals("Discount of the action product '75' must be lower than '50'.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Discount percent of the action product '75' must be lower than '50'.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_discount_is_negative() {
+	public void test_action_discount_percent_is_negative() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("5.25"), getActionType(), getStartDate(), getEndDate());
-		action.setDiscount(new BigDecimal("-10"));
+		action.setDiscountPercent(new BigDecimal("-10"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as action discount is negative:", 1, constraintViolations.size());
-        assertEquals("Discount of the action product '-10' mustn't be negative.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Discount percent of the action product '-10' mustn't be negative.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
@@ -201,8 +201,8 @@ public class ActionTest {
 	@Test
 	public void test_action_is_valid() {
 		Action action = new Action(new Product(), new Chain(), new BigDecimal("15.25"), getActionType(), getStartDate(), getEndDate());
-		action.setPrice(new BigDecimal("20.75"));
-		action.setDiscount(new BigDecimal("10"));
+		action.setBasePrice(new BigDecimal("20.75"));
+		action.setDiscountPercent(new BigDecimal("10"));
 		Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as action is valid:", 0, constraintViolations.size());
 	}

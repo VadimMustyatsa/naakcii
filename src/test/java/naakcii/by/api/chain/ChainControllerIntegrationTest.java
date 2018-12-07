@@ -54,13 +54,10 @@ public class ChainControllerIntegrationTest {
 	private List<Chain> createListOfChains() {
 		Chain firstChain = new Chain("First chain", "First chain link", true);
 		firstChain.setLogo("First chain logo");
-		firstChain.setLogoSmall("First chain small logo");
 		Chain secondChain = new Chain("Second chain", "Second chain link", true);
 		secondChain.setLogo("Second chain logo");
-		secondChain.setLogoSmall("Second chain small logo");
 		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
 		thirdChain.setLogo("Third chain logo");
-		thirdChain.setLogoSmall("Third chain small logo");
 		testEntityManager.persist(firstChain);
 		testEntityManager.persist(secondChain);
 		testEntityManager.persist(thirdChain);
@@ -88,9 +85,9 @@ public class ChainControllerIntegrationTest {
 								  .andReturn();
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should be: ["
-				   + "{\"id\":1,\"name\":\"First chain\",\"logo\":\"First chain logo\",\"logoSmall\":\"First chain small logo\",\"link\":\"First chain link\"},"
-				   + "{\"id\":2,\"name\":\"Second chain\",\"logo\":\"Second chain logo\",\"logoSmall\":\"Second chain small logo\",\"link\":\"Second chain link\"},"
-				   + "{\"id\":3,\"name\":\"Third chain\",\"logo\":\"Third chain logo\",\"logoSmall\":\"Third chain small logo\",\"link\":\"Third chain link\"}"
+				   + "{\"id\":1,\"name\":\"First chain\",\"logo\":\"First chain logo\",\"link\":\"First chain link\"},"
+				   + "{\"id\":2,\"name\":\"Second chain\",\"logo\":\"Second chain logo\",\"link\":\"Second chain link\"},"
+				   + "{\"id\":3,\"name\":\"Third chain\",\"logo\":\"Third chain logo\",\"link\":\"Third chain link\"}"
 				   + "].", expectedJson, resultJson);					
 	}
 }

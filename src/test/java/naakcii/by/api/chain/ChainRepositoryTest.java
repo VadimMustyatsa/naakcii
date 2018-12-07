@@ -32,7 +32,6 @@ public class ChainRepositoryTest {
 	public void setUp() {
 		chain = new Chain("Chain name", "Chain link", true);
 		chain.setLogo("Chain logo");
-		chain.setLogoSmall("Chain small logo");
 		testEntityManager.persistAndFlush(chain);
 		testEntityManager.detach(chain);
 	}

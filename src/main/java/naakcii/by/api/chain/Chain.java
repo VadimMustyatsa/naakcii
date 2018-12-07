@@ -26,7 +26,7 @@ import naakcii.by.api.util.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "logo", "logoSmall", "actions"})
+@EqualsAndHashCode(exclude = {"id", "logo", "actions"})
 @Entity
 @Table(name = "CHAIN")
 public class Chain implements Serializable {
@@ -54,17 +54,6 @@ public class Chain implements Serializable {
 	)
 	private String logo;
 	
-	@Column(name = "CHAIN_LOGO_SMALL")
-	@Size(
-	   	max = 255,
-	   	message = "Path to the small logo of the chain '${validatedValue}' mustn't be more than '{max}' characters long."
-	)
-	private String logoSmall;
-
-	@Column(name = "CHAIN_IS_ACTIVE")
-	@NotNull(message = "Chain must have field 'isActive' defined.")
-	private Boolean isActive;
-	
 	@Column(name = "CHAIN_LINK")
 	@NotNull(message = "Chain must have field 'link' defined.")
 	@PureSize(
@@ -79,6 +68,10 @@ public class Chain implements Serializable {
 		@Valid
 		@NotNull(message = "Action mustn't be null.")
 		Action> actions = new HashSet<Action>();
+	
+	@Column(name = "CHAIN_IS_ACTIVE")
+	@NotNull(message = "Chain must have field 'isActive' defined.")
+	private Boolean isActive;
 		
 	public Chain(String name, String link, Boolean isActive) {
 		this.name = name;
