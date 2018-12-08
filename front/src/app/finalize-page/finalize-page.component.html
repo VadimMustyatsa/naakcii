@@ -149,15 +149,15 @@
       <div class="empty-small"></div>
     </div>
     <div class="finalizeFooterButton">
-      <div class="back-to-products-btn tooltipped" data-position="top" data-tooltip="Вернуться к товарам">
+      <div class="back-to-products-btn">
         <a routerLink="/form-shopping-list" class="deep-orange waves-effect btn">
           <i class="material-icons">arrow_back</i>
           <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Вернуться к товарам</span>
         </a>
       </div>
       <div class="pdf-btn">
-        <a href="javascript:void(0);" (click)="generatePDF()" data-position="top" data-tooltip="Скачать в PDF"
-           class="deep-orange waves-effect waves-light btn button-icon-pdf tooltipped"
+        <a href="javascript:void(0);" (click)="generatePDF()"
+           class="deep-orange waves-effect waves-light btn button-icon-pdf"
            (click)="openModal()">
           <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Скачать</span>
           <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>

@@ -19,7 +19,7 @@ import {BreakPointCheckService} from "../shared/services/breakpoint-check.servic
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class FinalizePageComponent implements OnInit, OnDestroy {
+export class FinalizePageComponent implements OnInit {
   undiscountProduct: any;
   chainListExist: ChainLine[] = null;
   undiscount: Array<{text:string; id: string}> ;
@@ -62,11 +62,6 @@ export class FinalizePageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
-  }
-
-  ngOnDestroy() {
-    const tooltip = document.getElementsByClassName('material-tooltip') as HTMLCollectionOf<HTMLElement>;
-    tooltip[0].style.display = 'none';
   }
 
   setImgStyles(pict) {
