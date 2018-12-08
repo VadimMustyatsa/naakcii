@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
+import {Component, ElementRef, OnInit, OnDestroy, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
@@ -19,7 +19,7 @@ import {BreakPointCheckService} from "../shared/services/breakpoint-check.servic
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class FinalizePageComponent implements OnInit {
+export class FinalizePageComponent implements OnInit, OnDestroy {
   undiscountProduct: any;
   chainListExist: ChainLine[] = null;
   undiscount: Array<{text:string; id: string}> ;
@@ -62,6 +62,11 @@ export class FinalizePageComponent implements OnInit {
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
+  }
+
+  ngOnDestroy() {
+    const tooltip = document.getElementsByClassName('material-tooltip') as HTMLCollectionOf<HTMLElement>;
+    tooltip[0].style.display = 'none';
   }
 
   setImgStyles(pict) {
@@ -166,9 +171,13 @@ export class FinalizePageComponent implements OnInit {
     this.undiscountStorage.setToUndiscount(this.undiscount);
   };
 
-  AddUndiscountProduct() {
+  addUndiscountProduct() {
+    window.scrollTo({
+      top: 10000,
+      behavior: "smooth"
+    });
     let { undiscountProduct, undiscount } = this;
-    if( undiscountProduct.length > 2 && undiscountProduct.length<50) {
+    if (undiscountProduct.length > 2 && undiscountProduct.length<50) {
       undiscount.push({
         text: undiscountProduct,
         id: (+(new Date())).toString()
@@ -194,6 +203,7 @@ export class FinalizePageComponent implements OnInit {
   get discountMonth () {
     return Number(new Date()) + 30*24*60*60*1000;
   }
+
 }
 
 

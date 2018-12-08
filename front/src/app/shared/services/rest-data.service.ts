@@ -19,11 +19,15 @@ export class RestDataService {
     return this.http.get<SubCategory[]>(`/api/subcategory/${categoryId}`);
   }
 
-  get getShops() {
+  get getChains() {
     return this.http.get<Storag[]>(`/api/chain`);
   }
 
   getProducts(data) {
     return this.http.get<FoodList[]>(`/api/product/`, {params: data});
+  }
+
+  get statistics() {
+    return this.http.get('/statistic');
   }
 }

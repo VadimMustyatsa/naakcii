@@ -45,6 +45,7 @@ import { TooltipDirective } from './shared/derectives/tooltip.directive';
 import { SessionStorageService } from "./shared/services/session-storage.service";
 import { UndiscountService } from "./shared/services/undiscount.service";
 import { RestDataService } from "./shared/services/rest-data.service";
+import { HomePageService } from "./home-page/home-page-service/home-page.service";
 
 registerLocaleData(localeFr);
 
@@ -87,6 +88,7 @@ registerLocaleData(localeFr);
 
   providers: [
     FoodsStorageService,
+    HomePageService,
     Chain,
     Cart,
     FoodsCategoriesService,

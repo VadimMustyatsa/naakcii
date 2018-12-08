@@ -9,7 +9,7 @@ export class FoodsStorageService {
   }
 
   getAll() {
-    return this.restDataService.getShops
+    return this.restDataService.getChains
       .map(chainList => {
         return chainList.map(chain => {
           return {

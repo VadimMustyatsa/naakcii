@@ -5,7 +5,7 @@
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
      [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div *ngIf="cart.lines.length > 0">
-    <div class="list">Список покупок на сумму: {{cart.cartTotalPrice | currency: "BYN": "code-narrow"}}</div>
+    <div class="list">Список покупок</div>
 
     <ul class="collapsible" data-collapsible="expandable" materialize="collapsible" [materializeParams]="params">
       <li class="collapsible-header list-header">
@@ -124,9 +124,9 @@
           <div class="input-field undiscount-product-input">
             <label for="undiscount-products">Дополните список неакционными товарами</label>
             <input type="text" id="undiscount-products" [(ngModel)]="undiscountProduct"
-                   (keyup.enter)="AddUndiscountProduct()">
+                   (keyup.enter)="addUndiscountProduct()">
           </div>
-          <span (click)="AddUndiscountProduct()"><i class="material-icons">add</i></span>
+          <span (click)="addUndiscountProduct()"><i class="material-icons">add</i></span>
         </div>
       </li>
     </ul>
@@ -149,23 +149,25 @@
       <div class="empty-small"></div>
     </div>
     <div class="finalizeFooterButton">
-      <div class="back-to-products-btn">
+      <div class="back-to-products-btn tooltipped" data-position="top" data-tooltip="Вернуться к товарам">
         <a routerLink="/form-shopping-list" class="deep-orange waves-effect btn">
           <i class="material-icons">arrow_back</i>
-          <span>Вернуться к товарам</span>
+          <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Вернуться к товарам</span>
         </a>
       </div>
       <div class="pdf-btn">
-        <a href="javascript:void(0);" (click)="generatePDF()"
-           class="deep-orange waves-effect waves-light btn button-icon-pdf"
-           (click)="openModal()">Скачать
+        <a href="javascript:void(0);" (click)="generatePDF()" data-position="top" data-tooltip="Скачать в PDF"
+           class="deep-orange waves-effect waves-light btn button-icon-pdf tooltipped"
+           (click)="openModal()">
+          <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Скачать</span>
           <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
         </a>
       </div>
       <div>
         <a href="javascript:void(0);"
-           class="btn tooltipped viber-btn" data-position="top" data-tooltip="Эта функция скоро станет доступна">Отправить
-          в<div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
+           class="btn tooltipped viber-btn" data-position="top" data-tooltip="Эта функция скоро станет доступна">
+          <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Отправить в</span>
+          <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
         </a>
       </div>
     </div>
@@ -234,8 +236,7 @@
       <div class="modal-item">
         <div class="modal-item-content">
           <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/3.png)'}"></div>
-          <p>Если полученный список вас устраивает,
-            вы можете завершить работу с сервисом,
+          <p>Если полученный список вас устраивает, вы можете завершить работу с сервисом,
             закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
         </div>
       </div>

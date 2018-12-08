@@ -1,5 +1,5 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
+import { Component, OnInit, Input} from '@angular/core';
+import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 import {
   trigger,
@@ -8,6 +8,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import {HomePageService} from "../home-page-service/home-page.service";
 
 const titles = ['_ ведущих торговых сетей', '_ акционных товаров', '_% - средний размер достигаемой экономии'];
 
@@ -31,9 +32,10 @@ export class HomeSliderComponent implements OnInit {
   basicData = [0, 0, 0];
   getData = 'inactive';
 
-  constructor(private storageService: FoodsStorageService, public breakPointCheckService: BreakPointCheckService) {}
+  constructor(private storageService: FoodsStorageService, private homePageService: HomePageService, public breakPointCheckService: BreakPointCheckService) {}
 
   ngOnInit() {
+    // this.homePageService.statistics.subscribe(data => console.log(data));
     this.storageService.getAll().subscribe(data => {
       this.basicData[0] = data.length;
       this.getData = 'active';

@@ -1,6 +1,6 @@
 .listContainer {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 130px auto;
 }
 
 .list {
@@ -48,8 +48,16 @@
 }
 
 .total-line {
+  position: fixed;
+  bottom: 45px;
+  z-index: 3;
   display: flex;
   width: 100%;
+  max-width: 1200px;
+  background-color: white;
+  border: 2px #D7D7D7;
+  box-shadow: 0 2px 2px 0 #D7D7D7;
+
 }
 
 .total-line {
@@ -180,13 +188,20 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
+  position: fixed;
+  bottom: -4px;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  background-color: white;
   div {
     margin-bottom: 3px;
   }
   a {
-    width: 270px;
+    width: 230px;
     margin: 0 10px 10px 0;
+    padding: 0;
+    font-size: 13px;
   }
 }
 
@@ -388,6 +403,13 @@
   .item-image {
     flex: .7;
   }
+
+
+  .finalizeFooterButton {
+    a {
+      width: 80px;
+    }
+  }
 }
 
 .isHandset {
@@ -428,6 +450,7 @@
 
 /*-----------Snackbar-----------------------*/
 .snack-wrap {
+  opacity: .7;
   display:block;
   position:absolute;
   top:40px;
