@@ -17,6 +17,16 @@
   border-radius: 28px;
 }
 
+.confirm-btn {
+  margin: 0 auto;
+  display: block;
+}
+
+.confirmation-btn {
+  padding-top: 10px;
+}
+
+
 .collapsible {
   margin: 0;
   border: none;
@@ -210,17 +220,17 @@
 
 .overlay-text.isTablet {
   width: 100%;
-  bottom: 1%;
-  top: auto;
+  bottom: auto;
+  top: 68%;
   right: auto;
 }
 
 .overlay-text.isHandset {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .overlay-text.isMobile {
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .chainPercent {
@@ -254,6 +264,19 @@
   }
   .text {
     font-size: 16px;
+  }
+  .chainListWrap {
+    width: 85%;
+    left: -10px;
+  }
+  .collection-header span {
+    font-size: 12px;
+  }
+  .total-goods {
+    padding-left: 30px;
+  }
+  .chainCountGoods {
+    padding-left: 42px;
   }
 }
 

@@ -3,12 +3,10 @@ import { NgModule } from '@angular/core';
 import { MaterializeModule } from 'angular2-materialize';
 import { NguCarouselModule } from '@ngu/carousel';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { FoodsPageComponent } from './foods-page/foods-page.component';
-import { RouterModule } from '@angular/router';
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeSliderComponent } from './home-page/home-slider/home-slider.component';
@@ -33,19 +31,21 @@ import { Cart } from './shared/cart/cart.model';
 import { FinalizePageComponent } from './finalize-page/finalize-page.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakPointCheckService } from './shared/services/breakpoint-check.service';
-import {Chain} from './shared/chain/chain.model';
-import {LOCALE_ID} from "@angular/core";
+import { Chain} from './shared/chain/chain.model';
+import { LOCALE_ID} from "@angular/core";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeDiplomComponent } from './home-page/home-diplom/home-diplom.component';
 import { HomePartnersComponent } from './home-page/home-partners/home-partners.component';
-import {PdfGeneratorService} from "./shared/services/pdf-generator.service";
-import {AppRouterModule} from "./shared/modules/router/router.module";
-import {FinalizePageGuard} from "./shared/guards/finalize-page.guard";
+import { PdfGeneratorService } from "./shared/services/pdf-generator.service";
+import { AppRouterModule } from "./shared/routing/router.module";
+import { FinalizePageGuard } from "./shared/guards/finalize-page.guard";
 import { TooltipDirective } from './shared/derectives/tooltip.directive';
-import {SessionStorageService} from "./shared/services/session-storage.service";
-import {UndiscountService} from "./shared/services/undiscount.service";
+import { SessionStorageService } from "./shared/services/session-storage.service";
+import { UndiscountService } from "./shared/services/undiscount.service";
+import { RestDataService } from "./shared/services/rest-data.service";
+import { HomePageService } from "./home-page/home-page-service/home-page.service";
 
 registerLocaleData(localeFr);
 
@@ -88,6 +88,7 @@ registerLocaleData(localeFr);
 
   providers: [
     FoodsStorageService,
+    HomePageService,
     Chain,
     Cart,
     FoodsCategoriesService,
@@ -96,6 +97,7 @@ registerLocaleData(localeFr);
     SessionStorageService,
     UndiscountService,
     FinalizePageGuard,
+    RestDataService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
   bootstrap: [AppComponent]
