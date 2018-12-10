@@ -1,5 +1,7 @@
 package naakcii.by.api.subscriber.service;
 
+import naakcii.by.api.subscriber.service.modelDTO.SubscriberDTO;
+
 public interface SubscriberService {
-    void save(String email);
+    SubscriberDTO save(String email);
 }

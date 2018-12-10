@@ -18,12 +18,15 @@ public class SubscriberServiceImpl implements SubscriberService {
     private SubscriberConverter subscriberConverter;
 
     @Override
-    public void save(String email) {
+    public SubscriberDTO save(String email) {
         Subscriber subscriberByEmail = subscriberRepository.findByEmail(email);
+        SubscriberDTO returnSubscriberDto = new SubscriberDTO();
         if (subscriberByEmail == null) {
             SubscriberDTO subscriberDTO = new SubscriberDTO(email);
             Subscriber subscriber = subscriberConverter.convertFromDto(subscriberDTO);
-            subscriberRepository.save(subscriber);
+            subscriber = subscriberRepository.save(subscriber);
+            returnSubscriberDto = subscriberConverter.convertToDto(subscriber);
         }
+        return returnSubscriberDto;
     }
 }
