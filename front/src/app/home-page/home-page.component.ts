@@ -34,7 +34,7 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('Акции и скидки в магазинах Минска и других городах - Наакции.бай.');
-    this.metaService.addTag({name:"description",content:"Сервис экономии. Товары на скидках и акциях в магазинах и торговых сетях. Составьте свой список покупок, распечайте его или перешлите в Viber"});
+    this.metaService.addTag({name:"description",content:"Сервис экономии. Товары на скидках и акциях в магазинах и торговых сетях. Составьте свой список покупок, распечайте его или перешлите в Viber."});
   }
 
   @HostListener('window:scroll', ['$event'])
