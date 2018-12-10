@@ -2,6 +2,7 @@ package naakcii.by.api.subscriber.controller;
 
 import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subscriber.service.SubscriberService;
+import naakcii.by.api.subscriber.service.modelDTO.SubscriberDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -26,11 +33,28 @@ public class SubscriberControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void expectStatusOk() throws Exception {
+    public void givenSubscriberDtoThenReturnJson() throws Exception {
         String jsonString = "{\"email\" : \"email@email.com\"}";
-        mockMvc.perform(post("/subscribers/add").content(jsonString)
+        String email = "email@email.com";
+        SubscriberDTO subscriberDTO = new SubscriberDTO();
+        subscriberDTO.setId(1L);
+        subscriberDTO.setEmail(email);
+        given(subscriberService.save(email)).willReturn(subscriberDTO);
+        mockMvc.perform(post("/subscribers/add")
+                .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(ApiConfigConstants.API_V1_0))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+                .andExpect(content().contentTypeCompatibleWith(ApiConfigConstants.API_V1_0))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.email", is(email)));
+    }
+
+    @Test
+    public void emptyBody_ShouldReturnHttpStatusCode400() throws Exception {
+        mockMvc.perform(post("/subscribers/add")
+                .accept(ApiConfigConstants.API_V1_0))
+                .andExpect(status().is4xxClientError());
     }
 }

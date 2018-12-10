@@ -3,6 +3,7 @@ package naakcii.by.api.subscriber.controller;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subscriber.service.SubscriberService;
+import naakcii.by.api.subscriber.service.modelDTO.SubscriberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +18,8 @@ public class SubscriberController {
     private SubscriberService subscriberService;
 
     @PostMapping(value = {"/add"}, produces = ApiConfigConstants.API_V1_0)
-    public void subscribe(@RequestBody ObjectNode json) {
+    public SubscriberDTO subscribe(@RequestBody ObjectNode json) {
         String email = json.get("email").textValue();
-        subscriberService.save(email);
+        return subscriberService.save(email);
     }
 }
