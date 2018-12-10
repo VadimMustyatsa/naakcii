@@ -25,6 +25,5 @@ public class SubscriberServiceImpl implements SubscriberService {
             Subscriber subscriber = subscriberConverter.convertFromDto(subscriberDTO);
             subscriberRepository.save(subscriber);
         }
-
     }
 }
