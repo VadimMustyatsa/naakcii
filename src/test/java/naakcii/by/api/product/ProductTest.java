@@ -147,36 +147,6 @@ private static Validator validator;
 	}
 	
 	@Test
-	public void test_product_quantity_has_too_many_integer_digits() {
-		Product product = new Product("1000123456789", "Product name", true, getSubcategory());
-		createActions(product);
-		product.setQuantity(new BigDecimal("10000"));
-		Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as product quantity has too many integer digits:", 1, constraintViolations.size());
-        assertEquals("Quantity of the product '10000' must have up to '4' integer digits and '3' fraction digits.", constraintViolations.iterator().next().getMessage());
-	}
-	
-	@Test
-	public void test_product_quantity_has_too_many_fraction_digits() {
-		Product product = new Product("1000123456789", "Product name", true, getSubcategory());
-		createActions(product);
-		product.setQuantity(new BigDecimal("0.1000"));
-		Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as product quantity has too many fraction digits:", 1, constraintViolations.size());
-        assertEquals("Quantity of the product '0.1000' must have up to '4' integer digits and '3' fraction digits.", constraintViolations.iterator().next().getMessage());
-	}
-	
-	@Test
-	public void test_product_quantity_is_negative() {
-		Product product = new Product("1000123456789", "Product name", true, getSubcategory());
-		createActions(product);
-		product.setQuantity(new BigDecimal("-100"));
-		Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as product quantity is negative:", 1, constraintViolations.size());
-        assertEquals("Quantity of the product '-100' must be positive.", constraintViolations.iterator().next().getMessage());
-	}
-	
-	@Test
 	public void test_product_set_of_actoins_contains_invalid_elements() {
 		Product product = new Product("1000123456789", "Product name", false, getSubcategory());
 		createInvalidActions(product);
@@ -197,7 +167,6 @@ private static Validator validator;
 		createActions(product);
 		product.setUnit(Unit.KG);
 		product.setPicture("Path to picture");
-		product.setQuantity(new BigDecimal("1000.500"));
 		product.setManufacturer("Manufacturer");
 		product.setBrand("Brand");
 		product.setCountryOfOrigin("Country of origin");

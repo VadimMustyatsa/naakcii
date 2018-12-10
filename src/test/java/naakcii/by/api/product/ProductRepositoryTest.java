@@ -47,12 +47,10 @@ public class ProductRepositoryTest {
 		Chain chain = new Chain("Chain name", "Chain link", true);
 		chain.setLogo("Chain logo");
 		ActionType actionType = new ActionType("Action type name");
-		actionType.setIcon("Action type icon");
-		actionType.setTooltipText("Action type tooltip text.");
+		actionType.setTooltip("Action type tooltip text.");
 		product = new Product("1000123456789", "Product name", true, subcategory);
 		product.setUnit(Unit.KG);
 		product.setPicture("Product picture");
-		product.setQuantity(new BigDecimal("100.00"));
 		product.setManufacturer("Manufacturer");
 		product.setBrand("Brand");
 		product.setCountryOfOrigin("Country of origin");

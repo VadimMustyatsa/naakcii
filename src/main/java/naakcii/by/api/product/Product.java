@@ -35,7 +35,7 @@ import naakcii.by.api.util.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "quantity", "unit", "actions", "manufacturer", "brand", "countryOfOrigin"})
+@EqualsAndHashCode(exclude = {"id", "picture", "unit", "actions", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -72,15 +72,6 @@ public class Product implements Serializable {
 	    	message = "Path to the picture of the product '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String picture;
-	
-	@Column(name = "PRODUCT_QUANTITY")
-	@Positive(message = "Quantity of the product '${validatedValue}' must be positive.")
-	@Digits(
-		integer = 4, 
-		fraction = 3,
-		message = "Quantity of the product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
-	)
-	private BigDecimal quantity;
 	
 	@Column(name = "PRODUCT_UNIT")
 	@Enumerated(EnumType.STRING)

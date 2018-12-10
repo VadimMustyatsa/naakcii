@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import naakcii.by.api.config.ApiConfigConstants;
+
 import java.util.List;
 
 @RestController
-@RequestMapping({"/category"})
+@RequestMapping({"/categories"})
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -18,7 +20,7 @@ public class CategoryController {
     	this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping(produces = ApiConfigConstants.API_V_2_0)
     public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
     }

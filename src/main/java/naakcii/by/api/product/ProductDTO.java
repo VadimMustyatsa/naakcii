@@ -1,7 +1,6 @@
 package naakcii.by.api.product;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Formatter;
 
@@ -20,8 +19,7 @@ public class ProductDTO {
 	private Long productId;
     private Long chainId;
     private String name;
-    private BigDecimal quantity;
-    private Unit unit;
+    private String unit;
     private String manufacturer;
     private String brand;
     private String countryOfOrigin;
@@ -29,16 +27,15 @@ public class ProductDTO {
     private BigDecimal basePrice;
     private BigDecimal discountPercent;
     private BigDecimal discountPrice;
-    private String startDate;
-    private String endDate;
+    private Long startDate;
+    private Long endDate;
     private ActionTypeDTO actionType;
     
     public ProductDTO(Action action) {
     	this.productId = action.getId().getProductId();
     	this.chainId = action.getId().getProductId();
     	this.name = action.getProduct().getName();
-    	this.quantity = action.getProduct().getQuantity().setScale(1, RoundingMode.HALF_DOWN);
-    	this.unit = action.getProduct().getUnit();
+    	this.unit = action.getProduct().getUnit().getRepresentation();
     	this.manufacturer = action.getProduct().getManufacturer();
     	this.brand = action.getProduct().getBrand();
     	this.countryOfOrigin = action.getProduct().getCountryOfOrigin();
@@ -46,8 +43,8 @@ public class ProductDTO {
     	this.basePrice = action.getBasePrice();
     	this.discountPercent = action.getDiscountPercent();
     	this.discountPrice = action.getDiscountPrice();
-    	this.startDate = getFormattedDate(action.getStartDate());
-    	this.endDate = getFormattedDate(action.getEndDate());;
+    	this.startDate = action.getStartDate().getTimeInMillis();
+    	this.endDate = action.getEndDate().getTimeInMillis();
     	this.actionType = new ActionTypeDTO(action.getType());
     }
     

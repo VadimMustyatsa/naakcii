@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import naakcii.by.api.config.ApiConfigConstants;
+
 import java.util.List;
 
 @RestController
-@RequestMapping({"/subcategory"})
+@RequestMapping({"/subcategories"})
 public class SubcategoryController {
 
     private SubcategoryService subcategoryService;
@@ -19,7 +21,7 @@ public class SubcategoryController {
     	this.subcategoryService = subcategoryService;
     }
 
-    @GetMapping(path = "/{categoryId}")
+    @GetMapping(path = "/{categoryId}", produces = ApiConfigConstants.API_V_2_0)
     public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(@PathVariable("categoryId") Long categoryId) {
         return subcategoryService.getAllSubcategoriesByCategoryId(categoryId);
     }

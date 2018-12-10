@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -36,6 +37,7 @@ import naakcii.by.api.action.Action;
 import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -105,63 +107,53 @@ public class ProductControllerIntegrationTest {
 		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", true);
 		//Creation of action types.
 		ActionType firstActionType = new ActionType("First action type");
-		firstActionType.setIcon("First action type icon");
-		firstActionType.setTooltipText("First action type tooltip text.");
+		firstActionType.setTooltip("First action type tooltip text.");
 		ActionType secondActionType = new ActionType("Second action type");
-		secondActionType.setIcon("Second action type icon");
-		secondActionType.setTooltipText("Second action type tooltip text.");
+		secondActionType.setTooltip("Second action type tooltip text.");
 		//Creation of products.
 		Product firstProduct = new Product("10000000000000", "First product", true, firstSubcategory);
-		firstProduct.setQuantity(new BigDecimal("250"));
 		firstProduct.setUnit(Unit.KG);
 		firstProduct.setManufacturer("First product manufacturer");
 		firstProduct.setBrand("First product brand");
 		firstProduct.setCountryOfOrigin("Belarus");
 		firstProduct.setPicture("Path to the picture of the first product");
 		Product secondProduct = new Product("20000000000000", "Second product", true, firstSubcategory);
-		secondProduct.setQuantity(new BigDecimal("500"));
 		secondProduct.setUnit(Unit.PC);
 		secondProduct.setManufacturer("Second product manufacturer");
 		secondProduct.setBrand("First product brand");
 		secondProduct.setCountryOfOrigin("Belarus");
 		secondProduct.setPicture("Path to the picture of the second product");
 		Product thirdProduct = new Product("30000000000000", "Third product", true, firstSubcategory);
-		thirdProduct.setQuantity(new BigDecimal("950"));
 		thirdProduct.setUnit(Unit.KG);
 		thirdProduct.setManufacturer("Third product manufacturer");
 		thirdProduct.setBrand("First product brand");
 		thirdProduct.setCountryOfOrigin("Belarus");
 		thirdProduct.setPicture("Path to the picture of the third product");
 		Product fourthProduct = new Product("40000000000000", "Fourth product", true, secondSubcategory);
-		fourthProduct.setQuantity(new BigDecimal("1"));
 		fourthProduct.setUnit(Unit.PC);
 		fourthProduct.setManufacturer("Fourth product manufacturer");
 		fourthProduct.setBrand("First product brand");
 		fourthProduct.setCountryOfOrigin("Belarus");
 		fourthProduct.setPicture("Path to the picture of the fourth product");
 		Product fifthProduct = new Product("50000000000000", "Fifth product", true, secondSubcategory);
-		fifthProduct.setQuantity(new BigDecimal("2"));
 		fifthProduct.setUnit(Unit.KG);
 		fifthProduct.setManufacturer("Fifth product manufacturer");
 		fifthProduct.setBrand("First product brand");
 		fifthProduct.setCountryOfOrigin("Belarus");
 		fifthProduct.setPicture("Path to the picture of the fifth product");
 		Product sixthProduct = new Product("60000000000000", "Sixth product", true, thirdSubcategory);
-		sixthProduct.setQuantity(new BigDecimal("0.500"));
 		sixthProduct.setUnit(Unit.PC);
 		sixthProduct.setManufacturer("Sixth product manufacturer");
 		sixthProduct.setBrand("First product brand");
 		sixthProduct.setCountryOfOrigin("Russia");
 		sixthProduct.setPicture("Path to the picture of the sixth product");
 		Product seventhProduct = new Product("70000000000000", "Seventh product", true, thirdSubcategory);
-		seventhProduct.setQuantity(new BigDecimal("200"));
 		seventhProduct.setUnit(Unit.KG);
 		seventhProduct.setManufacturer("Seventh product manufacturer");
 		seventhProduct.setBrand("First product brand");
 		seventhProduct.setCountryOfOrigin("Latvia");
 		seventhProduct.setPicture("Path to the picture of the seventh product");
 		Product eighthProduct = new Product("80000000000000", "Eighth product", true, fourthSubcategory);
-		eighthProduct.setQuantity(new BigDecimal("2.5"));
 		eighthProduct.setUnit(Unit.PC);
 		eighthProduct.setManufacturer("Eighth product manufacturer");
 		eighthProduct.setBrand("First product brand");
@@ -297,8 +289,8 @@ public class ProductControllerIntegrationTest {
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_1_and_page_size_is_3() throws Exception {
-		int page = 0;
-		int size = 3;
+		String page = "0";
+		String size = "3";
 		List<Long> subcategoryIds = new ArrayList<>();
 		subcategoryIds.add(secondSubcategoryId);
 		subcategoryIds.add(thirdSubcategoryId);
@@ -314,11 +306,17 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
-		MvcResult mvcResult = this.mockMvc.perform(get("/products/{chainSet}/{subcategorySet}/{page}/{size}", chains, subcategories, page, size))
-				  .andExpect(status().isOk())
-				  .andExpect(content().contentType("application/json;charset=UTF-8"))
-				  .andDo(print())
-				  .andReturn();
+		MvcResult mvcResult = this.mockMvc.perform(get("/products")
+				  				  .param("chainIds", chains)
+				  				  .param("subcategoryIds", subcategories)
+				  				  .param("page", page)
+				  				  .param("size", size)
+				  				  .accept(ApiConfigConstants.API_V_2_0))
+				  				  .andExpect(status().isOk())
+				  				  .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
+				  				  .andDo(print())
+				  				  .andReturn();
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ProductDTO(twelvethAction));
 		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
@@ -326,16 +324,16 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain: ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"measure\":\"KG\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"measure\":\"PC\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"measure\":\"KG\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_2_and_page_size_is_3() throws Exception {
-		int page = 2;
-		int size = 3;
+		String page = "2";
+		String size = "3";
 		List<Long> subcategoryIds = new ArrayList<>();
 		subcategoryIds.add(secondSubcategoryId);
 		subcategoryIds.add(thirdSubcategoryId);
@@ -351,11 +349,17 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
-		MvcResult mvcResult = this.mockMvc.perform(get("/products/{chainSet}/{subcategorySet}/{page}/{size}", chains, subcategories, page, size))
-				  .andExpect(status().isOk())
-				  .andExpect(content().contentType("application/json;charset=UTF-8"))
-				  .andDo(print())
-				  .andReturn();
+		MvcResult mvcResult = this.mockMvc.perform(get("/products")
+								  .param("chainIds", chains)
+								  .param("subcategoryIds", subcategories)
+								  .param("page", page)
+								  .param("size", size)
+								  .accept(ApiConfigConstants.API_V_2_0))
+				  				  .andExpect(status().isOk())
+				  				  .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
+				  				  .andDo(print())
+				  				  .andReturn();
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
@@ -365,8 +369,8 @@ public class ProductControllerIntegrationTest {
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_size_and_number_are_both_negative() throws Exception {
-		int page = -1;
-		int size = -5;
+		String page = "-1";
+		String size = "-5";
 		List<Long> subcategoryIds = new ArrayList<>();
 		subcategoryIds.add(secondSubcategoryId);
 		subcategoryIds.add(thirdSubcategoryId);
@@ -382,11 +386,17 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
-		MvcResult mvcResult = this.mockMvc.perform(get("/products/{chainSet}/{subcategorySet}/{page}/{size}", chains, subcategories, page, size))
-				  .andExpect(status().isOk())
-				  .andExpect(content().contentType("application/json;charset=UTF-8"))
-				  .andDo(print())
-				  .andReturn();
+		MvcResult mvcResult = this.mockMvc.perform(get("/products")
+								  .param("chainIds", chains)
+								  .param("subcategoryIds", subcategories)
+								  .param("page", page)
+								  .param("size", size)
+								  .accept(ApiConfigConstants.API_V_2_0))
+				  				  .andExpect(status().isOk())
+				  				  .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
+				  				  .andDo(print())
+				  				  .andReturn();
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ProductDTO(twelvethAction));
 		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
@@ -394,9 +404,9 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"quantity\":200.0,\"unit\":\"KG\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discount\":33,\"discountPrice\":1.00,\"startDate\":\"14-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"quantity\":2.5,\"unit\":\"PC\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discount\":47,\"discountPrice\":4.00,\"startDate\":\"28-11-2018\",\"endDate\":\"26-12-2018\",\"actionType\":{\"name\":\"First action type\",\"icon\":\"First action type icon\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"quantity\":2.0,\"unit\":\"KG\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discount\":29,\"discountPrice\":10.75,\"startDate\":\"28-11-2018\",\"endDate\":\"19-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"icon\":\"Second action type icon\",\"tooltipText\":\"Second action type tooltip text.\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	

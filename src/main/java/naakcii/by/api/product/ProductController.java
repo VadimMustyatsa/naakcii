@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import naakcii.by.api.config.ApiConfigConstants;
 
 import java.util.List;
 import java.util.Set;
@@ -24,12 +29,12 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
-	@GetMapping(path = "/{chainSet}/{subcategorySet}/{page}/{size}")
+	@GetMapping(produces = ApiConfigConstants.API_V_2_0)
     public List<ProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
-    		@PathVariable("chainSet") Set<Long> chainIds,
-    		@PathVariable("subcategorySet") Set<Long> subcategoryIds,
-    		@PathVariable("page") Integer page,
-    		@PathVariable("size") Integer size) {
+    		@RequestParam("chainIds") Set<Long> chainIds,
+    		@RequestParam("subcategoryIds") Set<Long> subcategoryIds,
+    		@RequestParam("page") Integer page,
+    		@RequestParam("size") Integer size) {
 		if (page == null || page < 0) {
 			page = DEFAULT_PAGE_NIMBER;
 		}

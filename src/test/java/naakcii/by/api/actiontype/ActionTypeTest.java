@@ -51,8 +51,7 @@ private static Validator validator;
 	@Test
 	public void test_action_type_is_valid() {
 		ActionType actionType = new ActionType("Action type name");
-		actionType.setIcon("Path to icon");
-		actionType.setTooltipText("Tooltip text.");
+		actionType.setTooltip("Tooltip text.");
 		Set<ConstraintViolation<ActionType>> constraintViolations = validator.validate(actionType);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as action type is too valid:", 0, constraintViolations.size());
     }

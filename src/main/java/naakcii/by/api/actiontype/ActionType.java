@@ -19,7 +19,7 @@ import naakcii.by.api.util.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "icon", "tooltipText"})
+@EqualsAndHashCode(exclude = {"id", "tooltip"})
 @Entity
 @Table(name = "ACTION_TYPE")
 public class ActionType implements Serializable {
@@ -40,19 +40,12 @@ public class ActionType implements Serializable {
     )
 	private String name;
 	
-	@Column(name = "ACTION_TYPE_ICON")
-    @Size(
-    	max = 255, 
-    	message = "Path to the icon of the action type '${validatedValue}' mustn't be more than '{max}' characters long."
-    )
-	private String icon;
-	
-	@Column(name = "ACTION_TYPE_TOOLTIP_TEXT")
+	@Column(name = "ACTION_TYPE_TOOLTIP")
 	@Size(
 		max = 225,
-		message = "Tooltip text of the action type '${vallidatedVAlue}' mustn't be more than '{max}' characters long."
+		message = "Tooltip of the action type '${vallidatedVAlue}' mustn't be more than '{max}' characters long."
 	)
-	private String tooltipText;
+	private String tooltip;
 	
 	public ActionType(String name) {
 		this.name = name;

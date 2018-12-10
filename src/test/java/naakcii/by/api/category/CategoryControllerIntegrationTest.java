@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import naakcii.by.api.APIApplication;
+import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -91,9 +93,12 @@ public class CategoryControllerIntegrationTest {
 				.map(CategoryDTO::new)
 				.collect(Collectors.toList());
 		String expectedJson = objectMapper.writeValueAsString(expectedCategoryDTOs);
-		MvcResult mvcResult = this.mockMvc.perform(get("/category"))
+		MvcResult mvcResult = this.mockMvc.perform(get("/categories")
+								  .accept(ApiConfigConstants.API_V_2_0))
 								  .andExpect(status().isOk())
-								  .andExpect(content().contentType("application/json;charset=UTF-8"))
+								  .andExpect(content().contentTypeCompatibleWith(ApiConfigConstants.API_V_2_0))
+								  .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
 								  .andDo(print())
 								  .andReturn();
 		String resultJson = mvcResult.getResponse().getContentAsString();
