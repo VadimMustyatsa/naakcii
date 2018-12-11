@@ -1,7 +1,9 @@
 package naakcii.by.api.product;
 
 public enum Unit {
-	KG("кг"), PC("шт.");
+	
+	KG("кг"), 
+	PC("шт.");
 	
 	private String representation;
 	

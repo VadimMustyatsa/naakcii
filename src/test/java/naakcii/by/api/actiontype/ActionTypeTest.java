@@ -53,6 +53,6 @@ private static Validator validator;
 		ActionType actionType = new ActionType("Action type name");
 		actionType.setTooltip("Tooltip text.");
 		Set<ConstraintViolation<ActionType>> constraintViolations = validator.validate(actionType);
-		assertEquals("Expected size of the ConstraintViolation set should be 0, as action type is too valid:", 0, constraintViolations.size());
+		assertEquals("Expected size of the ConstraintViolation set should be 0, as action type is valid:", 0, constraintViolations.size());
     }
 }

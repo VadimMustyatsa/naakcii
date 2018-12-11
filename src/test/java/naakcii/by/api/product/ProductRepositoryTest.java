@@ -21,6 +21,8 @@ import naakcii.by.api.action.Action;
 import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.country.Country;
+import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -48,15 +50,17 @@ public class ProductRepositoryTest {
 		chain.setLogo("Chain logo");
 		ActionType actionType = new ActionType("Action type name");
 		actionType.setTooltip("Action type tooltip text.");
-		product = new Product("1000123456789", "Product name", true, subcategory);
+		Country country = new Country(CountryCode.BG);
+		product = new Product("1000123456789", "Product name", Unit.KG, true, subcategory);
 		product.setUnit(Unit.KG);
 		product.setPicture("Product picture");
 		product.setManufacturer("Manufacturer");
 		product.setBrand("Brand");
-		product.setCountryOfOrigin("Country of origin");
+		product.setCountryOfOrigin(country);
 		testEntityManager.persist(chain);
 		testEntityManager.persist(category);
 		testEntityManager.persist(actionType);
+		testEntityManager.persist(country);
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.MONTH, 1);

@@ -21,6 +21,7 @@ import naakcii.by.api.action.Action;
 import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 public class ChainTest {
@@ -28,7 +29,7 @@ public class ChainTest {
 private static Validator validator;
 
 	public void createActions(Chain chain) {
-		Product product = new Product("1000123456789", "Product Name", true, new Subcategory("Subcategory name", true));
+		Product product = new Product("1000123456789", "Product Name", Unit.PC, true, new Subcategory("Subcategory name", true));
 		ActionType actionType = new ActionType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
@@ -38,7 +39,7 @@ private static Validator validator;
 	}
 	
 	public void createInvalidActions(Chain chain) {
-		Product product = new Product("1000123456789", "Product Name", true, new Subcategory("Subcategory name", true));
+		Product product = new Product("1000123456789", "Product Name", Unit.PC, true, new Subcategory("Subcategory name", true));
 		ActionType actionType = new ActionType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();

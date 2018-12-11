@@ -29,6 +29,7 @@ import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -89,14 +90,14 @@ public class ActionRepositoryTest {
 		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", true);
 		ActionType firstActionType = new ActionType("First action type");
 		ActionType secondActionType = new ActionType("Second action type");
-		Product firstProduct = new Product("10000000000000", "First product", true, firstSubcategory);
-		Product secondProduct = new Product("20000000000000", "Second product", true, firstSubcategory);
-		Product thirdProduct = new Product("30000000000000", "Third product", true, firstSubcategory);
-		Product fourthProduct = new Product("40000000000000", "Fourth product", true, secondSubcategory);
-		Product fifthProduct = new Product("50000000000000", "Fifth product", true, secondSubcategory);
-		Product sixthProduct = new Product("60000000000000", "Sixth product", true, thirdSubcategory);
-		Product seventhProduct = new Product("70000000000000", "Seventh product", true, thirdSubcategory);
-		Product eighthProduct = new Product("80000000000000", "Eighth product", true, fourthSubcategory);
+		Product firstProduct = new Product("10000000000000", "First product", Unit.PC, true, firstSubcategory);
+		Product secondProduct = new Product("20000000000000", "Second product", Unit.KG, true, firstSubcategory);
+		Product thirdProduct = new Product("30000000000000", "Third product", Unit.PC, true, firstSubcategory);
+		Product fourthProduct = new Product("40000000000000", "Fourth product", Unit.KG, true, secondSubcategory);
+		Product fifthProduct = new Product("50000000000000", "Fifth product", Unit.PC, true, secondSubcategory);
+		Product sixthProduct = new Product("60000000000000", "Sixth product", Unit.KG, true, thirdSubcategory);
+		Product seventhProduct = new Product("70000000000000", "Seventh product", Unit.PC, true, thirdSubcategory);
+		Product eighthProduct = new Product("80000000000000", "Eighth product", Unit.KG, true, fourthSubcategory);
 		testEntityManager.persist(category);
 		testEntityManager.persist(firstChain);
 		testEntityManager.persist(secondChain);

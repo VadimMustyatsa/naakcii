@@ -1,7 +1,6 @@
 package naakcii.by.api.product;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -29,13 +26,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.action.Action;
+import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.util.PureSize;
 
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "unit", "actions", "manufacturer", "brand", "countryOfOrigin"})
+@EqualsAndHashCode(exclude = {"id", "picture", "actions", "manufacturer", "brand"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -75,6 +73,7 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_UNIT")
 	@Enumerated(EnumType.STRING)
+	@NotNull(message = "Unit of the product mustn't be null.")
 	private Unit unit;
 	
 	@Column(name = "PRODUCT_MANUFACTURER")
@@ -91,12 +90,10 @@ public class Product implements Serializable {
 	)
 	private String brand;
 	
-	@Column(name = "PRODUCT_COUNTRY_OF_ORIGIN")
-	@Size(
-	   	max = 50,
-	   	message = "Origin country of the product '${validatedValue}' mustn't be more than '{max}' characters long."
-	)
-	private String countryOfOrigin;
+	@ManyToOne
+	@JoinColumn(name = "PRODUCT_COUNTRY_OF_ORIGIN")
+	@Valid
+	private Country countryOfOrigin;
 	
 	@ManyToOne
 	@JoinColumn(name = "SUBCATEGORY_ID")
@@ -114,23 +111,26 @@ public class Product implements Serializable {
 	@NotNull(message = "Product must have field 'isActive' defined.")
 	private Boolean isActive;
 	
-	public Product(String barcode, String name, Boolean isActive) {
+	public Product(String barcode, String name, Unit unit, Boolean isActive) {
 		this.barcode = barcode;
 		this.name = name;
+		this.unit = unit;
 		this.isActive = isActive;
 	}
 		
-	public Product(String barcode, String name, Boolean isActive, Subcategory subcategory) {
+	public Product(String barcode, String name, Unit unit, Boolean isActive, Subcategory subcategory) {
 		this.barcode = barcode;
 		this.name = name;
+		this.unit = unit;
 		this.isActive = isActive;
 		this.subcategory = subcategory;
 		subcategory.getProducts().add(this);
 	}
 	
-	public Product(String barcode, String name, Boolean isActive, Subcategory subcategory, Set<Action> actions) {
+	public Product(String barcode, String name, Unit unit, Boolean isActive, Subcategory subcategory, Set<Action> actions) {
 		this.barcode = barcode;
 		this.name = name;
+		this.unit = unit;
 		this.isActive = isActive;
 		this.subcategory = subcategory;
 		this.actions = actions;

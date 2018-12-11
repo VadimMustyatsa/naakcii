@@ -38,7 +38,7 @@ public class ProductDTO {
     	this.unit = action.getProduct().getUnit().getRepresentation();
     	this.manufacturer = action.getProduct().getManufacturer();
     	this.brand = action.getProduct().getBrand();
-    	this.countryOfOrigin = action.getProduct().getCountryOfOrigin();
+    	this.countryOfOrigin = action.getProduct().getCountryOfOrigin().getName();
     	this.picture = action.getProduct().getPicture();
     	this.basePrice = action.getBasePrice();
     	this.discountPercent = action.getDiscountPercent();

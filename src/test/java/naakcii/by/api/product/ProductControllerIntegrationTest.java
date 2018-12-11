@@ -38,6 +38,8 @@ import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.config.ApiConfigConstants;
+import naakcii.by.api.country.Country;
+import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -110,54 +112,57 @@ public class ProductControllerIntegrationTest {
 		firstActionType.setTooltip("First action type tooltip text.");
 		ActionType secondActionType = new ActionType("Second action type");
 		secondActionType.setTooltip("Second action type tooltip text.");
+		//Creation of countries.
+		Country firstCountry = new Country(CountryCode.BY);
+		Country secondCountry = new Country(CountryCode.LT);
 		//Creation of products.
-		Product firstProduct = new Product("10000000000000", "First product", true, firstSubcategory);
+		Product firstProduct = new Product("10000000000000", "First product", Unit.KG, true, firstSubcategory);
 		firstProduct.setUnit(Unit.KG);
 		firstProduct.setManufacturer("First product manufacturer");
 		firstProduct.setBrand("First product brand");
-		firstProduct.setCountryOfOrigin("Belarus");
+		firstProduct.setCountryOfOrigin(firstCountry);
 		firstProduct.setPicture("Path to the picture of the first product");
-		Product secondProduct = new Product("20000000000000", "Second product", true, firstSubcategory);
+		Product secondProduct = new Product("20000000000000", "Second product", Unit.KG, true, firstSubcategory);
 		secondProduct.setUnit(Unit.PC);
 		secondProduct.setManufacturer("Second product manufacturer");
 		secondProduct.setBrand("First product brand");
-		secondProduct.setCountryOfOrigin("Belarus");
+		secondProduct.setCountryOfOrigin(secondCountry);
 		secondProduct.setPicture("Path to the picture of the second product");
-		Product thirdProduct = new Product("30000000000000", "Third product", true, firstSubcategory);
+		Product thirdProduct = new Product("30000000000000", "Third product", Unit.KG, true, firstSubcategory);
 		thirdProduct.setUnit(Unit.KG);
 		thirdProduct.setManufacturer("Third product manufacturer");
 		thirdProduct.setBrand("First product brand");
-		thirdProduct.setCountryOfOrigin("Belarus");
+		thirdProduct.setCountryOfOrigin(firstCountry);
 		thirdProduct.setPicture("Path to the picture of the third product");
-		Product fourthProduct = new Product("40000000000000", "Fourth product", true, secondSubcategory);
+		Product fourthProduct = new Product("40000000000000", "Fourth product", Unit.PC, true, secondSubcategory);
 		fourthProduct.setUnit(Unit.PC);
 		fourthProduct.setManufacturer("Fourth product manufacturer");
 		fourthProduct.setBrand("First product brand");
-		fourthProduct.setCountryOfOrigin("Belarus");
+		fourthProduct.setCountryOfOrigin(secondCountry);
 		fourthProduct.setPicture("Path to the picture of the fourth product");
-		Product fifthProduct = new Product("50000000000000", "Fifth product", true, secondSubcategory);
+		Product fifthProduct = new Product("50000000000000", "Fifth product", Unit.KG, true, secondSubcategory);
 		fifthProduct.setUnit(Unit.KG);
 		fifthProduct.setManufacturer("Fifth product manufacturer");
 		fifthProduct.setBrand("First product brand");
-		fifthProduct.setCountryOfOrigin("Belarus");
+		fifthProduct.setCountryOfOrigin(firstCountry);
 		fifthProduct.setPicture("Path to the picture of the fifth product");
-		Product sixthProduct = new Product("60000000000000", "Sixth product", true, thirdSubcategory);
+		Product sixthProduct = new Product("60000000000000", "Sixth product", Unit.PC, true, thirdSubcategory);
 		sixthProduct.setUnit(Unit.PC);
 		sixthProduct.setManufacturer("Sixth product manufacturer");
 		sixthProduct.setBrand("First product brand");
-		sixthProduct.setCountryOfOrigin("Russia");
+		sixthProduct.setCountryOfOrigin(secondCountry);
 		sixthProduct.setPicture("Path to the picture of the sixth product");
-		Product seventhProduct = new Product("70000000000000", "Seventh product", true, thirdSubcategory);
+		Product seventhProduct = new Product("70000000000000", "Seventh product", Unit.KG, true, thirdSubcategory);
 		seventhProduct.setUnit(Unit.KG);
 		seventhProduct.setManufacturer("Seventh product manufacturer");
 		seventhProduct.setBrand("First product brand");
-		seventhProduct.setCountryOfOrigin("Latvia");
+		seventhProduct.setCountryOfOrigin(firstCountry);
 		seventhProduct.setPicture("Path to the picture of the seventh product");
-		Product eighthProduct = new Product("80000000000000", "Eighth product", true, fourthSubcategory);
+		Product eighthProduct = new Product("80000000000000", "Eighth product", Unit.PC, true, fourthSubcategory);
 		eighthProduct.setUnit(Unit.PC);
 		eighthProduct.setManufacturer("Eighth product manufacturer");
 		eighthProduct.setBrand("First product brand");
-		eighthProduct.setCountryOfOrigin("Poland");
+		eighthProduct.setCountryOfOrigin(secondCountry);
 		eighthProduct.setPicture("Path to the picture of the eighth product");
 		//Saving of all entities.
 		testEntityManager.persist(firstCategory);
@@ -168,6 +173,8 @@ public class ProductControllerIntegrationTest {
 		testEntityManager.persist(fourthChain);
 		testEntityManager.persist(firstActionType);
 		testEntityManager.persist(secondActionType);
+		testEntityManager.persist(firstCountry);
+		testEntityManager.persist(secondCountry);
 		//Creation of actions.
 		Calendar firstStartDate = getCurrentDate();
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
@@ -324,9 +331,9 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain: ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	
@@ -404,9 +411,9 @@ public class ProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Latvia\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Poland\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Belarus\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
 	}
 	

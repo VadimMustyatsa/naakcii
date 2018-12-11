@@ -22,6 +22,7 @@ import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 public class SubcategoryTest {
@@ -48,8 +49,8 @@ public class SubcategoryTest {
 
 	public void createProducts(Subcategory subcategory) {
 		Chain chain = new Chain("Chain name", "Chain link", true);
-		Product firstProduct = new Product("1000123456789", "Name of the first product", true, subcategory);
-		Product secondProduct = new Product("1000123456789", "Name of the second product", true, subcategory);
+		Product firstProduct = new Product("1000123456789", "Name of the first product", Unit.PC, true, subcategory);
+		Product secondProduct = new Product("1000123456789", "Name of the second product", Unit.KG, true, subcategory);
 		ActionType actionType = new ActionType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
@@ -60,8 +61,8 @@ public class SubcategoryTest {
 
 	public void createInvalidProducts(Subcategory subcategory) {
 		Chain chain = new Chain("Chain name", "Chain link", true);
-		Product firstProduct = new Product("1000123456789", null, true, subcategory);
-		Product secondProduct = new Product("1000123456789", "Name of the second product", null, subcategory);
+		Product firstProduct = new Product("1000123456789", null, Unit.PC, true, subcategory);
+		Product secondProduct = new Product("1000123456789", "Name of the second product", Unit.KG, null, subcategory);
 		ActionType actionType = new ActionType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
