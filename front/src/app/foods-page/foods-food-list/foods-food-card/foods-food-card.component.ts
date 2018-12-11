@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
 import {FoodList} from '../../../shared/foodList/foods.foodList.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
 import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
+import {MaterializeAction} from "angular2-materialize";
 
 @Component({
   selector: 'app-foods-food-card',
@@ -15,6 +16,14 @@ export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
   discountMonth: string;
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal() {
+    this.modalActions.emit({action: 'modal', params: ['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action: 'modal', params: ['close']});
+  }
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
@@ -50,6 +59,7 @@ export class FoodsFoodCardComponent implements OnInit {
   selectFood(selectFood: FoodList) {
     this.cart.addLine(selectFood, selectFood.selectAmount);  //добавляем в корзину
     selectFood.selectAmount = 1;  //сбрасываем на 1 на карточке
+    this.openModal();
   }
 
   subItem(selectFood: FoodList) {

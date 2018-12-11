@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-email-modal',
@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmailModalComponent implements OnInit {
 
-  constructor() { }
+  @Output() childEvent = new EventEmitter();
+  close() {
+    this.childEvent.emit();
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
