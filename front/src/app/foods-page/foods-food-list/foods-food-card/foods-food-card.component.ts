@@ -5,6 +5,7 @@ import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 import {MaterializeAction} from "angular2-materialize";
+import {SessionStorageService} from "../../../shared/services/session-storage.service";
 
 @Component({
   selector: 'app-foods-food-card',
@@ -16,6 +17,7 @@ export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
   discountMonth: string;
+  emailSenderIsNotOpened: boolean;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal() {
@@ -27,8 +29,9 @@ export class FoodsFoodCardComponent implements OnInit {
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
-              private cart: Cart) {
+              private cart: Cart, private sessionStorageService: SessionStorageService) {
     this.discountMonth = this.getDiscountMonth();
+    this.emailSenderIsNotOpened = !this.sessionStorageService.getSenderEmailOpened();
   }
 
   ngOnInit() {
@@ -59,7 +62,7 @@ export class FoodsFoodCardComponent implements OnInit {
   selectFood(selectFood: FoodList) {
     this.cart.addLine(selectFood, selectFood.selectAmount);  //добавляем в корзину
     selectFood.selectAmount = 1;  //сбрасываем на 1 на карточке
-    this.openModal();
+    if(this.emailSenderIsNotOpened){this.openModal();}
   }
 
   subItem(selectFood: FoodList) {

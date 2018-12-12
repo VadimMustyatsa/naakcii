@@ -60,7 +60,7 @@
   </div>
 </div>
 
-<div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+<div *ngIf="emailSenderIsNotOpened" id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <app-email-modal (childEvent)="closeModal()"></app-email-modal>
 </div>
