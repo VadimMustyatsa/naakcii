@@ -1,7 +1,8 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostListener, OnInit} from '@angular/core';
 import {FoodsCategoriesService} from '../shared/category/foods.categories.service';
 import {Title} from "@angular/platform-browser";
 import { BreakPointCheckService} from '../shared/services/breakpoint-check.service';
+
 
 @Component({
   selector: 'app-foods-page',
@@ -10,6 +11,7 @@ import { BreakPointCheckService} from '../shared/services/breakpoint-check.servi
 })
 
 export class FoodsPageComponent implements OnInit {
+
   constructor(private service: FoodsCategoriesService, private titleService: Title, public breakPointCheckService: BreakPointCheckService,) {
     window.scrollTo(0,0);
   }

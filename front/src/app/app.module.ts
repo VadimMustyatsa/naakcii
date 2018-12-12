@@ -46,7 +46,7 @@ import { SessionStorageService } from "./shared/services/session-storage.service
 import { UndiscountService } from "./shared/services/undiscount.service";
 import { RestDataService } from "./shared/services/rest-data.service";
 import { HomePageService } from "./home-page/home-page-service/home-page.service";
-import { EmailModalComponent } from './finalize-page/email-modal/email-modal.component';
+import { EmailModalComponent } from './foods-page/email-modal/email-modal.component';
 
 registerLocaleData(localeFr);
 
