@@ -18,6 +18,9 @@ export class EmailModalComponent implements OnInit {
     this.childEvent.emit();
   };
 
+  constructor(private subscribeService:SubscribeService) {
+  }
+
   onSubmit(form: NgForm, modal) {
     if (form.valid) {
       // console.log(form.value['email']);
@@ -26,9 +29,6 @@ export class EmailModalComponent implements OnInit {
       this.successMessage = "Ваша почта успешно сохранена, следите за обновлениями.";
       setTimeout(this.onClose, 3000);
     }
-  }
-
-  constructor(private subscribeService:SubscribeService) {
   }
 
   ngOnInit() {
