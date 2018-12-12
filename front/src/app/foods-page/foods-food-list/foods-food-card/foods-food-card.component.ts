@@ -17,7 +17,6 @@ export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
   discountMonth: string;
-  emailSenderIsNotOpened: boolean;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal() {
@@ -31,7 +30,6 @@ export class FoodsFoodCardComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService) {
     this.discountMonth = this.getDiscountMonth();
-    this.emailSenderIsNotOpened = !this.sessionStorageService.getSenderEmailOpened();
   }
 
   ngOnInit() {
@@ -63,6 +61,10 @@ export class FoodsFoodCardComponent implements OnInit {
     this.cart.addLine(selectFood, selectFood.selectAmount);  //добавляем в корзину
     selectFood.selectAmount = 1;  //сбрасываем на 1 на карточке
     if(this.emailSenderIsNotOpened){this.openModal();}
+  }
+
+  get emailSenderIsNotOpened (){
+    return !this.sessionStorageService.getSenderEmailOpened()
   }
 
   subItem(selectFood: FoodList) {
