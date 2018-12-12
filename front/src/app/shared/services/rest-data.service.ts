@@ -30,4 +30,8 @@ export class RestDataService {
   get statistics() {
     return this.http.get('/statistic');
   }
+
+  addSubscriber(email){
+    return this.http.post('/subscribers/add',{email:email});
+  }
 }
