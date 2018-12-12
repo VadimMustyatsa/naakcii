@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, NgForm} from '@angular/core';
 
 @Component({
   selector: 'app-email-modal',
@@ -6,10 +6,20 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./email-modal.component.scss']
 })
 export class EmailModalComponent implements OnInit {
+  public email = '';
+  public successMessage = '';
 
   @Output() childEvent = new EventEmitter();
-  close() {
+  onClose = () => {
     this.childEvent.emit();
+  };
+
+  onSubmit(form: NgForm, modal) {
+    if (form.valid) {
+      modal.remove();
+      this.successMessage = "Ваша почта успешно сохранена, следите за обновлениями.";
+      setTimeout(this.onClose, 3000);
+    }
   }
 
   constructor() {

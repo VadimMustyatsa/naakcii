@@ -1,9 +1,11 @@
-<i class="material-icons" (click)="close()">close</i>
-<div class="modal-content">
+<i class="material-icons" (click)="onClose()">close</i>
+<div  class="modal-content">
+  <div class="successMessage"><h4>{{successMessage}}</h4></div>
+<div #modal>
   <div class="modal-header">
     <h4>Обратите внимание!</h4>
   </div>
-  <form>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form, modal)">
     <div class="modal-item">
     </div>
     <div class="modal-item">
@@ -22,7 +24,10 @@
       <div class="modal-item-content">
         <label for="email">
         </label>
-        <input id="email" type="email" name="email"/>
+        <input id="email" type="email" name="email" [(ngModel)]="email"
+               required
+               minlength="6"
+               pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
       </div>
       <div class="modal-item">
         <div class="modal-item-content">
@@ -33,4 +38,4 @@
     </div>
   </form>
 </div>
-
+</div>
