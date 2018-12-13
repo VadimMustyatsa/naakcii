@@ -1,7 +1,6 @@
 .foodContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 30px;
 }
 
 .chainSearchBlock {
@@ -19,6 +18,7 @@
 }
 
 .shopping-info {
+  min-height: 600px;
   display: flex;
   justify-content: space-around;
   .subCategoryContainer, .totalItemsContainer {
@@ -86,6 +86,7 @@
 }
 
 .snackbar {
+  opacity: .7;
   display:block;
   background: #444444;
   border:#f2f2f2;
