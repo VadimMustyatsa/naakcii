@@ -1,11 +1,13 @@
 <i class="material-icons" (click)="onClose()">close</i>
 <div  class="modal-content">
-  <div class="successMessage"><h4>{{successMessage}}</h4></div>
-<div #modal>
+  <div *ngIf="messageSwitcher" class="successMessage">
+    <h4>Ваша почта успешно сохранена, следите за обновлениями.</h4>
+  </div>
+<div *ngIf="!messageSwitcher">
   <div class="modal-header">
     <h4>Обратите внимание!</h4>
   </div>
-  <form #form="ngForm" (ngSubmit)="onSubmit(form, modal)">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <div class="modal-item">
     </div>
     <div class="modal-item">
