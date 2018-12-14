@@ -17,7 +17,7 @@ public class SubscriberController {
     @Autowired
     private SubscriberService subscriberService;
 
-    @PostMapping(value = {"/add"}, produces = ApiConfigConstants.API_V1_0)
+    @PostMapping(produces = ApiConfigConstants.API_V1_0)
     public SubscriberDTO subscribe(@RequestBody ObjectNode json) {
         String email = json.get("email").textValue();
         return subscriberService.save(email);
