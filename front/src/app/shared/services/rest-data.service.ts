@@ -31,7 +31,7 @@ export class RestDataService {
     return this.http.get('/statistic');
   }
 
-  addSubscriber(email){
-    return this.http.post('/subscribers/add',{email:email});
+  addSubscriber(body){
+    return this.http.post('/subscribers/add',body);
   }
 }
