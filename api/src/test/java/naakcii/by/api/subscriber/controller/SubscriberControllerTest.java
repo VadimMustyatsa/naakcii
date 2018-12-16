@@ -40,7 +40,7 @@ public class SubscriberControllerTest {
         subscriberDTO.setId(1L);
         subscriberDTO.setEmail(email);
         given(subscriberService.save(email)).willReturn(subscriberDTO);
-        mockMvc.perform(post("/subscribers/add")
+        mockMvc.perform(post("/subscribers")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(ApiConfigConstants.API_V1_0))
@@ -53,7 +53,7 @@ public class SubscriberControllerTest {
 
     @Test
     public void emptyBody_ShouldReturnHttpStatusCode400() throws Exception {
-        mockMvc.perform(post("/subscribers/add")
+        mockMvc.perform(post("/subscribers")
                 .accept(ApiConfigConstants.API_V1_0))
                 .andExpect(status().is4xxClientError());
     }

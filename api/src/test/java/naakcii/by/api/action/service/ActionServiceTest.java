@@ -80,10 +80,8 @@ public class ActionServiceTest {
         List<Action> actions = setUp();
         Mockito.when(actionRepository.findAllByChain(actions.get(0).getChain())).thenReturn(actions);
         Assert.assertThat(actions.size(), is(1));
-
-        Chain chain = actions.get(0).getChain();
-        List<Integer> result = actionService.getDiscountAndAllActionsByChain(chainConverter.convert(chain));
-        result.forEach(System.out::println);
+        Assert.assertThat(actions.get(0).getChain().getName(),is("chain_1"));
+        Assert.assertThat(actions.get(0).getProduct().getName(),is("product_1"));
     }
 
 
