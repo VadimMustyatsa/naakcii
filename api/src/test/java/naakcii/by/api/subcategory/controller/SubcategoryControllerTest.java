@@ -1,6 +1,5 @@
 package naakcii.by.api.subcategory.controller;
 
-import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subcategory.service.SubcategoryService;
 import naakcii.by.api.subcategory.service.modelDTO.SubcategoryDTO;
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -39,11 +39,10 @@ public class SubcategoryControllerTest {
         firstSubcategory.setName("firstSubcategory");
         given(subcategoryService.getSubcategoryByCategoryId(firstSubcategory.getCategoryId()))
                 .willReturn(Collections.singletonList(firstSubcategory));
-        mockMvc.perform(get("/subcategory/{id}", firstSubcategory.getCategoryId())
-                .accept(ApiConfigConstants.API_V1_0))
+        mockMvc.perform(get("/subcategory/{id}", firstSubcategory.getCategoryId()))
                 .andExpect(status().isOk())
                 .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                .andExpect(content().contentTypeCompatibleWith(ApiConfigConstants.API_V1_0))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(firstSubcategory.getName())));
     }

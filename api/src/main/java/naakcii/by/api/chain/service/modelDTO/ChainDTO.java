@@ -1,9 +1,5 @@
 package naakcii.by.api.chain.service.modelDTO;
 
-import naakcii.by.api.action.repository.model.Action;
-
-import java.util.Set;
-
 public class ChainDTO {
 
     private Long id;

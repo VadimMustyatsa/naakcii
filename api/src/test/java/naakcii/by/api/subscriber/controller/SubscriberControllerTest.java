@@ -1,6 +1,5 @@
 package naakcii.by.api.subscriber.controller;
 
-import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subscriber.service.SubscriberService;
 import naakcii.by.api.subscriber.service.modelDTO.SubscriberDTO;
 import org.junit.Test;
@@ -42,19 +41,17 @@ public class SubscriberControllerTest {
         given(subscriberService.save(email)).willReturn(subscriberDTO);
         mockMvc.perform(post("/subscribers")
                 .content(jsonString)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(ApiConfigConstants.API_V1_0))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                .andExpect(content().contentTypeCompatibleWith(ApiConfigConstants.API_V1_0))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.email", is(email)));
     }
 
     @Test
     public void emptyBody_ShouldReturnHttpStatusCode400() throws Exception {
-        mockMvc.perform(post("/subscribers")
-                .accept(ApiConfigConstants.API_V1_0))
+        mockMvc.perform(post("/subscribers"))
                 .andExpect(status().is4xxClientError());
     }
 }

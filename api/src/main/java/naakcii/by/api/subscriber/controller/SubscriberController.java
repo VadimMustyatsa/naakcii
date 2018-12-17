@@ -1,7 +1,5 @@
 package naakcii.by.api.subscriber.controller;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.subscriber.service.SubscriberService;
 import naakcii.by.api.subscriber.service.modelDTO.SubscriberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,8 @@ public class SubscriberController {
     @Autowired
     private SubscriberService subscriberService;
 
-    @PostMapping(produces = ApiConfigConstants.API_V1_0)
-    public SubscriberDTO subscribe(@RequestBody ObjectNode json) {
-        String email = json.get("email").textValue();
-        return subscriberService.save(email);
+    @PostMapping
+    public SubscriberDTO subscribe(@RequestBody SubscriberDTO subscriberDTO) {
+        return subscriberService.save(subscriberDTO.getEmail());
     }
 }

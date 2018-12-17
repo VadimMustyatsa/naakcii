@@ -1,6 +1,5 @@
 package naakcii.by.api.product.controller;
 
-import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.product.service.ProductService;
 import naakcii.by.api.product.service.modelDTO.ProductDTO;
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -41,7 +41,7 @@ public class ProductControllerTest {
                 .willReturn(Collections.singletonList(firstProduct));
         mockMvc.perform(get("/product/{id}", firstProduct.getSubcategoryId()))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(ApiConfigConstants.API_V1_0 + ";charset=UTF-8"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(firstProduct.getName())));
     }
@@ -62,11 +62,10 @@ public class ProductControllerTest {
                 .param("first", "0")
                 .param("last", "10")
                 .param("SubcategoryList", firstProduct.getSubcategoryId().toString())
-                .param("SubcategoryList", secondProduct.getSubcategoryId().toString())
-                .accept(ApiConfigConstants.API_V1_0))
+                .param("SubcategoryList", secondProduct.getSubcategoryId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                .andExpect(content().contentTypeCompatibleWith(ApiConfigConstants.API_V1_0))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(firstProduct.getName())))
                 .andExpect(jsonPath("$[1].name", is(secondProduct.getName())));
