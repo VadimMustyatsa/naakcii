@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   OnInit,
-  OnDestroy,
   EventEmitter,
   ChangeDetectionStrategy,
   HostListener
@@ -206,11 +205,6 @@ export class FinalizePageComponent implements OnInit {
   onEventStop(event) {
     event.stopPropagation();
   }
-
-  get discountMonth() {
-    return Number(new Date()) + 30 * 24 * 60 * 60 * 1000;
-  }
-
 }
 
 
