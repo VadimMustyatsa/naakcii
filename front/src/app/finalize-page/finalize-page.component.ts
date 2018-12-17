@@ -1,14 +1,22 @@
-import {Component, ElementRef, OnInit, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  HostListener
+} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
 import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
 import {MaterializeAction} from 'angular2-materialize'
-import { Title } from '@angular/platform-browser'
+import {Title} from '@angular/platform-browser'
 import {Router} from "@angular/router";
 import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
 import {UndiscountService} from "../shared/services/undiscount.service";
+import {BreakPointCheckService} from "../shared/services/breakpoint-check.service";
 
 @Component({
   selector: 'app-finalize-page',
@@ -19,36 +27,38 @@ import {UndiscountService} from "../shared/services/undiscount.service";
 
 })
 export class FinalizePageComponent implements OnInit {
+  undiscountProduct: any;
   chainListExist: ChainLine[] = null;
-  widthContainer = 1200;
-  undiscount: Array<{text:string; id: string}> ;
-  discountMonth: string;
+  undiscount: Array<{ text: string; id: string }>;
 
   params = [
     {
       onOpen: (el) => {
-      el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
+        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
       },
       onClose: (el) => {
         el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_right';
       }
     }
   ];
-  modalActions = new EventEmitter<string|MaterializeAction>();
+  modalActions = new EventEmitter<string | MaterializeAction>();
+
   openModal() {
     this.modalActions.emit({action: 'modal', params: ['open']});
   }
+
   closeModal() {
     this.modalActions.emit({action: 'modal', params: ['close']});
   }
 
-  constructor(private router: Router ,public  chainLst: Chain,
+  constructor(private router: Router,
+              public  chainLst: Chain,
               private el: ElementRef,
-              private undiscountStorage:UndiscountService,
+              public breakPointCheckService: BreakPointCheckService,
+              private undiscountStorage: UndiscountService,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
-    this.discountMonth=this.getDiscountMonth();
   }
 
   @HostListener('click', ['$event.target'])
@@ -61,7 +71,6 @@ export class FinalizePageComponent implements OnInit {
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
-
   }
 
   setImgStyles(pict) {
@@ -157,77 +166,44 @@ export class FinalizePageComponent implements OnInit {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
 
-  onResizeContent() {
-
-    const rootElement = this.el.nativeElement;
-    const childElement = rootElement.firstElementChild;
-    const contentElement = childElement.firstElementChild;
-    this.widthContainer = contentElement.clientWidth;
-  }
-
-  getPosition() {
-    this.onResizeContent();
-    const clientHeight = document.documentElement.clientHeight; // высота видимой части
-    const offsetHeight = document.documentElement.offsetHeight;
-    if ((offsetHeight - clientHeight) < 50) {
-      return '';
-    } else {
-      return 'fixed';
-    }
-  }
-
-  onRemoveUndiscount(event){
-     this.undiscount.forEach((i,index)=>{
-       if(event.target.parentNode.id === i.id.toString()){
-         this.undiscount.splice(index,1);
-       }
-     });
+  onRemoveUndiscount(event) {
+    this.undiscount.forEach((i, index) => {
+      if (event.target.parentNode.id === i.id.toString()) {
+        this.undiscount.splice(index, 1);
+      }
+    });
     this.undiscountStorage.setToUndiscount(this.undiscount);
   };
 
-  onAddUndiscount(event){
-    let value = event.target.parentNode.previousElementSibling.value;
-    if( value.length>2 && value.length<50) {
-      this.undiscount.push({
-        text: value,
-        id: event.timeStamp
+  addUndiscountProduct() {
+    window.scrollTo({
+      top: 10000,
+      behavior: "smooth"
+    });
+    let {undiscountProduct, undiscount} = this;
+    if (undiscountProduct.length > 2 && undiscountProduct.length < 50) {
+      undiscount.push({
+        text: undiscountProduct,
+        id: (+(new Date())).toString()
       });
-    }
-    event.target.parentNode.previousElementSibling.value='';
-    this.undiscountStorage.setToUndiscount(this.undiscount);
-  }
-
-  AddUndiscountByEnter(event){
-    if(event.keyCode === 13){
-      let value = event.target.value;
-      if( value.length>2 && value.length<50) {
-        this.undiscount.push({
-          text: value,
-          id: event.timeStamp
-        });
-      }
-      event.target.value='';
-      this.undiscountStorage.setToUndiscount(this.undiscount);
+      this.undiscountProduct = '';
     }
   }
 
-  onRedirect(){
+  onRedirect() {
     this.closeModal();
     sessionStorage.clear();
     this.undiscountStorage.clearUndiscount();
     this.cart.lines = [];
     this.router.navigateByUrl('/form-shopping-list');
   }
+
   generatePDF() {
     this.PDFGenerator.generatePDF();
   }
+
   onEventStop(event) {
     event.stopPropagation();
-  }
-  getDiscountMonth(){
-    let d = new Date();
-    let months = ['января', 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    return months[d.getMonth()+1];
   }
 }
 

@@ -1,21 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Category} from './foods.category.model';
-import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import {RestDataService} from "../services/rest-data.service";
 
 @Injectable()
 export class FoodsCategoriesService {
 
-  private categoryUrl: string;
   private data: Category[] = [];
   private selectedCategory: Category;
 
-  constructor(private http: HttpClient) {
+  constructor(private restDataService: RestDataService) {
   }
 
   getAll() {
-    this.categoryUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.42:8080/api/category' : 'http://' + window.location.hostname +':8080/api/category';
-    return this.http.get<Category[]>(this.categoryUrl)
+    return this.restDataService.category
       .map(categoryList => {
         return categoryList.map(category => {
           return {

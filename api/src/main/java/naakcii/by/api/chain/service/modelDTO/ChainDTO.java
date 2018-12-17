@@ -13,7 +13,6 @@ public class ChainDTO {
     private String imgLogoSmall;
     private Integer countGoods;
     private Integer percent;
-    private Set<Action> actions;
 
 
     public Long getId() {
@@ -70,17 +69,5 @@ public class ChainDTO {
 
     public void setImgLogoSmall(String imgLogoSmall) {
         this.imgLogoSmall = imgLogoSmall;
-    }
-
-    public Set<Action> getActions() {
-        return actions;
-    }
-
-    public Set<Action> getAction() {
-        return actions;
-    }
-
-    public void setActions(Set<Action> actions) {
-        this.actions = actions;
     }
 }

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import { MODES, SHARED_STATE, SharedState } from '../sharedState.model';
 import { Chain } from '../../shared/chain/chain.model';
 import { Observable } from 'rxjs/Observable';
-import { Cart, CartLine } from '../../shared/cart/cart.model';
+import { Cart } from '../../shared/cart/cart.model';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 import {SessionStorageService} from "../../shared/services/session-storage.service";
 
@@ -52,8 +52,7 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
     if (this.eRef.nativeElement.contains(event.target) && event.target.className !== 'overlay') {
       this.overlayElement.nativeElement.style.display = 'none';
     } if (!this.eRef.nativeElement.contains(event.target) && event.target.className !== 'overlay') {
-      this.actionsCollapsible.emit({action: 'collapsible', params: ['close', 0]});
-      this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+      this.close();
     }
   }
 
@@ -115,9 +114,7 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
         }
       });
       if (cnt === 1) {
-        this.chainListText = String(curChain.name);
-        this.curChainPercent = String(curChain.percent) + ' %';
-        this.curChainCountGoods = String(curChain.countGoods);
+        this.chainListText = `Выбрана торговая сеть: "${curChain.name}"`;
         this.checkedAllChain = false;
       } else {
         this.curChainPercent = '';
@@ -125,14 +122,12 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
         if (cnt > 1) {
           this.chainListText = 'Выбраны торговые сети: ' + String(cnt);
         } else if (cnt === 1) {
-          this.chainListText = String(curChain.name);
-          this.curChainPercent = String(curChain.percent) + ' %';
+          this.chainListText = curChain.name;
+          this.curChainPercent = `${curChain.percent}%`;
           this.curChainCountGoods = String(curChain.countGoods);
         } else if (cnt === 0) {
           this.chainListText = 'Выберите торговую сеть';
-          this.checkedAllChain = false;
         }
-          this.checkedAllChain = false;
       }
       // проверка на однотипность выбора
       const curCheck = this.chainLst.lines[0].chain.selected;
@@ -149,5 +144,10 @@ export class FoodsStorageListComponent implements OnInit, AfterViewInit {
     this.checkedAllChain = !this.checkedAllChain;
     this.setAllChains(this.checkedAllChain);
     this.sessionStorageService.setChainToSessionStorage(this.chainLst.lines);
+  }
+
+  close() {
+    this.actionsCollapsible.emit({action: 'collapsible', params: ['close', 0]});
+    this.curentIconCollapsible = String(this.iconCollapsible.minimized);
   }
 }

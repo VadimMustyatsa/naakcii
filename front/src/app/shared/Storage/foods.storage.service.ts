@@ -1,19 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Storag} from './foods.storage.model';
-import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import {RestDataService} from "../services/rest-data.service";
 
 @Injectable()
 export class FoodsStorageService {
 
-  private storeUrl: string;
-
-  constructor(private http: HttpClient) {
+  constructor(private restDataService: RestDataService) {
   }
 
   getAll() {
-    this.storeUrl = window.location.hostname === 'localhost' ? 'http://178.124.206.42:8080/api/chain' : 'http://' + window.location.hostname +':8080/api/chain';
-    return this.http.get<Storag[]>(this.storeUrl)
+    return this.restDataService.getChains
       .map(chainList => {
         return chainList.map(chain => {
           return {

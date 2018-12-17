@@ -14,12 +14,11 @@ import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.
 export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
-  discountMonth: string;
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart) {
-    this.discountMonth = this.getDiscountMonth();
+
   }
 
   ngOnInit() {
@@ -60,12 +59,6 @@ export class FoodsFoodCardComponent implements OnInit {
 
   addItem(selectFood: FoodList) {
     selectFood.selectAmount = selectFood.selectAmount + 1;
-  }
-
-  getDiscountMonth(){
-    let d = new Date();
-    let months = ['января', 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    return months[d.getMonth()+1];
   }
 
   setImgStyles(pict) {
