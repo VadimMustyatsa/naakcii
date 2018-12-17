@@ -18,7 +18,6 @@ public class ChainConverter {
         chainDTO.setImgLogoSmall(chain.getLogoSmall());
         chainDTO.setId(chain.getId());
         chainDTO.setLink(chain.getLink());
-        chainDTO.setActions(chain.getActions());
 
         return chainDTO;
     }
@@ -31,7 +30,6 @@ public class ChainConverter {
         chain.setLink(chainDTO.getLink());
         chain.setLogoSmall(chainDTO.getImgLogoSmall());
         chain.setLogo(chainDTO.getImgLogoSmall());
-        chain.setActions(chainDTO.getActions());
         return chain;
     }
 }
