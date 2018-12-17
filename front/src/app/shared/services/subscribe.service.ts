@@ -8,7 +8,6 @@ export class SubscribeService {
   }
 
   addEmail(email){
-    console.log(JSON.stringify({"email":email}))
     return this.restDataService.addSubscriber(JSON.stringify({"email":email}));
   }
 

@@ -27,7 +27,7 @@ export class EmailModalComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      this.subscribeService.addEmail(form.value['email']).subscribe(rez=>{console.log(rez)},err=>{console.log(err)});
+      this.subscribeService.addEmail(form.value['email']).subscribe(rez=>{},err=>{console.log(err)});
       this.sessionStorageService.setSenderEmailOpened(form.value['email']);
       this.messageSwitcher = true;
       this.successMessageTimeOut = setTimeout(this.onClose, SUCCESS_MESSAGE_TIME);
