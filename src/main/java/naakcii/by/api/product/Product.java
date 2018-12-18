@@ -28,7 +28,7 @@ import lombok.Setter;
 import naakcii.by.api.action.Action;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
-import naakcii.by.api.util.PureSize;
+import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter
@@ -48,9 +48,9 @@ public class Product implements Serializable {
 	@Column(name = "PRODUCT_BARCODE")
 	@NotNull(message = "Barcode of the product mustn't be null.")
 	@Size(
-	    	min = 4, 
-	    	max = 14,
-	    	message = "Barcode of the product '${validatedValue}' must be between '{min}' and '{max}' characters long."
+	    min = 4, 
+	    max = 14,
+	    message = "Barcode of the product '${validatedValue}' must be between '{min}' and '{max}' characters long."
 	)
 	@Pattern(regexp = "[0-9]+", message = "Barcode of the product must contain only digits.")
 	private String barcode;
@@ -66,8 +66,8 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_PICTURE")
 	@Size(
-	    	max = 255, 
-	    	message = "Path to the picture of the product '${validatedValue}' mustn't be more than '{max}' characters long."
+	    max = 255, 
+	    message = "Path to the picture of the product '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String picture;
 	

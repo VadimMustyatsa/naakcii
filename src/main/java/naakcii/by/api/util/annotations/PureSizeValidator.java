@@ -1,4 +1,4 @@
-package naakcii.by.api.util;
+package naakcii.by.api.util.annotations;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

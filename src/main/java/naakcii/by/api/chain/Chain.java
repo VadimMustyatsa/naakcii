@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.action.Action;
-import naakcii.by.api.util.PureSize;
+import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter
@@ -63,7 +62,7 @@ public class Chain implements Serializable {
 	)
 	private String link;
 	
-	@OneToMany(mappedBy = "chain", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "chain")
 	private Set<
 		@Valid
 		@NotNull(message = "Action mustn't be null.")

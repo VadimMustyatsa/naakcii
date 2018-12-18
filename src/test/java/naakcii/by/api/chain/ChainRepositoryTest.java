@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-unit-test.properties")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class ChainRepositoryTest {

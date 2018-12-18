@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.product.Product;
-import naakcii.by.api.util.PureSize;
+import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,9 +40,11 @@ import naakcii.by.api.config.ApiConfigConstants;
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ChainControllerIntegrationTest {
+	
+	private static final Logger logger = LogManager.getLogger(ChainControllerIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -47,39 +53,60 @@ public class ChainControllerIntegrationTest {
 	private TestEntityManager testEntityManager;
 	
 	private ObjectMapper objectMapper;
+	private StopWatch stopWatch;
+	private List<Chain> chains;
 	
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
+		stopWatch = new StopWatch();
 	}
 	
-	private List<Chain> createListOfChains() {
+	private void createListOfChains() {
+		logger.info("Preparing of test data.");
 		Chain firstChain = new Chain("First chain", "First chain link", true);
 		firstChain.setLogo("First chain logo");
 		Chain secondChain = new Chain("Second chain", "Second chain link", true);
 		secondChain.setLogo("Second chain logo");
 		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
 		thirdChain.setLogo("Third chain logo");
-		testEntityManager.persist(firstChain);
-		testEntityManager.persist(secondChain);
-		testEntityManager.persist(thirdChain);
-		testEntityManager.detach(firstChain);
-		testEntityManager.detach(secondChain);
-		testEntityManager.detach(thirdChain);
-		List<Chain> chains = new ArrayList<>();
-		chains.add(firstChain);
-		chains.add(secondChain);
-		chains.add(thirdChain);
-		return chains;
+		chains = new ArrayList<>();
+		
+		try {
+			chains.add(testEntityManager.persist(firstChain));
+			chains.add(testEntityManager.persist(secondChain));
+			chains.add(testEntityManager.persist(thirdChain));
+			testEntityManager.clear();
+			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Chain.class);
+		} catch(Exception exception) {
+			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Chain.class, exception);
+		}
+	}
+	
+	private void removeListOfChains() {
+		logger.info("Removing of test data.");
+		
+		try {
+			chains.stream()
+				  .map((Chain chain) -> testEntityManager.merge(chain))
+				  .forEach((Chain chain) ->	testEntityManager.remove(chain));		  
+			testEntityManager.flush();
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", Chain.class, exception);
+		}
 	}
 	
 	@Test
 	public void test_get_all_chains() throws Exception {
-		List<ChainDTO> expectedChainDTOs = createListOfChains()
+		createListOfChains();
+		List<ChainDTO> expectedChainDTOs = chains
 				.stream()
 				.map(ChainDTO::new)
 				.collect(Collectors.toList());
 		String expectedJson = objectMapper.writeValueAsString(expectedChainDTOs);
+		logger.info("Starting of request '{}({})' execution.", "GET", "/chains");
+		stopWatch.start();
 		MvcResult mvcResult = this.mockMvc.perform(get("/chains")
 								  .accept(ApiConfigConstants.API_V_2_0))
 								  .andExpect(status().isOk())
@@ -87,11 +114,22 @@ public class ChainControllerIntegrationTest {
 								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
 								  .andDo(print())
 								  .andReturn();
+		stopWatch.stop();
+		logger.info("Execution of request '{}({})' has finished.", "GET", "/chains");
+		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected json should be: ["
 				   + "{\"id\":1,\"name\":\"First chain\",\"logo\":\"First chain logo\",\"link\":\"First chain link\"},"
 				   + "{\"id\":2,\"name\":\"Second chain\",\"logo\":\"Second chain logo\",\"link\":\"Second chain link\"},"
 				   + "{\"id\":3,\"name\":\"Third chain\",\"logo\":\"Third chain logo\",\"link\":\"Third chain link\"}"
-				   + "].", expectedJson, resultJson);					
+				   + "].", expectedJson, resultJson);
+		removeListOfChains();
+	}
+	
+	@After
+	public void tearDown() {
+		objectMapper = null;
+		stopWatch = null;
+		chains = null;
 	}
 }
