@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 
-@RequestMapping({"/statistic"})
+@RequestMapping({"/statistics"})
 public class StatisticController {
 
     @Autowired
