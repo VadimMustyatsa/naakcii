@@ -1,4 +1,4 @@
-package naakcii.by.api.statistic;
+package naakcii.by.api.statistics;
 
 
 import lombok.EqualsAndHashCode;
@@ -23,8 +23,8 @@ import java.util.Calendar;
 @Getter
 @EqualsAndHashCode(exclude = "id")
 @Entity
-@Table(name = "STATISTIC")
-public class Statistic implements Serializable {
+@Table(name = "STATISTICS")
+public class Statistics implements Serializable {
 
     private static final long serialVersionUID = 7800996290031207909L;
 
@@ -34,26 +34,26 @@ public class Statistic implements Serializable {
     private Long id;
 
     @Column(name = "CHAIN_QUANTITY")
-    @NotNull(message = "Chain quantity of the statistic mustn't be null.")
-    @Positive(message = "Chain quantity of the statistic '${validatedValue}' must be positive.")
+    @NotNull(message = "Chain quantity of the statistics mustn't be null.")
+    @Positive(message = "Chain quantity of the statistics '${validatedValue}' must be positive.")
     private Integer chainQuantity;
 
     @Column(name = "DISCOUNTED_PRODUCTS")
-    @NotNull(message = "Discounted products of the statistic mustn't be null.")
-    @Positive(message = "Discounted products of the statistic '${validatedValue}' must be positive.")
+    @NotNull(message = "Discounted products of the statistics mustn't be null.")
+    @Positive(message = "Discounted products of the statistics '${validatedValue}' must be positive.")
     private Integer discountedProducts;
 
     @Column(name = "AVERAGE_DISCOUNT_PERCENTAGE")
-    @NotNull(message = "Average discount percentage of the statistic mustn't be null.")
-    @Positive(message = "Average discount percentage of the statistic '${validatedValue}' must be positive.")
-    @Max(value = 100, message = "Average discount percentage of the statistic '${validatedValue}' must be less 100")
+    @NotNull(message = "Average discount percentage of the statistics mustn't be null.")
+    @Positive(message = "Average discount percentage of the statistics '${validatedValue}' must be positive.")
+    @Max(value = 100, message = "Average discount percentage of the statistics '${validatedValue}' must be less 100")
     private Integer averageDiscountPercentage;
 
     @Column(name = "CREATION_DATE")
-    @NotNull(message = "Creation date of the statistic mustn't be null.")
+    @NotNull(message = "Creation date of the statistics mustn't be null.")
     private Calendar creationDate;
 
-    public Statistic(Integer chainQuantity, Integer discountedProducts, Integer averageDiscountPercentage, Calendar creationDate) {
+    public Statistics(Integer chainQuantity, Integer discountedProducts, Integer averageDiscountPercentage, Calendar creationDate) {
         this.chainQuantity = chainQuantity;
         this.discountedProducts = discountedProducts;
         this.averageDiscountPercentage = averageDiscountPercentage;

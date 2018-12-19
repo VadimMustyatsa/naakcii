@@ -1,4 +1,4 @@
-package naakcii.by.api.statistic;
+package naakcii.by.api.statistics;
 
 import naakcii.by.api.config.ApiConfigConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping({"/products"})
-public class StatisticController {
+@RequestMapping({"/statistics"})
+public class StatisticsController {
 
     @Autowired
-    private StatisticService statisticService;
+    private StatisticsService statisticsService;
 
     @GetMapping(produces = ApiConfigConstants.API_V_2_0)
-    public StatisticDTO getStatistic() {
-        return statisticService.findCurrentStatistic();
+    public StatisticsDTO getStatistic() {
+        return statisticsService.findCurrentStatistics();
     }
 }
