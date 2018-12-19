@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import {Title} from "@angular/platform-browser";
+import {Title, Meta} from "@angular/platform-browser";
 import {
   trigger,
   state,
@@ -28,12 +28,13 @@ export class HomePageComponent implements OnInit {
 
   getData = 'inactive';
 
-  constructor(private titleService: Title) {
+  constructor(private titleService: Title, private metaService: Meta) {
     window.scrollTo(0,0);
+    this.metaService.addTag({name:"description",content:"Сервис экономии. Товары на скидках и акциях в магазинах и торговых сетях. Составьте свой список покупок, распечайте его или перешлите в Viber."});
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Сервис экономии – НаАкции.Бел')
+    this.titleService.setTitle('Акции и скидки в магазинах Минска и других городах - Наакции.бай.');
   }
 
   @HostListener('window:scroll', ['$event'])

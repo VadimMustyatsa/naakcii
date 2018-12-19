@@ -16,7 +16,6 @@ import {SessionStorageService} from "../../../shared/services/session-storage.se
 export class FoodsFoodCardComponent implements OnInit {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
-  discountMonth: string;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal() {
@@ -28,8 +27,8 @@ export class FoodsFoodCardComponent implements OnInit {
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
-              private cart: Cart, private sessionStorageService: SessionStorageService) {
-    this.discountMonth = this.getDiscountMonth();
+              private cart: Cart) {
+
   }
 
   ngOnInit() {
@@ -77,10 +76,8 @@ export class FoodsFoodCardComponent implements OnInit {
     selectFood.selectAmount = selectFood.selectAmount + 1;
   }
 
-  getDiscountMonth(){
-    let d = new Date();
-    let months = ['января', 'февраля' , 'марта' , 'апреля' , 'мая' , 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-    return months[d.getMonth()+1];
+  get discountMonth () {
+    return Number(new Date()) + 30*24*60*60*1000;
   }
 
   setImgStyles(pict) {
