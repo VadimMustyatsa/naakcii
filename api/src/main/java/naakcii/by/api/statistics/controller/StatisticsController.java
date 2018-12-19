@@ -1,7 +1,7 @@
-package naakcii.by.api.statistic.controller;
+package naakcii.by.api.statistics.controller;
 
-import naakcii.by.api.statistic.service.StatisticService;
-import naakcii.by.api.statistic.service.modelDTO.StatisticDTO;
+import naakcii.by.api.statistics.service.StatisticsService;
+import naakcii.by.api.statistics.service.modelDTO.StatisticsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 @RequestMapping({"/statistics"})
-public class StatisticController {
+public class StatisticsController {
 
     @Autowired
-    StatisticService statisticService;
+    StatisticsService statisticsService;
 
 
     @GetMapping
-    public StatisticDTO getStatistic() {
-        return (statisticService.getStatistic());
+    public StatisticsDTO getStatistic() {
+        return (statisticsService.getStatistics());
     }
 }
 
