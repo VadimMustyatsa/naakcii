@@ -16,8 +16,6 @@ public class SubscriberController {
 
     @PostMapping(produces = ApiConfigConstants.API_V_2_0)
     public SubscriberDTO subscribe(@RequestBody SubscriberDTO subscriberDTO) {
-        // String email = json.get("email").textValue();
-        // String email = json.get("email").textValue();
         return subscriberService.save(subscriberDTO.getEmail());
     }
 }

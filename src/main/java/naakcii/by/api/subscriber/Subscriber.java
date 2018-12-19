@@ -33,4 +33,7 @@ public class Subscriber implements Serializable {
     @Email(message = "Email should be valid")
     private String email;
 
+    public Subscriber(String email) {
+        this.email = email;
+    }
 }

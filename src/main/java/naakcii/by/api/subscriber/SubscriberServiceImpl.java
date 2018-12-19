@@ -1,5 +1,6 @@
 package naakcii.by.api.subscriber;
 
+import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,18 +11,17 @@ public class SubscriberServiceImpl implements SubscriberService {
     private SubscriberRepository subscriberRepository;
 
     @Autowired
-    private SubscriberConverter subscriberConverter;
+    private ObjectFactory objectFactory;
 
     @Override
     public SubscriberDTO save(String email) {
         Subscriber subscriberByEmail = subscriberRepository.findByEmail(email);
-        SubscriberDTO returnSubscriberDto = new SubscriberDTO();
+        SubscriberDTO returnedSubscriberDto = new SubscriberDTO();
         if (subscriberByEmail == null) {
-            SubscriberDTO subscriberDTO = new SubscriberDTO(email);
-            Subscriber subscriber = subscriberConverter.convertFromDto(subscriberDTO);
+            Subscriber subscriber = new Subscriber(email);
             subscriber = subscriberRepository.save(subscriber);
-            returnSubscriberDto = subscriberConverter.convertToDto(subscriber);
+            returnedSubscriberDto = objectFactory.getInstance(SubscriberDTO.class, subscriber);
         }
-        return returnSubscriberDto;
+        return returnedSubscriberDto;
     }
 }

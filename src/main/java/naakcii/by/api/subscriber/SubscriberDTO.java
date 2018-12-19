@@ -8,10 +8,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SubscriberDTO {
+
     private Long id;
     private String email;
 
-    public SubscriberDTO(String email) {
-        this.email = email;
+    public SubscriberDTO(Subscriber subscriber) {
+        this.id = subscriber.getId();
+        this.email = subscriber.getEmail();
     }
 }

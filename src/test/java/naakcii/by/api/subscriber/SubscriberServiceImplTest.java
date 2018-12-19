@@ -42,7 +42,7 @@ public class SubscriberServiceImplTest {
     }
 
     @Configuration
-    @ComponentScan(basePackages = "naakcii.by.api.subscriber.service")
+    @ComponentScan(basePackages = "naakcii.by.api.subscriber")
     static class SubscriberTestConfig {
 
         @Bean
