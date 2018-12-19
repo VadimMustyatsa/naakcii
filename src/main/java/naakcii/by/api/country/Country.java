@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.util.PureSize;
+import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter

@@ -14,6 +14,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -47,9 +50,11 @@ import naakcii.by.api.subcategory.Subcategory;
 @AutoConfigureMockMvc
 @AutoConfigureTestEntityManager
 @Transactional
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ProductControllerIntegrationTest {
+	
+	private static final Logger logger = LogManager.getLogger(ProductControllerIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -58,6 +63,11 @@ public class ProductControllerIntegrationTest {
 	private TestEntityManager testEntityManager;
 	
 	private ObjectMapper objectMapper;
+	private StopWatch stopWatch;
+	private List<ActionType> actionTypes;
+	private List<Category> categories;
+	private List<Chain> chains;
+	private List<Country> countries;
 	private Action firstAction;
 	private Action secondAction;
 	private Action thirdAction;
@@ -92,6 +102,11 @@ public class ProductControllerIntegrationTest {
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
+		stopWatch = new StopWatch();
+	}
+	
+	private void createTestData() {
+		logger.info("Preparing of test data.");
 		//Creation of categories.
 		Category firstCategory = new Category("First category name", true);
 		firstCategory.setIcon("First category icon");
@@ -165,16 +180,50 @@ public class ProductControllerIntegrationTest {
 		eighthProduct.setCountryOfOrigin(secondCountry);
 		eighthProduct.setPicture("Path to the picture of the eighth product");
 		//Saving of all entities.
-		testEntityManager.persist(firstCategory);
-		testEntityManager.persist(secondCategory);
-		testEntityManager.persist(firstChain);
-		testEntityManager.persist(secondChain);
-		testEntityManager.persist(thirdChain);
-		testEntityManager.persist(fourthChain);
-		testEntityManager.persist(firstActionType);
-		testEntityManager.persist(secondActionType);
-		testEntityManager.persist(firstCountry);
-		testEntityManager.persist(secondCountry);
+		categories = new ArrayList<>();
+		
+		try {
+			categories.add(testEntityManager.persist(firstCategory));
+			categories.add(testEntityManager.persist(secondCategory));
+			logger.info("Test data was created successfully: instances of '{}', '{}', {} and '{}' were added in the database.",
+					Category.class, Subcategory.class, Product.class, Action.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occured during the creation of test data ('{}', '{}', {} and '{}' instances): {}.", 
+					Category.class, Subcategory.class, Product.class, Action.class, exception);
+		} 
+		
+		chains = new ArrayList<>();
+		
+		try {
+			chains.add(testEntityManager.persist(firstChain));
+			chains.add(testEntityManager.persist(secondChain));
+			chains.add(testEntityManager.persist(thirdChain));
+			chains.add(testEntityManager.persist(fourthChain));
+			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Chain.class);
+		} catch(Exception exception) {
+			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Chain.class, exception);
+		}
+		
+		actionTypes = new ArrayList<>();
+		
+		try {
+			actionTypes.add(testEntityManager.persist(firstActionType));
+			actionTypes.add(testEntityManager.persist(secondActionType));
+			logger.info("Test data was created successfully: instances of '{}' were added in the database.", ActionType.class);
+		} catch(Exception exception) {
+			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", ActionType.class, exception);
+		}
+		
+		countries = new ArrayList<>();
+		
+		try {
+			countries.add(testEntityManager.persist(firstCountry));
+			countries.add(testEntityManager.persist(secondCountry));
+			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Country.class);
+		} catch(Exception exception) {
+			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Country.class, exception);
+		}
+		
 		//Creation of actions.
 		Calendar firstStartDate = getCurrentDate();
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
@@ -284,18 +333,52 @@ public class ProductControllerIntegrationTest {
 		thirdChainId = thirdChain.getId();
 		fourthChainId = fourthChain.getId();
 		//Detaching of all entities.
-		testEntityManager.detach(firstActionType);
-		testEntityManager.detach(secondActionType);
-		testEntityManager.detach(firstChain);
-		testEntityManager.detach(secondChain);
-		testEntityManager.detach(thirdChain);
-		testEntityManager.detach(fourthChain);
-		testEntityManager.detach(firstCategory);
-		testEntityManager.detach(secondCategory);
+		testEntityManager.clear();
+	}
+	
+	private void removeTestData() {	
+		logger.info("Removing of test data.");
+		
+		try {
+			categories.stream()
+					  .map((Category category) -> testEntityManager.merge(category))
+					  .forEach((Category category) ->	testEntityManager.remove(category));
+			logger.info("Test data was cleaned successfully: instances of '{}', '{}', '{}' and '{}' were removed from the database.",
+					Category.class, Subcategory.class, Product.class, Action.class);
+			chains.stream()
+					  .map((Chain chain) -> testEntityManager.merge(chain))
+					  .forEach((Chain chain) ->	testEntityManager.remove(chain));		  
+			testEntityManager.flush();
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occured during the cleaning of test data ('{}', '{}', '{}', {} and '{}' instances): {}.", 
+					Category.class, Subcategory.class, Product.class, Action.class, Chain.class, exception);
+		}
+		
+		try {
+			countries.stream()
+					  .map((Country country) -> testEntityManager.merge(country))
+					  .forEach((Country country) ->	testEntityManager.remove(country));		  
+			testEntityManager.flush();
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Country.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", Country.class, exception);
+		}
+		
+		try {
+			actionTypes.stream()
+					  .map((ActionType actionType) -> testEntityManager.merge(actionType))
+					  .forEach((ActionType actionType) ->	testEntityManager.remove(actionType));		  
+			testEntityManager.flush();
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ActionType.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", ActionType.class, exception);
+		}
 	}
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_1_and_page_size_is_3() throws Exception {
+		createTestData();
 		String page = "0";
 		String size = "3";
 		List<Long> subcategoryIds = new ArrayList<>();
@@ -313,6 +396,12 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
+		logger.info("Starting of request '{}({})' execution.", "GET", "/products");
+		logger.info("Request parameter: '{}' = '{}'.", "chainIds", chains);
+		logger.info("Request parameter: '{}' = '{}'.", "subcategoryIds", subcategories);
+		logger.info("Request parameter: '{}' = '{}'.", "page", page);
+		logger.info("Request parameter: '{}' = '{}'.", "size", size);
+		stopWatch.start();
 		MvcResult mvcResult = this.mockMvc.perform(get("/products")
 				  				  .param("chainIds", chains)
 				  				  .param("subcategoryIds", subcategories)
@@ -324,6 +413,9 @@ public class ProductControllerIntegrationTest {
 								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
 				  				  .andDo(print())
 				  				  .andReturn();
+		stopWatch.stop();
+		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
+		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ProductDTO(twelvethAction));
 		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
@@ -335,10 +427,12 @@ public class ProductControllerIntegrationTest {
 				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
 				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
+		removeTestData();
 	}
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_number_is_2_and_page_size_is_3() throws Exception {
+		createTestData();
 		String page = "2";
 		String size = "3";
 		List<Long> subcategoryIds = new ArrayList<>();
@@ -356,6 +450,12 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
+		logger.info("Starting of request '{}({})' execution.", "GET", "/products");
+		logger.info("Request parameter: '{}' = '{}'.", "chainIds", chains);
+		logger.info("Request parameter: '{}' = '{}'.", "subcategoryIds", subcategories);
+		logger.info("Request parameter: '{}' = '{}'.", "page", page);
+		logger.info("Request parameter: '{}' = '{}'.", "size", size);
+		stopWatch.start();
 		MvcResult mvcResult = this.mockMvc.perform(get("/products")
 								  .param("chainIds", chains)
 								  .param("subcategoryIds", subcategories)
@@ -367,15 +467,20 @@ public class ProductControllerIntegrationTest {
 								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
 				  				  .andDo(print())
 				  				  .andReturn();
+		stopWatch.stop();
+		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
+		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		System.out.println(expectedJson);
 		assertEquals("Expected json shouldn't contain anything, as all results have been placed on previos page : [].", expectedJson, resultJson);	
+		removeTestData();
 	}
 	
 	@Test
 	public void test_find_all_by_subcategories_ids_and_chain_ids_when_page_size_and_number_are_both_negative() throws Exception {
+		createTestData();
 		String page = "-1";
 		String size = "-5";
 		List<Long> subcategoryIds = new ArrayList<>();
@@ -393,6 +498,12 @@ public class ProductControllerIntegrationTest {
 				.stream()
 				.map((Long id) -> id.toString())
 				.collect(Collectors.joining(","));
+		logger.info("Starting of request '{}({})' execution.", "GET", "/products");
+		logger.info("Request parameter: '{}' = '{}'.", "chainIds", chains);
+		logger.info("Request parameter: '{}' = '{}'.", "subcategoryIds", subcategories);
+		logger.info("Request parameter: '{}' = '{}'.", "page", page);
+		logger.info("Request parameter: '{}' = '{}'.", "size", size);
+		stopWatch.start();
 		MvcResult mvcResult = this.mockMvc.perform(get("/products")
 								  .param("chainIds", chains)
 								  .param("subcategoryIds", subcategories)
@@ -404,6 +515,9 @@ public class ProductControllerIntegrationTest {
 								  .andExpect(content().contentType("application/vnd.naakcii.api-v2.0+json;charset=UTF-8"))
 				  				  .andDo(print())
 				  				  .andReturn();
+		stopWatch.stop();
+		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
+		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
 		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ProductDTO(twelvethAction));
 		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
@@ -415,11 +529,17 @@ public class ProductControllerIntegrationTest {
 				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
 				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
 				   + "].", expectedJson, resultJson);	
+		removeTestData();
 	}
 	
 	@After
 	public void tearDown() {
 		objectMapper = null;
+		stopWatch = null;
+		actionTypes = null;
+		categories = null;
+		chains = null;
+		countries = null;
 		firstAction = null;
 		secondAction = null;
 		thirdAction = null;

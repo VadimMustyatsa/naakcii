@@ -14,12 +14,12 @@
 		</Console>
 	</Appenders>
 	<Loggers>
-    <Logger name="org.hibernate.SQL" level="trace" additivity="false">
+    <!--<Logger name="org.hibernate.SQL" level="trace" additivity="false">
       <AppenderRef ref="Console" />
     </Logger>
     <Logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
       <AppenderRef ref="Console" />
-    </Logger>
+    </Logger>-->
 		<Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
 		<Logger name="org.apache.catalina.util.LifecycleBase" level="error" />
 		<Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />

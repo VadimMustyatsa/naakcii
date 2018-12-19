@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-unit-test.properties")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class CategoryRepositoryTest {
