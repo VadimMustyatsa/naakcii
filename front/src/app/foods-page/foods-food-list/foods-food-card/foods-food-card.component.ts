@@ -76,10 +76,6 @@ export class FoodsFoodCardComponent implements OnInit {
     selectFood.selectAmount = selectFood.selectAmount + 1;
   }
 
-  get discountMonth () {
-    return Number(new Date()) + 30*24*60*60*1000;
-  }
-
   setImgStyles(pict) {
     return {
       'background-image': `url("assets/images/Products/${pict.img}")`,
