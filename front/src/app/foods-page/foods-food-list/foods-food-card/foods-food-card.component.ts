@@ -27,7 +27,7 @@ export class FoodsFoodCardComponent implements OnInit {
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
-              private cart: Cart) {
+              private cart: Cart, private sessionStorageService: SessionStorageService ) {
 
   }
 

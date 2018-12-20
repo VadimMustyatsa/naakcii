@@ -75,7 +75,7 @@ registerLocaleData(localeFr);
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,
-    EmailModalComponent
+    EmailModalComponent,
     DateGeneratorDirective
   ],
   imports: [
