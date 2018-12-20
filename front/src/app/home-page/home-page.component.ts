@@ -30,11 +30,12 @@ export class HomePageComponent implements OnInit {
 
   constructor(private titleService: Title, private metaService: Meta) {
     window.scrollTo(0,0);
-    this.metaService.addTag({name:"description",content:"Сервис экономии. Товары на скидках и акциях в магазинах и торговых сетях. Составьте свой список покупок, распечайте его или перешлите в Viber."});
+    this.metaService.addTag({name:"description",content:"Цифровой сервис, предоставляющий возможность составить свой список покупок преимущественно (или полностью) из акционных товаров торговых сетей (товаров со скидкой) Республики Беларусь и сэкономить до 20-30% от общей суммы закупки."});
+    this.metaService.addTag({name:"keywords",content:"на акции бел, на акции бай, скидки, список покупок, торговые сети, акционные товары, минск, беларусь"});
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Акции и скидки в магазинах Минска и других городах - Наакции.бай.');
+    this.titleService.setTitle('Сервис экономии на розничных закупках – НаАкции.Бел');
   }
 
   @HostListener('window:scroll', ['$event'])
