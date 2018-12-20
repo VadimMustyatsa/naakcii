@@ -46,6 +46,8 @@ import { SessionStorageService } from "./shared/services/session-storage.service
 import { UndiscountService } from "./shared/services/undiscount.service";
 import { RestDataService } from "./shared/services/rest-data.service";
 import { HomePageService } from "./home-page/home-page-service/home-page.service";
+import { EmailModalComponent } from './foods-page/email-modal/email-modal.component';
+import { SubscribeService } from "./shared/services/subscribe.service";
 import { DateGeneratorDirective } from './shared/derectives/date-generator/date-generator.directive';
 
 registerLocaleData(localeFr);
@@ -73,6 +75,7 @@ registerLocaleData(localeFr);
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,
+    EmailModalComponent
     DateGeneratorDirective
   ],
   imports: [
@@ -100,6 +103,7 @@ registerLocaleData(localeFr);
     UndiscountService,
     FinalizePageGuard,
     RestDataService,
+    SubscribeService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: "ru-BY"}],
   bootstrap: [AppComponent]

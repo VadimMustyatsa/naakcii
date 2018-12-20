@@ -30,4 +30,8 @@ export class RestDataService {
   get statistics() {
     return this.http.get('/statistic');
   }
+
+  addSubscriber(body){
+    return this.http.post('/api/subscribers',body,{'headers':{'Content-Type':'application/json'}});
+  }
 }
