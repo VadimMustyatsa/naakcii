@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-export const SESSION_STORAGE_KEY_EMAIL = 'SESSION_STORAGE_KEY_EMAIL';
-export const STORAGE_KEY = "naakciiStorage";
-export const STORAGE_KEY_COUNT = "naakciiStorageCount";
-export const CHAIN_STORAGE_KEY = 'naakciiChainStorage';
-export const UNDISCOUNT_STORAGE_KEY = 'naakciiUndiscountStorage';
+const SESSION_STORAGE_KEY_EMAIL = 'SESSION_STORAGE_KEY_EMAIL';
+const STORAGE_KEY = "naakciiStorage";
+const STORAGE_KEY_COUNT = "naakciiStorageCount";
+const CHAIN_STORAGE_KEY = 'naakciiChainStorage';
+const UNDISCOUNT_STORAGE_KEY = 'naakciiUndiscountStorage';
 
 
 @Injectable()
