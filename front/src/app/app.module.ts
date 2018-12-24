@@ -32,20 +32,20 @@ import { FinalizePageComponent } from './finalize-page/finalize-page.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakPointCheckService } from './shared/services/breakpoint-check.service';
 import { Chain} from './shared/chain/chain.model';
-import { LOCALE_ID} from "@angular/core";
+import { LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeDiplomComponent } from './home-page/home-diplom/home-diplom.component';
 import { HomePartnersComponent } from './home-page/home-partners/home-partners.component';
-import { PdfGeneratorService } from "./shared/services/pdf-generator.service";
-import { AppRouterModule } from "./shared/routing/router.module";
-import { FinalizePageGuard } from "./shared/guards/finalize-page.guard";
+import { PdfGeneratorService } from './shared/services/pdf-generator.service';
+import { AppRouterModule } from './shared/routing/router.module';
+import { FinalizePageGuard } from './shared/guards/finalize-page.guard';
 import { TooltipDirective } from './shared/derectives/tooltip.directive';
-import { SessionStorageService } from "./shared/services/session-storage.service";
-import { UndiscountService } from "./shared/services/undiscount.service";
-import { RestDataService } from "./shared/services/rest-data.service";
-import { HomePageService } from "./home-page/home-page-service/home-page.service";
+import { SessionStorageService } from './shared/services/session-storage.service';
+import { UndiscountService } from './shared/services/undiscount.service';
+import { RestDataService } from './shared/services/rest-data.service';
+import { HomePageService } from './home-page/home-page-service/home-page.service';
 
 registerLocaleData(localeFr);
 
@@ -85,7 +85,6 @@ registerLocaleData(localeFr);
     LayoutModule,
     BrowserAnimationsModule
   ],
-
   providers: [
     FoodsStorageService,
     HomePageService,
@@ -99,7 +98,7 @@ registerLocaleData(localeFr);
     FinalizePageGuard,
     RestDataService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
-    { provide: LOCALE_ID, useValue: "ru-BY"}],
+    { provide: LOCALE_ID, useValue: 'ru-BY'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
