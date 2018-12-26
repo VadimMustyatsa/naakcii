@@ -4,6 +4,8 @@ import {Category} from '../category/foods.category.model';
 import {SubCategory} from '../subCategory/foods.subCategory.model';
 import {Storag} from '../Storage/foods.storage.model';
 import {FoodList} from '../foodList/foods.foodList.model';
+import { Observable } from 'rxjs';
+import { Statistics } from '../../home-page/model/statistics';
 
 @Injectable()
 
@@ -27,7 +29,7 @@ export class RestDataService {
     return this.http.get<FoodList[]>(`/product/`, {params: data});
   }
 
-  get statistics() {
-    return this.http.get('/statistics');
+  get statistics(): Observable<Statistics> {
+    return this.http.get<Statistics>('/statistics');
   }
 }

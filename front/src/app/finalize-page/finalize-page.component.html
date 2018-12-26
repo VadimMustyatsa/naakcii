@@ -108,7 +108,8 @@
           <div></div>
           <div class="chosen-undiscount-products" *ngFor="let item of undiscount">
             <div class="chosen-undiscount-products_item">
-              {{item.text}}
+              <div class="item-image" [ngStyle]="setImgStyles('customChoice.svg')"></div>
+              <div class="custom-item-description"> {{item.text}}</div>
             </div>
             <div class="chosen-undiscount-products_bin">
               <a (click)="onRemoveUndiscount($event)" [attr.id]="item.id">

@@ -73,7 +73,6 @@
 .collapsible-body.empty {
   padding: 0;
 }
-
 /********************************/
 .item-info {
   display: flex;
@@ -311,10 +310,21 @@
 }
 
 .chosen-undiscount-products {
-  padding: 0 0 0 20px;
+  align-items: center;
+  padding: 0 0 0 10px;
   display: flex;
   .chosen-undiscount-products_item {
+    display: flex;    
     flex: 16.5;
+    .item-image {
+      flex: 1;
+      color: #C4C4C4;
+      align-self: center;
+    }
+    .custom-item-description {
+      flex: 12;
+      align-self: center;
+    }
   }
   .chosen-undiscount-products_bin {
     flex: 1;
@@ -323,6 +333,10 @@
 
 .arrow-item i {
   padding-left: 9px;
+}
+
+.isTablet .chosen-undiscount-products {
+  padding-left: 10px;
 }
 
 /*********************************/

@@ -22,7 +22,7 @@ import {BreakPointCheckService} from "../shared/services/breakpoint-check.servic
 export class FinalizePageComponent implements OnInit {
   undiscountProduct: any;
   chainListExist: ChainLine[] = null;
-  undiscount: Array<{text:string; id: string}> ;
+  undiscount: Array<{text: string; id: string}> ;
 
   params = [
     {
@@ -159,7 +159,7 @@ export class FinalizePageComponent implements OnInit {
 
   onRemoveUndiscount(event){
      this.undiscount.forEach((i,index)=>{
-       if(event.target.parentNode.id === i.id.toString()){
+       if (event.target.parentNode.id === i.id.toString()){
          this.undiscount.splice(index,1);
        }
      });
@@ -172,7 +172,7 @@ export class FinalizePageComponent implements OnInit {
       behavior: "smooth"
     });
     let { undiscountProduct, undiscount } = this;
-    if (undiscountProduct.length > 2 && undiscountProduct.length<50) {
+    if (undiscountProduct.length > 2 && undiscountProduct.length < 50) {
       undiscount.push({
         text: undiscountProduct,
         id: (+(new Date())).toString()
