@@ -31,7 +31,7 @@ public class SubscriberControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void givenSubscriberDtoThenReturnJson() throws Exception {
+    public void test_given_subscriberDto_then_return_json() throws Exception {
         String jsonString = "{\"email\" : \"email@email.com\"}";
         String email = "email@email.com";
         SubscriberDTO subscriberDTO = new SubscriberDTO();
@@ -50,7 +50,7 @@ public class SubscriberControllerTest {
     }
 
     @Test
-    public void emptyBody_ShouldReturnHttpStatusCode400() throws Exception {
+    public void test_empty_body_should_return_httpStatusCode400() throws Exception {
         mockMvc.perform(post("/subscribers")
                 .accept(ApiConfigConstants.API_V_2_0))
                 .andExpect(status().is4xxClientError());
