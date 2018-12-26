@@ -6,14 +6,19 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
+@TestPropertySource(locations = "classpath:application-unit-test.properties")
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 public class SubscriberRepositoryTest {
 
     @Autowired
@@ -34,7 +39,7 @@ public class SubscriberRepositoryTest {
     }
 
     @Test
-    public void findByEmail() {
+    public void test_find_by_email() {
         Subscriber firstSubscriberByEmail = subscriberRepository.findByEmail("firstsubscriber@gmail.com");
         Subscriber secondSubscriberByEmail = subscriberRepository.findByEmail("secindsubscriber@gmail.com");
         assertThat(firstSubscriberByEmail.getEmail()).isEqualTo("firstsubscriber@gmail.com");
@@ -42,7 +47,7 @@ public class SubscriberRepositoryTest {
     }
 
     @Test
-    public void save() {
+    public void test_save() {
         Subscriber subscriber = new Subscriber();
         subscriber.setEmail("subscriber@gmail.com");
         subscriberRepository.save(subscriber);
@@ -53,7 +58,7 @@ public class SubscriberRepositoryTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void incorrectSave() throws Exception {
+    public void test_incorrect_save() throws Exception {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Email should be valid");
         Subscriber subscriber = new Subscriber();

@@ -14,7 +14,7 @@ public class StatisticsController {
     private StatisticsService statisticsService;
 
     @GetMapping(produces = ApiConfigConstants.API_V_2_0)
-    public StatisticsDTO getStatistic() {
+    public StatisticsDTO getStatistics() {
         return statisticsService.findCurrentStatistics();
     }
 }
