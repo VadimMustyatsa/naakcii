@@ -11,7 +11,7 @@ import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.
   styleUrls: ['./foods-food-card.component.scss'],
   providers: [FoodsStorageService]
 })
-export class FoodsFoodCardComponent implements OnInit {
+export class FoodsFoodCardComponent {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
   discountMonth: string;
@@ -20,13 +20,6 @@ export class FoodsFoodCardComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart) {
     this.discountMonth = this.getDiscountMonth();
-  }
-
-  ngOnInit() {
-    // если продуктов нечетное количество, добавляем пустышку в массив для кастомного центрирования, т.к. поведение justify-content: center не удовлетворяет
-    if (this.foodList.length % 2 !== 0) {
-      this.foodList.push(this.foodList[0]);
-    }
   }
 
   getStorageByID(id: number): ChainLine {

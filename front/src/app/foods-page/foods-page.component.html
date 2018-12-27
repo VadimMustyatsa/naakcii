@@ -5,7 +5,7 @@
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
 
-  <div class="chainSearchBlock row">
+  <div class="chain-selector row">
     <div class="col m7">
       <app-foods-storage-list></app-foods-storage-list>
     </div>
@@ -16,7 +16,6 @@
   <app-foods-group></app-foods-group>
 
   <div class="shopping-info">
-
     <div class="subCategoryContainer">
       <app-foods-subCategory></app-foods-subCategory>
     </div>

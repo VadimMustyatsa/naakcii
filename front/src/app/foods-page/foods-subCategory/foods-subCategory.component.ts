@@ -13,24 +13,12 @@ import {Observer} from 'rxjs/Observer';
   providers: [FoodsSubCategoriesService]
 })
 export class FoodsSubCategoryComponent implements OnInit {
-  fixedPaddingTop = 0;
   curCategory: Category;
   subCategoryList: SubCategory[];
 
   constructor(private service: FoodsSubCategoriesService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-  }
-
-  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-    const verticalOffset = window.pageYOffset
-      || document.documentElement.scrollTop
-      || document.body.scrollTop || 0;
-    if (verticalOffset > 280) {
-      // this.fixedPaddingTop = verticalOffset - 300;
-    } else {
-      this.fixedPaddingTop = 0;
-    }
   }
 
   ngOnInit() {
@@ -52,8 +40,5 @@ export class FoodsSubCategoryComponent implements OnInit {
       el.selected = (el.id === idSubCut);
     });
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
-  }
-  getPaddingTop() {
-    return (String(this.fixedPaddingTop) + 'px');
   }
 }

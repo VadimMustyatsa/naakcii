@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import {Title} from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
 import {
   trigger,
   state,
@@ -28,27 +28,20 @@ export class HomePageComponent implements OnInit {
 
   getData = 'inactive';
 
-  constructor(private titleService: Title) {
-    window.scrollTo(0,0);
-  }
+  constructor(private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Сервис экономии – НаАкции.Бел')
+    this.titleService.setTitle('Сервис экономии – НаАкции.Бел');
   }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-      document.getElementById("up-btn").style.display = "block";
+      document.getElementById('up-btn').style.display = 'block';
       this.getData = 'active';
     } else {
-      document.getElementById("up-btn").style.display = "none";
+      document.getElementById('up-btn').style.display = 'none';
       this.getData = 'inactive';
     }
   }
-
-  clickToTop() {
-    document.documentElement.scrollTop = 0;
-  }
-
 }
