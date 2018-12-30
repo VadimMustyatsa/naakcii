@@ -1,5 +1,4 @@
-<!-- [ngStyle]="{'padding-top':getPaddingTop()}" -->
-<div *ngIf="cart.lines.length > 0" 
+<div *ngIf="cart.lines.length > 0"
      [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
      [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
      [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
@@ -98,12 +97,9 @@
 
       </li>
   </ul>
-  <!--<a class="waves-effect waves btn amber left">PDF</a>-->
   <a routerLink="/finalize-shopping-list" id="goFoodsBtn" class="deep-orange waves-effect waves btn right"><span>Перейти к списку</span></a>
-
-
 </div>
-<div *ngIf="cart.lines.length == 0" [ngStyle]="{'padding-top':getPaddingTop()}">
+<div *ngIf="cart.lines.length == 0" >
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div>Список покупок</div>

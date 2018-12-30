@@ -77,14 +77,6 @@ export class FoodsFoodListComponent implements OnInit {
 
   }
 
-
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10)) {
-      this.updateFoodList();
-    }
-  }
-
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
     let isProduct = false;

@@ -8,7 +8,7 @@
       </div>
     </li>
     <li class="collection-item" *ngFor="let subCat of subCategoryList; let i = index">
-      <a class="waves-effect btn-flat custom-btn" [class.active]="subCategoryList[i].selected" app-scroll-to-top (click)="onChangeItem(subCat.id)">
+      <a class="waves-effect btn-flat custom-btn" [class.active]="subCategoryList[i].selected" (click)="onChangeItem(subCat.id)">
         {{subCat.name}}
       </a>
     </li>
