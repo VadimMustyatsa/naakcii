@@ -1,4 +1,11 @@
-import {Component, ElementRef, OnInit, OnDestroy, EventEmitter, ChangeDetectionStrategy, HostListener} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  HostListener
+} from '@angular/core';
 import {Cart, CartLine} from '../shared/cart/cart.model';
 import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
@@ -27,17 +34,19 @@ export class FinalizePageComponent implements OnInit {
   params = [
     {
       onOpen: (el) => {
-      el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
+        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
       },
       onClose: (el) => {
         el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_right';
       }
     }
   ];
-  modalActions = new EventEmitter<string|MaterializeAction>();
+  modalActions = new EventEmitter<string | MaterializeAction>();
+
   openModal() {
     this.modalActions.emit({action: 'modal', params: ['open']});
   }
+
   closeModal() {
     this.modalActions.emit({action: 'modal', params: ['close']});
   }
@@ -177,24 +186,21 @@ export class FinalizePageComponent implements OnInit {
 
   }
 
-  onRedirect(){
+  onRedirect() {
     this.closeModal();
     sessionStorage.clear();
     this.undiscountStorage.clearUndiscount();
     this.cart.lines = [];
     this.router.navigateByUrl('/form-shopping-list');
   }
+
   generatePDF() {
     this.PDFGenerator.generatePDF();
   }
+
   onEventStop(event) {
     event.stopPropagation();
   }
-
-  get discountMonth () {
-    return Number(new Date()) + 30*24*60*60*1000;
-  }
-
 }
 
 

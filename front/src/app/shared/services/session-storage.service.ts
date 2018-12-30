@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
+import * as CONSTANTS from "../../CONSTANTS";
 
-const storageKey = "naakciiStorage";
-const storageKeyCount = "naakciiStorageCount";
-const chainStorageKey = 'naakciiChainStorage';
-const undiscountStorageKey = 'naakciiUndiscountStorage';
 
 @Injectable()
 export class SessionStorageService {
@@ -11,34 +8,42 @@ export class SessionStorageService {
   }
 
   getCartFromSessionStorage() {
-    return JSON.parse(sessionStorage.getItem(storageKey));
+    return JSON.parse(sessionStorage.getItem(CONSTANTS.STORAGE_KEY));
   }
 
   setCartToSessionStorage(cart) {
-    sessionStorage.setItem(storageKey, JSON.stringify(cart));
+    sessionStorage.setItem(CONSTANTS.STORAGE_KEY, JSON.stringify(cart));
   }
 
   getCartCountFromSessionStorage() {
-    return JSON.parse(sessionStorage.getItem(storageKeyCount));
+    return JSON.parse(sessionStorage.getItem(CONSTANTS.STORAGE_KEY_COUNT));
   }
 
   setCartCountToSessionStorage(count) {
-    sessionStorage.setItem(storageKeyCount, JSON.stringify(count))
+    sessionStorage.setItem(CONSTANTS.STORAGE_KEY_COUNT, JSON.stringify(count))
   }
 
   getChainFromSessionStorage() {
-    return JSON.parse(sessionStorage.getItem(chainStorageKey));
+    return JSON.parse(sessionStorage.getItem(CONSTANTS.CHAIN_STORAGE_KEY));
   }
 
   setChainToSessionStorage(chains) {
-    sessionStorage.setItem(chainStorageKey, JSON.stringify(chains));
+    sessionStorage.setItem(CONSTANTS.CHAIN_STORAGE_KEY, JSON.stringify(chains));
   }
 
   getFromUndiscountStorage() {
-    return JSON.parse(sessionStorage.getItem(undiscountStorageKey));
+    return JSON.parse(sessionStorage.getItem(CONSTANTS.UNDISCOUNT_STORAGE_KEY));
   }
 
   setToUndiscountStorage(undiscount) {
-    sessionStorage.setItem(undiscountStorageKey, JSON.stringify(undiscount));
+    sessionStorage.setItem(CONSTANTS.UNDISCOUNT_STORAGE_KEY, JSON.stringify(undiscount));
+  }
+
+  setSenderEmailOpened(email: string) {
+    sessionStorage.setItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL, email);
+  }
+
+  getSenderEmailOpened():string {
+    return sessionStorage.getItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL);
   }
 }

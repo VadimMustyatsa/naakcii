@@ -43,7 +43,7 @@
           <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN":
             "code-narrow"}}
           </div>
-          <div class="promotional-deadline tablet-none">{{discountMonth | date : "d MMMM"}}</div>
+          <div class="promotional-deadline tablet-none" appDateGenerator></div>
           <div class="arrow-item">
             <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>

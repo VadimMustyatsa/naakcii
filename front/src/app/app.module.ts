@@ -47,6 +47,9 @@ import { UndiscountService } from './shared/services/undiscount.service';
 import { RestDataService } from './shared/services/rest-data.service';
 import { HomePageService } from './home-page/home-page-service/home-page.service';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
+import { EmailModalComponent } from './foods-page/email-modal/email-modal.component';
+import { SubscribeService } from "./shared/services/subscribe.service";
+import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
 
 registerLocaleData(localeFr);
 
@@ -73,7 +76,9 @@ registerLocaleData(localeFr);
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,
-    ScrollToTopDirective
+    ScrollToTopDirective,
+    EmailModalComponent,
+    DateGeneratorDirective
   ],
   imports: [
     BrowserModule,
@@ -99,6 +104,7 @@ registerLocaleData(localeFr);
     UndiscountService,
     FinalizePageGuard,
     RestDataService,
+    SubscribeService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: 'ru-BY'}],
   bootstrap: [AppComponent]

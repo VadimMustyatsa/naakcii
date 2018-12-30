@@ -51,10 +51,15 @@
         </div>
         <div class="endStock">
         <span class="grey-text">
-          Окончание акции: 1 {{discountMonth}}
+          Окончание акции: <span appDateGenerator></span>
         </span>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <app-email-modal (childEvent)="closeModal()"></app-email-modal>
 </div>
