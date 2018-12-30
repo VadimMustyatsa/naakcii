@@ -29,7 +29,7 @@ import { BreakPointCheckService } from '../shared/services/breakpoint-check.serv
 export class FinalizePageComponent implements OnInit {
   undiscountProduct: any;
   chainListExist: ChainLine[] = null;
-  undiscount: Array<{text: string; id: string}> ;
+  undiscount: Array<{ text: string; id: string }>;
 
   params = [
     {

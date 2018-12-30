@@ -3,6 +3,7 @@ import {FoodsCategoriesService} from '../shared/category/foods.categories.servic
 import {Title} from "@angular/platform-browser";
 import { BreakPointCheckService} from '../shared/services/breakpoint-check.service';
 
+
 @Component({
   selector: 'app-foods-page',
   templateUrl: './foods-page.component.html',
