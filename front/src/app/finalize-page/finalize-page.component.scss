@@ -73,9 +73,9 @@
 .collapsible-body.empty {
   padding: 0;
 }
-
 /********************************/
 .item-info {
+  align-items: center;
   display: flex;
 }
 
@@ -273,12 +273,6 @@
   flex: .65;
 }
 
-.isTablet {
-  .non-discounted-products-arrow {
-    flex: 1;
-  }
-}
-
 .input-field {
   margin-top: 0;
 }
@@ -311,16 +305,28 @@
 }
 
 .chosen-undiscount-products {
-  padding: 0 0 0 20px;
+  align-items: center;
+  padding: 0 0 0 10px;
   display: flex;
+  border-bottom: 1px #DDDDDD solid;
   .chosen-undiscount-products_item {
+    display: flex;    
     flex: 16.5;
+    .item-image {
+      flex: 1;
+      color: #C4C4C4;
+      align-self: center;
+    }
+    .custom-item-description {
+      flex: 12;
+      align-self: center;
+    }
   }
   .chosen-undiscount-products_bin {
     flex: 1;
   }
 }
-
+ 
 .arrow-item i {
   padding-left: 9px;
 }
@@ -369,8 +375,12 @@
     text-align: left;
   }
 }
+// Responsive
 
 .isTablet {
+  .non-discounted-products-arrow {
+    flex: 1;
+  }
   .tablet-none {
     display: none;
   }
@@ -424,6 +434,12 @@
         padding-top: 5px;
       }
     }
+    .chosen-undiscount-products {
+      padding-left: 10px;
+    .item-image {
+      height: 40px;
+    }
+  }
     .chosen-undiscount-products_item {
       flex: 7.5;
     }

@@ -1,8 +1,8 @@
 import {Component, OnInit, HostListener} from '@angular/core';
-import {FoodsStorageService} from "../../shared/Storage/foods.storage.service";
+import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
 import {Cart, CartLine} from '../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../shared/chain/chain.model';
-import { BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
+import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-total-items',
@@ -11,7 +11,6 @@ import { BreakPointCheckService} from "../../shared/services/breakpoint-check.se
   providers: [FoodsStorageService]
 })
 export class FoodsTotalItemsComponent implements OnInit {
-  fixedPaddingTop:number = 0;
 
   params = [
     {
@@ -30,17 +29,6 @@ export class FoodsTotalItemsComponent implements OnInit {
 
   ngOnInit() { }
 
-  @HostListener('window:scroll', ['$event']) onScrollEvent($event){
-    const verticalOffset = window.pageYOffset
-      || document.documentElement.scrollTop
-      || document.body.scrollTop || 0;
-    if (verticalOffset > 280) {
-      // this.fixedPaddingTop = verticalOffset - 280;
-    } else {
-      this.fixedPaddingTop = 0;
-    }
-  }
-
   deleteFoodCard(curFood: CartLine) {
     this.cart.removeLine(curFood.product.id);
   }
@@ -51,10 +39,6 @@ export class FoodsTotalItemsComponent implements OnInit {
   }
   addItem(curFood: CartLine) {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
-  }
-
-  getPaddingTop() {
-    return (String(this.fixedPaddingTop) + 'px');
   }
 
   getStorageByID(id: number): ChainLine {

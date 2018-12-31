@@ -13,7 +13,7 @@ import {SessionStorageService} from "../../../shared/services/session-storage.se
   styleUrls: ['./foods-food-card.component.scss'],
   providers: [FoodsStorageService]
 })
-export class FoodsFoodCardComponent implements OnInit {
+export class FoodsFoodCardComponent {
   @Input() foodList: FoodList[];
   nameMaxWidth = 80;
 
@@ -28,14 +28,6 @@ export class FoodsFoodCardComponent implements OnInit {
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService ) {
-
-  }
-
-  ngOnInit() {
-    // если продуктов нечетное количество, добавляем пустышку в массив для кастомного центрирования, т.к. поведение justify-content: center не удовлетворяет
-    if (this.foodList.length % 2 !== 0) {
-      this.foodList.push(this.foodList[0]);
-    }
   }
 
   getStorageByID(id: number): ChainLine {

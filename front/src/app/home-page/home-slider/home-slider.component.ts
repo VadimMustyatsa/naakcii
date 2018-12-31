@@ -1,5 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
-import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
+import { Component, OnInit } from '@angular/core';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 import {
   trigger,
@@ -8,9 +7,9 @@ import {
   animate,
   transition
 } from '@angular/animations';
-import {HomePageService} from "../home-page-service/home-page.service";
+import {HomePageService} from '../home-page-service/home-page.service';
 
-const titles = ['_ ведущих торговых сетей', '_ акционных товаров', '_% - средний размер достигаемой экономии'];
+const titles = ['_ ведущих торговых сетей', '_ акционных товаров', '_% средний размер достигаемой экономии'];
 
 @Component({
   selector: 'app-home-slider',
@@ -29,34 +28,37 @@ const titles = ['_ ведущих торговых сетей', '_ акцион�
   ]
 })
 export class HomeSliderComponent implements OnInit {
-  basicData = [0, 0, 0];
+  totalGoodsInfo = [];
   getData = 'inactive';
+  titleHeaders = titles;
 
-  constructor(private storageService: FoodsStorageService, private homePageService: HomePageService, public breakPointCheckService: BreakPointCheckService) {}
+  constructor(private homePageService: HomePageService,
+    public breakPointCheckService: BreakPointCheckService) {
+    }
 
   ngOnInit() {
-    // this.homePageService.statistics.subscribe(data => console.log(data));
-    this.storageService.getAll().subscribe(data => {
-      this.basicData[0] = data.length;
+    this.homePageService.statistics.subscribe(data => {
+      ({ chainQuantity: this.totalGoodsInfo[0], discountedGoods: this.totalGoodsInfo[1], averageDiscount: this.totalGoodsInfo[2] } = data);
       this.getData = 'active';
-      data.forEach(item => {
-        this.basicData[1] += +item.countGoods;
-        this.basicData[2] += +item.percent/data.length;
-      });
+      this.matchPhrase();
     });
   }
 
   get titles() {
-    this.basicData.map( (data, index) => {
-      const digit = this.basicData[1].toString().substr(-1);
-      if (digit === '1'){
-        titles[1] = '_ акционный товар'
+    return this.titleHeaders;
+  }
+
+  matchPhrase() {
+    this.totalGoodsInfo.map(() => {
+      const digit = this.totalGoodsInfo[1].toString().substr(-1);
+      if (digit === '1') {
+        titles[1] = '_ акционный товар';
       }
-      if (digit === '2' || digit === '3' || digit === '4'){
-        titles[1] = '_ акционныx товара'
+      if (digit === '2' || digit === '3' || digit === '4') {
+        titles[1] = '_ акционныx товара';
       }
     });
-    return titles.map((title, index) => title.replace('_', this.basicData[index].toFixed(0)));
+    this.titleHeaders = titles.map((title, index) => title.replace('_', this.totalGoodsInfo[index].toFixed(0)));
   }
 
 }

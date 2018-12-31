@@ -29,7 +29,6 @@ export class HomePageComponent implements OnInit {
   getData = 'inactive';
 
   constructor(private titleService: Title, private metaService: Meta) {
-    window.scrollTo(0,0);
     this.metaService.addTag({name:"description",content:"Цифровой сервис, предоставляющий возможность составить свой список покупок преимущественно (или полностью) из акционных товаров торговых сетей (товаров со скидкой) Республики Беларусь и сэкономить до 20-30% от общей суммы закупки."});
     this.metaService.addTag({name:"keywords",content:"на акции бел, на акции бай, скидки, список покупок, торговые сети, акционные товары, минск, беларусь"});
   }
@@ -41,16 +40,11 @@ export class HomePageComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-      document.getElementById("up-btn").style.display = "block";
+      document.getElementById('up-btn').style.display = 'block';
       this.getData = 'active';
     } else {
-      document.getElementById("up-btn").style.display = "none";
+      document.getElementById('up-btn').style.display = 'none';
       this.getData = 'inactive';
     }
   }
-
-  clickToTop() {
-    document.documentElement.scrollTop = 0;
-  }
-
 }

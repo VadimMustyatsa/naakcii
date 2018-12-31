@@ -11,12 +11,12 @@ import {FoodsStorageService} from '../shared/Storage/foods.storage.service';
 import {isUndefined} from 'util';
 import {FoodList} from '../shared/foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../shared/chain/chain.model';
-import {MaterializeAction} from 'angular2-materialize'
-import {Title} from '@angular/platform-browser'
-import {Router} from "@angular/router";
-import {PdfGeneratorService} from "../shared/services/pdf-generator.service";
-import {UndiscountService} from "../shared/services/undiscount.service";
-import {BreakPointCheckService} from "../shared/services/breakpoint-check.service";
+import {MaterializeAction} from 'angular2-materialize';
+import {Title} from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { PdfGeneratorService } from '../shared/services/pdf-generator.service';
+import { UndiscountService } from '../shared/services/undiscount.service';
+import { BreakPointCheckService } from '../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-finalize-page',
@@ -57,7 +57,6 @@ export class FinalizePageComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               private undiscountStorage: UndiscountService,
               public cart: Cart, private titleService: Title, private PDFGenerator: PdfGeneratorService) {
-    window.scrollTo(0, 0);
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
   }
 
@@ -166,28 +165,26 @@ export class FinalizePageComponent implements OnInit {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
 
-  onRemoveUndiscount(event) {
-    this.undiscount.forEach((i, index) => {
-      if (event.target.parentNode.id === i.id.toString()) {
-        this.undiscount.splice(index, 1);
-      }
-    });
+
+  onRemoveUndiscount(event){
+     this.undiscount.forEach((i,index)=>{
+       if (event.target.parentNode.id === i.id.toString()){
+         this.undiscount.splice(index,1);
+       }
+     });
     this.undiscountStorage.setToUndiscount(this.undiscount);
-  };
+  }
 
   addUndiscountProduct() {
-    window.scrollTo({
-      top: 10000,
-      behavior: "smooth"
-    });
-    let {undiscountProduct, undiscount} = this;
-    if (undiscountProduct.length > 2 && undiscountProduct.length < 50) {
-      undiscount.push({
+    const { undiscountProduct } = this;
+    if (undiscountProduct.length > 2) {
+      this.undiscount.push({
         text: undiscountProduct,
         id: (+(new Date())).toString()
       });
       this.undiscountProduct = '';
     }
+
   }
 
   onRedirect() {
