@@ -36,4 +36,8 @@ export class RestDataService {
   addSubscriber(body){
     return this.http.post('/api/subscribers',body,{'headers':{'Content-Type':'application/json'}});
   }
+
+  addSubscriber(body){
+    return this.http.post('/api/subscribers',body,{'headers':{'Content-Type':'application/json'}});
+  }
 }

@@ -165,6 +165,7 @@ export class FinalizePageComponent implements OnInit {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
 
+
   onRemoveUndiscount(event){
      this.undiscount.forEach((i,index)=>{
        if (event.target.parentNode.id === i.id.toString()){

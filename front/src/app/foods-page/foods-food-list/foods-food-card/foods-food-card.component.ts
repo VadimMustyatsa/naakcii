@@ -28,7 +28,6 @@ export class FoodsFoodCardComponent {
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService ) {
-
   }
 
   getStorageByID(id: number): ChainLine {
