@@ -38,7 +38,7 @@ export class HomeSliderComponent implements OnInit {
 
   ngOnInit() {
     this.homePageService.statistics.subscribe(data => {
-      ({ chainQuantity: this.totalGoodsInfo[0], discountedGoods: this.totalGoodsInfo[1], averageDiscount: this.totalGoodsInfo[2] } = data);
+      ({ chainQuantity: this.totalGoodsInfo[0], discountedProducts: this.totalGoodsInfo[1], averageDiscountPercentage: this.totalGoodsInfo[2] } = data);
       this.getData = 'active';
       this.matchPhrase();
     });

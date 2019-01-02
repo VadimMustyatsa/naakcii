@@ -6,29 +6,29 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { FoodsPageComponent } from './foods-page/foods-page.component';
+import { ProductSelectionComponent } from './product-selection/product-selection.component';
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HomeSliderComponent } from './home-page/home-slider/home-slider.component';
 import { HomeStepsComponent } from './home-page/home-steps/home-steps.component';
 import { HomeLayer1Component } from './home-page/home-layer1/home-layer1.component';
-import { FoodsSearchComponent } from './foods-page/foods-search/foods-search.component';
-import { FoodsCategoryComponent } from './foods-page/foods-category/foods-category.component';
-import { FoodsSubCategoryComponent } from './foods-page/foods-subCategory/foods-subCategory.component';
-import { FoodsSortingComponent } from './foods-page/foods-sorting/foods-sorting.component';
-import { FoodsFoodListComponent } from './foods-page/foods-food-list/foods-food-list.component';
-import { FoodsTotalItemsComponent } from './foods-page/foods-total-items/foods-total-items.component';
+import { ProductSearchComponent } from './product-selection/product-search/product-search.component';
+import { ProductCategoryComponent } from './product-selection/product-category/product-category.component';
+import { ProductSubcategoryComponent } from './product-selection/product-subcategory/product-subcategory.component';
+import { ProductSortingComponent } from './product-selection/product-sorting/product-sorting.component';
+import { ProductListComponent } from './product-selection/product-list/product-list.component';
+import { ProductsTotalComponent } from './product-selection/products-total/products-total.component';
 import { FoodsCategoriesService } from './shared/category/foods.categories.service';
-import { SHARED_STATE, SharedState } from './foods-page/sharedState.model';
+import { SHARED_STATE, SharedState } from './product-selection/sharedState.model';
 import { Subject} from 'rxjs/Subject';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FoodsFoodCardComponent } from './foods-page/foods-food-list/foods-food-card/foods-food-card.component';
+import { ProductCardComponent } from './product-selection/product-list/product-card/product-card.component';
 import { AppCutStringPipe } from './cutString.pipe';
-import { FoodsStorageListComponent } from './foods-page/foods-storage-list/foods-storage-list.component';
+import { ProductStorageListComponent } from './product-selection/product-storage-list/product-storage-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FoodsStorageService } from './shared/Storage/foods.storage.service';
 import { Cart } from './shared/cart/cart.model';
-import { FinalizePageComponent } from './finalize-page/finalize-page.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakPointCheckService } from './shared/services/breakpoint-check.service';
 import { Chain} from './shared/chain/chain.model';
@@ -41,15 +41,15 @@ import { HomePartnersComponent } from './home-page/home-partners/home-partners.c
 import { PdfGeneratorService } from './shared/services/pdf-generator.service';
 import { AppRouterModule } from './shared/routing/router.module';
 import { FinalizePageGuard } from './shared/guards/finalize-page.guard';
-import { TooltipDirective } from './shared/directives/tooltip.directive';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { UndiscountService } from './shared/services/undiscount.service';
 import { RestDataService } from './shared/services/rest-data.service';
 import { HomePageService } from './home-page/home-page-service/home-page.service';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
-import { EmailModalComponent } from './foods-page/email-modal/email-modal.component';
+import { EmailModalComponent } from './product-selection/email-modal/email-modal.component';
 import { SubscribeService } from "./shared/services/subscribe.service";
 import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
+import { TooltipDirective } from "./shared/directives/tooltip/tooltip.directive";
 
 registerLocaleData(localeFr);
 
@@ -57,22 +57,22 @@ registerLocaleData(localeFr);
   declarations: [
     AppComponent,
     HomePageComponent,
-    FoodsPageComponent,
+    ProductSelectionComponent,
     ToolbarComponent,
     HomeSliderComponent,
     HomeStepsComponent,
     HomeLayer1Component,
-    FoodsSearchComponent,
-    FoodsCategoryComponent,
-    FoodsSubCategoryComponent,
-    FoodsSortingComponent,
-    FoodsFoodListComponent,
-    FoodsTotalItemsComponent,
-    FoodsFoodCardComponent,
-    FoodsStorageListComponent,
+    ProductSearchComponent,
+    ProductCategoryComponent,
+    ProductSubcategoryComponent,
+    ProductSortingComponent,
+    ProductListComponent,
+    ProductsTotalComponent,
+    ProductCardComponent,
+    ProductStorageListComponent,
     AppCutStringPipe,
-    FoodsStorageListComponent,
-    FinalizePageComponent,
+    ProductStorageListComponent,
+    ShoppingListComponent,
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,

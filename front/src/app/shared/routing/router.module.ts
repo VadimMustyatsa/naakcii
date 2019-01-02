@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FinalizePageComponent } from "../../finalize-page/finalize-page.component";
+import { ShoppingListComponent } from "../../shopping-list/shopping-list.component";
 import { HomePageComponent } from "../../home-page/home-page.component";
-import { FoodsPageComponent } from "../../foods-page/foods-page.component";
+import { ProductSelectionComponent } from "../../product-selection/product-selection.component";
 import { FinalizePageGuard } from "../guards/finalize-page.guard";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptorService} from "./request-interceptor.service";
@@ -10,8 +10,8 @@ import { RequestInterceptorService} from "./request-interceptor.service";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
-  {path: 'form-shopping-list', component: FoodsPageComponent},
-  {path: 'finalize-shopping-list', component: FinalizePageComponent, canActivate: [FinalizePageGuard]}
+  {path: 'form-shopping-list', component: ProductSelectionComponent},
+  {path: 'finalize-shopping-list', component: ShoppingListComponent, canActivate: [FinalizePageGuard]}
 ];
 
 @NgModule({

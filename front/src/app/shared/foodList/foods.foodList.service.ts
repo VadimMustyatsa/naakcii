@@ -16,12 +16,8 @@ export class FoodsFoodListService {
     return this.restDataService.getProducts(dataGet)
       .map(productList => {
         return productList.map(product => {
-          let index = product['picture'].indexOf('%');
-          if (index !== -1) {
-            let first = product['picture'].substring(0, index);
-            let second = product['picture'].substring(index + 1);
-            product['picture'] = first + '%25' + second;
-          }
+          product['picture'] = product['picture'].replace('%', '%25');
+          // {...product, picture: product['picture'], boxWeight: '', selectAmount: ''};
           return {
             id: product['id'],
             name: product['name'],
@@ -36,7 +32,6 @@ export class FoodsFoodListService {
           };
         });
       });
-  }
-}
+}}
 
 

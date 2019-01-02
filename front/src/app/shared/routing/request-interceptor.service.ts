@@ -9,9 +9,11 @@ export class RequestInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const request = req.clone({
+    let request = req.clone({
       url: `${environment.baseUrl}/api/${req.url}`,
-      headers: null
+      setHeaders: {
+        Authorization: 'Accept=application/vnd.naakcii.api-v2.0+json'
+      }
     });
     return next.handle(request);
   }

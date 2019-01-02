@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {FoodsStorageService} from '../Storage/foods.storage.service';
 import {Storag} from '../Storage/foods.storage.model';
 import {Observer} from 'rxjs/Observer';
-import {SharedState, SHARED_STATE, MODES} from '../../foods-page/sharedState.model';
+import {SharedState, SHARED_STATE, MODES} from '../../product-selection/sharedState.model';
 import {SessionStorageService} from "../services/session-storage.service";
 
 @Injectable()
