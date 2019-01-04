@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +27,9 @@ public class StatisticsServiceImplTest {
 
     @Test
     public void test_find_current_statistics() throws Exception {
-        Statistics statistics = new Statistics(1, 111, 11, new GregorianCalendar(2018, 0, 1, 0, 0, 0));
+        GregorianCalendar calendar =new GregorianCalendar(2018, 0, 1);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC") );
+        Statistics statistics = new Statistics(1, 111, 11,calendar);
         StatisticsDTO statisticsDTO = new StatisticsDTO(statistics);
         Mockito.when(statisticsRepository.findFirstByOrderByIdAsc()).thenReturn(statistics);
         ObjectFactory mock = Mockito.mock(ObjectFactory.class);
@@ -35,7 +38,7 @@ public class StatisticsServiceImplTest {
         assertThat(actualStatisticsDTO.getChainQuantity()).isEqualTo(1);
         assertThat(actualStatisticsDTO.getDiscountedProducts()).isEqualTo(111);
         assertThat(actualStatisticsDTO.getAverageDiscountPercentage()).isEqualTo(11);
-        assertThat(actualStatisticsDTO.getCreationDateMillis()).isEqualTo(1514754000000L);
+        assertThat(actualStatisticsDTO.getCreationDateMillis()).isEqualTo(1514764800000L);
     }
 
     @Test
