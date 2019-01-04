@@ -26,7 +26,7 @@ public class StatisticsServiceImplTest {
 
     @Test
     public void test_find_current_statistics() throws Exception {
-        Statistics statistics = new Statistics(1, 111, 11, new GregorianCalendar(2018, 0, 1));
+        Statistics statistics = new Statistics(1, 111, 11, new GregorianCalendar(2018, 0, 1, 0, 0, 0));
         StatisticsDTO statisticsDTO = new StatisticsDTO(statistics);
         Mockito.when(statisticsRepository.findFirstByOrderByIdAsc()).thenReturn(statistics);
         ObjectFactory mock = Mockito.mock(ObjectFactory.class);
