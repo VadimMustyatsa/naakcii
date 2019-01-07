@@ -9,7 +9,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class APIApplication extends SpringBootServletInitializer implements CommandLineRunner {
 	
-	
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(APIApplication.class);
@@ -22,6 +21,6 @@ public class APIApplication extends SpringBootServletInitializer implements Comm
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Hello world");
+		//System.out.println("Hello world");
 	}
 }

@@ -81,4 +81,19 @@ public class Subcategory implements Serializable {
 		this.isActive = isActive;
 		category.getSubcategories().add(this);
 	}
+	
+	public String toString() {
+    	StringBuilder result = new StringBuilder("Instance of " + Subcategory.class + ":");
+    	result.append(System.lineSeparator());
+		result.append("id - " + id + ";");
+		result.append(System.lineSeparator());
+		result.append("name - " + name + ";");
+		result.append(System.lineSeparator());
+		result.append("category id/name - " + category.getId() + "/" + category.getName() + ";");
+		result.append(System.lineSeparator());
+		result.append("priority - " + priority + ";");
+		result.append(System.lineSeparator());
+		result.append("isActive - " + isActive + ".");
+    	return result.toString();
+    }
 }

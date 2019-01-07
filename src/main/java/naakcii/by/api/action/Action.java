@@ -3,6 +3,7 @@ package naakcii.by.api.action;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Formatter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -106,20 +107,6 @@ public class Action implements Serializable {
     )
     private BigDecimal basePrice;
 
-    @Column(name = "ACTION_DISCOUNT_PERCENT")
-    @Digits(
-    	integer = 2, 
-    	fraction = 0,
-    	message = "Discount percent of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
-    )
-    @DecimalMax(
-        value = "50", 
-        inclusive = true,
-        message = "Discount percent of the action product '${validatedValue}' must be lower than '{value}'."
-    )
-    @PositiveOrZero(message = "Discount percent of the action product '${validatedValue}' mustn't be negative.")
-    private BigDecimal discountPercent;
-
     @Column(name = "ACTION_DISCOUNT_PRICE")
     @NotNull(message = "Discount price of the action product mustn't be null.")
     @Digits(
@@ -138,6 +125,20 @@ public class Action implements Serializable {
        	message = "Discount price of the action product '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal discountPrice;
+    
+    @Column(name = "ACTION_DISCOUNT_PERCENT")
+    @Digits(
+    	integer = 2, 
+    	fraction = 0,
+    	message = "Discount percent of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    )
+    @DecimalMax(
+        value = "50", 
+        inclusive = true,
+        message = "Discount percent of the action product '${validatedValue}' must be lower than '{value}'."
+    )
+    @PositiveOrZero(message = "Discount percent of the action product '${validatedValue}' mustn't be negative.")
+    private BigDecimal discountPercent;
 
     @Column(name = "ACTION_START_DATE")
     @Temporal(TemporalType.DATE)
@@ -185,5 +186,33 @@ public class Action implements Serializable {
         this.id.chainId = chain.getId();
         product.getActions().add(this);
         chain.getActions().add(this);
+    }
+    
+    public String toString() {
+    	StringBuilder result = new StringBuilder("Instance of " + Action.class + ":");
+		result.append(System.lineSeparator());
+		result.append("product id/name - " + id.productId + "/" + product.getName() + ";");
+		result.append(System.lineSeparator());
+		result.append("chain id/name - " + id.chainId + "/" + chain.getName() + ";");
+		result.append(System.lineSeparator());
+		result.append("base price - " + basePrice + ";");
+		result.append(System.lineSeparator());
+		result.append("discount price - " + discountPrice + ";");
+		result.append(System.lineSeparator());
+		result.append("discount percent - " + discountPercent + ";");
+		result.append(System.lineSeparator());
+		result.append("start date - " + getFormattedDate(startDate) + ";");
+		result.append(System.lineSeparator());
+		result.append("end date - " + getFormattedDate(endDate) + ";");
+		result.append(System.lineSeparator());
+		result.append("action type id/name - " + type.getId() + "/" + type.getName() + ".");
+		return result.toString();
+    }
+    
+    private String getFormattedDate(Calendar date) {
+    	Formatter formatter = new Formatter();
+    	String formattedDate = formatter.format("%td-%tm-%tY", date, date, date).toString();
+    	formatter.close();
+    	return formattedDate;
     }
 }

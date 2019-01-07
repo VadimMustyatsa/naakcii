@@ -10,8 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ChainRepository extends CrudRepository<Chain, Long> {
 	
-	List<Chain> findAllByOrderByNameAsc();
-	List<Chain> findAllByOrderByNameDesc();
 	List<Chain> findAllByIsActiveTrueOrderByNameAsc();
 	List<Chain> findAllByIsActiveTrueOrderByNameDesc();
 	Optional<Chain> findByName(String chainName);

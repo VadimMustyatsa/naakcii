@@ -50,4 +50,16 @@ public class ActionType implements Serializable {
 	public ActionType(String name) {
 		this.name = name;
 	}
+	
+	public String toString() {
+		StringBuilder result = new StringBuilder("Instance of " + ActionType.class + ":");
+		result.append(System.lineSeparator());
+		result.append("id - " + id + ";");
+		result.append(System.lineSeparator());
+		result.append("name - " + name + ";");
+		result.append(System.lineSeparator());
+		result.append("tooltip - " + tooltip + ".");
+		result.append(System.lineSeparator());
+		return result.toString();
+	}
 }

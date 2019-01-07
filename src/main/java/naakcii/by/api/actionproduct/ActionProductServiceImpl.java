@@ -1,4 +1,4 @@
-package naakcii.by.api.product;
+package naakcii.by.api.actionproduct;
 
 import naakcii.by.api.action.Action;
 import naakcii.by.api.action.ActionRepository;
@@ -16,13 +16,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ActionProductServiceImpl implements ActionProductService {
 	
 	private ActionRepository actionRepository;
 	private ObjectFactory objectFactory;
 	
 	@Autowired
-	public ProductServiceImpl(ActionRepository actionRepository, ObjectFactory objectFactory) {
+	public ActionProductServiceImpl(ActionRepository actionRepository, ObjectFactory objectFactory) {
 		this.actionRepository = actionRepository;
 		this.objectFactory = objectFactory;
 	}
@@ -36,11 +36,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> subcategoryIds, Set<Long> chainIds, Pageable pageable) {
-		return actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable)
+	public List<ActionProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> subcategoryIds, Set<Long> chainIds, Pageable pageable) {
+		return actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable)
 				.stream()
 				.filter(Objects::nonNull)
-				.map((Action action) -> objectFactory.getInstance(ProductDTO.class, action))
+				.map((Action action) -> objectFactory.getInstance(ActionProductDTO.class, action))
 				.collect(Collectors.toList());
 	}
 }

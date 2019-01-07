@@ -136,4 +136,29 @@ public class Product implements Serializable {
 		this.actions = actions;
 		subcategory.getProducts().add(this);
 	}
+	
+	public String toString() {
+    	StringBuilder result = new StringBuilder("Instance of " + Product.class + ":");
+    	result.append(System.lineSeparator());
+		result.append("id - " + id + ";");
+		result.append(System.lineSeparator());
+		result.append("barcode - " + barcode + ";");
+		result.append(System.lineSeparator());
+		result.append("name - " + name + ";");
+		result.append(System.lineSeparator());
+		result.append("picture - " + picture + ";");
+		result.append(System.lineSeparator());
+		result.append("unit - " + unit + ";");
+		result.append(System.lineSeparator());
+		result.append("manufacturer - " + manufacturer + ";");
+		result.append(System.lineSeparator());
+		result.append("brand - " + brand + ";");
+		result.append(System.lineSeparator());
+		result.append("country of origin id/name - " + countryOfOrigin.getId() + "/" + countryOfOrigin.getName() + ";");
+		result.append(System.lineSeparator());
+		result.append("subcategory id/name - " + subcategory.getId() + "/" + subcategory.getName() + ";");
+		result.append(System.lineSeparator());
+		result.append("isActive - " + isActive + ".");
+    	return result.toString();
+    }
 }

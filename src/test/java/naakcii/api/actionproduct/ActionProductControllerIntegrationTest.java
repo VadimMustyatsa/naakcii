@@ -1,4 +1,4 @@
-package naakcii.by.api.product;
+package naakcii.api.actionproduct;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,12 +37,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import naakcii.by.api.APIApplication;
 import naakcii.by.api.action.Action;
+import naakcii.by.api.actionproduct.ActionProductDTO;
 import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
+import naakcii.by.api.product.Product;
+import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -52,9 +55,9 @@ import naakcii.by.api.subcategory.Subcategory;
 @Transactional
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ProductControllerIntegrationTest {
+public class ActionProductControllerIntegrationTest {
 	
-	private static final Logger logger = LogManager.getLogger(ProductControllerIntegrationTest.class);
+	private static final Logger logger = LogManager.getLogger(ActionProductControllerIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -82,6 +85,8 @@ public class ProductControllerIntegrationTest {
 	private Action twelvethAction;
 	private Action thirteenthAction;
 	private Action fourteenthAction;
+	private Action fifteenthAction;
+	private Action sixteenthAction;
 	private Long firstSubcategoryId;
 	private Long secondSubcategoryId;
 	private Long thirdSubcategoryId;
@@ -132,63 +137,63 @@ public class ProductControllerIntegrationTest {
 		Country secondCountry = new Country(CountryCode.LT);
 		//Creation of products.
 		Product firstProduct = new Product("10000000000000", "First product", Unit.KG, true, firstSubcategory);
-		firstProduct.setUnit(Unit.KG);
 		firstProduct.setManufacturer("First product manufacturer");
 		firstProduct.setBrand("First product brand");
 		firstProduct.setCountryOfOrigin(firstCountry);
 		firstProduct.setPicture("Path to the picture of the first product");
 		Product secondProduct = new Product("20000000000000", "Second product", Unit.KG, true, firstSubcategory);
-		secondProduct.setUnit(Unit.PC);
 		secondProduct.setManufacturer("Second product manufacturer");
 		secondProduct.setBrand("First product brand");
 		secondProduct.setCountryOfOrigin(secondCountry);
 		secondProduct.setPicture("Path to the picture of the second product");
 		Product thirdProduct = new Product("30000000000000", "Third product", Unit.KG, true, firstSubcategory);
-		thirdProduct.setUnit(Unit.KG);
 		thirdProduct.setManufacturer("Third product manufacturer");
 		thirdProduct.setBrand("First product brand");
 		thirdProduct.setCountryOfOrigin(firstCountry);
 		thirdProduct.setPicture("Path to the picture of the third product");
 		Product fourthProduct = new Product("40000000000000", "Fourth product", Unit.PC, true, secondSubcategory);
-		fourthProduct.setUnit(Unit.PC);
 		fourthProduct.setManufacturer("Fourth product manufacturer");
 		fourthProduct.setBrand("First product brand");
 		fourthProduct.setCountryOfOrigin(secondCountry);
 		fourthProduct.setPicture("Path to the picture of the fourth product");
 		Product fifthProduct = new Product("50000000000000", "Fifth product", Unit.KG, true, secondSubcategory);
-		fifthProduct.setUnit(Unit.KG);
 		fifthProduct.setManufacturer("Fifth product manufacturer");
 		fifthProduct.setBrand("First product brand");
 		fifthProduct.setCountryOfOrigin(firstCountry);
 		fifthProduct.setPicture("Path to the picture of the fifth product");
 		Product sixthProduct = new Product("60000000000000", "Sixth product", Unit.PC, true, thirdSubcategory);
-		sixthProduct.setUnit(Unit.PC);
 		sixthProduct.setManufacturer("Sixth product manufacturer");
 		sixthProduct.setBrand("First product brand");
 		sixthProduct.setCountryOfOrigin(secondCountry);
 		sixthProduct.setPicture("Path to the picture of the sixth product");
 		Product seventhProduct = new Product("70000000000000", "Seventh product", Unit.KG, true, thirdSubcategory);
-		seventhProduct.setUnit(Unit.KG);
 		seventhProduct.setManufacturer("Seventh product manufacturer");
 		seventhProduct.setBrand("First product brand");
 		seventhProduct.setCountryOfOrigin(firstCountry);
 		seventhProduct.setPicture("Path to the picture of the seventh product");
 		Product eighthProduct = new Product("80000000000000", "Eighth product", Unit.PC, true, fourthSubcategory);
-		eighthProduct.setUnit(Unit.PC);
 		eighthProduct.setManufacturer("Eighth product manufacturer");
 		eighthProduct.setBrand("First product brand");
 		eighthProduct.setCountryOfOrigin(secondCountry);
 		eighthProduct.setPicture("Path to the picture of the eighth product");
+		Product ninthProduct = new Product("90000000000000", "Ninth product", Unit.PC, false, secondSubcategory);
+		ninthProduct.setManufacturer("Ninth product manufacturer");
+		ninthProduct.setBrand("First product brand");
+		ninthProduct.setCountryOfOrigin(firstCountry);
+		Product tenthProduct = new Product("10000000000000", "Tenth product", Unit.KG, false, thirdSubcategory);
+		tenthProduct.setManufacturer("Tenth product manufacturer");
+		tenthProduct.setBrand("First product brand");
+		tenthProduct.setCountryOfOrigin(secondCountry);
 		//Saving of all entities.
 		categories = new ArrayList<>();
 		
 		try {
 			categories.add(testEntityManager.persist(firstCategory));
 			categories.add(testEntityManager.persist(secondCategory));
-			logger.info("Test data was created successfully: instances of '{}', '{}', {} and '{}' were added in the database.",
+			logger.info("Test data was created successfully: instances of '{}', '{}', {} and '{}' were added to the database.",
 					Category.class, Subcategory.class, Product.class, Action.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}', '{}', {} and '{}' instances): {}.", 
+			logger.error("Exception has occurred during the creation of test data ('{}', '{}', {} and '{}' instances): {}.", 
 					Category.class, Subcategory.class, Product.class, Action.class, exception);
 		} 
 		
@@ -199,9 +204,9 @@ public class ProductControllerIntegrationTest {
 			chains.add(testEntityManager.persist(secondChain));
 			chains.add(testEntityManager.persist(thirdChain));
 			chains.add(testEntityManager.persist(fourthChain));
-			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Chain.class);
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", Chain.class);
 		} catch(Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Chain.class, exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Chain.class, exception);
 		}
 		
 		actionTypes = new ArrayList<>();
@@ -209,9 +214,9 @@ public class ProductControllerIntegrationTest {
 		try {
 			actionTypes.add(testEntityManager.persist(firstActionType));
 			actionTypes.add(testEntityManager.persist(secondActionType));
-			logger.info("Test data was created successfully: instances of '{}' were added in the database.", ActionType.class);
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", ActionType.class);
 		} catch(Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", ActionType.class, exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", ActionType.class, exception);
 		}
 		
 		countries = new ArrayList<>();
@@ -219,9 +224,9 @@ public class ProductControllerIntegrationTest {
 		try {
 			countries.add(testEntityManager.persist(firstCountry));
 			countries.add(testEntityManager.persist(secondCountry));
-			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Country.class);
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", Country.class);
 		} catch(Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Country.class, exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Country.class, exception);
 		}
 		
 		//Creation of actions.
@@ -322,6 +327,20 @@ public class ProductControllerIntegrationTest {
 		fourteenthAction = new Action(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
 		fourteenthAction.setDiscountPrice(new BigDecimal("20.00"));
 		fourteenthAction.setDiscountPercent(new BigDecimal("25"));
+		Calendar fifteenthStartDate = getCurrentDate();
+		fifteenthStartDate.add(Calendar.DAY_OF_MONTH, -15);
+		Calendar fifteenthEndDate = getCurrentDate();
+		fifteenthEndDate.add(Calendar.DAY_OF_MONTH, 15);
+		fifteenthAction = new Action(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
+		fifteenthAction.setDiscountPrice(new BigDecimal("1.00"));
+		fifteenthAction.setDiscountPercent(new BigDecimal("15"));
+		Calendar sixteenthStartDate = getCurrentDate();
+		sixteenthStartDate.add(Calendar.DAY_OF_MONTH, -5);
+		Calendar sixteenthEndDate = getCurrentDate();
+		sixteenthEndDate.add(Calendar.DAY_OF_MONTH, 5);
+		sixteenthAction = new Action(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
+		sixteenthAction.setDiscountPrice(new BigDecimal("1.30"));
+		sixteenthAction.setDiscountPercent(new BigDecimal("12"));
 		testEntityManager.flush();
 		//Subcategory and action IDs saving.
 		firstSubcategoryId = firstSubcategory.getId();
@@ -351,7 +370,7 @@ public class ProductControllerIntegrationTest {
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}', '{}', '{}', {} and '{}' instances): {}.", 
+			logger.error("Exception has occurred during the cleaning of test data ('{}', '{}', '{}', {} and '{}' instances): {}.", 
 					Category.class, Subcategory.class, Product.class, Action.class, Chain.class, exception);
 		}
 		
@@ -362,7 +381,7 @@ public class ProductControllerIntegrationTest {
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Country.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", Country.class, exception);
+			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", Country.class, exception);
 		}
 		
 		try {
@@ -372,7 +391,7 @@ public class ProductControllerIntegrationTest {
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ActionType.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", ActionType.class, exception);
+			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", ActionType.class, exception);
 		}
 	}
 	
@@ -415,14 +434,14 @@ public class ProductControllerIntegrationTest {
 				  				  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
-		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ProductDTO(ninthAction));
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
+		expectedProductDTOs.add(new ActionProductDTO(twelvethAction));
+		expectedProductDTOs.add(new ActionProductDTO(thirteenthAction));
+		expectedProductDTOs.add(new ActionProductDTO(ninthAction));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected json should contain: ["
+		assertEquals("Expected JSON should contain: ["
 				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
 				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
 				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
@@ -469,12 +488,12 @@ public class ProductControllerIntegrationTest {
 				  				  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
-		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		System.out.println(expectedJson);
-		assertEquals("Expected json shouldn't contain anything, as all results have been placed on previos page : [].", expectedJson, resultJson);	
+		assertEquals("Expected JSON shouldn't contain anything, as all results have been placed on previous page : [].", expectedJson, resultJson);	
 		removeTestData();
 	}
 	
@@ -517,14 +536,14 @@ public class ProductControllerIntegrationTest {
 				  				  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
-		List<ProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ProductDTO(ninthAction));
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
+		expectedProductDTOs.add(new ActionProductDTO(twelvethAction));
+		expectedProductDTOs.add(new ActionProductDTO(thirteenthAction));
+		expectedProductDTOs.add(new ActionProductDTO(ninthAction));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected json should contain the same data, as it is the 1st page with size 12 (default values): ["
+		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): ["
 				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
 				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
 				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
@@ -558,6 +577,8 @@ public class ProductControllerIntegrationTest {
 		secondSubcategoryId = null;
 		thirdSubcategoryId = null;
 		fourthSubcategoryId = null;
+		fifteenthAction = null;
+		sixteenthAction = null;
 		firstChainId = null;
 		secondChainId = null;
 		thirdChainId = null;

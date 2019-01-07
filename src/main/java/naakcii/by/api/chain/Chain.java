@@ -76,5 +76,20 @@ public class Chain implements Serializable {
 		this.name = name;
 		this.link = link;
 		this.isActive = isActive;
-	}	
+	}
+	
+	public String toString() {
+		StringBuilder result = new StringBuilder("Instance of " + Chain.class + ":");
+		result.append(System.lineSeparator());
+		result.append("id - " + id + ";");
+		result.append(System.lineSeparator());
+		result.append("name - " + name + ";");
+		result.append(System.lineSeparator());
+		result.append("logo - " + logo + ";");
+		result.append(System.lineSeparator());
+		result.append("link - " + link + ";");
+		result.append(System.lineSeparator());
+		result.append("isActive - " + isActive + ".");
+		return result.toString();
+	}
 }
