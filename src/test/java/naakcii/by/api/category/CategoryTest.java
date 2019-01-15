@@ -3,7 +3,6 @@ package naakcii.by.api.category;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -85,22 +84,6 @@ public class CategoryTest {
 		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as category 'isActive' field is null:", 1, constraintViolations.size());
 		assertEquals("Category must have field 'isActive' defined.", constraintViolations.iterator().next().getMessage());
-	}
-	
-	@Test
-	public void test_category_set_of_subcategories_is_null() {
-		Category category = new Category("Category name", null, false);
-		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as category set of subcategories is null:", 1, constraintViolations.size());
-		assertEquals("Category must have at least one subcategory.", constraintViolations.iterator().next().getMessage());
-	}
-	
-	@Test
-	public void test_category_set_of_subcategories_is_empty() {
-		Category category = new Category("Category name", new HashSet<Subcategory>(), false);
-		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as category set of subcategories is empty:", 1, constraintViolations.size());
-		assertEquals("Category must have at least one subcategory.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test

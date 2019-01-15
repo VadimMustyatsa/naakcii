@@ -21,6 +21,6 @@ public class APIApplication extends SpringBootServletInitializer implements Comm
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		//System.out.println("Hello world");
+		System.out.println("Hello world");
 	}
 }

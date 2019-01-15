@@ -1,4 +1,4 @@
-package naakcii.by.api.util.parser;
+package naakcii.by.api.util.parser.multisheet;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -17,7 +17,15 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"warnings", "constraintViolations", "exceptions"})
+@EqualsAndHashCode(exclude = {
+		"warnings", 
+		"constraintViolations", 
+		"exceptions", 
+		"startTime", 
+		"finishTime", 
+		"parsingTime",
+		"commonExceptions"
+})
 public class ParsingResult<T> {
 	
 	private static final String DATE_AND_TIME_FORMAT = "yyyy'-'MM'-'dd HH':'mm':'ss'.'SSS";
@@ -33,7 +41,12 @@ public class ParsingResult<T> {
 	private Integer totalNumberOfInstances;
 	private LocalDateTime startTime;
 	private LocalDateTime finishTime;
-	private Long parsingTime; // In milliseconds.
+	// Time of parsing process in milliseconds.
+	private Long parsingTime;
+	// Common exceptions of parsing process.
+	private List<Exception> commonExceptions = new ArrayList<>();
+	// Common warnings of parsing process.
+	private List<String> commonWarnings = new ArrayList<>();
 	/*
 	 * Parameters for 'warnings', 'constraintViolations' and 'exceptions' maps:
 	 * Key (Integer) - 
@@ -105,6 +118,14 @@ public class ParsingResult<T> {
 		}
 	}
 	
+	public void addCommonException(Exception commonException) {
+		commonExceptions.add(commonException);
+	}
+	
+	public void addCommonWarning(String commonWarning) {
+		commonWarnings.add(commonWarning);
+	}
+	
 	private int getTotalNumberOfWarnings() {
 		return warnings
 				.values()
@@ -170,6 +191,40 @@ public class ParsingResult<T> {
 		result.append(System.lineSeparator());
 		result.append("number of invalid instances - " + numberOfInvalidInstances + ";");
 		result.append(System.lineSeparator());
+		result.append("common warnings: ");
+		
+		if(commonWarnings.isEmpty()) {
+			result.append("not found;");
+			result.append(System.lineSeparator());
+		} else {
+			result.append(commonWarnings.size() + " pieces,");
+			result.append(System.lineSeparator());
+			result.append("namely");
+			result.append(System.lineSeparator());
+			
+			for(String commonWarning : commonWarnings) {
+				result.append(commonWarning + ";");
+				result.append(System.lineSeparator());
+			}
+		}
+		
+		result.append("common exceptions: ");
+		
+		if(commonExceptions.isEmpty()) {
+			result.append("not found;");
+			result.append(System.lineSeparator());
+		} else {
+			result.append(commonExceptions.size() + " pieces,");
+			result.append(System.lineSeparator());
+			result.append("namely");
+			result.append(System.lineSeparator());
+			
+			for(Exception commonException : commonExceptions) {
+				result.append(commonException + ";");
+				result.append(System.lineSeparator());
+			}
+		}
+		
 		result.append("warnings: ");
 		
 		if (warnings.isEmpty()) {
@@ -241,15 +296,14 @@ public class ParsingResult<T> {
 		
 		result.append("start time - ");
 		result.append(startTime == null ? "undefined" : startTime.format(DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT)));
+		result.append(";");
 		result.append(System.lineSeparator());
 		result.append("finish time - ");
-		result.append(";");
 		result.append(finishTime == null ? "undefined" : finishTime.format(DateTimeFormatter.ofPattern(DATE_AND_TIME_FORMAT)));
 		result.append(";");
 		result.append(System.lineSeparator());
 		result.append("total parsing time - ");
-		result.append(parsingTime == null ? "impossible to calculate" : parsingTime + "milliseconds");	
-		result.append(".");
+		result.append(parsingTime == null ? " impossible to calculate." : parsingTime + " milliseconds.");	
 		return result.toString();
 	}
 }

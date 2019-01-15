@@ -1,4 +1,4 @@
-package naakcii.api.actionproduct;
+package naakcii.by.api.actionproduct;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

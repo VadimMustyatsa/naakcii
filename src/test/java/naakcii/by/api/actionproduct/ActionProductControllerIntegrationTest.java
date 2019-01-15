@@ -1,4 +1,4 @@
-package naakcii.api.actionproduct;
+package naakcii.by.api.actionproduct;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

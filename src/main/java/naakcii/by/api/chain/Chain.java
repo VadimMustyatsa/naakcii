@@ -25,7 +25,7 @@ import naakcii.by.api.util.annotations.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "logo", "actions"})
+@EqualsAndHashCode(exclude = {"id", "logo", "actions", "synonym"})
 @Entity
 @Table(name = "CHAIN")
 public class Chain implements Serializable {
@@ -68,6 +68,9 @@ public class Chain implements Serializable {
 		@NotNull(message = "Action mustn't be null.")
 		Action> actions = new HashSet<Action>();
 	
+	@Column(name = "CHAIN_SYNONYM")
+	private String synonym;
+		
 	@Column(name = "CHAIN_IS_ACTIVE")
 	@NotNull(message = "Chain must have field 'isActive' defined.")
 	private Boolean isActive;
@@ -78,18 +81,27 @@ public class Chain implements Serializable {
 		this.isActive = isActive;
 	}
 	
+	public Chain(String name, String link, Boolean isActive, String synonym) {
+		this.name = name;
+		this.link = link;
+		this.isActive = isActive;
+		this.synonym = synonym;
+	}
+	
 	public String toString() {
 		StringBuilder result = new StringBuilder("Instance of " + Chain.class + ":");
 		result.append(System.lineSeparator());
-		result.append("id - " + id + ";");
+		result.append("\t").append("id - " + id + ";");
 		result.append(System.lineSeparator());
-		result.append("name - " + name + ";");
+		result.append("\t").append("name - " + name + ";");
 		result.append(System.lineSeparator());
-		result.append("logo - " + logo + ";");
+		result.append("\t").append("logo - " + logo + ";");
 		result.append(System.lineSeparator());
-		result.append("link - " + link + ";");
+		result.append("\t").append("link - " + link + ";");
 		result.append(System.lineSeparator());
-		result.append("isActive - " + isActive + ".");
+		result.append("\t").append("isActive - " + isActive + ";");
+		result.append(System.lineSeparator());
+		result.append("\t").append("synonym - " + synonym + ".");
 		return result.toString();
 	}
 }

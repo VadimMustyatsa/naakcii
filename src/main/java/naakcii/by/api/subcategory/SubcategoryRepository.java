@@ -12,7 +12,7 @@ public interface SubcategoryRepository extends CrudRepository<Subcategory, Long>
 	
 	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByPriorityAsc(Long categoryId);
 	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByPriorityDesc(Long categoryId);
-	Optional<Subcategory> findByName(String subcategoryName);
+	Optional<Subcategory> findByNameAndCategoryName(String subcategoryName, String categoryName);
 	
 	@Modifying
 	@Query("update Subcategory subcategory set subcategory.isActive = false where subcategory.id = :subcategoryId")

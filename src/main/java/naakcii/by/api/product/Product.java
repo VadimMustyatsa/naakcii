@@ -33,7 +33,7 @@ import naakcii.by.api.util.annotations.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "actions", "manufacturer", "brand"})
+@EqualsAndHashCode(exclude = {"id", "picture", "actions", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -140,25 +140,25 @@ public class Product implements Serializable {
 	public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + Product.class + ":");
     	result.append(System.lineSeparator());
-		result.append("id - " + id + ";");
+		result.append("\t").append("id - " + id + ";");
 		result.append(System.lineSeparator());
-		result.append("barcode - " + barcode + ";");
+		result.append("\t").append("barcode - " + barcode + ";");
 		result.append(System.lineSeparator());
-		result.append("name - " + name + ";");
+		result.append("\t").append("name - " + name + ";");
 		result.append(System.lineSeparator());
-		result.append("picture - " + picture + ";");
+		result.append("\t").append("picture - " + picture + ";");
 		result.append(System.lineSeparator());
-		result.append("unit - " + unit + ";");
+		result.append("\t").append("unit - " + (unit == null ? null : unit.getRepresentation()) + ";");
 		result.append(System.lineSeparator());
-		result.append("manufacturer - " + manufacturer + ";");
+		result.append("\t").append("manufacturer - " + manufacturer + ";");
 		result.append(System.lineSeparator());
-		result.append("brand - " + brand + ";");
+		result.append("\t").append("brand - " + brand + ";");
+		result.append(System.lineSeparator());	
+		result.append("\t").append("country of origin id/name - " + (countryOfOrigin == null ? null + "/" + null : countryOfOrigin.getId() + "/" + countryOfOrigin.getName()) + ";");
 		result.append(System.lineSeparator());
-		result.append("country of origin id/name - " + countryOfOrigin.getId() + "/" + countryOfOrigin.getName() + ";");
+		result.append("\t").append("subcategory id/name - " + (subcategory == null ? null + "/" + null : subcategory.getId() + "/" + subcategory.getName()) + ";");
 		result.append(System.lineSeparator());
-		result.append("subcategory id/name - " + subcategory.getId() + "/" + subcategory.getName() + ";");
-		result.append(System.lineSeparator());
-		result.append("isActive - " + isActive + ".");
+		result.append("\t").append("isActive - " + isActive + ".");
     	return result.toString();
     }
 }

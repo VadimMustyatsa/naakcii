@@ -188,24 +188,49 @@ public class Action implements Serializable {
         chain.getActions().add(this);
     }
     
+    public Action(Product product, Chain chain, BigDecimal basePrice, BigDecimal discountPrice, BigDecimal discountPercent, ActionType type, Calendar startDate, Calendar endDate) {
+        this.product = product;
+        this.chain = chain;
+        this.basePrice = basePrice;
+        this.discountPrice = discountPrice;
+        this.discountPercent = discountPercent;
+        this.type = type;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.id.productId = product.getId();
+        this.id.chainId = chain.getId();
+        product.getActions().add(this);
+        chain.getActions().add(this);
+    }
+    
+    public void setProduct(Product product) {
+    	this.product = product;
+    	this.id.productId = product.getId();
+    }
+    
+    public void setChain(Chain chain) {
+    	this.chain = chain;
+    	this.id.chainId = chain.getId();
+    }
+    
     public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + Action.class + ":");
 		result.append(System.lineSeparator());
-		result.append("product id/name - " + id.productId + "/" + product.getName() + ";");
+		result.append("\t").append("product id/name - " + (product == null ? null + "/" + null : id.productId + "/" + product.getName()) + ";");
 		result.append(System.lineSeparator());
-		result.append("chain id/name - " + id.chainId + "/" + chain.getName() + ";");
+		result.append("\t").append("chain id/name - " + (chain == null ? null + "/" + null : id.chainId + "/" + chain.getName()) + ";");
 		result.append(System.lineSeparator());
-		result.append("base price - " + basePrice + ";");
+		result.append("\t").append("base price - " + basePrice + ";");
 		result.append(System.lineSeparator());
-		result.append("discount price - " + discountPrice + ";");
+		result.append("\t").append("discount price - " + discountPrice + ";");
 		result.append(System.lineSeparator());
-		result.append("discount percent - " + discountPercent + ";");
+		result.append("\t").append("discount percent - " + discountPercent + ";");
 		result.append(System.lineSeparator());
-		result.append("start date - " + getFormattedDate(startDate) + ";");
+		result.append("\t").append("start date - " + startDate == null ? null : getFormattedDate(startDate) + ";");
 		result.append(System.lineSeparator());
-		result.append("end date - " + getFormattedDate(endDate) + ";");
+		result.append("\t").append("end date - " + endDate == null ? null : getFormattedDate(endDate) + ";");
 		result.append(System.lineSeparator());
-		result.append("action type id/name - " + type.getId() + "/" + type.getName() + ".");
+		result.append("\t").append("action type id/name - " + (type == null ? null + "/" + null : type.getId() + "/" + type.getName()) + ".");
 		return result.toString();
     }
     
