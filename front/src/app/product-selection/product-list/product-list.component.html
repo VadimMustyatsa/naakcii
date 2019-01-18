@@ -5,9 +5,18 @@
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div *ngIf="isVisibleProd()">
-    <app-foods-food-card [foodList]="foodList" class="food-cards">
-    </app-foods-food-card>
-
+    
+    <div class="food-cards">
+        <div *ngFor="let curFood of foodList; let i = index" >
+          <app-foods-food-card [product]="curFood">
+          </app-foods-food-card>
+      </div>
+    </div>
+      <!-- <div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+          [materializeActions]="modalActions">
+        <app-email-modal (childEvent)="closeModal()"></app-email-modal>
+      </div> -->
+    
     <div *ngIf="showLoadingCard" class="loadingCard">
         <div class="progress amber">
           <div class="indeterminate deep-orange"></div>

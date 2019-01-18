@@ -13,21 +13,20 @@ import {SessionStorageService} from "../../../shared/services/session-storage.se
   styleUrls: ['./product-card.component.scss'],
   providers: [FoodsStorageService]
 })
-export class ProductCardComponent {
-  @Input() foodList: FoodList[];
+export class ProductCardComponent implements OnInit{
+  public selectAmount:number;
+
   nameMaxWidth = 80;
 
-  modalActions = new EventEmitter<string|MaterializeAction>();
-  openModal() {
-    this.modalActions.emit({action: 'modal', params: ['open']});
-  }
-  closeModal() {
-    this.modalActions.emit({action: 'modal', params: ['close']});
-  }
+  @Input() product: FoodList;
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService ) {
+  }
+
+  ngOnInit(){
+    this.selectAmount=1;
   }
 
   getStorageByID(id: number): ChainLine {
@@ -88,5 +87,12 @@ export class ProductCardComponent {
       }
     });
     return selected;
+  }
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal() {
+    this.modalActions.emit({action: 'modal', params: ['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action: 'modal', params: ['close']});
   }
 }

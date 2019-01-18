@@ -1,4 +1,6 @@
 import {Component, Inject, OnInit, HostListener} from '@angular/core';
+import {MaterializeAction} from "angular2-materialize";
+
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
