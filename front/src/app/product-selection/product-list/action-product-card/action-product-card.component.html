@@ -39,14 +39,14 @@
       </div>
 
       <div class="amountItem center">
-        <a class="btn-floating btn teal grey darken-1" (click)="subItem(product)">
+        <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
           <i class="material-icons">remove</i>
         </a>
-        <span class="grey-text text-darken-2">{{product.selectAmount}}</span>
-        <a class="btn-floating btn teal grey darken-1" (click)="addItem(product)">
+        <span class="grey-text text-darken-2">{{selectAmount}}</span>
+        <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
           <i class="material-icons">add</i>
         </a>
-        <a class="selectFood btn waves-block deep-orange" (click)="selectFood(product)">Добавить</a>
+        <a class="selectFood btn waves-block deep-orange" (click)="selectFood()">Добавить</a>
       </div>
       <div class="endStock">
       <span class="grey-text">
