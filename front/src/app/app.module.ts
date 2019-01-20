@@ -22,7 +22,7 @@ import { FoodsCategoriesService } from './shared/category/foods.categories.servi
 import { SHARED_STATE, SharedState } from './product-selection/sharedState.model';
 import { Subject} from 'rxjs/Subject';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProductCardComponent } from './product-selection/product-list/product-card/product-card.component';
+import { ActionProductCardComponent } from './product-selection/product-list/action-product-card/action-product-card.component';
 import { AppCutStringPipe } from './cutString.pipe';
 import { ProductStorageListComponent } from './product-selection/product-storage-list/product-storage-list.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -68,7 +68,7 @@ registerLocaleData(localeFr);
     ProductSortingComponent,
     ProductListComponent,
     ProductsTotalComponent,
-    ProductCardComponent,
+    ActionProductCardComponent,
     ProductStorageListComponent,
     AppCutStringPipe,
     ProductStorageListComponent,

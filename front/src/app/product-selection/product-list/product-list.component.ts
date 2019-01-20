@@ -1,4 +1,6 @@
-import {Component, Inject, OnInit, HostListener} from '@angular/core';
+import {Component, Inject, OnInit,EventEmitter} from '@angular/core';
+import {MaterializeAction} from "angular2-materialize";
+
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
 import {FoodList} from '../../shared/foodList/foods.foodList.model';
@@ -150,4 +152,12 @@ export class ProductListComponent implements OnInit {
   checkDuplicate(foodList, product) {
     return foodList.some(el => el.id === product.id)
   };
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  openModal() {
+    this.modalActions.emit({action: 'modal', params: ['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action: 'modal', params: ['close']});
+  }
 }
