@@ -7,7 +7,7 @@
   <div *ngIf="isVisibleProd()">
     
     <div class="food-cards">
-        <div *ngFor="let curFood of foodList" >
+        <div *ngFor="let curFood of foodList">
           <app-action-product-card [product]="curFood" (openModal)="openModal()">
           </app-action-product-card>
       </div>
