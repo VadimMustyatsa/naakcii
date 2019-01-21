@@ -1,6 +1,7 @@
 package naakcii.by.api.subcategory;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,13 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {
 	
-	List<Subcategory> findByCategoryId(Long categoryId);
-	List<Subcategory> findByIsActiveTrueAndCategoryId(Long categoryId);
-	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByNameAsc(Long categoryId);
-	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByNameDesc(Long categoryId);
-	Subcategory findByNameAndCategoryName(String subcategoryName, String categoryName);
 	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByPriorityAsc(Long categoryId);
 	List<Subcategory> findByIsActiveTrueAndCategoryIdOrderByPriorityDesc(Long categoryId);
+	Optional<Subcategory> findByNameAndCategoryName(String subcategoryName, String categoryName);
 	
 	@Modifying
 	@Query("update Subcategory subcategory set subcategory.isActive = false where subcategory.id = :subcategoryId")

@@ -76,6 +76,6 @@ public class SubcategoryServiceImplTest {
 		verify(objectFactory).getInstance(SubcategoryDTO.class, secondSubcategory);
 		verify(objectFactory).getInstance(SubcategoryDTO.class, thirdSubcategory);
 		assertEquals("Size of the result list of subcategory data transfer objects should be 3.", resultSubcategoryDTOs.size(), 3);
-		assertEquals("Result list of subcategory data transfer objects should be [firstSubcategoryDTO, secondSubcategoryDTO, thirdSubcategoryDTO]", expectedSubcategoryDTOs, resultSubcategoryDTOs);
+		assertEquals("Result list of subcategory data transfer objects should be: [firstSubcategoryDTO, secondSubcategoryDTO, thirdSubcategoryDTO].", expectedSubcategoryDTOs, resultSubcategoryDTOs);
 	}
 }

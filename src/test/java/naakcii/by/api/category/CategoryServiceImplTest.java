@@ -75,6 +75,6 @@ public class CategoryServiceImplTest {
 		verify(objectFactory).getInstance(CategoryDTO.class, secondCategory);
 		verify(objectFactory).getInstance(CategoryDTO.class, thirdCategory);
 		assertEquals("Size of the result list of category data transfer objects should be 3.", resultCategoryDTOs.size(), 3);
-		assertEquals("Result list of category data transfer objects should be [firstCategoryDTO, secondCategoryDTO, thirdCategoryDTO]", expectedCategoryDTOs, resultCategoryDTOs);
+		assertEquals("Result list of category data transfer objects should be: [firstCategoryDTO, secondCategoryDTO, thirdCategoryDTO].", expectedCategoryDTOs, resultCategoryDTOs);
 	}
 }

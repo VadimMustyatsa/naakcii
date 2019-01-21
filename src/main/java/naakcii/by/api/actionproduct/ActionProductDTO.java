@@ -1,4 +1,4 @@
-package naakcii.by.api.product;
+package naakcii.by.api.actionproduct;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -14,7 +14,7 @@ import naakcii.by.api.actiontype.ActionTypeDTO;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDTO {
+public class ActionProductDTO {
 		
 	private Long productId;
     private Long chainId;
@@ -31,7 +31,7 @@ public class ProductDTO {
     private Long endDate;
     private ActionTypeDTO actionType;
     
-    public ProductDTO(Action action) {
+    public ActionProductDTO(Action action) {
     	this.productId = action.getId().getProductId();
     	this.chainId = action.getId().getProductId();
     	this.name = action.getProduct().getName();

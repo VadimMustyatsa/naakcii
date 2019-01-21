@@ -1,4 +1,4 @@
-package naakcii.by.api.product;
+package naakcii.by.api.actionproduct;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,18 +15,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import naakcii.by.api.actionproduct.ActionProductController;
+import naakcii.by.api.actionproduct.ActionProductDTO;
+import naakcii.by.api.actionproduct.ActionProductService;
+
 @RunWith(MockitoJUnitRunner.class)
-public class ProductControllerTest {
+public class ActionProductControllerTest {
 	
 	private static final Integer DEFAULT_PAGE_NIMBER = 0;
 	private static final Integer DEFAULT_PAGE_SIZE = 12;
 	private static final String DEFAULT_FIELD_FOR_SORTING = "discountPrice";
 
-	private ProductController productController;
-	private List<ProductDTO> productDTOs;
+	private ActionProductController productController;
+	private List<ActionProductDTO> productDTOs;
 	
 	@Mock
-	private ProductService productService;
+	private ActionProductService actionProductService;
 	
 	@Mock
 	private Set<Long> subcategoryIds;
@@ -36,7 +40,7 @@ public class ProductControllerTest {
 		
 	@Before
 	public void setUp() {
-		productController = new ProductController(productService);
+		productController = new ActionProductController(actionProductService);
 	}
 	
 	@Test
@@ -44,9 +48,9 @@ public class ProductControllerTest {
 		Integer page = 0;
 		Integer size = 12;
 		Pageable pageRequest = PageRequest.of(page, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(productService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -54,9 +58,9 @@ public class ProductControllerTest {
 		Integer page = -5;
 		Integer size = 12;
 		Pageable pageRequest = PageRequest.of(DEFAULT_PAGE_NIMBER, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(productService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -64,9 +68,9 @@ public class ProductControllerTest {
 		Integer page = 2;
 		Integer size = 0;
 		Pageable pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(productService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -74,8 +78,8 @@ public class ProductControllerTest {
 		Integer page = -1;
 		Integer size = -5;
 		Pageable pageRequest = PageRequest.of(DEFAULT_PAGE_NIMBER, DEFAULT_PAGE_SIZE, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(productService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 }

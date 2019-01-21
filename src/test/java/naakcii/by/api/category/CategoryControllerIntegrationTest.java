@@ -56,12 +56,15 @@ public class CategoryControllerIntegrationTest {
 	
 	private ObjectMapper objectMapper;
 	private StopWatch stopWatch;
-	private List<Category> categories;
+	private List<Category> activeCategories;
+	private List<Category> inactiveCategories;
 	
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
 		stopWatch = new StopWatch();
+		activeCategories = new ArrayList<>();
+		inactiveCategories = new ArrayList<>();
 	}
 		
 	private void createListOfCategories() {
@@ -69,12 +72,15 @@ public class CategoryControllerIntegrationTest {
 		Category firstCategory = new Category("First category", true);
 		Category secondCategory = new Category("Second category", true);
 		Category thirdCategory = new Category("Third category", true);
+		Category fourthCategory = new Category("Fourth category", false);
 		firstCategory.setIcon("First category icon");
 		firstCategory.setPriority(7);
 		secondCategory.setIcon("Second category icon");
 		secondCategory.setPriority(2);
 		thirdCategory.setIcon("Third category icon");
 		thirdCategory.setPriority(4);
+		fourthCategory.setIcon("Fourth category icon");
+		fourthCategory.setPriority(1);
 		Subcategory firstSubcategory = new Subcategory("1st subcategory", firstCategory, true);
 		firstSubcategory.setPriority(7);
 		Subcategory secondSubcategory = new Subcategory("2nd subcategory", firstCategory, true);
@@ -83,17 +89,20 @@ public class CategoryControllerIntegrationTest {
 		thirdSubcategory.setPriority(5);
 		Subcategory fourthSubcategory = new Subcategory("4th subcategory", thirdCategory, true);
 		fourthSubcategory.setPriority(3);
-		categories = new ArrayList<>();
+		Subcategory fifthSubcategory = new Subcategory("5th subcategory", fourthCategory, true);
+		fifthSubcategory.setPriority(2);
 				
 		try {
-			categories.add(testEntityManager.persist(secondCategory));
-			categories.add(testEntityManager.persist(thirdCategory));
-			categories.add(testEntityManager.persist(firstCategory));
+			activeCategories.add(testEntityManager.persist(secondCategory));
+			activeCategories.add(testEntityManager.persist(thirdCategory));
+			activeCategories.add(testEntityManager.persist(firstCategory));
+			inactiveCategories.add(testEntityManager.persist(fourthCategory));
 			testEntityManager.clear();
-			logger.info("Test data was created successfully: instances of '{}' and '{}' were added in the database.",
+			logger.info("Test data was created successfully: instances of '{}' and '{}' were added to the database.",
 					Category.class, Subcategory.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' and '{}' instances): {}.", exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' and '{}' instances): {}.", 
+					Category.class, Subcategory.class, exception);
 		} 
 	}
 	
@@ -101,14 +110,17 @@ public class CategoryControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			categories.stream()
-					  .map((Category category) -> testEntityManager.merge(category))
-					  .forEach((Category category) ->	testEntityManager.remove(category));		  
+			activeCategories.stream()
+					.map((Category category) -> testEntityManager.merge(category))
+					.forEach((Category category) ->	testEntityManager.remove(category));
+			inactiveCategories.stream()
+					.map((Category category) -> testEntityManager.merge(category))
+					.forEach((Category category) ->	testEntityManager.remove(category));
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' and '{}' were removed from the database.",
 					Category.class, Subcategory.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}' and '{}' instances): {}.", 
+			logger.error("Exception has occurred during the cleaning of test data ('{}' and '{}' instances): {}.", 
 					Category.class, Subcategory.class, exception);
 		}
 	}
@@ -116,7 +128,7 @@ public class CategoryControllerIntegrationTest {
 	@Test
 	public void test_get_all_categories() throws Exception {
 		createListOfCategories();
-		List<CategoryDTO> expectedCategoryDTOs = categories
+		List<CategoryDTO> expectedCategoryDTOs = activeCategories
 				.stream()
 				.map(CategoryDTO::new)
 				.collect(Collectors.toList());
@@ -133,9 +145,9 @@ public class CategoryControllerIntegrationTest {
 								  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/categories");
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected json should be: ["
+		assertEquals("Expected JSON should be: ["
 				   + "{\"name\":\"Second category\",\"priority\":2,\"icon\":\"Second category icon\",\"id\":2},"
 				   + "{\"name\":\"Third category\",\"priority\":4,\"icon\":\"Third category icon\",\"id\":3},"
 				   + "{\"name\":\"First category\",\"priority\":7,\"icon\":\"First category icon\",\"id\":1}"
@@ -147,6 +159,7 @@ public class CategoryControllerIntegrationTest {
 	public void tearDown() {
 		objectMapper = null;
 		stopWatch = null;
-		categories = null;
+		activeCategories = null;
+		inactiveCategories = null;
 	}
 }

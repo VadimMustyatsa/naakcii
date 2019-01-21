@@ -60,12 +60,15 @@ public class SubcategoryControllerIntegrationTest {
 	private Subcategory thirdSubcategory;
 	private Subcategory fourthSubcategory;
 	private Subcategory fifthSubcategory;
+	private Subcategory sixthSubcategory;
+	private Subcategory seventhSubcategory;
 	private Long categoryId;
 	
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
 		stopWatch = new StopWatch();
+		categories = new ArrayList<>();
 	}
 	
 	private void createListOfSubcategories() {
@@ -89,7 +92,10 @@ public class SubcategoryControllerIntegrationTest {
 		fourthSubcategory.setPriority(3);
 		fifthSubcategory = new Subcategory("5th subcategory", firstCategory, true);
 		fifthSubcategory.setPriority(9);
-		categories = new ArrayList<>();
+		sixthSubcategory = new Subcategory("6th subcategory", secondCategory, false);
+		sixthSubcategory.setPriority(2);
+		seventhSubcategory = new Subcategory("7th subcategory", thirdCategory, false);
+		seventhSubcategory.setPriority(4);
 		
 		try {
 			categories.add(testEntityManager.persist(firstCategory));
@@ -97,10 +103,11 @@ public class SubcategoryControllerIntegrationTest {
 			categories.add(testEntityManager.persist(thirdCategory));
 			testEntityManager.clear();
 			categoryId = firstCategory.getId();
-			logger.info("Test data was created successfully: instances of '{}' and '{}' were added in the database.",
+			logger.info("Test data was created successfully: instances of '{}' and '{}' were added to the database.",
 					Category.class, Subcategory.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' and '{}' instances): {}.", exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' and '{}' instances): {}.", 
+					Category.class, Subcategory.class, exception);
 		} 
 	}
 	
@@ -115,7 +122,7 @@ public class SubcategoryControllerIntegrationTest {
 			logger.info("Test data was cleaned successfully: instances of '{}' and '{}' were removed from the database.",
 					Category.class, Subcategory.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}' and '{}' instances): {}.", 
+			logger.error("Exception has occurred during the cleaning of test data ('{}' and '{}' instances): {}.", 
 					Category.class, Subcategory.class, exception);
 		}
 	}
@@ -140,9 +147,9 @@ public class SubcategoryControllerIntegrationTest {
 								  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/subcategories/" + categoryId);
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected json should be: ["
+		assertEquals("Expected JSON should be: ["
 				   + "{\"id\":1,\"name\":\"2nd subcategory\",\"categoryId\":1,\"priority\":1},"
 				   + "{\"id\":3,\"name\":\"1st subcategory\",\"categoryId\":1,\"priority\":7},"
 				   + "{\"id\":2,\"name\":\"5th subcategory\",\"categoryId\":1,\"priority\":9}"

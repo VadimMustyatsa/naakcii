@@ -54,12 +54,15 @@ public class ChainControllerIntegrationTest {
 	
 	private ObjectMapper objectMapper;
 	private StopWatch stopWatch;
-	private List<Chain> chains;
+	private List<Chain> activeChains;
+	private List<Chain> inactiveChains;
 	
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
 		stopWatch = new StopWatch();
+		activeChains = new ArrayList<>();
+		inactiveChains = new ArrayList<>();
 	}
 	
 	private void createListOfChains() {
@@ -70,16 +73,18 @@ public class ChainControllerIntegrationTest {
 		secondChain.setLogo("Second chain logo");
 		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
 		thirdChain.setLogo("Third chain logo");
-		chains = new ArrayList<>();
+		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", false);
+		fourthChain.setLogo("Fourth chain logo");
 		
 		try {
-			chains.add(testEntityManager.persist(firstChain));
-			chains.add(testEntityManager.persist(secondChain));
-			chains.add(testEntityManager.persist(thirdChain));
+			activeChains.add(testEntityManager.persist(firstChain));
+			activeChains.add(testEntityManager.persist(secondChain));
+			activeChains.add(testEntityManager.persist(thirdChain));
+			inactiveChains.add(testEntityManager.persist(fourthChain));
 			testEntityManager.clear();
-			logger.info("Test data was created successfully: instances of '{}' were added in the database.", Chain.class);
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", Chain.class);
 		} catch(Exception exception) {
-			logger.error("Exception has occured during the creation of test data ('{}' instances): {}.", Chain.class, exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Chain.class, exception);
 		}
 	}
 	
@@ -87,20 +92,23 @@ public class ChainControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			chains.stream()
-				  .map((Chain chain) -> testEntityManager.merge(chain))
-				  .forEach((Chain chain) ->	testEntityManager.remove(chain));		  
+			activeChains.stream()
+					.map((Chain chain) -> testEntityManager.merge(chain))
+					.forEach((Chain chain) ->	testEntityManager.remove(chain));	
+			inactiveChains.stream()
+					.map((Chain chain) -> testEntityManager.merge(chain))
+					.forEach((Chain chain) ->	testEntityManager.remove(chain));	
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occured during the cleaning of test data ('{}' instances): {}.", Chain.class, exception);
+			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", Chain.class, exception);
 		}
 	}
 	
 	@Test
 	public void test_get_all_chains() throws Exception {
 		createListOfChains();
-		List<ChainDTO> expectedChainDTOs = chains
+		List<ChainDTO> expectedChainDTOs = activeChains
 				.stream()
 				.map(ChainDTO::new)
 				.collect(Collectors.toList());
@@ -116,9 +124,9 @@ public class ChainControllerIntegrationTest {
 								  .andReturn();
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/chains");
-		logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
+		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected json should be: ["
+		assertEquals("Expected JSON should be: ["
 				   + "{\"id\":1,\"name\":\"First chain\",\"logo\":\"First chain logo\",\"link\":\"First chain link\"},"
 				   + "{\"id\":2,\"name\":\"Second chain\",\"logo\":\"Second chain logo\",\"link\":\"Second chain link\"},"
 				   + "{\"id\":3,\"name\":\"Third chain\",\"logo\":\"Third chain logo\",\"link\":\"Third chain link\"}"
@@ -130,6 +138,7 @@ public class ChainControllerIntegrationTest {
 	public void tearDown() {
 		objectMapper = null;
 		stopWatch = null;
-		chains = null;
+		activeChains = null;
+		inactiveChains = null;
 	}
 }

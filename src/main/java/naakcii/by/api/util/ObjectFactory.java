@@ -15,9 +15,21 @@ public class ObjectFactory {
 			Class<?>[] arrayOfArgsAsClasses = Arrays.stream(args).map(Object::getClass).toArray(Class[]::new);
 			return clazz.getConstructor(arrayOfArgsAsClasses).newInstance(args);
 		} catch(Exception exeption) {
-			logger.error(exeption.getMessage());
+			logger.error("Exception has occurred during the process of creating new instance of '{}': {}." , 
+					clazz, printStackTrace(exeption));
 			return null;
 		}
 	}
-
+	
+	private String printStackTrace(Exception exception) {
+		StringBuilder stackTrace = new StringBuilder();
+		stackTrace.append(exception.getClass().getName()).append(" - ").append(exception.getMessage());
+		
+		for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
+			stackTrace.append(System.lineSeparator());
+			stackTrace.append("\t").append(stackTraceElement);
+		}
+	
+		return stackTrace.toString();
+	}
 }

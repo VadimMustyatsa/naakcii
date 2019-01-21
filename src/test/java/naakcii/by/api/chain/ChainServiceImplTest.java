@@ -75,6 +75,6 @@ public class ChainServiceImplTest {
 		verify(objectFactory).getInstance(ChainDTO.class, secondChain);
 		verify(objectFactory).getInstance(ChainDTO.class, thirdChain);
 		assertEquals("Size of the result list of chain data transfer objects should be 3.", resultChainDTOs.size(), 3);
-		assertEquals("Result list of chain data transfer objects should be [firstChainDTO, secondChainDTO, thirdChainDTO]", expectedChainDTOs, resultChainDTOs);
+		assertEquals("Result list of chain data transfer objects should be: [firstChainDTO, secondChainDTO, thirdChainDTO].", expectedChainDTOs, resultChainDTOs);
 	}
 }

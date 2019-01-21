@@ -60,6 +60,8 @@ public class ActionRepositoryTest {
 	private Action twelvethAction;
 	private Action thirteenthAction;
 	private Action fourteenthAction;
+	private Action fifteenthAction;
+	private Action sixteenthAction;
 	private Long firstSubcategoryId;
 	private Long secondSubcategoryId;
 	private Long thirdSubcategoryId;
@@ -98,6 +100,8 @@ public class ActionRepositoryTest {
 		Product sixthProduct = new Product("60000000000000", "Sixth product", Unit.KG, true, thirdSubcategory);
 		Product seventhProduct = new Product("70000000000000", "Seventh product", Unit.PC, true, thirdSubcategory);
 		Product eighthProduct = new Product("80000000000000", "Eighth product", Unit.KG, true, fourthSubcategory);
+		Product ninthProduct = new Product("90000000000000", "Ninth product", Unit.PC, false, firstSubcategory);
+		Product tenthProduct = new Product("10000000000000", "Tenth product", Unit.KG, false, secondSubcategory);
 		testEntityManager.persist(category);
 		testEntityManager.persist(firstChain);
 		testEntityManager.persist(secondChain);
@@ -174,6 +178,16 @@ public class ActionRepositoryTest {
 		Calendar fourteenthEndDate = getCurrentDate();
 		fourteenthEndDate.add(Calendar.DAY_OF_MONTH, 28);
 		fourteenthAction = new Action(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
+		Calendar fifteenthStartDate = getCurrentDate();
+		fifteenthStartDate.add(Calendar.DAY_OF_MONTH, -15);
+		Calendar fifteenthEndDate = getCurrentDate();
+		fifteenthEndDate.add(Calendar.DAY_OF_MONTH, 15);
+		fifteenthAction = new Action(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
+		Calendar sixteenthStartDate = getCurrentDate();
+		sixteenthStartDate.add(Calendar.DAY_OF_MONTH, -5);
+		Calendar sixteenthEndDate = getCurrentDate();
+		sixteenthEndDate.add(Calendar.DAY_OF_MONTH, 5);
+		sixteenthAction = new Action(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
 		testEntityManager.flush();
 		firstSubcategoryId = firstSubcategory.getId();
 		secondSubcategoryId = secondSubcategory.getId();
@@ -194,7 +208,7 @@ public class ActionRepositoryTest {
 		
 	@Test
 	public void test_find_all_by_subcategory_id() {
-		List<Action> actions = actionRepository.findByProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				thirdSubcategoryId, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 3: [10thAction, 11thAction, 12thAction].", 3, actions.size());
 		assertTrue("Result list of actions should contain 10th action.", actions.contains(tenthAction));
@@ -207,7 +221,7 @@ public class ActionRepositoryTest {
 		Set<Long> subcategoryIds = new HashSet<>();
 		subcategoryIds.add(firstSubcategoryId);
 		subcategoryIds.add(secondSubcategoryId);
-		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 9: "
 				+ "[1stAction, 2ndAction, 3rdAction, 4thAction, 5thAction, 6thAction, 7thAction, 8thAction, 9thAction].", 9, actions.size());
@@ -231,7 +245,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 6: "
 				+ "[2ndAction, 3rdAction, 4thAction, 5thAction, 8thAction, 9thAction].", 6, actions.size());
@@ -253,7 +267,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the first page, should be 4: ["
 				+ "8thAction (discountPrice = 1.75), "
@@ -277,7 +291,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 2: ["
 				+ "9thAction (discountPrice = 10.75), "
@@ -297,11 +311,10 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
-		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previos pages.", 0, actions.size());
+		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previous pages.", 0, actions.size());
 	}
-	
 	
 	@After
 	public void tearDown() {
@@ -319,6 +332,8 @@ public class ActionRepositoryTest {
 		twelvethAction = null;
 		thirteenthAction = null;
 		fourteenthAction = null;
+		fifteenthAction = null;
+		sixteenthAction = null;
 		firstSubcategoryId = null;
 		secondSubcategoryId = null;
 		thirdSubcategoryId = null;
