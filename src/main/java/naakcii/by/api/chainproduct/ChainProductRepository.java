@@ -1,4 +1,4 @@
-package naakcii.by.api.action;
+package naakcii.by.api.chainproduct;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -9,9 +9,9 @@ import java.util.Set;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ActionRepository extends CrudRepository<Action, Action.Id> {
+public interface ChainProductRepository extends CrudRepository<ChainProduct, ChainProduct.Id> {
 	
-	Optional<Action> findByStartDateAndEndDateAndBasePriceAndDiscountPriceAndTypeIdAndChainIdAndProductId(
+	Optional<ChainProduct> findByStartDateAndEndDateAndBasePriceAndDiscountPriceAndTypeIdAndChainIdAndProductId(
 			Calendar startDate,
 			Calendar endDate,
 			BigDecimal basePrice,
@@ -21,25 +21,25 @@ public interface ActionRepository extends CrudRepository<Action, Action.Id> {
 			Long productId
 	);
 	
-	List<Action> findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+	List<ChainProduct> findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
     		Long subcategoryId, 
     		Calendar startDateRestriction, 
     		Calendar endDateRestriction
     );
 	
-	List<Action> findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+	List<ChainProduct> findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
     		Set<Long> subcategoryIds, 
     		Calendar startDateRestriction, 
     		Calendar endDateRestriction
     );
     
-	List<Action> findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+	List<ChainProduct> findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
     		Set<Long> subcategoryIds, 
     		Set<Long> chainIds, 
     		Calendar startDateRestriction, 
     		Calendar endDateRestriction
     );
-    List<Action> findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+    List<ChainProduct> findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
     		Set<Long> subcategoryIds, 
     		Set<Long> chainIds, 
     		Calendar startDateRestriction, 

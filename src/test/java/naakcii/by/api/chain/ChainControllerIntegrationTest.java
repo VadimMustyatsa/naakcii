@@ -43,7 +43,7 @@ import naakcii.by.api.config.ApiConfigConstants;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ChainControllerIntegrationTest {
-	
+/*	
 	private static final Logger logger = LogManager.getLogger(ChainControllerIntegrationTest.class);
 
 	@Autowired
@@ -140,5 +140,5 @@ public class ChainControllerIntegrationTest {
 		stopWatch = null;
 		activeChains = null;
 		inactiveChains = null;
-	}
+	}*/
 }

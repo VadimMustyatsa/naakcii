@@ -31,20 +31,19 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import naakcii.by.api.action.Action;
-import naakcii.by.api.action.ActionRepository;
-import naakcii.by.api.actiontype.ActionType;
-import naakcii.by.api.actiontype.ActionTypeRepository;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.category.CategoryRepository;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
+import naakcii.by.api.chainproduct.ChainProduct;
+import naakcii.by.api.chainproduct.ChainProductRepository;
+import naakcii.by.api.chainproducttype.ChainProductType;
+import naakcii.by.api.chainproducttype.ChainProductTypeRepository;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.country.CountryRepository;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductRepository;
-import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.subcategory.SubcategoryRepository;
 import naakcii.by.api.util.ObjectFactory;
@@ -82,8 +81,8 @@ public class DataParser implements IDataParser{
 	private CategoryRepository categoryRepository;
 	private SubcategoryRepository subcategoryRepository;
 	private ProductRepository productRepository;
-	private ActionRepository actionRepository;
-	private ActionTypeRepository actionTypeRepository;
+	private ChainProductRepository actionRepository;
+	private ChainProductTypeRepository actionTypeRepository;
 	private CountryRepository countryRepository;
 	
 	@Autowired
@@ -93,8 +92,8 @@ public class DataParser implements IDataParser{
 					  CategoryRepository categoryRepository,
 					  SubcategoryRepository subcategoryRepository,
 					  ProductRepository productRepository,
-					  ActionRepository actionRepository,
-					  ActionTypeRepository actionTypeRepository,
+					  ChainProductRepository actionRepository,
+					  ChainProductTypeRepository actionTypeRepository,
 					  CountryRepository countryRepository
 					 ) {
 		this.objectFactory = objectFactory;
@@ -185,15 +184,15 @@ public class DataParser implements IDataParser{
 		return parsingResult;
 	}
 	
-	public ParsingResult<ActionType> createBasicActionTypes() {
-		logger.info("File: '{}'. Target instance: '{}'. Preparing for parsing.", FILE_WITH_BASIC_DATA, ActionType.class);
+	public ParsingResult<ChainProductType> createBasicActionTypes() {
+		logger.info("File: '{}'. Target instance: '{}'. Preparing for parsing.", FILE_WITH_BASIC_DATA, ChainProductType.class);
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
-		ParsingResult<ActionType> parsingResult = objectFactory.getInstance(ParsingResult.class, ActionType.class, FILE_WITH_BASIC_DATA);
+		ParsingResult<ChainProductType> parsingResult = objectFactory.getInstance(ParsingResult.class, ChainProductType.class, FILE_WITH_BASIC_DATA);
 		parsingResult.setStartTime();
 		
 		try (FileInputStream fileInputStream = new FileInputStream(FILE_WITH_BASIC_DATA)) {
-			logger.info("File: '{}'. Target instance: '{}'. Starting process of parsing.", FILE_WITH_BASIC_DATA, ActionType.class);
+			logger.info("File: '{}'. Target instance: '{}'. Starting process of parsing.", FILE_WITH_BASIC_DATA, ChainProductType.class);
 		
 			try (XSSFWorkbook book = new XSSFWorkbook(fileInputStream)) {
 				XSSFSheet sheet = book.getSheet(SHEET_WITH_BASIC_ACTION_TYPES);
@@ -202,7 +201,7 @@ public class DataParser implements IDataParser{
 					parsingResult.setSheetName(sheet.getSheetName());
 					parsingResult.setSheetIndex(book.getSheetIndex(sheet));
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. Starting working with sheet.", 
-							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ActionType.class);
+							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ChainProductType.class);
 					ActionTypeColumnMapper actionTypeColumnMapper = objectFactory.getInstance(ActionTypeColumnMapper.class);
 					Iterator<Row> rowIterator = sheet.iterator();
 					Row row = rowIterator.next();
@@ -214,12 +213,12 @@ public class DataParser implements IDataParser{
 					}
 					
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. {}", 
-							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ActionType.class, actionTypeColumnMapper.toString());
+							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ChainProductType.class, actionTypeColumnMapper.toString());
 					
 				
 					while (rowIterator.hasNext()) {
 						row = rowIterator.next();
-						ActionType actionType = objectFactory.getInstance(ActionType.class);
+						ChainProductType actionType = objectFactory.getInstance(ChainProductType.class);
 						parsingResult.increaseTotalNumberOfInstances();
 						
 						if (actionTypeColumnMapper.isNameMapped()) {
@@ -240,12 +239,12 @@ public class DataParser implements IDataParser{
 							}	
 						}
 						
-						Set<ConstraintViolation<ActionType>> constraintViolations = validator.validate(actionType);
+						Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(actionType);
 						
 						if (constraintViolations.size() == 0) {
 							if (actionTypeRepository.findByName(actionType.getName()).isPresent()) {
 								logger.warn("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. New instance has been already presented in the database.",
-										FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ActionType.class);
+										FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ChainProductType.class);
 								logger.warn(actionType.toString());
 								parsingResult.increaseNumberOfUnsavedInstances();
 								parsingResult.increaseNumberOfAlreadyExistingInstances();
@@ -254,24 +253,24 @@ public class DataParser implements IDataParser{
 								try {
 									if (actionTypeRepository.save(actionType) != null) {
 										logger.info("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. New instance has been created and saved to the database.",
-												FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ActionType.class);
+												FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ChainProductType.class);
 										logger.info(actionType.toString());
 										parsingResult.increaseNumberOfSavedInstances();
 									}
 								} catch (Exception savingException) {
 									logger.error("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Exception has occurred during the saving of new instance to the database: {}.", 
-											FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ActionType.class, printStackTrace(savingException));
+											FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ChainProductType.class, printStackTrace(savingException));
 									parsingResult.increaseNumberOfUnsavedInstances();
 									parsingResult.addException(row.getRowNum(), savingException);
 								}
 							}	
 						} else {
 							logger.error("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Exception(s) has occurred during the validation of new instance. See validation exception(s) below.", 
-									FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ActionType.class);
+									FILE_WITH_BASIC_DATA, sheet.getSheetName(), row.getRowNum(), ChainProductType.class);
 							parsingResult.increaseNumberOfUnsavedInstances();
 							parsingResult.increaseNumberOfInvalidInstances();
 							
-							for (ConstraintViolation<ActionType> violation : constraintViolations) {
+							for (ConstraintViolation<ChainProductType> violation : constraintViolations) {
 								logger.error("Validation exception: {}", violation.getMessage());
 								parsingResult.addConstraintViolation(row.getRowNum(), violation);
 							}
@@ -279,24 +278,24 @@ public class DataParser implements IDataParser{
 					}
 					
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. Finishing working with sheet.", 
-							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ActionType.class);
+							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ChainProductType.class);
 					logger.info("File: '{}'. Target instances: '{}'. Finishing process of parsing.", 
-							FILE_WITH_BASIC_DATA, ActionType.class);
+							FILE_WITH_BASIC_DATA, ChainProductType.class);
 				} else {
-					logger.warn("File: '{}'. Target instance: '{}'. Sheet with name '{}' wasn't found.", FILE_WITH_BASIC_DATA, ActionType.class, SHEET_WITH_BASIC_ACTION_TYPES);
+					logger.warn("File: '{}'. Target instance: '{}'. Sheet with name '{}' wasn't found.", FILE_WITH_BASIC_DATA, ChainProductType.class, SHEET_WITH_BASIC_ACTION_TYPES);
 					parsingResult.addCommonWarning("Sheet with name '" + SHEET_WITH_BASIC_ACTION_TYPES + "' wasn't found.");
 				}
 				
 			} 		
 		} catch (IOException ioException) {
 			logger.error("File: '{}'. Target instance: '{}'. Input-output exception has occurred during opening the file: {}.", 
-					FILE_WITH_BASIC_DATA, ActionType.class, printStackTrace(ioException));
+					FILE_WITH_BASIC_DATA, ChainProductType.class, printStackTrace(ioException));
 			parsingResult.addCommonException(ioException);
 		} 
 		
 		parsingResult.setFinishTime();
 		logger.info("File: '{}'. Target instance: '{}'. Returning result of parsing. {}", 
-				FILE_WITH_BASIC_DATA, ActionType.class, parsingResult.toString());
+				FILE_WITH_BASIC_DATA, ChainProductType.class, parsingResult.toString());
 		return parsingResult;
 	}
 	
@@ -783,7 +782,7 @@ public class DataParser implements IDataParser{
 						
 						if (productColumnMapper.isUnitMapped()) {
 							Cell productUnit = row.getCell(productColumnMapper.getUnitColumnIndex());
-							
+							/*
 							if ((productUnit != null) && 
 									((productUnit.getCellType() == CellType.STRING) || (productUnit.getCellType() == CellType.BLANK))) {
 								Optional<Unit> unit = Unit.getByRepresentation(productUnit.getStringCellValue().trim());
@@ -795,7 +794,7 @@ public class DataParser implements IDataParser{
 											file, sheet.getSheetName(), row.getRowNum(), Product.class, Unit.class, productUnit.getStringCellValue().trim());
 									parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + Unit.class + "' with name '" + productUnit.getStringCellValue().trim() + "' hasn't been found in the inner sources.");
 								}
-							}	
+							}*/	
 						}
 						
 						if (productColumnMapper.isManufacturerMapped()) {
@@ -847,7 +846,7 @@ public class DataParser implements IDataParser{
 						
 						Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
 						
-						if (constraintViolations.size() == 0) {
+						if (constraintViolations.size() == 0) {/*
 							if (productRepository.findByNameAndBarcodeAndUnit(product.getName(), product.getBarcode(), product.getUnit()).isPresent()) {
 								logger.warn("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. New instance has been already presented in the database.",
 										file, sheet.getSheetName(), row.getRowNum(), Product.class);
@@ -869,7 +868,7 @@ public class DataParser implements IDataParser{
 									parsingResult.increaseNumberOfUnsavedInstances();
 									parsingResult.addException(row.getRowNum(), savingException);
 								}
-							}	
+							}*/	
 						} else {
 							logger.error("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Exception(s) has occurred during the validation of new instance. See validation exception(s) below.", 
 									file, sheet.getSheetName(), row.getRowNum(), Product.class);
@@ -904,15 +903,15 @@ public class DataParser implements IDataParser{
 		return parsingResult;
 	}
 	
-	public ParsingResult<Action> parseActions(String file, String chainSynonym) {
-		logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Preparing for parsing.", file, Action.class, chainSynonym);
+	public ParsingResult<ChainProduct> parseActions(String file, String chainSynonym) {
+		logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Preparing for parsing.", file, ChainProduct.class, chainSynonym);
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
-		ParsingResult<Action> parsingResult = objectFactory.getInstance(ParsingResult.class, Action.class, file);
+		ParsingResult<ChainProduct> parsingResult = objectFactory.getInstance(ParsingResult.class, ChainProduct.class, file);
 		parsingResult.setStartTime();
 		
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
-			logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Starting process of parsing.", file, Action.class, chainSynonym);
+			logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Starting process of parsing.", file, ChainProduct.class, chainSynonym);
 		
 			try (XSSFWorkbook book = new XSSFWorkbook(fileInputStream)) {
 				XSSFSheet sheet = book.getSheetAt(0);
@@ -921,7 +920,7 @@ public class DataParser implements IDataParser{
 					parsingResult.setSheetName(sheet.getSheetName());
 					parsingResult.setSheetIndex(book.getSheetIndex(sheet));
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. Chain synonym: '{}'. Starting working with sheet.", 
-							file, sheet.getSheetName(), Action.class, chainSynonym);
+							file, sheet.getSheetName(), ChainProduct.class, chainSynonym);
 					ActionColumnMapper actionColumnMapper = objectFactory.getInstance(ActionColumnMapper.class);
 					Iterator<Row> rowIterator = sheet.iterator();
 					Row row = rowIterator.next();
@@ -933,11 +932,11 @@ public class DataParser implements IDataParser{
 					}
 					
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. Chain synonym: '{}'. {}", 
-							file, sheet.getSheetName(), Action.class, chainSynonym, actionColumnMapper.toString());
+							file, sheet.getSheetName(), ChainProduct.class, chainSynonym, actionColumnMapper.toString());
 				
 					while (rowIterator.hasNext()) {
 						row = rowIterator.next();
-						Action action = objectFactory.getInstance(Action.class);
+						ChainProduct action = objectFactory.getInstance(ChainProduct.class);
 						parsingResult.increaseTotalNumberOfInstances(); 
 						
 						if (actionColumnMapper.isBasePriceMapped()) {
@@ -989,7 +988,7 @@ public class DataParser implements IDataParser{
 							action.setChain(chain.get());
 						} else {
 							logger.warn("File: '{}'. Sheet: '{}'. Row number '{}' Target instance: '{}'. Chain synonym: '{}'. Reference on instance of '{}' with synonym '{}' hasn't been found in the database.", 
-									file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym, Chain.class, chainSynonym);
+									file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym, Chain.class, chainSynonym);
 							parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + Chain.class + "' with synonym '" + chainSynonym + "' hasn't been found in the database.");
 						}
 						
@@ -1009,21 +1008,21 @@ public class DataParser implements IDataParser{
 									actionTypeName = ACTION_TYPE_NICE_PRICE_NAME;
 								}
 								
-								Optional<ActionType> type = actionTypeRepository.findByName(actionTypeName);
+								Optional<ChainProductType> type = actionTypeRepository.findByName(actionTypeName);
 								
 								if (type.isPresent()) {
 									action.setType(type.get());
 								} else {
 									logger.warn("File: '{}'. Sheet: '{}'. Row number '{}' Target instance: '{}'. Chain synonym: '{}'. Reference on instance of '{}' with synonym '{}' hasn't been found in the database.", 
-											file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym, ActionType.class, actionTypeSynonym);
-									parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + ActionType.class + "' with synonym '" + actionTypeSynonym + "' hasn't been found in the database.");
+											file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym, ChainProductType.class, actionTypeSynonym);
+									parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + ChainProductType.class + "' with synonym '" + actionTypeSynonym + "' hasn't been found in the database.");
 								}
 							}
 						}
 						
 						String actionProductNameValue = null;
 						String actionProductBarcodeValue = null;
-						Unit unitValue = null;
+						//Unit unitValue = null;
 						
 						if (actionColumnMapper.isProductNameMapped()) {
 							Cell actionProductName = row.getCell(actionColumnMapper.getProductNameColumnIndex());
@@ -1047,7 +1046,7 @@ public class DataParser implements IDataParser{
 						if (actionColumnMapper.isProductUnitMapped()) {
 							Cell actionProductUnit = row.getCell(actionColumnMapper.getProductUnitColumnIndex());
 							
-							if ((actionProductUnit != null) && 
+							/*if ((actionProductUnit != null) && 
 									((actionProductUnit.getCellType() == CellType.STRING) || (actionProductUnit.getCellType() == CellType.BLANK))) {
 								Optional<Unit> unit = Unit.getByRepresentation(actionProductUnit.getStringCellValue().trim());
 								
@@ -1058,20 +1057,20 @@ public class DataParser implements IDataParser{
 											file, sheet.getSheetName(), row.getRowNum(), Product.class, chainSynonym, Unit.class, actionProductUnit.getStringCellValue().trim());
 									parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + Unit.class + "' with name '" + actionProductUnit.getStringCellValue().trim() + "' hasn't been found in the inner sources.");
 								}
-							}	
+							}*/
 						}
 						
-						Optional<Product> product = productRepository.findByNameAndBarcodeAndUnit(actionProductNameValue, actionProductBarcodeValue, unitValue);
-						
+						//Optional<Product> product = productRepository.findByNameAndBarcodeAndUnit(actionProductNameValue, actionProductBarcodeValue, unitValue);
+						/*
 						if (product.isPresent()) {
 							action.setProduct(product.get());
 						} else {
 							logger.warn("File: '{}'. Sheet: '{}'. Row number '{}' Target instance: '{}'. Chain synonym: '{}'. Reference on instance of '{}' with name '{}', barcode '{}' and unit '{}' hasn't been found in the database.", 
-									file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym, Product.class, actionProductNameValue, actionProductBarcodeValue, unitValue);
+									file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym, Product.class, actionProductNameValue, actionProductBarcodeValue, unitValue);
 							parsingResult.addWarning(row.getRowNum(), "Reference on instance of '" + Product.class + "' with name '" + actionProductNameValue + "', barcode '" + actionProductBarcodeValue + "' and unit '" + unitValue + "' hasn't been found in the database.");
 						}
-						
-						Set<ConstraintViolation<Action>> constraintViolations = validator.validate(action);
+						*/
+						Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(action);
 						
 						if (constraintViolations.size() == 0) {
 							if (actionRepository.findByStartDateAndEndDateAndBasePriceAndDiscountPriceAndTypeIdAndChainIdAndProductId(
@@ -1083,7 +1082,7 @@ public class DataParser implements IDataParser{
 									action.getChain() == null ? null : action.getChain().getId(),
 									action.getProduct() == null ? null : action.getProduct().getId()).isPresent()) {
 								logger.warn("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Chain synonym: '{}'. New instance has been already presented in the database.",
-										file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym);
+										file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym);
 								logger.warn(action.toString());
 								parsingResult.increaseNumberOfUnsavedInstances();
 								parsingResult.increaseNumberOfAlreadyExistingInstances();
@@ -1092,24 +1091,24 @@ public class DataParser implements IDataParser{
 								try {
 									if (actionRepository.save(action) != null) {
 										logger.info("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Chain synonym: '{}'. New instance has been created and saved to the database.",
-												file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym);
+												file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym);
 										logger.info(action.toString());
 										parsingResult.increaseNumberOfSavedInstances();
 									}
 								} catch (Exception savingException) {
 									logger.error("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Chain synonym: '{}'. Exception has occurred during the saving of new instance to the database: {}.", 
-											file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym, printStackTrace(savingException));
+											file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym, printStackTrace(savingException));
 									parsingResult.increaseNumberOfUnsavedInstances();
 									parsingResult.addException(row.getRowNum(), savingException);
 								}
 							}	
 						} else {
 							logger.error("File: '{}'. Sheet: '{}'. Row number '{}'. Target instance: '{}'. Chain synonym: '{}'. Exception(s) has occurred during the validation of new instance. See validation exception(s) below.", 
-									file, sheet.getSheetName(), row.getRowNum(), Action.class, chainSynonym);
+									file, sheet.getSheetName(), row.getRowNum(), ChainProduct.class, chainSynonym);
 							parsingResult.increaseNumberOfUnsavedInstances();
 							parsingResult.increaseNumberOfInvalidInstances();
 							
-							for (ConstraintViolation<Action> violation : constraintViolations) {
+							for (ConstraintViolation<ChainProduct> violation : constraintViolations) {
 								logger.error("Validation exception: {}", violation.getMessage());
 								parsingResult.addConstraintViolation(row.getRowNum(), violation);
 							}
@@ -1117,23 +1116,23 @@ public class DataParser implements IDataParser{
 					}
 					
 					logger.info("File: '{}'. Sheet: '{}'. Target instance: '{}'. Chain synonym: '{}'. Finishing working with sheet.", 
-							FILE_WITH_BASIC_DATA, sheet.getSheetName(), Action.class, chainSynonym);
+							FILE_WITH_BASIC_DATA, sheet.getSheetName(), ChainProduct.class, chainSynonym);
 					logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Finishing process of parsing.", 
 							FILE_WITH_BASIC_DATA, Subcategory.class, chainSynonym);
 				} else {
-					logger.warn("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Sheet at index '{}' wasn't found.", file, Action.class, chainSynonym, 0);
+					logger.warn("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Sheet at index '{}' wasn't found.", file, ChainProduct.class, chainSynonym, 0);
 					parsingResult.addCommonWarning("Sheet at index '" + 0 + "' wasn't found.");
 				}				
 			} 		
 		} catch (IOException ioException) {
 			logger.error("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Input-output exception has occurred during opening the file: {}.", 
-					file, Action.class, chainSynonym, printStackTrace(ioException));
+					file, ChainProduct.class, chainSynonym, printStackTrace(ioException));
 			parsingResult.addCommonException(ioException);
 		} 
 		
 		parsingResult.setFinishTime();
 		logger.info("File: '{}'. Target instance: '{}'. Chain synonym: '{}'. Returning result of parsing. {}", 
-				file, Action.class, chainSynonym, parsingResult.toString());
+				file, ChainProduct.class, chainSynonym, parsingResult.toString());
 		return parsingResult;
 	}
 }

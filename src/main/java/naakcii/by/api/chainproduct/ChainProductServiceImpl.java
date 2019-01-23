@@ -1,7 +1,5 @@
-package naakcii.by.api.actionproduct;
+package naakcii.by.api.chainproduct;
 
-import naakcii.by.api.action.Action;
-import naakcii.by.api.action.ActionRepository;
 import naakcii.by.api.util.ObjectFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ActionProductServiceImpl implements ActionProductService {
+public class ChainProductServiceImpl implements ChainProductService {
 	
-	private ActionRepository actionRepository;
+	private ChainProductRepository chainProductRepository;
 	private ObjectFactory objectFactory;
 	
 	@Autowired
-	public ActionProductServiceImpl(ActionRepository actionRepository, ObjectFactory objectFactory) {
-		this.actionRepository = actionRepository;
+	public ChainProductServiceImpl(ChainProductRepository chainProductRepository, ObjectFactory objectFactory) {
+		this.chainProductRepository = chainProductRepository;
 		this.objectFactory = objectFactory;
 	}
 	
@@ -36,11 +34,11 @@ public class ActionProductServiceImpl implements ActionProductService {
 	}
 
 	@Override
-	public List<ActionProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> subcategoryIds, Set<Long> chainIds, Pageable pageable) {
-		return actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable)
+	public List<ChainProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> subcategoryIds, Set<Long> chainIds, Pageable pageable) {
+		return chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable)
 				.stream()
 				.filter(Objects::nonNull)
-				.map((Action action) -> objectFactory.getInstance(ActionProductDTO.class, action))
+				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
 				.collect(Collectors.toList());
 	}
 }

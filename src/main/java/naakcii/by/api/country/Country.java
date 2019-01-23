@@ -29,30 +29,30 @@ public class Country {
     @Column(name = "COUNTRY_ID")
     private Long id;
 	
-	@Column(name = "COUNTRY_NAME")
-    @NotNull(message = "Name of the country mustn't be null.")
+	@Column(name = "COUNTRY_NAME", unique = true)
+    @NotNull(message = "Country's name mustn't be null.")
     @PureSize(
     	min = 3, 
     	max = 50,
-    	message = "Name of the country '${validatedValue}' must be between '{min}' and '{max}' characters long."
+    	message = "Country's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
 	private String name;
 	
-	@Column(name = "COUNTRY_ALPHA_CODE_2")
-    @NotBlank(message = "AlphaCode2 of the country mustn't be blank.")
+	@Column(name = "COUNTRY_ALPHA_CODE_2", unique = true)
+    @NotBlank(message = "Country's AlphaCode2 mustn't be blank.")
     @Size(
     	min = 2, 
     	max = 2,
-    	message = "AlphaCode2 of the country '${validatedValue}' must be '{min}' characters long."
+    	message = "Country's AlphaCode2 '${validatedValue}' must be '{min}' characters long."
     )
 	private String alphaCode2;
 	
-	@Column(name = "COUNTRY_ALPHA_CODE_3")
-    @NotBlank(message = "AlphaCode3 of the country mustn't be blank.")
+	@Column(name = "COUNTRY_ALPHA_CODE_3", unique = true)
+    @NotBlank(message = "Country's AlphaCode3 mustn't be blank.")
     @Size(
     	min = 3, 
     	max = 3,
-    	message = "AlphaCode3 of the country '${validatedValue}' must be '{min}' characters long."
+    	message = "Country's AlphaCode3 '${validatedValue}' must be '{min}' characters long."
     )
 	private String alphaCode3;
 	

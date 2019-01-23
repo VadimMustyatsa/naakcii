@@ -25,15 +25,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.action.Action;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
+import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "actions", "manufacturer", "brand", "countryOfOrigin"})
+@EqualsAndHashCode(exclude = {"id", "picture", "chainProducts", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -46,21 +47,21 @@ public class Product implements Serializable {
 	private Long id;
 	
 	@Column(name = "PRODUCT_BARCODE")
-	@NotNull(message = "Barcode of the product mustn't be null.")
+	@NotNull(message = "Product's bar-code mustn't be null.")
 	@Size(
 	    min = 4, 
 	    max = 14,
-	    message = "Barcode of the product '${validatedValue}' must be between '{min}' and '{max}' characters long."
+	    message = "Product's bar-code '${validatedValue}' must be between '{min}' and '{max}' characters long."
 	)
-	@Pattern(regexp = "[0-9]+", message = "Barcode of the product must contain only digits.")
+	@Pattern(regexp = "[0-9]+", message = "Product's bar-code must contain only digits.")
 	private String barcode;
 	
 	@Column(name = "PRODUCT_NAME")
-	@NotNull(message = "Name of the product mustn't be null.")
+	@NotNull(message = "Product's name mustn't be null.")
     @PureSize(
     	min = 3, 
     	max = 100,
-    	message = "Name of the product '${validatedValue}' must be between '{min}' and '{max}' characters long."
+    	message = "Product's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
 	private String name;
 	
@@ -73,20 +74,20 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_UNIT")
 	@Enumerated(EnumType.STRING)
-	@NotNull(message = "Unit of the product mustn't be null.")
-	private Unit unit;
+	@NotNull(message = "Product's unit of measure mustn't be null.")
+	private UnitOfMeasure unitOfMeasure;
 	
 	@Column(name = "PRODUCT_MANUFACTURER")
 	@Size(
 	   	max = 50,
-	   	message = "Manufacturer of the product '${validatedValue}' mustn't be more than '{max}' characters long."
+	   	message = "Product's manufacturer '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String manufacturer;
 	
 	@Column(name = "PRODUCT_BRAND")
 	@Size(
 	   	max = 50,
-	   	message = "Brand of the product '${validatedValue}' mustn't be more than '{max}' characters long."
+	   	message = "Product's brand '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String brand;
 	
@@ -103,37 +104,37 @@ public class Product implements Serializable {
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private	Set<
-		@Valid
-		@NotNull(message = "Action mustn't be null.")
-		Action> actions = new HashSet<Action>();
+		@Valid 
+		@NotNull(message = "Product must have list of chainProducts without null elements.") 
+		ChainProduct> chainProducts = new HashSet<ChainProduct>();
 	
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")
 	private Boolean isActive;
 	
-	public Product(String barcode, String name, Unit unit, Boolean isActive) {
+	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive) {
 		this.barcode = barcode;
 		this.name = name;
-		this.unit = unit;
+		this.unitOfMeasure = unitOfMeasure;
 		this.isActive = isActive;
 	}
 		
-	public Product(String barcode, String name, Unit unit, Boolean isActive, Subcategory subcategory) {
+	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive, Subcategory subcategory) {
 		this.barcode = barcode;
 		this.name = name;
-		this.unit = unit;
+		this.unitOfMeasure = unitOfMeasure;
 		this.isActive = isActive;
 		this.subcategory = subcategory;
 		subcategory.getProducts().add(this);
 	}
 	
-	public Product(String barcode, String name, Unit unit, Boolean isActive, Subcategory subcategory, Set<Action> actions) {
+	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive, Subcategory subcategory, Set<ChainProduct> chainProducts) {
 		this.barcode = barcode;
 		this.name = name;
-		this.unit = unit;
+		this.unitOfMeasure = unitOfMeasure;
 		this.isActive = isActive;
 		this.subcategory = subcategory;
-		this.actions = actions;
+		this.chainProducts = chainProducts;
 		subcategory.getProducts().add(this);
 	}
 	
@@ -142,13 +143,15 @@ public class Product implements Serializable {
     	result.append(System.lineSeparator());
 		result.append("\t").append("id - " + id + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("barcode - " + barcode + ";");
+		result.append("\t").append("bar-code - " + barcode + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("name - " + name + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("picture - " + picture + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("unit - " + (unit == null ? null : unit.getRepresentation()) + ";");
+		result.append("\t").append("unit of measure name - " + (unitOfMeasure == null ? null : unitOfMeasure.getName()) + ";");
+		result.append(System.lineSeparator());
+		result.append("\t").append("unit of measure step - " + (unitOfMeasure == null ? null : unitOfMeasure.getStep()) + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("manufacturer - " + manufacturer + ";");
 		result.append(System.lineSeparator());

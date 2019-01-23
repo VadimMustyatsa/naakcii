@@ -19,13 +19,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.action.Action;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "logo", "actions", "synonym"})
+@EqualsAndHashCode(exclude = {"id", "logo", "chainProducts", "synonym"})
 @Entity
 @Table(name = "CHAIN")
 public class Chain implements Serializable {
@@ -38,13 +38,22 @@ public class Chain implements Serializable {
 	private Long id;
 	
 	@Column(name = "CHAIN_NAME")
-	@NotNull(message = "Name of the chain mustn't be null.")
+	@NotNull(message = "Chain's name mustn't be null.")
 	@PureSize(
 	   	min = 3, 
-	   	max = 100,
-	   	message = "Name of the chain '${validatedValue}' must be between '{min}' and '{max}' characters long."
+	   	max = 25,
+	   	message = "Chain's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
 	)
 	private String name;
+	
+	@Column(name = "CHAIN_SYNONYM", unique = true)
+	@NotNull(message = "Chain's synonym chain mustn't be null.")
+	@PureSize(
+	   	min = 3, 
+	   	max = 25,
+	   	message = "Chain's synonym '${validatedValue}' must be between '{min}' and '{max}' characters long."
+	)
+	private String synonym;
 	
 	@Column(name = "CHAIN_LOGO")
 	@Size(
@@ -54,38 +63,29 @@ public class Chain implements Serializable {
 	private String logo;
 	
 	@Column(name = "CHAIN_LINK")
-	@NotNull(message = "Chain must have field 'link' defined.")
+	@NotNull(message = "Chain's link mustn't be null.")
 	@PureSize(
 	   	min = 10, 
-	  	max = 75,
-	   	message = "Link of the chain '${validatedValue}' must be between '{min}' and '{max}' characters long."
+	  	max = 255,
+	   	message = "Chain's link '${validatedValue}' must be between '{min}' and '{max}' characters long."
 	)
 	private String link;
 	
 	@OneToMany(mappedBy = "chain")
 	private Set<
-		@Valid
-		@NotNull(message = "Action mustn't be null.")
-		Action> actions = new HashSet<Action>();
-	
-	@Column(name = "CHAIN_SYNONYM")
-	private String synonym;
+		@Valid 
+		@NotNull(message = "Chain must have list of chainProducts without null elements.") 
+		ChainProduct> chainProducts = new HashSet<ChainProduct>();
 		
 	@Column(name = "CHAIN_IS_ACTIVE")
 	@NotNull(message = "Chain must have field 'isActive' defined.")
 	private Boolean isActive;
-		
-	public Chain(String name, String link, Boolean isActive) {
-		this.name = name;
-		this.link = link;
-		this.isActive = isActive;
-	}
 	
-	public Chain(String name, String link, Boolean isActive, String synonym) {
+	public Chain(String name, String synonym, String link, Boolean isActive) {
 		this.name = name;
+		this.synonym = synonym;
 		this.link = link;
 		this.isActive = isActive;
-		this.synonym = synonym;
 	}
 	
 	public String toString() {
@@ -95,13 +95,13 @@ public class Chain implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("name - " + name + ";");
 		result.append(System.lineSeparator());
+		result.append("\t").append("synonym - " + synonym + ";");
+		result.append(System.lineSeparator());
 		result.append("\t").append("logo - " + logo + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("link - " + link + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("isActive - " + isActive + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("synonym - " + synonym + ".");
+		result.append("\t").append("isActive - " + isActive + ".");
 		return result.toString();
 	}
 }

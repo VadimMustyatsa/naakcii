@@ -1,4 +1,4 @@
-package naakcii.by.api.action;
+package naakcii.by.api.chainproduct;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,43 +25,44 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chainproduct.ChainProduct;
+import naakcii.by.api.chainproduct.ChainProductRepository;
+import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.product.Product;
-import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations = "classpath:application-unit-test.properties")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class ActionRepositoryTest {
-	
+public class ChainProductRepositoryTest {
+	/*
 	private static Calendar currentDate = Calendar.getInstance();
 	
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
 	@Autowired
-	private ActionRepository actionRepository;
+	private ChainProductRepository actionRepository;
 	
-	private Action firstAction;
-	private Action secondAction;
-	private Action thirdAction;
-	private Action fourthAction;
-	private Action fifthAction;
-	private Action sixthAction;
-	private Action seventhAction;
-	private Action eighthAction;
-	private Action ninthAction;
-	private Action tenthAction;
-	private Action eleventhAction;
-	private Action twelvethAction;
-	private Action thirteenthAction;
-	private Action fourteenthAction;
-	private Action fifteenthAction;
-	private Action sixteenthAction;
+	private ChainProduct firstAction;
+	private ChainProduct secondAction;
+	private ChainProduct thirdAction;
+	private ChainProduct fourthAction;
+	private ChainProduct fifthAction;
+	private ChainProduct sixthAction;
+	private ChainProduct seventhAction;
+	private ChainProduct eighthAction;
+	private ChainProduct ninthAction;
+	private ChainProduct tenthAction;
+	private ChainProduct eleventhAction;
+	private ChainProduct twelvethAction;
+	private ChainProduct thirteenthAction;
+	private ChainProduct fourteenthAction;
+	private ChainProduct fifteenthAction;
+	private ChainProduct sixteenthAction;
 	private Long firstSubcategoryId;
 	private Long secondSubcategoryId;
 	private Long thirdSubcategoryId;
@@ -90,8 +91,8 @@ public class ActionRepositoryTest {
 		Chain secondChain = new Chain("Second chain", "Second chain link", true);
 		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
 		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", true);
-		ActionType firstActionType = new ActionType("First action type");
-		ActionType secondActionType = new ActionType("Second action type");
+		ChainProductType firstActionType = new ChainProductType("First action type");
+		ChainProductType secondActionType = new ChainProductType("Second action type");
 		Product firstProduct = new Product("10000000000000", "First product", Unit.PC, true, firstSubcategory);
 		Product secondProduct = new Product("20000000000000", "Second product", Unit.KG, true, firstSubcategory);
 		Product thirdProduct = new Product("30000000000000", "Third product", Unit.PC, true, firstSubcategory);
@@ -113,81 +114,81 @@ public class ActionRepositoryTest {
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar firstEndDate = getCurrentDate();
 		firstEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		firstAction = new Action(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
+		firstAction = new ChainProduct(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
 		Calendar secondStartDate = getCurrentDate();
 		secondStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar secondEndDate = getCurrentDate();
 		secondEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		secondAction = new Action(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
+		secondAction = new ChainProduct(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
 		Calendar thirdStartDate = getCurrentDate();
 		Calendar thirdEndDate = getCurrentDate();
 		thirdEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		thirdAction = new Action(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
+		thirdAction = new ChainProduct(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
 		Calendar fourthStartDate = getCurrentDate();
 		fourthStartDate.add(Calendar.MONTH, -1);
 		Calendar fourthEndDate = getCurrentDate();
 		fourthEndDate.add(Calendar.MONTH, 1);
-		fourthAction = new Action(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
+		fourthAction = new ChainProduct(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
 		Calendar fifthStartDate = getCurrentDate();
 		fifthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar fifthEndDate = getCurrentDate();
 		fifthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		fifthAction = new Action(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
+		fifthAction = new ChainProduct(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
 		Calendar sixthStartDate = getCurrentDate();
 		sixthStartDate.add(Calendar.DAY_OF_MONTH, -10);
 		Calendar sixthEndDate = getCurrentDate();
 		sixthEndDate.add(Calendar.DAY_OF_MONTH, 10);
-		sixthAction = new Action(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
+		sixthAction = new ChainProduct(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
 		Calendar seventhStartDate = getCurrentDate();
 		seventhStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar seventhEndDate = getCurrentDate();
 		seventhEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		seventhAction = new Action(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
+		seventhAction = new ChainProduct(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
 		Calendar eighthStartDate = getCurrentDate();
 		eighthStartDate.add(Calendar.DAY_OF_MONTH, -20);
 		Calendar eighthEndDate = getCurrentDate();
 		eighthEndDate.add(Calendar.DAY_OF_MONTH, 20);
-		eighthAction = new Action(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
+		eighthAction = new ChainProduct(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
 		Calendar ninthStartDate = getCurrentDate();
 		ninthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar ninthEndDate = getCurrentDate();
 		ninthEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		ninthAction = new Action(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
+		ninthAction = new ChainProduct(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
 		Calendar tenthStartDate = getCurrentDate();
 		tenthStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar tenthEndDate = getCurrentDate();
 		tenthEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		tenthAction = new Action(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
+		tenthAction = new ChainProduct(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
 		Calendar eleventhStartDate = getCurrentDate();
 		eleventhStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar eleventhEndDate = getCurrentDate();
 		eleventhEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		eleventhAction = new Action(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
+		eleventhAction = new ChainProduct(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
 		Calendar twelvethStartDate = getCurrentDate();
 		twelvethStartDate.add(Calendar.DAY_OF_MONTH, -21);
 		Calendar twelvethEndDate = getCurrentDate();
 		twelvethEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		twelvethAction = new Action(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
+		twelvethAction = new ChainProduct(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
 		Calendar thirteenthStartDate = getCurrentDate();
 		thirteenthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar thirteenthEndDate = getCurrentDate();
 		thirteenthEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		thirteenthAction = new Action(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
+		thirteenthAction = new ChainProduct(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
 		Calendar fourteenthStartDate = getCurrentDate();
 		fourteenthStartDate.add(Calendar.DAY_OF_MONTH, -28);
 		Calendar fourteenthEndDate = getCurrentDate();
 		fourteenthEndDate.add(Calendar.DAY_OF_MONTH, 28);
-		fourteenthAction = new Action(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
+		fourteenthAction = new ChainProduct(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
 		Calendar fifteenthStartDate = getCurrentDate();
 		fifteenthStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar fifteenthEndDate = getCurrentDate();
 		fifteenthEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		fifteenthAction = new Action(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
+		fifteenthAction = new ChainProduct(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
 		Calendar sixteenthStartDate = getCurrentDate();
 		sixteenthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar sixteenthEndDate = getCurrentDate();
 		sixteenthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		sixteenthAction = new Action(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
+		sixteenthAction = new ChainProduct(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
 		testEntityManager.flush();
 		firstSubcategoryId = firstSubcategory.getId();
 		secondSubcategoryId = secondSubcategory.getId();
@@ -208,7 +209,7 @@ public class ActionRepositoryTest {
 		
 	@Test
 	public void test_find_all_by_subcategory_id() {
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				thirdSubcategoryId, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 3: [10thAction, 11thAction, 12thAction].", 3, actions.size());
 		assertTrue("Result list of actions should contain 10th action.", actions.contains(tenthAction));
@@ -221,7 +222,7 @@ public class ActionRepositoryTest {
 		Set<Long> subcategoryIds = new HashSet<>();
 		subcategoryIds.add(firstSubcategoryId);
 		subcategoryIds.add(secondSubcategoryId);
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 9: "
 				+ "[1stAction, 2ndAction, 3rdAction, 4thAction, 5thAction, 6thAction, 7thAction, 8thAction, 9thAction].", 9, actions.size());
@@ -245,7 +246,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
 		assertEquals("Number actions, that have been found in the database, should be 6: "
 				+ "[2ndAction, 3rdAction, 4thAction, 5thAction, 8thAction, 9thAction].", 6, actions.size());
@@ -267,7 +268,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the first page, should be 4: ["
 				+ "8thAction (discountPrice = 1.75), "
@@ -291,7 +292,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 2: ["
 				+ "9thAction (discountPrice = 10.75), "
@@ -311,7 +312,7 @@ public class ActionRepositoryTest {
 		Set<Long> chainIds = new HashSet<>();
 		chainIds.add(secondChainId);
 		chainIds.add(thirdChainId);
-		List<Action> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+		List<ChainProduct> actions = actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
 		assertEquals("Number actions, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previous pages.", 0, actions.size());
 	}
@@ -342,5 +343,5 @@ public class ActionRepositoryTest {
 		secondChainId = null;
 		thirdChainId = null;
 		fourthChainId = null;
-	}
+	}*/
 }

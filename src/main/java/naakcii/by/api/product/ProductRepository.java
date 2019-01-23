@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import naakcii.by.api.unitofmeasure.UnitOfMeasure;
+
 public interface ProductRepository extends CrudRepository<Product, Long> {
 	
-	Optional<Product> findByNameAndBarcodeAndUnit(String productName, String productBarcode, Unit productUnit);
+	Optional<Product> findByNameAndBarcodeAndUnitOfMeasure(String productName, String productBarcode, UnitOfMeasure unitOfMeasure);
 	
     @Modifying
     @Query("update Product product set product.isActive = false where product.id = :productId")

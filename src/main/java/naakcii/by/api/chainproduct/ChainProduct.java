@@ -1,4 +1,4 @@
-package naakcii.by.api.action;
+package naakcii.by.api.chainproduct;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,9 +27,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.product.Product;
 
 @NoArgsConstructor
@@ -37,9 +36,9 @@ import naakcii.by.api.product.Product;
 @Getter
 @EqualsAndHashCode(exclude = {"id"})
 @Entity
-@Table(name = "ACTION")
+@Table(name = "CHAIN_PRODUCT")
 @org.hibernate.annotations.Immutable
-public class Action implements Serializable {
+public class ChainProduct implements Serializable {
 
 	private static final long serialVersionUID = 1525810593299011676L;
 
@@ -89,66 +88,66 @@ public class Action implements Serializable {
     @EmbeddedId
     private Id id = new Id();
 
-    @Column(name = "ACTION_BASE_PRICE")
+    @Column(name = "CHAIN_PRODUCT_BASE_PRICE")
     @Digits(
     	integer = 2, 
     	fraction = 2,
-    	message = "Base price of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    	message = "ChainProduct's base price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
     	value = "25", 
     	inclusive = true,
-    	message = "Base price of the action product '${validatedValue}' must be lower than '{value}'."
+    	message = "ChainProduct's base price '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
        	value = "0.20", 
        	inclusive = true,
-       	message = "Base price of the action product '${validatedValue}' must be higher than '{value}'."
+       	message = "ChainProduct's base price '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal basePrice;
 
-    @Column(name = "ACTION_DISCOUNT_PRICE")
-    @NotNull(message = "Discount price of the action product mustn't be null.")
+    @Column(name = "CHAIN_PRODUCT_DISCOUNT_PRICE")
+    @NotNull(message = "ChainProduct's discount price mustn't be null.")
     @Digits(
     	integer = 2, 
     	fraction = 2,
-    	message = "Discount price of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    	message = "ChainProduct's discount price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
         value = "25", 
         inclusive = true,
-        message = "Discount price of the action product '${validatedValue}' must be lower than '{value}'."
+        message = "ChainProduct's discount price '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
       	value = "0.20", 
        	inclusive = true,
-       	message = "Discount price of the action product '${validatedValue}' must be higher than '{value}'."
+       	message = "ChainProduct's discount price '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal discountPrice;
     
-    @Column(name = "ACTION_DISCOUNT_PERCENT")
+    @Column(name = "CHAIN_PRODUCT_DISCOUNT_PERCENT")
     @Digits(
     	integer = 2, 
     	fraction = 0,
-    	message = "Discount percent of the action product '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+    	message = "ChainProduct's discount percent '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
         value = "50", 
         inclusive = true,
-        message = "Discount percent of the action product '${validatedValue}' must be lower than '{value}'."
+        message = "ChainProduct's discount percent '${validatedValue}' must be lower than '{value}'."
     )
-    @PositiveOrZero(message = "Discount percent of the action product '${validatedValue}' mustn't be negative.")
+    @PositiveOrZero(message = "ChainProduct's discount percent '${validatedValue}' mustn't be negative.")
     private BigDecimal discountPercent;
 
-    @Column(name = "ACTION_START_DATE")
+    @Column(name = "CHAIN_PRODUCT_START_DATE")
     @Temporal(TemporalType.DATE)
-    @NotNull(message = "Action must have have start date.")
+    @NotNull(message = "ChainProduct must have have start date.")
     private Calendar startDate;
 
-    @Column(name = "ACTION_END_DATE")
+    @Column(name = "CHAIN_PRODUCT_END_DATE")
     @Temporal(TemporalType.DATE)
-    @Future(message = "End date of the action must be in the future.")
-    @NotNull(message = "Action must have end date.")
+    @Future(message = "ChainProduct's end date must be in the future.")
+    @NotNull(message = "ChainProduct must have end date.")
     private Calendar endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -157,7 +156,7 @@ public class Action implements Serializable {
         updatable = false,
         insertable = false
     )
-    @NotNull(message = "Action must have product.")
+    @NotNull(message = "ChainProduct must have product.")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -166,16 +165,16 @@ public class Action implements Serializable {
         updatable = false,
         insertable = false
     )
-    @NotNull(message = "Action must have chain.")
+    @NotNull(message = "ChainProduct must have chain.")
     private Chain chain;
 
     @ManyToOne
-    @JoinColumn(name = "ACTION_TYPE_ID")
-    @NotNull(message = "Action must have type.")
+    @JoinColumn(name = "CHAIN_PRODUCT_TYPE_ID")
+    @NotNull(message = "ChainProduct must have type.")
     @Valid
-    private ActionType type;
+    private ChainProductType type;
     
-    public Action(Product product, Chain chain, BigDecimal discountPrice, ActionType type, Calendar startDate, Calendar endDate) {
+    public ChainProduct(Product product, Chain chain, BigDecimal discountPrice, ChainProductType type, Calendar startDate, Calendar endDate) {
         this.product = product;
         this.chain = chain;
         this.discountPrice = discountPrice;
@@ -184,11 +183,11 @@ public class Action implements Serializable {
         this.endDate = endDate;
         this.id.productId = product.getId();
         this.id.chainId = chain.getId();
-        product.getActions().add(this);
-        chain.getActions().add(this);
+        product.getChainProducts().add(this);
+        chain.getChainProducts().add(this);
     }
     
-    public Action(Product product, Chain chain, BigDecimal basePrice, BigDecimal discountPrice, BigDecimal discountPercent, ActionType type, Calendar startDate, Calendar endDate) {
+    public ChainProduct(Product product, Chain chain, BigDecimal basePrice, BigDecimal discountPrice, BigDecimal discountPercent, ChainProductType type, Calendar startDate, Calendar endDate) {
         this.product = product;
         this.chain = chain;
         this.basePrice = basePrice;
@@ -199,8 +198,8 @@ public class Action implements Serializable {
         this.endDate = endDate;
         this.id.productId = product.getId();
         this.id.chainId = chain.getId();
-        product.getActions().add(this);
-        chain.getActions().add(this);
+        product.getChainProducts().add(this);
+        chain.getChainProducts().add(this);
     }
     
     public void setProduct(Product product) {
@@ -214,7 +213,7 @@ public class Action implements Serializable {
     }
     
     public String toString() {
-    	StringBuilder result = new StringBuilder("Instance of " + Action.class + ":");
+    	StringBuilder result = new StringBuilder("Instance of " + ChainProduct.class + ":");
 		result.append(System.lineSeparator());
 		result.append("\t").append("product id/name - " + (product == null ? null + "/" + null : id.productId + "/" + product.getName()) + ";");
 		result.append(System.lineSeparator());
@@ -230,7 +229,7 @@ public class Action implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("end date - " + endDate == null ? null : getFormattedDate(endDate) + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("action type id/name - " + (type == null ? null + "/" + null : type.getId() + "/" + type.getName()) + ".");
+		result.append("\t").append("type id/name - " + (type == null ? null + "/" + null : type.getId() + "/" + type.getName()) + ".");
 		return result.toString();
     }
     

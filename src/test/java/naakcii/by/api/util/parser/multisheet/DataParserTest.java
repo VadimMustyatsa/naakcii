@@ -28,20 +28,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import naakcii.by.api.APIApplication;
-import naakcii.by.api.action.Action;
-import naakcii.by.api.action.ActionRepository;
-import naakcii.by.api.actiontype.ActionType;
-import naakcii.by.api.actiontype.ActionTypeRepository;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.category.CategoryRepository;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
+import naakcii.by.api.chainproduct.ChainProduct;
+import naakcii.by.api.chainproduct.ChainProductRepository;
+import naakcii.by.api.chainproducttype.ChainProductType;
+import naakcii.by.api.chainproducttype.ChainProductTypeRepository;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.country.CountryRepository;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductRepository;
-import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.subcategory.SubcategoryControllerIntegrationTest;
 import naakcii.by.api.subcategory.SubcategoryRepository;
@@ -54,7 +53,7 @@ import naakcii.by.api.util.ObjectFactory;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class DataParserTest {
-	
+	/*
 	private static final Logger logger = LogManager.getLogger(SubcategoryControllerIntegrationTest.class);
 	private static final String FILE_WITH_BASIC_DATA = "src/test/resources/Basic_data.xlsx";
 	private static final String FILE_WITH_ACTIONS = "src/test/resources/Test_actions.xlsx";
@@ -88,10 +87,10 @@ public class DataParserTest {
 	private ProductRepository productRepository;
 	
 	@Autowired
-	private ActionRepository actionRepository;
+	private ChainProductRepository actionRepository;
 	
 	@Autowired
-	private ActionTypeRepository actionTypeRepository;
+	private ChainProductTypeRepository actionTypeRepository;
 	
 	@Autowired
 	private CountryRepository countryRepository;
@@ -157,17 +156,17 @@ public class DataParserTest {
 	
 	@Test
 	public void test_create_action_types() {
-		ParsingResult<ActionType> expectedParsingResult = new ParsingResult<>(ActionType.class, FILE_WITH_BASIC_DATA);
+		ParsingResult<ChainProductType> expectedParsingResult = new ParsingResult<>(ChainProductType.class, FILE_WITH_BASIC_DATA);
 		expectedParsingResult.setSheetName(SHEET_WITH_BASIC_ACTION_TYPES);
 		expectedParsingResult.setSheetIndex(3);
 		expectedParsingResult.setNumberOfSavedInstances(3);
 		expectedParsingResult.setTotalNumberOfInstances(3);
-		List<ActionType> expectedActionTypes = Arrays.stream(ACTION_TYPES).map(ActionType::new).collect(Collectors.toList());
-		ParsingResult<ActionType> parsingResult = dataParser.createBasicActionTypes();
-		TypedQuery<ActionType> getAllActionTypes = testEntityManager
+		List<ChainProductType> expectedActionTypes = Arrays.stream(ACTION_TYPES).map(ChainProductType::new).collect(Collectors.toList());
+		ParsingResult<ChainProductType> parsingResult = dataParser.createBasicActionTypes();
+		TypedQuery<ChainProductType> getAllActionTypes = testEntityManager
 				.getEntityManager()
-				.createQuery("Select actionType from ActionType actionType", ActionType.class);
-		List<ActionType> resultActionTypes = getAllActionTypes.getResultList();
+				.createQuery("Select actionType from ActionType actionType", ChainProductType.class);
+		List<ChainProductType> resultActionTypes = getAllActionTypes.getResultList();
 		assertEquals("Result list of action types should contain 3 elements.", 3, resultActionTypes.size());
 		assertTrue("Result list of action types should contain all elements of expected list: ["
 				+ "{name:'Скидка', tooltip:null}, "
@@ -193,12 +192,12 @@ public class DataParserTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			resultActionTypes.stream().forEach((ActionType actionType) -> testEntityManager.remove(actionType));
+			resultActionTypes.stream().forEach((ChainProductType actionType) -> testEntityManager.remove(actionType));
 			testEntityManager.flush();
-			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ActionType.class);
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ChainProductType.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the removing of test data ('{}' instances): {}.", 
-					ActionType.class, exception);
+					ChainProductType.class, exception);
 		}
 	}
 	
@@ -517,8 +516,8 @@ public class DataParserTest {
 		Subcategory indefiniteSubcategory = new Subcategory(INDEFINITE_SUBCATEGORY, indefiniteCategory, false);
 		indefiniteCategory.getSubcategories().add(indefiniteSubcategory);
 		List<Country> countries = Arrays.stream(CountryCode.values()).map(Country::new).collect(Collectors.toList());
-		List<ActionType> actionTypes = Arrays.stream(ACTION_TYPES).map(ActionType::new).collect(Collectors.toList());
-		ActionType firstType = actionTypes.get(0);
+		List<ChainProductType> actionTypes = Arrays.stream(ACTION_TYPES).map(ChainProductType::new).collect(Collectors.toList());
+		ChainProductType firstType = actionTypes.get(0);
 		List<Product> products = new ArrayList<>();
 		Product firstProduct = new Product("2100220000000", "Апельсины крупные Импорт Вес", Unit.KG, true, indefiniteSubcategory); 
 		Product secondProduct = new Product("4607037121607", "Сыр плавл President мастер бутерброда ветчина жир 40% 150г", Unit.PC, true, indefiniteSubcategory);		
@@ -559,37 +558,37 @@ public class DataParserTest {
 		try {
 			testEntityManager.persist(indefiniteCategory);
 			countries.stream().forEach((Country country) -> testEntityManager.persist(country));
-			actionTypes.stream().forEach((ActionType actionType) -> testEntityManager.persist(actionType));
+			actionTypes.stream().forEach((ChainProductType actionType) -> testEntityManager.persist(actionType));
 			chains.stream().forEach((Chain chain) -> testEntityManager.persist(chain));
 			testEntityManager.clear();
 			logger.info("Test data was created successfully: instances of '{}', '{}', '{}', '{}', '{}' and '{}' were added to the database.", 
-					Category.class, Subcategory.class, Product.class, Country.class, ActionType.class, Chain.class);
+					Category.class, Subcategory.class, Product.class, Country.class, ChainProductType.class, Chain.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the creation of test data ('{}', '{}', '{}', '{}', '{}' and '{}' instances): {}.", 
-					Category.class, Subcategory.class, Product.class, Country.class, ActionType.class, Chain.class);
+					Category.class, Subcategory.class, Product.class, Country.class, ChainProductType.class, Chain.class);
 		}
 		
-		List<Action> expectedActions = new ArrayList<>();
-		expectedActions.add(new Action(firstProduct, seventhChain, new BigDecimal("3.69"), new BigDecimal("3.19"), new BigDecimal("14"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(secondProduct, seventhChain, new BigDecimal("3.25"), new BigDecimal("2.39"), new BigDecimal("26"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(thirdProduct, seventhChain, new BigDecimal("2.45"), new BigDecimal("1.65"), new BigDecimal("33"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(fourthProduct, seventhChain, new BigDecimal("2.98"), new BigDecimal("1.99"), new BigDecimal("33"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(fifthProduct, seventhChain, new BigDecimal("0.78"), new BigDecimal("0.59"), new BigDecimal("24"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(sixthProduct, seventhChain, new BigDecimal("5.65"), new BigDecimal("4.39"), new BigDecimal("22"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(seventhProduct, seventhChain, new BigDecimal("4.99"), new BigDecimal("3.99"), new BigDecimal("20"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(eighthProduct, seventhChain, new BigDecimal("4.49"), new BigDecimal("2.89"), new BigDecimal("36"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(ninthProduct, seventhChain, new BigDecimal("3.49"), new BigDecimal("3.39"), new BigDecimal("3"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		expectedActions.add(new Action(tenthProduct, seventhChain, new BigDecimal("4.79"), new BigDecimal("4.09"), new BigDecimal("15"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
-		ParsingResult<Action> expectedParsingResult = new ParsingResult<>(Action.class, FILE_WITH_ACTIONS);
+		List<ChainProduct> expectedActions = new ArrayList<>();
+		expectedActions.add(new ChainProduct(firstProduct, seventhChain, new BigDecimal("3.69"), new BigDecimal("3.19"), new BigDecimal("14"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(secondProduct, seventhChain, new BigDecimal("3.25"), new BigDecimal("2.39"), new BigDecimal("26"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(thirdProduct, seventhChain, new BigDecimal("2.45"), new BigDecimal("1.65"), new BigDecimal("33"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(fourthProduct, seventhChain, new BigDecimal("2.98"), new BigDecimal("1.99"), new BigDecimal("33"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(fifthProduct, seventhChain, new BigDecimal("0.78"), new BigDecimal("0.59"), new BigDecimal("24"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(sixthProduct, seventhChain, new BigDecimal("5.65"), new BigDecimal("4.39"), new BigDecimal("22"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(seventhProduct, seventhChain, new BigDecimal("4.99"), new BigDecimal("3.99"), new BigDecimal("20"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(eighthProduct, seventhChain, new BigDecimal("4.49"), new BigDecimal("2.89"), new BigDecimal("36"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(ninthProduct, seventhChain, new BigDecimal("3.49"), new BigDecimal("3.39"), new BigDecimal("3"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		expectedActions.add(new ChainProduct(tenthProduct, seventhChain, new BigDecimal("4.79"), new BigDecimal("4.09"), new BigDecimal("15"), firstType, new GregorianCalendar(2018, 10, 22), new GregorianCalendar(2019, 10, 28)));
+		ParsingResult<ChainProduct> expectedParsingResult = new ParsingResult<>(ChainProduct.class, FILE_WITH_ACTIONS);
 		expectedParsingResult.setSheetName(SHEET_WITH_ACTIONS);
 		expectedParsingResult.setSheetIndex(0);
 		expectedParsingResult.setNumberOfSavedInstances(10);
 		expectedParsingResult.setTotalNumberOfInstances(10);
-		ParsingResult<Action> parsingResult = dataParser.parseActions(FILE_WITH_ACTIONS, "almi");
-		TypedQuery<Action> getAllActions = testEntityManager
+		ParsingResult<ChainProduct> parsingResult = dataParser.parseActions(FILE_WITH_ACTIONS, "almi");
+		TypedQuery<ChainProduct> getAllActions = testEntityManager
 				.getEntityManager()
-				.createQuery("Select action from Action action", Action.class);
-		List<Action> resultActions = getAllActions.getResultList();
+				.createQuery("Select action from Action action", ChainProduct.class);
+		List<ChainProduct> resultActions = getAllActions.getResultList();
 		assertEquals("Result list of products should contain 10 elements.", 10, resultActions.size());
 		assertTrue("Result list of actions should contain all elements of expected list: ["
 				+ "{basePrice:3.69, discountPrice:3.19, discountPercent:14, startDate:'22.11.2018',  startDate:'22.11.2019'},"
@@ -625,18 +624,18 @@ public class DataParserTest {
 			testEntityManager.remove(testEntityManager.merge(indefiniteCategory));
 			chains.stream().forEach((Chain chain) -> testEntityManager.remove(testEntityManager.merge(chain)));
 			countries.stream().forEach((Country country) -> testEntityManager.remove(testEntityManager.merge(country)));
-			actionTypes.stream().forEach((ActionType actionType) -> testEntityManager.remove(testEntityManager.merge(actionType)));	
+			actionTypes.stream().forEach((ChainProductType actionType) -> testEntityManager.remove(testEntityManager.merge(actionType)));	
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}', '{}', '{}', '{}', '{}' and '{}' were removed from the database.", 
-					Category.class, Subcategory.class, Product.class, Country.class, ActionType.class, Chain.class);
+					Category.class, Subcategory.class, Product.class, Country.class, ChainProductType.class, Chain.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the removing of test data ('{}', '{}', '{}', '{}', '{}' and '{}' instances): {}.", 
-					Category.class, Subcategory.class, Product.class, Country.class, ActionType.class, Chain.class, exception);
+					Category.class, Subcategory.class, Product.class, Country.class, ChainProductType.class, Chain.class, exception);
 		}
 	}
 		
 	@After
 	public void tearDown() {
 		dataParser = null;
-	}
+	}*/
 }

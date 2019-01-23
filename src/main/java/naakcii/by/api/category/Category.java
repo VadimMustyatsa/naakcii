@@ -40,22 +40,22 @@ public class Category implements Serializable {
     private Long id;
 
     @Column(name = "CATEGORY_NAME")
-    @NotNull(message = "Name of the category mustn't be null.")
+    @NotNull(message = "Category's name mustn't be null.")
     @PureSize(
     	min = 3, 
-    	max = 100,
-    	message = "Name of the category '${validatedValue}' must be between '{min}' and '{max}' characters long."
+    	max = 50,
+    	message = "Category's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
     private String name;
     
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<
     	@Valid 
-    	@NotNull(message = "Subcategory mustn't be null.") 
+    	@NotNull(message = "Category must have list of subcategories without null elements.") 
     	Subcategory> subcategories = new HashSet<Subcategory>();
 
     @Column(name = "CATEGORY_PRIORITY")
-    @Positive(message = "Priority of the category '${validatedValue}' must be positive.")
+    @Positive(message = "Category's priority '${validatedValue}' must be positive.")
     private Integer priority;
 
     @Column(name = "CATEGORY_ICON")
@@ -74,10 +74,10 @@ public class Category implements Serializable {
         this.isActive = isActive;
     }
 
-    public Category(String name, Set<Subcategory> subcategories, Boolean isActive) {
+    public Category(String name, Boolean isActive, Set<Subcategory> subcategories) {
         this.name = name;
-        this.subcategories = subcategories;
         this.isActive = isActive;
+        this.subcategories = subcategories;
     }
     
     public String toString() {

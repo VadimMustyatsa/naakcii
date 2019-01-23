@@ -1,4 +1,4 @@
-package naakcii.by.api.actionproduct;
+package naakcii.by.api.chainproduct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,21 +16,21 @@ import java.util.Set;
 
 @RestController
 @RequestMapping({"/products"})
-public class ActionProductController {
+public class ChainProductController {
 	
 	private static final Integer DEFAULT_PAGE_NIMBER = 0;
 	private static final Integer DEFAULT_PAGE_SIZE = 12;
 	private static final String DEFAULT_FIELD_FOR_SORTING = "discountPrice";
 	
-	private ActionProductService actionProductService;
+	private ChainProductService chainProductService;
 	
 	@Autowired
-	public ActionProductController(ActionProductService productService) {
-		this.actionProductService = productService;
+	public ChainProductController(ChainProductService chainProductService) {
+		this.chainProductService = chainProductService;
 	}
 	
 	@GetMapping(produces = ApiConfigConstants.API_V_2_0)
-    public List<ActionProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
+    public List<ChainProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
     		@RequestParam("chainIds") Set<Long> chainIds,
     		@RequestParam("subcategoryIds") Set<Long> subcategoryIds,
     		@RequestParam("page") Integer page,
@@ -44,6 +44,6 @@ public class ActionProductController {
 		}
 		
 		Pageable pageRequest = PageRequest.of(page, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		return actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		return chainProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 }

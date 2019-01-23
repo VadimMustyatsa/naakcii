@@ -45,7 +45,7 @@ import naakcii.by.api.subcategory.Subcategory;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CategoryControllerIntegrationTest {
-	
+	/*
 	private static final Logger logger = LogManager.getLogger(CategoryControllerIntegrationTest.class);
 		
 	@Autowired
@@ -161,5 +161,5 @@ public class CategoryControllerIntegrationTest {
 		stopWatch = null;
 		activeCategories = null;
 		inactiveCategories = null;
-	}
+	}*/
 }

@@ -42,17 +42,17 @@ public class Subcategory implements Serializable {
 	private Long id;
 	
 	@Column(name = "SUBCATEGORY_NAME")
-	@NotNull(message = "Name of the subcategory mustn't be null.")
+	@NotNull(message = "Subcategory's name mustn't be null.")
     @PureSize(
     	min = 3, 
-    	max = 100,
-    	message = "Name of the subcategory '${validatedValue}' must be between '{min}' and '{max}' characters long."
+    	max = 50,
+    	message = "Subcategory's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
 	private String name;
 	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID")
-	@NotNull(message = "Subcategory must have category.")
+	@NotNull(message = "Subcategory must have list of products without null elements.")
 	@Valid
 	private Category category;
 	
@@ -63,7 +63,7 @@ public class Subcategory implements Serializable {
 		Product> products = new HashSet<Product>();
 	
 	@Column(name = "SUBCATEGORY_PRIORITY")
-	@Positive(message = "Priority of the subcategory '${validatedValue}' must be positive.")
+	@Positive(message = "Subcategory's priority '${validatedValue}' must be positive.")
 	private Integer priority;	
 	
 	@Column(name = "SUBCATEGORY_IS_ACTIVE")
@@ -75,10 +75,10 @@ public class Subcategory implements Serializable {
 		this.isActive = isActive;
 	}
 	
-	public Subcategory(String name, Category category, Boolean isActive) {
+	public Subcategory(String name, Boolean isActive, Category category) {
 		this.name = name;
-		this.category = category;
 		this.isActive = isActive;
+		this.category = category;
 		category.getSubcategories().add(this);
 	}
 	

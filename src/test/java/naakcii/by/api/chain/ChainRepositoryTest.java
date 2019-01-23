@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class ChainRepositoryTest {
-	
+	/*
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
@@ -80,5 +80,5 @@ public class ChainRepositoryTest {
 		firstChain = null;
 		secondChain = null;
 		thirdChain = null;
-	}
+	}*/
 }

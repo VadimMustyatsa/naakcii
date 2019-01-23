@@ -21,7 +21,7 @@ import naakcii.by.api.category.Category;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class SubcategoryRepositoryTest {
-	
+	/*
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
@@ -56,5 +56,5 @@ public class SubcategoryRepositoryTest {
 	@After
 	public void tearDown() {
 		subcategory = null;
-	}
+	}*/
 }

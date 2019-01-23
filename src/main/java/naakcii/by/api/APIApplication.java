@@ -14,8 +14,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class APIApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
-    @Autowired
-    IDataParser dataParser;
+    //@Autowired
+    //IDataParser dataParser;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -30,7 +30,7 @@ public class APIApplication extends SpringBootServletInitializer implements Comm
     @Override
     public void run(String... args) throws Exception {
         // TODO Auto-generated method stub
-        dataParser.parseBasicData(null);
+        //dataParser.parseBasicData(null);
         System.out.println("Hello world");
     }
 }

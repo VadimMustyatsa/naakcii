@@ -17,17 +17,17 @@ import javax.validation.ValidatorFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import naakcii.by.api.action.Action;
-import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chainproduct.ChainProduct;
+import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.subcategory.Subcategory;
 
 public class ProductTest {
-
+/*
 private static Validator validator;
 	
 	@BeforeClass
@@ -49,22 +49,22 @@ private static Validator validator;
 	
 	public void createActions(Product product) {
 		Chain chain = new Chain("Chain name", "Chain link", true);
-		ActionType actionType = new ActionType("Action type name");
+		ChainProductType actionType = new ChainProductType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 15); 
-		Action firstAction = new Action(product, chain, new BigDecimal("2.25"), actionType, startDate, endDate);
-		Action secondAction = new Action(product, chain, new BigDecimal("6.00"), actionType, startDate, endDate);
+		ChainProduct firstAction = new ChainProduct(product, chain, new BigDecimal("2.25"), actionType, startDate, endDate);
+		ChainProduct secondAction = new ChainProduct(product, chain, new BigDecimal("6.00"), actionType, startDate, endDate);
 	}
 	
 	public void createInvalidActions(Product product) {
 		Chain chain = new Chain("Chain name", "Chain link", true);
-		ActionType actionType = new ActionType("Action type name");
+		ChainProductType actionType = new ChainProductType("Action type name");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 15); 
-		Action firstAction = new Action(product, chain, null, actionType, startDate, endDate);
-		Action secondAction = new Action(product, chain, new BigDecimal("6.00"), null, startDate, endDate);
+		ChainProduct firstAction = new ChainProduct(product, chain, null, actionType, startDate, endDate);
+		ChainProduct secondAction = new ChainProduct(product, chain, new BigDecimal("6.00"), null, startDate, endDate);
 	}
 	
 	@Test
@@ -196,5 +196,5 @@ private static Validator validator;
 		product.setCountryOfOrigin(new Country(CountryCode.AZ));
 		Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as product is valid:", 0, constraintViolations.size());
-	}
+	}*/
 }

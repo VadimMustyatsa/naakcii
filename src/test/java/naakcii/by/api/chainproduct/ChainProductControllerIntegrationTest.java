@@ -1,4 +1,4 @@
-package naakcii.by.api.actionproduct;
+package naakcii.by.api.chainproduct;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,16 +36,14 @@ import org.springframework.util.StopWatch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import naakcii.by.api.APIApplication;
-import naakcii.by.api.action.Action;
-import naakcii.by.api.actionproduct.ActionProductDTO;
-import naakcii.by.api.actiontype.ActionType;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chainproduct.ChainProductDTO;
+import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.config.ApiConfigConstants;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.product.Product;
-import naakcii.by.api.product.Unit;
 import naakcii.by.api.subcategory.Subcategory;
 
 @RunWith(SpringRunner.class)
@@ -55,9 +53,9 @@ import naakcii.by.api.subcategory.Subcategory;
 @Transactional
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ActionProductControllerIntegrationTest {
-	
-	private static final Logger logger = LogManager.getLogger(ActionProductControllerIntegrationTest.class);
+public class ChainProductControllerIntegrationTest {
+/*	
+	private static final Logger logger = LogManager.getLogger(ChainProductControllerIntegrationTest.class);
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -67,26 +65,26 @@ public class ActionProductControllerIntegrationTest {
 	
 	private ObjectMapper objectMapper;
 	private StopWatch stopWatch;
-	private List<ActionType> actionTypes;
+	private List<ChainProductType> actionTypes;
 	private List<Category> categories;
 	private List<Chain> chains;
 	private List<Country> countries;
-	private Action firstAction;
-	private Action secondAction;
-	private Action thirdAction;
-	private Action fourthAction;
-	private Action fifthAction;
-	private Action sixthAction;
-	private Action seventhAction;
-	private Action eighthAction;
-	private Action ninthAction;
-	private Action tenthAction;
-	private Action eleventhAction;
-	private Action twelvethAction;
-	private Action thirteenthAction;
-	private Action fourteenthAction;
-	private Action fifteenthAction;
-	private Action sixteenthAction;
+	private ChainProduct firstAction;
+	private ChainProduct secondAction;
+	private ChainProduct thirdAction;
+	private ChainProduct fourthAction;
+	private ChainProduct fifthAction;
+	private ChainProduct sixthAction;
+	private ChainProduct seventhAction;
+	private ChainProduct eighthAction;
+	private ChainProduct ninthAction;
+	private ChainProduct tenthAction;
+	private ChainProduct eleventhAction;
+	private ChainProduct twelvethAction;
+	private ChainProduct thirteenthAction;
+	private ChainProduct fourteenthAction;
+	private ChainProduct fifteenthAction;
+	private ChainProduct sixteenthAction;
 	private Long firstSubcategoryId;
 	private Long secondSubcategoryId;
 	private Long thirdSubcategoryId;
@@ -128,9 +126,9 @@ public class ActionProductControllerIntegrationTest {
 		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
 		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", true);
 		//Creation of action types.
-		ActionType firstActionType = new ActionType("First action type");
+		ChainProductType firstActionType = new ChainProductType("First action type");
 		firstActionType.setTooltip("First action type tooltip text.");
-		ActionType secondActionType = new ActionType("Second action type");
+		ChainProductType secondActionType = new ChainProductType("Second action type");
 		secondActionType.setTooltip("Second action type tooltip text.");
 		//Creation of countries.
 		Country firstCountry = new Country(CountryCode.BY);
@@ -191,10 +189,10 @@ public class ActionProductControllerIntegrationTest {
 			categories.add(testEntityManager.persist(firstCategory));
 			categories.add(testEntityManager.persist(secondCategory));
 			logger.info("Test data was created successfully: instances of '{}', '{}', {} and '{}' were added to the database.",
-					Category.class, Subcategory.class, Product.class, Action.class);
+					Category.class, Subcategory.class, Product.class, ChainProduct.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the creation of test data ('{}', '{}', {} and '{}' instances): {}.", 
-					Category.class, Subcategory.class, Product.class, Action.class, exception);
+					Category.class, Subcategory.class, Product.class, ChainProduct.class, exception);
 		} 
 		
 		chains = new ArrayList<>();
@@ -214,9 +212,9 @@ public class ActionProductControllerIntegrationTest {
 		try {
 			actionTypes.add(testEntityManager.persist(firstActionType));
 			actionTypes.add(testEntityManager.persist(secondActionType));
-			logger.info("Test data was created successfully: instances of '{}' were added to the database.", ActionType.class);
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", ChainProductType.class);
 		} catch(Exception exception) {
-			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", ActionType.class, exception);
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", ChainProductType.class, exception);
 		}
 		
 		countries = new ArrayList<>();
@@ -234,111 +232,111 @@ public class ActionProductControllerIntegrationTest {
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar firstEndDate = getCurrentDate();
 		firstEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		firstAction = new Action(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
+		firstAction = new ChainProduct(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
 		firstAction.setBasePrice(new BigDecimal("6.05"));
 		firstAction.setDiscountPercent(new BigDecimal("9"));
 		Calendar secondStartDate = getCurrentDate();
 		secondStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar secondEndDate = getCurrentDate();
 		secondEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		secondAction = new Action(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
+		secondAction = new ChainProduct(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
 		secondAction.setBasePrice(new BigDecimal("8.10"));
 		secondAction.setDiscountPercent(new BigDecimal("17"));
 		Calendar thirdStartDate = getCurrentDate();
 		Calendar thirdEndDate = getCurrentDate();
 		thirdEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		thirdAction = new Action(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
+		thirdAction = new ChainProduct(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
 		thirdAction.setBasePrice(new BigDecimal("5.50"));
 		thirdAction.setDiscountPercent(new BigDecimal("50"));
 		Calendar fourthStartDate = getCurrentDate();
 		fourthStartDate.add(Calendar.MONTH, -1);
 		Calendar fourthEndDate = getCurrentDate();
 		fourthEndDate.add(Calendar.MONTH, 1);
-		fourthAction = new Action(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
+		fourthAction = new ChainProduct(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
 		fourthAction.setBasePrice(new BigDecimal("14.50"));
 		fourthAction.setDiscountPercent(new BigDecimal("14"));
 		Calendar fifthStartDate = getCurrentDate();
 		fifthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar fifthEndDate = getCurrentDate();
 		fifthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		fifthAction = new Action(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
+		fifthAction = new ChainProduct(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
 		fifthAction.setBasePrice(new BigDecimal("7.35"));
 		fifthAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar sixthStartDate = getCurrentDate();
 		sixthStartDate.add(Calendar.DAY_OF_MONTH, -10);
 		Calendar sixthEndDate = getCurrentDate();
 		sixthEndDate.add(Calendar.DAY_OF_MONTH, 10);
-		sixthAction = new Action(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
+		sixthAction = new ChainProduct(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
 		sixthAction.setBasePrice(new BigDecimal("17.05"));
 		sixthAction.setDiscountPercent(new BigDecimal("9"));
 		Calendar seventhStartDate = getCurrentDate();
 		seventhStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar seventhEndDate = getCurrentDate();
 		seventhEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		seventhAction = new Action(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
+		seventhAction = new ChainProduct(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
 		seventhAction.setBasePrice(new BigDecimal("3.50"));
 		seventhAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar eighthStartDate = getCurrentDate();
 		eighthStartDate.add(Calendar.DAY_OF_MONTH, -20);
 		Calendar eighthEndDate = getCurrentDate();
 		eighthEndDate.add(Calendar.DAY_OF_MONTH, 20);
-		eighthAction = new Action(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
+		eighthAction = new ChainProduct(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
 		eighthAction.setBasePrice(new BigDecimal("3.50"));
 		eighthAction.setDiscountPercent(new BigDecimal("50"));
 		Calendar ninthStartDate = getCurrentDate();
 		ninthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar ninthEndDate = getCurrentDate();
 		ninthEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		ninthAction = new Action(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
+		ninthAction = new ChainProduct(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
 		ninthAction.setBasePrice(new BigDecimal("15.05"));
 		ninthAction.setDiscountPercent(new BigDecimal("29"));
 		Calendar tenthStartDate = getCurrentDate();
 		tenthStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar tenthEndDate = getCurrentDate();
 		tenthEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		tenthAction = new Action(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
+		tenthAction = new ChainProduct(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
 		tenthAction.setBasePrice(new BigDecimal("7.15"));
 		tenthAction.setDiscountPercent(new BigDecimal("23"));
 		Calendar eleventhStartDate = getCurrentDate();
 		eleventhStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar eleventhEndDate = getCurrentDate();
 		eleventhEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		eleventhAction = new Action(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
+		eleventhAction = new ChainProduct(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
 		eleventhAction.setBasePrice(new BigDecimal("10.00"));
 		eleventhAction.setDiscountPercent(new BigDecimal("23"));
 		Calendar twelvethStartDate = getCurrentDate();
 		twelvethStartDate.add(Calendar.DAY_OF_MONTH, -21);
 		Calendar twelvethEndDate = getCurrentDate();
 		twelvethEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		twelvethAction = new Action(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
+		twelvethAction = new ChainProduct(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
 		twelvethAction.setBasePrice(new BigDecimal("1.50"));
 		twelvethAction.setDiscountPercent(new BigDecimal("33"));
 		Calendar thirteenthStartDate = getCurrentDate();
 		thirteenthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar thirteenthEndDate = getCurrentDate();
 		thirteenthEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		thirteenthAction = new Action(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
+		thirteenthAction = new ChainProduct(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
 		thirteenthAction.setBasePrice(new BigDecimal("7.50"));
 		thirteenthAction.setDiscountPercent(new BigDecimal("47"));
 		Calendar fourteenthStartDate = getCurrentDate();
 		fourteenthStartDate.add(Calendar.DAY_OF_MONTH, -28);
 		Calendar fourteenthEndDate = getCurrentDate();
 		fourteenthEndDate.add(Calendar.DAY_OF_MONTH, 28);
-		fourteenthAction = new Action(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
+		fourteenthAction = new ChainProduct(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
 		fourteenthAction.setDiscountPrice(new BigDecimal("20.00"));
 		fourteenthAction.setDiscountPercent(new BigDecimal("25"));
 		Calendar fifteenthStartDate = getCurrentDate();
 		fifteenthStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar fifteenthEndDate = getCurrentDate();
 		fifteenthEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		fifteenthAction = new Action(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
+		fifteenthAction = new ChainProduct(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
 		fifteenthAction.setDiscountPrice(new BigDecimal("1.00"));
 		fifteenthAction.setDiscountPercent(new BigDecimal("15"));
 		Calendar sixteenthStartDate = getCurrentDate();
 		sixteenthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar sixteenthEndDate = getCurrentDate();
 		sixteenthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		sixteenthAction = new Action(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
+		sixteenthAction = new ChainProduct(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
 		sixteenthAction.setDiscountPrice(new BigDecimal("1.30"));
 		sixteenthAction.setDiscountPercent(new BigDecimal("12"));
 		testEntityManager.flush();
@@ -363,7 +361,7 @@ public class ActionProductControllerIntegrationTest {
 					  .map((Category category) -> testEntityManager.merge(category))
 					  .forEach((Category category) ->	testEntityManager.remove(category));
 			logger.info("Test data was cleaned successfully: instances of '{}', '{}', '{}' and '{}' were removed from the database.",
-					Category.class, Subcategory.class, Product.class, Action.class);
+					Category.class, Subcategory.class, Product.class, ChainProduct.class);
 			chains.stream()
 					  .map((Chain chain) -> testEntityManager.merge(chain))
 					  .forEach((Chain chain) ->	testEntityManager.remove(chain));		  
@@ -371,7 +369,7 @@ public class ActionProductControllerIntegrationTest {
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the cleaning of test data ('{}', '{}', '{}', {} and '{}' instances): {}.", 
-					Category.class, Subcategory.class, Product.class, Action.class, Chain.class, exception);
+					Category.class, Subcategory.class, Product.class, ChainProduct.class, Chain.class, exception);
 		}
 		
 		try {
@@ -386,12 +384,12 @@ public class ActionProductControllerIntegrationTest {
 		
 		try {
 			actionTypes.stream()
-					  .map((ActionType actionType) -> testEntityManager.merge(actionType))
-					  .forEach((ActionType actionType) ->	testEntityManager.remove(actionType));		  
+					  .map((ChainProductType actionType) -> testEntityManager.merge(actionType))
+					  .forEach((ChainProductType actionType) ->	testEntityManager.remove(actionType));		  
 			testEntityManager.flush();
-			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ActionType.class);
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ChainProductType.class);
 		} catch (Exception exception) {
-			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", ActionType.class, exception);
+			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", ChainProductType.class, exception);
 		}
 	}
 	
@@ -435,10 +433,10 @@ public class ActionProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
-		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ActionProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ActionProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ActionProductDTO(ninthAction));
+		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
+		expectedProductDTOs.add(new ChainProductDTO(twelvethAction));
+		expectedProductDTOs.add(new ChainProductDTO(thirteenthAction));
+		expectedProductDTOs.add(new ChainProductDTO(ninthAction));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should contain: ["
@@ -489,7 +487,7 @@ public class ActionProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
-		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
+		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		System.out.println(expectedJson);
@@ -537,10 +535,10 @@ public class ActionProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
-		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ActionProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ActionProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ActionProductDTO(ninthAction));
+		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
+		expectedProductDTOs.add(new ChainProductDTO(twelvethAction));
+		expectedProductDTOs.add(new ChainProductDTO(thirteenthAction));
+		expectedProductDTOs.add(new ChainProductDTO(ninthAction));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): ["
@@ -583,5 +581,5 @@ public class ActionProductControllerIntegrationTest {
 		secondChainId = null;
 		thirdChainId = null;
 		fourthChainId = null;
-	}
+	}*/
 }

@@ -43,7 +43,7 @@ import naakcii.by.api.config.ApiConfigConstants;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class SubcategoryControllerIntegrationTest {
-	
+	/*
 	private static final Logger logger = LogManager.getLogger(SubcategoryControllerIntegrationTest.class);
 	
 	@Autowired
@@ -115,9 +115,7 @@ public class SubcategoryControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			categories.stream()
-					  .map((Category category) -> testEntityManager.merge(category))
-					  .forEach((Category category) ->	testEntityManager.remove(category));		  
+			categories.stream().forEach((Category category) -> testEntityManager.remove(testEntityManager.merge(category)));		  
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' and '{}' were removed from the database.",
 					Category.class, Subcategory.class);
@@ -168,5 +166,5 @@ public class SubcategoryControllerIntegrationTest {
 		fourthSubcategory = null;
 		fifthSubcategory = null;
 		categoryId = null;
-	}
+	}*/
 }

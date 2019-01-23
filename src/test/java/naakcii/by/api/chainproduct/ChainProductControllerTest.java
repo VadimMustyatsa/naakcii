@@ -1,4 +1,4 @@
-package naakcii.by.api.actionproduct;
+package naakcii.by.api.chainproduct;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,22 +15,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import naakcii.by.api.actionproduct.ActionProductController;
-import naakcii.by.api.actionproduct.ActionProductDTO;
-import naakcii.by.api.actionproduct.ActionProductService;
+import naakcii.by.api.chainproduct.ChainProductController;
+import naakcii.by.api.chainproduct.ChainProductDTO;
+import naakcii.by.api.chainproduct.ChainProductService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ActionProductControllerTest {
+public class ChainProductControllerTest {
 	
 	private static final Integer DEFAULT_PAGE_NIMBER = 0;
 	private static final Integer DEFAULT_PAGE_SIZE = 12;
 	private static final String DEFAULT_FIELD_FOR_SORTING = "discountPrice";
 
-	private ActionProductController productController;
-	private List<ActionProductDTO> productDTOs;
+	private ChainProductController productController;
+	private List<ChainProductDTO> productDTOs;
 	
 	@Mock
-	private ActionProductService actionProductService;
+	private ChainProductService actionProductService;
 	
 	@Mock
 	private Set<Long> subcategoryIds;
@@ -40,7 +40,7 @@ public class ActionProductControllerTest {
 		
 	@Before
 	public void setUp() {
-		productController = new ActionProductController(actionProductService);
+		productController = new ChainProductController(actionProductService);
 	}
 	
 	@Test

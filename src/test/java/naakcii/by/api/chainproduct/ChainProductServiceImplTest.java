@@ -1,4 +1,4 @@
-package naakcii.by.api.actionproduct;
+package naakcii.by.api.chainproduct;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -17,43 +17,41 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Pageable;
 
-import naakcii.by.api.action.Action;
-import naakcii.by.api.action.ActionRepository;
-import naakcii.by.api.actionproduct.ActionProductDTO;
-import naakcii.by.api.actionproduct.ActionProductService;
-import naakcii.by.api.actionproduct.ActionProductServiceImpl;
+import naakcii.by.api.chainproduct.ChainProductDTO;
+import naakcii.by.api.chainproduct.ChainProductService;
+import naakcii.by.api.chainproduct.ChainProductServiceImpl;
 import naakcii.by.api.util.ObjectFactory;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ActionProductServiceImplTest {
+public class ChainProductServiceImplTest {
 	
 	private static Calendar currentDate = Calendar.getInstance();
 	
-	private ActionProductService productService;
+	private ChainProductService productService;
 	
 	@Mock
-	private ActionRepository actionRepository;
+	private ChainProductRepository actionRepository;
 	
 	@Mock
 	private ObjectFactory objectFactory;
 	
 	@Mock
-	private Action firstAction;
+	private ChainProduct firstAction;
 	
 	@Mock
-	private Action secondAction;
+	private ChainProduct secondAction;
 	
 	@Mock
-	private Action thirdAction;
+	private ChainProduct thirdAction;
 	
 	@Mock
-	private ActionProductDTO firstProductDTO;
+	private ChainProductDTO firstProductDTO;
 	
 	@Mock
-	private ActionProductDTO secondProductDTO;
+	private ChainProductDTO secondProductDTO;
 	
 	@Mock
-	private ActionProductDTO thirdProductDTO;
+	private ChainProductDTO thirdProductDTO;
 	
 	@Mock
 	private Set<Long> subcategoryIds;
@@ -66,7 +64,7 @@ public class ActionProductServiceImplTest {
 	
 	@Before
 	public void setUp() {
-		productService = new ActionProductServiceImpl(actionRepository, objectFactory);
+		productService = new ChainProductServiceImpl(actionRepository, objectFactory);
 	}
 	
 	private Calendar getCurrentDate() {
@@ -76,8 +74,8 @@ public class ActionProductServiceImplTest {
 		);
 	}
 	
-	private List<Action> createListOfActions() {
-		List<Action> actions = new ArrayList<>();
+	private List<ChainProduct> createListOfActions() {
+		List<ChainProduct> actions = new ArrayList<>();
 		actions.add(firstAction);
 		actions.add(null);
 		actions.add(secondAction);
@@ -88,20 +86,20 @@ public class ActionProductServiceImplTest {
 	
 	@Test
 	public void test_get_all_products_by_chain_ids_and_subcategory_ids() {
-		List<ActionProductDTO> expectedProductDTOs = new ArrayList<>();
+		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(firstProductDTO);
 		expectedProductDTOs.add(secondProductDTO);
 		expectedProductDTOs.add(thirdProductDTO);
 		when(actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable))
 			.thenReturn(createListOfActions());
-		when(objectFactory.getInstance(ActionProductDTO.class, firstAction)).thenReturn(firstProductDTO);
-		when(objectFactory.getInstance(ActionProductDTO.class, secondAction)).thenReturn(secondProductDTO);
-		when(objectFactory.getInstance(ActionProductDTO.class, thirdAction)).thenReturn(thirdProductDTO);
-		List<ActionProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageable);
+		when(objectFactory.getInstance(ChainProductDTO.class, firstAction)).thenReturn(firstProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, secondAction)).thenReturn(secondProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, thirdAction)).thenReturn(thirdProductDTO);
+		List<ChainProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageable);
 		verify(actionRepository).findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable);
-		verify(objectFactory).getInstance(ActionProductDTO.class, firstAction);
-		verify(objectFactory).getInstance(ActionProductDTO.class, secondAction);
-		verify(objectFactory).getInstance(ActionProductDTO.class, thirdAction);
+		verify(objectFactory).getInstance(ChainProductDTO.class, firstAction);
+		verify(objectFactory).getInstance(ChainProductDTO.class, secondAction);
+		verify(objectFactory).getInstance(ChainProductDTO.class, thirdAction);
 		assertEquals("Size of the result list of product data transfer objects should be 3.", resultProductDTOs.size(), 3);
 		assertEquals("Result list of product data transfer objects should be: [firstProductDTO, secondProductDTO, thirdProductDTO].", expectedProductDTOs, resultProductDTOs);
 	}

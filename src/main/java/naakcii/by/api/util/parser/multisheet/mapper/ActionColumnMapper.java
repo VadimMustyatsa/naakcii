@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.action.Action;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.product.Product;
 
 @NoArgsConstructor
@@ -63,37 +63,37 @@ public class ActionColumnMapper implements ColumnMapper {
 			
 				case BASE_PRICE_COLUMN:
 					basePriceColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Action.class.getDeclaredField(BASE_PRICE_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProduct.class.getDeclaredField(BASE_PRICE_FIELD));
 					break;
 					
 				case DISCOUNT_PRICE_COLUMN:
 					discountPriceColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Action.class.getDeclaredField(DISCOUNT_PRICE_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProduct.class.getDeclaredField(DISCOUNT_PRICE_FIELD));
 					break;
 					
 				case START_DATE_COLUMN:
 					startDateColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Action.class.getDeclaredField(START_DATE_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProduct.class.getDeclaredField(START_DATE_FIELD));
 					break;
 					
 				case END_DATE_COLUMN:
 					endDateColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Action.class.getDeclaredField(END_DATE_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProduct.class.getDeclaredField(END_DATE_FIELD));
 					break;
 					
 				case ACTION_TYPE_COLUMN:
 					actionTypeColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Action.class.getDeclaredField(ACTION_TYPE_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProduct.class.getDeclaredField(ACTION_TYPE_FIELD));
 					break;
 					
 				default:
 					logger.warn("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}'.",
-							cellValue, columnIndex, Action.class);
+							cellValue, columnIndex, ChainProduct.class);
 					break;
 			}
 		} catch (Exception exception) {
 			logger.error("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}' due to exception: {}.",
-					cellValue, columnIndex, Action.class, printStackTrace(exception));
+					cellValue, columnIndex, ChainProduct.class, printStackTrace(exception));
 		}	
 	}
 	
@@ -131,7 +131,7 @@ public class ActionColumnMapper implements ColumnMapper {
 	
 	public String toString() {
 		try(Formatter formatter = new Formatter()) {
-			formatter.format("Columns mapping on fields of entity '%s':", Action.class.getName());
+			formatter.format("Columns mapping on fields of entity '%s':", ChainProduct.class.getName());
 			formatter.format("%n");
 			formatter.format(resultColumnMappingMessage, Product.class.getDeclaredField(PRODUCT_NAME_FIELD), productNameColumnIndex, PRODUCT_NAME_COLUMN, ';');
 			formatter.format("%n");
@@ -139,20 +139,20 @@ public class ActionColumnMapper implements ColumnMapper {
 			formatter.format("%n");
 			formatter.format(resultColumnMappingMessage, Product.class.getDeclaredField(PRODUCT_UNIT_FIELD), productUnitColumnIndex, PRODUCT_UNIT_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Action.class.getDeclaredField(BASE_PRICE_FIELD), basePriceColumnIndex, BASE_PRICE_COLUMN, ';');
+			formatter.format(resultColumnMappingMessage, ChainProduct.class.getDeclaredField(BASE_PRICE_FIELD), basePriceColumnIndex, BASE_PRICE_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Action.class.getDeclaredField(DISCOUNT_PRICE_FIELD), discountPriceColumnIndex, DISCOUNT_PRICE_COLUMN, ';');
+			formatter.format(resultColumnMappingMessage, ChainProduct.class.getDeclaredField(DISCOUNT_PRICE_FIELD), discountPriceColumnIndex, DISCOUNT_PRICE_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Action.class.getDeclaredField(START_DATE_FIELD), startDateColumnIndex, START_DATE_COLUMN, ';');
+			formatter.format(resultColumnMappingMessage, ChainProduct.class.getDeclaredField(START_DATE_FIELD), startDateColumnIndex, START_DATE_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Action.class.getDeclaredField(END_DATE_FIELD), endDateColumnIndex, END_DATE_COLUMN, ';');
+			formatter.format(resultColumnMappingMessage, ChainProduct.class.getDeclaredField(END_DATE_FIELD), endDateColumnIndex, END_DATE_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Action.class.getDeclaredField(ACTION_TYPE_FIELD), actionTypeColumnIndex, ACTION_TYPE_COLUMN, '.');
+			formatter.format(resultColumnMappingMessage, ChainProduct.class.getDeclaredField(ACTION_TYPE_FIELD), actionTypeColumnIndex, ACTION_TYPE_COLUMN, '.');
 			return formatter.toString();
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the process of getting mapping result for entity '{}': {}.", 
-					Action.class, printStackTrace(exception));
-			return "Exception has occurred during the process of getting mapping result for entity '" + Action.class + "' (see logs).";
+					ChainProduct.class, printStackTrace(exception));
+			return "Exception has occurred during the process of getting mapping result for entity '" + ChainProduct.class + "' (see logs).";
 		}
 	}
 }

@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.actiontype.ActionType;
+import naakcii.by.api.chainproducttype.ChainProductType;
 
 @NoArgsConstructor
 @Setter
@@ -30,22 +30,22 @@ public class ActionTypeColumnMapper implements ColumnMapper {
 			switch (cellValue) {
 				case NAME_COLUMN:
 					nameColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, ActionType.class.getDeclaredField(NAME_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProductType.class.getDeclaredField(NAME_FIELD));
 					break;
 				
 				case TOOLTIP_COLUMN:
 					tooltipColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, ActionType.class.getDeclaredField(TOOLTIP_FIELD));
+					logger.info(columnMappingMessage, cellValue, columnIndex, ChainProductType.class.getDeclaredField(TOOLTIP_FIELD));
 					break;
 					
 				default:
 					logger.warn("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}'.",
-							cellValue, columnIndex, ActionType.class);
+							cellValue, columnIndex, ChainProductType.class);
 					break;
 			}
 		} catch (Exception exception) {
 			logger.error("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}' due to exception: {}.",
-					cellValue, columnIndex, ActionType.class, printStackTrace(exception));
+					cellValue, columnIndex, ChainProductType.class, printStackTrace(exception));
 		}
 	}
 	
@@ -59,16 +59,16 @@ public class ActionTypeColumnMapper implements ColumnMapper {
 	
 	public String toString() {
 		try(Formatter formatter = new Formatter()) {
-			formatter.format("Columns mapping on fields of entity '%s':", ActionType.class.getName());
+			formatter.format("Columns mapping on fields of entity '%s':", ChainProductType.class.getName());
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, ActionType.class.getDeclaredField(NAME_FIELD), nameColumnIndex, NAME_COLUMN, ';');
+			formatter.format(resultColumnMappingMessage, ChainProductType.class.getDeclaredField(NAME_FIELD), nameColumnIndex, NAME_COLUMN, ';');
 			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, ActionType.class.getDeclaredField(TOOLTIP_FIELD), tooltipColumnIndex, TOOLTIP_COLUMN, '.');
+			formatter.format(resultColumnMappingMessage, ChainProductType.class.getDeclaredField(TOOLTIP_FIELD), tooltipColumnIndex, TOOLTIP_COLUMN, '.');
 			return formatter.toString();
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the process of getting mapping result for entity '{}': {}.", 
-					ActionType.class, printStackTrace(exception));
-			return "Exception has occurred during the process of getting mapping result for entity '" + ActionType.class + "' (see logs).";
+					ChainProductType.class, printStackTrace(exception));
+			return "Exception has occurred during the process of getting mapping result for entity '" + ChainProductType.class + "' (see logs).";
 		}
 	}
 }
