@@ -20,7 +20,7 @@ import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.product.Product;
 
 public class ChainProductTest {
-	
+/*	
 	private static Validator validator;
 	
 	@BeforeClass
@@ -205,5 +205,5 @@ public class ChainProductTest {
 		action.setDiscountPercent(new BigDecimal("10"));
 		Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(action);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as action is valid:", 0, constraintViolations.size());
-	}
+	}*/
 }

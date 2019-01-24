@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import naakcii.by.api.util.annotations.PureSize;
 @Getter
 @EqualsAndHashCode(exclude = {"id"})
 @Entity
-@Table(name = "UOM")
+@Table(name = "UNIT_OF_MEASURE")
 public class UnitOfMeasure {
 	
 	@Id
@@ -30,8 +31,8 @@ public class UnitOfMeasure {
     @Column(name = "UOM_ID")
     private Long id;
 	
-	@Column(name = "UOM_NAME")
-    @NotNull(message = "UOM's name mustn't be null.")
+	@Column(name = "UOM_NAME", unique = true)
+    @NotNull(message = "UoM's name mustn't be null.")
     @PureSize(
     	min = 2, 
     	max = 10,
@@ -40,12 +41,13 @@ public class UnitOfMeasure {
 	private String name;
 	
 	@Column(name = "UOM_STEP")
-	@NotNull(message = "UOM's step mustn't be null.")
+	@NotNull(message = "UoM's step mustn't be null.")
     @Digits(
     	integer = 3, 
     	fraction = 3,
     	message = "UOM's step '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
+	@Positive(message = "UoM's step '${validatedValue}' must be positive.")
     private BigDecimal step;
 	
 	public UnitOfMeasure(UnitCode unitCode) {
