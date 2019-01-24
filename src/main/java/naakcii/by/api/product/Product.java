@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -72,8 +70,9 @@ public class Product implements Serializable {
 	)
 	private String picture;
 	
-	@Column(name = "PRODUCT_UNIT")
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
+	@JoinColumn(name = "PRODUCT_UNIT_OF_MEASURE")
+	@Valid
 	@NotNull(message = "Product's unit of measure mustn't be null.")
 	private UnitOfMeasure unitOfMeasure;
 	
@@ -149,9 +148,7 @@ public class Product implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("picture - " + picture + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("unit of measure name - " + (unitOfMeasure == null ? null : unitOfMeasure.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("unit of measure step - " + (unitOfMeasure == null ? null : unitOfMeasure.getStep()) + ";");
+		result.append("\t").append("unit of measure (step) - " + (unitOfMeasure == null ? null : unitOfMeasure.getName() + "(" + unitOfMeasure.getStep() + ")") + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("manufacturer - " + manufacturer + ";");
 		result.append(System.lineSeparator());

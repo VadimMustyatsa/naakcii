@@ -56,8 +56,9 @@ public class ChainProductType implements Serializable {
 	)
 	private String tooltip;
 	
-	public ChainProductType(String name) {
+	public ChainProductType(String name, String synonym) {
 		this.name = name;
+		this.synonym = synonym;
 	}
 	
 	public String toString() {

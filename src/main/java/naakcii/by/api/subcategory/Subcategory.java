@@ -52,14 +52,14 @@ public class Subcategory implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID")
-	@NotNull(message = "Subcategory must have list of products without null elements.")
+	@NotNull(message = "Subcategory must have category.")
 	@Valid
 	private Category category;
 	
 	@OneToMany(mappedBy = "subcategory", cascade = CascadeType.ALL)
 	private Set<
 		@Valid
-		@NotNull(message = "Product mustn't be null.")
+		@NotNull(message = "Subcategory must have list of products without null elements.")
 		Product> products = new HashSet<Product>();
 	
 	@Column(name = "SUBCATEGORY_PRIORITY")

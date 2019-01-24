@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.chainproducttype.ChainProductTypeDTO;
+import naakcii.by.api.unitofmeasure.UnitOfMeasureDTO;
 
 @NoArgsConstructor
 @Setter
@@ -18,8 +19,7 @@ public class ChainProductDTO {
     private Long chainId;
     private String chainName;
     private String name;
-    private String unitOfMeasureName;
-    private BigDecimal unitOfMeasureStep;
+    private UnitOfMeasureDTO unitOfMeasure;
     private String manufacturer;
     private String brand;
     private String countryOfOrigin;
@@ -36,8 +36,7 @@ public class ChainProductDTO {
     	this.chainId = chainProduct.getId().getProductId();
     	this.chainName = chainProduct.getChain().getName();
     	this.name = chainProduct.getProduct().getName();
-    	this.unitOfMeasureName = chainProduct.getProduct().getUnitOfMeasure().getName();
-    	this.unitOfMeasureStep = chainProduct.getProduct().getUnitOfMeasure().getStep();
+    	this.unitOfMeasure = new UnitOfMeasureDTO(chainProduct.getProduct().getUnitOfMeasure());
     	this.manufacturer = chainProduct.getProduct().getManufacturer();
     	this.brand = chainProduct.getProduct().getBrand();
     	this.countryOfOrigin = chainProduct.getProduct().getCountryOfOrigin().getName();

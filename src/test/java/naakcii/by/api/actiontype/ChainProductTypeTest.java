@@ -17,7 +17,7 @@ import naakcii.by.api.chainproducttype.ChainProductType;
 public class ChainProductTypeTest {
 	
 private static Validator validator;
-	
+
 	@BeforeClass
 	public static void setUpValidator() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -25,34 +25,58 @@ private static Validator validator;
     }
 	
 	@Test
-	public void test_action_type_name_is_null() {
-		ChainProductType actionType = new ChainProductType();
-		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(actionType);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as action type name is null:", 1, constraintViolations.size());
-        assertEquals("Name of the action type mustn't be null.", constraintViolations.iterator().next().getMessage());
+	public void test_chainProductType_name_is_null() {
+		ChainProductType chainProductType = new ChainProductType(null, "good_price");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's name is null:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's name mustn't be null.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_type_name_is_too_short() {
-		ChainProductType actionType = new ChainProductType("Ac");
-		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(actionType);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as action type name is too short:", 1, constraintViolations.size());
-        assertEquals("Name of the action type 'Ac' must be between '3' and '100' characters long.", constraintViolations.iterator().next().getMessage());
+	public void test_chainProductType_name_is_too_short() {
+		ChainProductType chainProductType = new ChainProductType("Хо", "good_price");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's name is too short:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's name 'Хо' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_type_trimmed_name_is_too_short() {
-		ChainProductType actionType = new ChainProductType(" Ac ");
-		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(actionType);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as action type trimmed name is too short:", 1, constraintViolations.size());
-        assertEquals("Name of the action type ' Ac ' must be between '3' and '100' characters long.", constraintViolations.iterator().next().getMessage());
+	public void test_chainProductType_trimmed_name_is_too_short() {
+		ChainProductType chainProductType = new ChainProductType(" Хо ", "good_price");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's trimmed name is too short:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's name ' Хо ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test
-	public void test_action_type_is_valid() {
-		ChainProductType actionType = new ChainProductType("Action type name");
-		actionType.setTooltip("Tooltip text.");
-		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(actionType);
+	public void test_chainProductType_synonym_is_null() {
+		ChainProductType chainProductType = new ChainProductType("Хорошая цена", null);
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's synonym is null:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's synonym mustn't be null.", constraintViolations.iterator().next().getMessage());
+	}
+	
+	@Test
+	public void test_chainProductType_synonym_is_too_short() {
+		ChainProductType chainProductType = new ChainProductType("Хорошая цена", "pr");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's synonym is too short:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's synonym 'pr' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+	}
+	
+	@Test
+	public void test_chainProductType_trimmed_synonym_is_too_short() {
+		ChainProductType chainProductType = new ChainProductType("Хорошая цена", " pr ");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's trimmed synonym is too short:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's synonym ' pr ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+	}
+	
+	@Test
+	public void test_chainProductType_is_valid() {
+		ChainProductType chainProductType = new ChainProductType("Хорошая цена", "good_price");
+		chainProductType.setTooltip("Хорошая цена.");
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as action type is valid:", 0, constraintViolations.size());
     }
 }
