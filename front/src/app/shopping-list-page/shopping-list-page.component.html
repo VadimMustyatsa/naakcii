@@ -48,7 +48,6 @@
             <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
           </div>
         </div>
-
         <div class="collapsible-body item-info"
              *ngFor="let curCart of getCartByChain(chain.chain.id)">
           <div class="item-image" [ngStyle]="setImgStyles(curCart.product.img)"></div>
@@ -92,6 +91,7 @@
             </a>
           </div>
         </div>
+        
       </li>
       <!--отдельный компонент-->
       <li>

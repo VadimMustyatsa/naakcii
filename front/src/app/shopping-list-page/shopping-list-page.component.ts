@@ -20,13 +20,13 @@ import { BreakPointCheckService } from '../shared/services/breakpoint-check.serv
 
 @Component({
   selector: 'app-finalize-page',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss'],
+  templateUrl: './shopping-list-page.component.html',
+  styleUrls: ['./shopping-list-page.component.scss'],
   providers: [FoodsStorageService],
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListPageComponent implements OnInit {
   undiscountProduct: any;
   chainListExist: ChainLine[] = null;
   undiscount: Array<{ text: string; id: string }>;

@@ -28,7 +28,7 @@ import { ProductStorageListComponent } from './product-selection/product-storage
 import { HttpClientModule } from '@angular/common/http';
 import { FoodsStorageService } from './shared/Storage/foods.storage.service';
 import { Cart } from './shared/cart/cart.model';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingListPageComponent } from './shopping-list-page/shopping-list-page.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakPointCheckService } from './shared/services/breakpoint-check.service';
 import { Chain} from './shared/chain/chain.model';
@@ -72,7 +72,7 @@ registerLocaleData(localeFr);
     ProductStorageListComponent,
     AppCutStringPipe,
     ProductStorageListComponent,
-    ShoppingListComponent,
+    ShoppingListPageComponent,
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,
