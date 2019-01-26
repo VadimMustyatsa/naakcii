@@ -1,5 +1,8 @@
 package naakcii.by.api.chainproduct;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +17,7 @@ import naakcii.by.api.config.ApiConfigConstants;
 import java.util.List;
 import java.util.Set;
 
+@Api(description = "REST API для сущности ChainProduct")
 @RestController
 @RequestMapping({"/products"})
 public class ChainProductController {
@@ -30,10 +34,15 @@ public class ChainProductController {
 	}
 	
 	@GetMapping(produces = ApiConfigConstants.API_V_2_0)
+	@ApiOperation("Возвращает список товаров по id торговой сети и id подкатегории, отсортированный по цене товара со скидкой")
     public List<ChainProductDTO> getAllProductsByChainIdsAndSubcategoryIds(
+			@ApiParam(value = "Ids торговой сети", required = true)
     		@RequestParam("chainIds") Set<Long> chainIds,
+			@ApiParam(value = "Ids подкатегорий товаров", required = true)
     		@RequestParam("subcategoryIds") Set<Long> subcategoryIds,
+			@ApiParam(value = "Номер страницы. По умолчанию = 0", required = false)
     		@RequestParam("page") Integer page,
+			@ApiParam(value = "Количество ответов на странице. По умолчанию = 12", required = false)
     		@RequestParam("size") Integer size) {
 		if (page == null || page < 0) {
 			page = DEFAULT_PAGE_NIMBER;
