@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SubscriberServiceImpl implements SubscriberService {
 
-    @Autowired
     private SubscriberRepository subscriberRepository;
+    private ObjectFactory objectFactory;
 
     @Autowired
-    private ObjectFactory objectFactory;
+    public SubscriberServiceImpl(SubscriberRepository subscriberRepository, ObjectFactory objectFactory) {
+        this.subscriberRepository = subscriberRepository;
+        this.objectFactory = objectFactory;
+    }
 
     @Override
     public SubscriberDTO save(String email) {
