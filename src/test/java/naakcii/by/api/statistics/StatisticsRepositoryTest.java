@@ -39,7 +39,7 @@ public class StatisticsRepositoryTest {
     }
 
     @Test
-    public void test_find_first_by_order_by_id_asc() throws Exception {
+    public void test_find_first_by_order_by_id_asc() {
         Statistics statistics = statisticsRepository.findFirstByOrderByIdAsc();
         assertThat(statistics.getId()).isEqualTo(1L);
         assertThat(statistics.getChainQuantity()).isEqualTo(1);

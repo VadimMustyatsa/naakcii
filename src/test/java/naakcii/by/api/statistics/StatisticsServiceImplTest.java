@@ -1,57 +1,63 @@
 package naakcii.by.api.statistics;
 
 import naakcii.by.api.util.ObjectFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class StatisticsServiceImplTest {
 
-    @MockBean
+    private StatisticsService statisticsService;
+    private Statistics statistics;
+    private GregorianCalendar calendar;
+
+    @Mock
     private StatisticsRepository statisticsRepository;
 
-    @Autowired
-    private StatisticsService statisticsService;
+    @Mock
+    private ObjectFactory objectFactory;
+
+    @Before
+    public void setUp() {
+        statisticsService = new StatisticsServiceImpl(statisticsRepository, objectFactory);
+        calendar = new GregorianCalendar(2018, 0, 1);
+        statistics = new Statistics(2, 234, 11, calendar);
+    }
 
     @Test
-    public void test_find_current_statistics() throws Exception {
-        GregorianCalendar calendar =new GregorianCalendar(2018, 0, 1);
-        calendar.setTimeZone(TimeZone.getTimeZone("UTC") );
-        Statistics statistics = new Statistics(1, 111, 11,calendar);
+    public void test_find_current_statistics() {
         StatisticsDTO statisticsDTO = new StatisticsDTO(statistics);
-        Mockito.when(statisticsRepository.findFirstByOrderByIdAsc()).thenReturn(statistics);
-        ObjectFactory mock = Mockito.mock(ObjectFactory.class);
-        Mockito.when(mock.getInstance(StatisticsDTO.class, statistics)).thenReturn(statisticsDTO);
-        StatisticsDTO actualStatisticsDTO = statisticsService.findCurrentStatistics();
-        assertThat(actualStatisticsDTO.getChainQuantity()).isEqualTo(1);
-        assertThat(actualStatisticsDTO.getDiscountedProducts()).isEqualTo(111);
+        when(statisticsRepository.findFirstByOrderByIdAsc()).thenReturn(statistics);
+        when(objectFactory.getInstance(StatisticsDTO.class, statistics)).thenReturn(statisticsDTO);
+        StatisticsDTO actualStatisticsDTO = statisticsService.getCurrentStatistics();
+        assertThat(actualStatisticsDTO.getChainQuantity()).isEqualTo(2);
+        assertThat(actualStatisticsDTO.getDiscountedProducts()).isEqualTo(234);
         assertThat(actualStatisticsDTO.getAverageDiscountPercentage()).isEqualTo(11);
-        assertThat(actualStatisticsDTO.getCreationDateMillis()).isEqualTo(1514764800000L);
+        assertThat(actualStatisticsDTO.getCreationDateMillis()).isEqualTo(1514754000000L);
     }
 
     @Test
-    public void test_update_statistics() throws Exception {
+    public void test_update_statistics() {
+        Calendar updatedCalendar = new GregorianCalendar(2018, 0, 2);
+        Statistics updatedStatistics = new Statistics(4, 345, 20, updatedCalendar);
+        StatisticsDTO updatedStatisticsDTO = new StatisticsDTO(updatedStatistics);
+        when(statisticsRepository.findFirstByOrderByIdAsc()).thenReturn(statistics);
+        when(statisticsRepository.save(updatedStatistics)).thenReturn(updatedStatistics);
+        when(objectFactory.getInstance(StatisticsDTO.class, updatedStatistics)).thenReturn(updatedStatisticsDTO);
+        StatisticsDTO actualStatiscticsDTO = statisticsService.updateStatistics(4, 345, 20, updatedCalendar);
+        assertThat(actualStatiscticsDTO.getChainQuantity()).isEqualTo(4);
+        assertThat(actualStatiscticsDTO.getDiscountedProducts()).isEqualTo(345);
+        assertThat(actualStatiscticsDTO.getAverageDiscountPercentage()).isEqualTo(20);
+        assertThat(actualStatiscticsDTO.getCreationDateMillis()).isEqualTo(1514840400000L);
     }
 
-    @Configuration
-    @ComponentScan(basePackages = {"naakcii.by.api.statistics", "naakcii.by.api.util"})
-    static class StatisticsTestConfig {
-
-        @Bean
-        public StatisticsService statisticsService() {
-            return new StatisticsServiceImpl();
-        }
-    }
 }
