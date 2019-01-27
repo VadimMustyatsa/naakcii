@@ -47,7 +47,7 @@ public class UnitOfMeasure {
     	fraction = 3,
     	message = "UOM's step '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
-	@Positive(message = "UoM's step '${validatedValue}' must be positive.")
+	@Positive(message = "UOM's step '${validatedValue}' must be positive.")
     private BigDecimal step;
 	
 	public UnitOfMeasure(UnitCode unitCode) {
