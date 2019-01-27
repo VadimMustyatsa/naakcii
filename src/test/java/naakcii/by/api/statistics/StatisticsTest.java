@@ -27,7 +27,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_chain_quantity_is_null() {
+    public void test_statistics_chain_quantity_is_null() {
         Statistics statistics = new Statistics(null, 1, 1, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chainQuantity is null:", 1, validate.size());
@@ -35,7 +35,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_chain_quantity_is_negative() {
+    public void test_statistics_chain_quantity_is_negative() {
         Statistics statistics = new Statistics(-1, 1, 1, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chainQuantity is negative:", 1, validate.size());
@@ -43,7 +43,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_discounted_products_is_null() {
+    public void test_statistics_discounted_products_is_null() {
         Statistics statistics = new Statistics(1, null, 1, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as discountedProducts is null:", 1, validate.size());
@@ -51,7 +51,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_discounted_products_is_negative() {
+    public void test_statistics_discounted_products_is_negative() {
         Statistics statistics = new Statistics(1, -1, 1, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as discountedProducts is negative:", 1, validate.size());
@@ -59,7 +59,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_average_discount_percentage_is_null() {
+    public void test_statistics_average_discount_percentage_is_null() {
         Statistics statistics = new Statistics(1, 1, null, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as averageDiscountPercentage is null:", 1, validate.size());
@@ -67,7 +67,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_average_discount_percentage_is_negative() {
+    public void test_statistics_average_discount_percentage_is_negative() {
         Statistics statistics = new Statistics(1, 1, -1, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as averageDiscountPercentage is negative:", 1, validate.size());
@@ -75,7 +75,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_average_discount_percentage_is_too_large() {
+    public void test_statistics_average_discount_percentage_is_too_large() {
         Statistics statistics = new Statistics(1, 1, 200, calendar);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as averageDiscountPercentage is more than 100:", 1, validate.size());
@@ -83,7 +83,7 @@ public class StatisticsTest {
     }
 
     @Test
-    public void test_creation_date_is_null() {
+    public void test_statistics_creation_date_is_null() {
         Statistics statistics = new Statistics(1, 1, 1, null);
         Set<ConstraintViolation<Statistics>> validate = validator.validate(statistics);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as creationDate is null:", 1, validate.size());
