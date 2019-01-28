@@ -1,0 +1,28 @@
+ <div class="shop-name">
+    <div>
+      <img src="{{chain.chain.imgLogoSmall}}">
+    </div>
+    <div>
+      {{chain.chain.name}}
+      (<a [attr.href]="'http://' + chain.chain.link" target="_blank" (click)="onEventStop($event)"
+          tooltip="Адреса и графики работы магазинов сети">магазины</a>)
+    </div>
+  </div>
+  <div class="item-position tablet-none">{{cartLineList.length}}</div>
+  <div class="item-quantity mobile-none"></div>
+  <div class="item-whole-price tablet-none">
+    <span *ngIf="getCartAllPrice() > 0">{{getCartAllPrice() | currency: "BYN": "code-narrow"}}</span>
+    <span *ngIf="getCartAllPrice() == 0">нет данных</span>
+  </div>
+  <div class="item-discount tablet-none">
+    <!-- <span>{{(getCartAllPriceByChain(chain.chain.id) - getCartTotalPriceByChain(chain.chain.id)) | currency: "BYN": "code-narrow"}}</span><br> -->
+    <!-- <span>({{( 100 - (getCartTotalPriceByChain(chain.chain.id)/getCartAllPriceByChain(chain.chain.id))*100 ) | number:"1.2-2"}} %)</span> -->
+  </div>
+  <!-- <div class="item-discount-price mobile-none">{{getCartTotalPriceByChain(chain.chain.id) | currency: "BYN":
+    "code-narrow"}}
+  </div> -->
+  <div class="promotional-deadline tablet-none" appDateGenerator></div>
+  <div class="arrow-item">
+    <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
+  </div>
+

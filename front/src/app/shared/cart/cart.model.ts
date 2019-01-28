@@ -58,6 +58,39 @@ export class Cart {
     this.recalculate();
   }
 
+  getCartByChain(idChain: number):CartLine[] {
+    const cartListByChain: CartLine[] = [];
+    this.lines.map(line => {
+      if (line.product.idStrore == idChain) {
+        cartListByChain.push(line);
+      }
+    });
+    return cartListByChain;
+  }
+
+  getCartAllPriceByChain(idChain: number) {
+    let allPrice = 0;
+    this.lines.map(line => {
+      if (line.product.idStrore === idChain) {
+        if (line.product.allPrice > 0) {
+          allPrice += (line.product.allPrice * line.quantity);
+        } else {
+          allPrice += (line.product.totalPrice * line.quantity);
+        }
+      }
+    });
+    return allPrice;
+  }
+
+  getCartTotalPriceByChain(idChain: number) {
+    let totalPrice = 0;
+    this.lines.map(line => {
+      if (line.product.idStrore === idChain) {
+        totalPrice += (line.product.totalPrice * line.quantity);
+      }
+    });
+    return totalPrice;
+  }
   //генерация JSON итогового списка для PDF-----------------------------------
   generateJsonListPDF() {
     let pdf = {};

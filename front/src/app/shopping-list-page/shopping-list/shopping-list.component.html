@@ -1,0 +1,135 @@
+<div *ngIf="chainListExist" class="listContainer"
+     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
+     
+    <div *ngIf="cart.lines.length > 0">
+      <div class="list">Список покупок</div>
+    
+      <ul class="collapsible" data-collapsible="expandable" materialize="collapsible" [materializeParams]="params">
+        <li class="collapsible-header list-header">
+          <div class="empty-large"></div>
+          <div class="item-position tablet-none">Товарные позиции</div>
+          <div class="item-quantity">Количество</div>
+          <div class="item-whole-price tablet-none">Стоимость без скидки, руб.</div>
+          <div class="item-discount tablet-none">Скидка, руб.</div>
+          <div class="item-discount-price header">Стоимость со скидкой, руб.</div>
+          <div class="promotional-deadline tablet-none">Дата окончания акции</div>
+          <div class="empty-small mobile-none"></div>
+        </li>
+        <li *ngFor="let chain of chainListExist">
+          <div class="collapsible-header active shop-meta-data grey-text text-darken-2">
+            <app-chain-line [chain]="chain"></app-chain-line>
+          </div>
+          <div class="collapsible-body item-info"
+          *ngFor="let curCart of getCartByChain(chain.chain.id)">
+              <app-cart-line [curCart]="curCart"></app-cart-line>
+          </div>
+
+        </li>
+        <!--отдельный компонент-->
+        <li>
+          <div class="collapsible-header active row chainList grey-text text-darken-2 non-discounted-line">
+            <div class="non-discounted-products">
+              Неакционные товары
+            </div>
+            <div class="non-discounted-products-quantity tablet-none">{{undiscount.length}}</div>
+            <div class="non-discounted-products-arrow">
+              <i class="material-icons arrowCollapsibleBold">arrow_drop_down</i>
+            </div>
+          </div>
+          <div class="collapsible-body empty">
+            <div></div>
+            <div class="chosen-undiscount-products" *ngFor="let item of undiscount">
+              <div class="chosen-undiscount-products_item">
+                <div class="item-image" [ngStyle]="setImgStyles('customChoice.svg')"></div>
+                <div class="custom-item-description"> {{item.text}}</div>
+              </div>
+              <div class="chosen-undiscount-products_bin">
+                <a (click)="onRemoveUndiscount($event)" [attr.id]="item.id">
+                  <i class="material-icons center grey-text text-darken-1 deleteCartLine">delete_forever</i></a>
+              </div>
+            </div>
+          </div>
+    
+        </li>
+        <li>
+          <div class="undiscount">
+            <div class="item-image" [ngStyle]="setImgStyles('customProduct.png')"></div>
+            <div class="input-field undiscount-product-input">
+              <label for="undiscount-products">Дополните список неакционными товарами</label>
+              <input type="text" id="undiscount-products" [(ngModel)]="undiscountProduct" app-scroll-to-top="10000"
+                     (keyup.enter)="addUndiscountProduct()">
+            </div>
+            <span (click)="addUndiscountProduct()" app-scroll-to-top="10000"><i class="material-icons">add</i></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div *ngIf="cart.lines.length == 0">
+      <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
+        <li class="collapsible-header amber-text">
+          <div class="grey-text text-darken-2">
+            <p>
+              Не выбран ни один товар.
+            </p>
+            <p>
+              Чтобы просматривать итоговый список покупок,
+              нужно выбрать хотя бы один товар.
+            </p>
+          </div>
+        </li>
+        <li class="collapsible-header finalizeFooterButton row">
+          <div class="col m12 left">
+            <a routerLink="/form-shopping-list" class="orangeLink">
+              <i class="material-icons">arrow_back</i>
+              <span>Вернуться к товарам</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+     
+     <section>
+      <div class="total-line finalizeFooter wrapper">
+        <div class="empty-large">Итого:</div>
+        <div class="item-position tablet-none">{{cart.lines.length + undiscount.length}}</div>
+        <div class="item-quantity">{{cart.itemCount}}</div>
+        <div class="item-whole-price tablet-none">
+          <span *ngIf="cart.cartAllPrice > 0">{{(cart.cartAllPrice)| number:"1.2-2"}}</span>
+          <span *ngIf="cart.cartAllPrice == 0">нет данных</span>
+        </div>
+        <div class="item-discount tablet-none">{{(cart.cartAllPrice - cart.cartTotalPrice)| currency: "BYN":
+          "code-narrow"}}
+        </div>
+        <div class="item-discount-price allTotalPrice">{{cart.cartTotalPrice | currency: "BYN": "code-narrow"}}</div>
+        <div class="empty-small"></div>
+      </div>
+      <div class="finalizeFooterButton">
+        <div class="back-to-products-btn">
+          <a routerLink="/form-shopping-list" class="deep-orange waves-effect btn">
+            <i class="material-icons">arrow_back</i>
+            <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Вернуться к товарам</span>
+          </a>
+        </div>
+        <div class="pdf-btn">
+          <a href="javascript:void(0);" (click)="generatePDF()"
+             class="deep-orange waves-effect waves-light btn button-icon-pdf"
+             (click)="openModal()">
+            <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Скачать</span>
+            <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
+          </a>
+        </div>
+        <div>
+          <a href="javascript:void(0);"
+             class="btn tooltipped viber-btn" data-position="top" data-tooltip="Эта функция скоро станет доступна">
+            <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Отправить в</span>
+            <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
+          </a>
+        </div>
+      </div>
+    </section>
+</div>

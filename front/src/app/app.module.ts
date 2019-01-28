@@ -50,6 +50,10 @@ import { EmailModalComponent } from './product-selection/email-modal/email-modal
 import { SubscribeService } from "./shared/services/subscribe.service";
 import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
 import { TooltipDirective } from "./shared/directives/tooltip/tooltip.directive";
+import { ShoppingListComponent } from './shopping-list-page/shopping-list/shopping-list.component';
+import { ChainLineComponent } from './shopping-list-page/shopping-list/chain-line/chain-line.component';
+import { CartLineComponent } from './shopping-list-page/shopping-list/cart-line/cart-line.component';
+import { FinalizeFooterComponent } from './shopping-list-page/shopping-list/finalize-footer/finalize-footer.component';
 
 registerLocaleData(localeFr);
 
@@ -78,7 +82,11 @@ registerLocaleData(localeFr);
     TooltipDirective,
     ScrollToTopDirective,
     EmailModalComponent,
-    DateGeneratorDirective
+    DateGeneratorDirective,
+    ShoppingListComponent,
+    ChainLineComponent,
+    CartLineComponent,
+    FinalizeFooterComponent
   ],
   imports: [
     BrowserModule,

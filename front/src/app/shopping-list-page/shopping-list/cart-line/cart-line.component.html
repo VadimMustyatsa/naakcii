@@ -1,0 +1,40 @@
+<div class="item-image" [ngStyle]="setImgStyles(curCart.product.img)"></div>
+<div class="item-name-comment">
+  <p class="itemName">
+    {{curCart.product.name}}
+  </p>
+  <div class="itemComment">
+    <input placeholder="Тут можно добавить примечание" type="text"
+            [(ngModel)]="curCart.comment" value="{{curCart.comment}}">
+  </div>
+</div>
+
+<div class="item-quantity">
+  <a class="btn-floating btn teal grey tablet-none" (click)="subItem(curCart)">
+    <i class="material-icons">remove</i>
+  </a>
+  <span>{{curCart.quantity}}</span>
+  <a class="btn-floating btn teal grey tablet-none" (click)="addItem(curCart)">
+    <i class="material-icons">add</i>
+  </a>
+</div>
+
+<div class="item-whole-price tablet-none">
+  <span *ngIf="curCart.product.allPrice > 0">{{(curCart.product.allPrice*curCart.quantity)| currency: "BYN": "code-narrow"}}</span>
+  <span *ngIf="curCart.product.allPrice == 0">нет данных</span>
+</div>
+<div class="item-discount tablet-none">
+  <span *ngIf="curCart.product.discount == 0">&ndash;</span>
+  <span *ngIf="curCart.product.discount > 0">{{((curCart.product.allPrice - curCart.product.totalPrice)*curCart.quantity) | currency: "BYN": "code-narrow"}}</span><br>
+  <span *ngIf="curCart.product.discount > 0">({{curCart.product.discount}} %)</span>
+
+</div>
+<div class="item-discount-price">
+  <span>{{(curCart.product.totalPrice*curCart.quantity)| currency: "BYN": "code-narrow"}}</span><br>
+</div>
+<div class="promotional-deadline tablet-none">{{discountMonth | date : "d MMMM"}}</div>
+<div class="bin-item">
+  <a class="deleteCartLine" (click)="deleteCartLine(curCart)">
+    <i class="material-icons grey-text text-darken-1">delete_forever</i>
+  </a>
+</div>
