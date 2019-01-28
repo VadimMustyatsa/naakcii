@@ -45,7 +45,7 @@ import naakcii.by.api.subcategory.Subcategory;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CategoryControllerIntegrationTest {
-	/*
+
 	private static final Logger logger = LogManager.getLogger(CategoryControllerIntegrationTest.class);
 		
 	@Autowired
@@ -81,16 +81,14 @@ public class CategoryControllerIntegrationTest {
 		thirdCategory.setPriority(4);
 		fourthCategory.setIcon("Fourth category icon");
 		fourthCategory.setPriority(1);
-		Subcategory firstSubcategory = new Subcategory("1st subcategory", firstCategory, true);
+		Subcategory firstSubcategory = new Subcategory("1st subcategory", true, firstCategory);
 		firstSubcategory.setPriority(7);
-		Subcategory secondSubcategory = new Subcategory("2nd subcategory", firstCategory, true);
+		Subcategory secondSubcategory = new Subcategory("2nd subcategory", true, secondCategory);
 		secondSubcategory.setPriority(1);
-		Subcategory thirdSubcategory = new Subcategory("3rd subcategory", secondCategory, true);
+		Subcategory thirdSubcategory = new Subcategory("3rd subcategory", true, thirdCategory);
 		thirdSubcategory.setPriority(5);
-		Subcategory fourthSubcategory = new Subcategory("4th subcategory", thirdCategory, true);
+		Subcategory fourthSubcategory = new Subcategory("4th subcategory", true, fourthCategory);
 		fourthSubcategory.setPriority(3);
-		Subcategory fifthSubcategory = new Subcategory("5th subcategory", fourthCategory, true);
-		fifthSubcategory.setPriority(2);
 				
 		try {
 			activeCategories.add(testEntityManager.persist(secondCategory));
@@ -161,5 +159,5 @@ public class CategoryControllerIntegrationTest {
 		stopWatch = null;
 		activeCategories = null;
 		inactiveCategories = null;
-	}*/
+	}
 }
