@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class ChainRepositoryTest {
-	/*
+
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
@@ -36,33 +36,30 @@ public class ChainRepositoryTest {
 	
 	@Before
 	public void setUp() {
-		firstChain = new Chain("First chain name", "First chain link", true);
+		firstChain = new Chain("First chain name", "First chain synonym", "First chain link", true);
 		firstChain.setLogo("First chain logo");
-		firstChain.setSynonym("First chain synonym");
-		secondChain = new Chain("Second chain name", "Second chain link", true);
+		secondChain = new Chain("Second chain name", "Second chain synonym", "Second chain link", true);
 		secondChain.setLogo("Second chain logo");
-		secondChain.setSynonym("Second chain synonym");
-		thirdChain = new Chain("Third chain name", "Third chain link", true);
+		thirdChain = new Chain("Third chain name", "Third chain synonym","Third chain link", true);
 		thirdChain.setLogo("Third chain logo");
-		thirdChain.setSynonym("Third chain synonym");
 		testEntityManager.persist(firstChain);
 		testEntityManager.persist(secondChain);
 		testEntityManager.persistAndFlush(thirdChain);
 		testEntityManager.clear();
 	}
-	
+
 	@Test
 	public void test_soft_delete() {
 		int numberOfUpdatedRows = chainRepository.softDelete(firstChain.getId());
 		assertTrue("Number of updated rows in the database should be equal to 1, as 1 entity has been modified.", numberOfUpdatedRows == 1);
 	}
-	
+
 	@Test
 	public void test_soft_delete_with_wrong_id() {
 		int numberOfUpdatedRows = chainRepository.softDelete(firstChain.getId() + 10);
 		assertTrue("Number of updated rows in the database should be equal to 0, as nothing has been modified.", numberOfUpdatedRows == 0);
 	}
-	
+
 	@Test
 	public void test_get_all_synonyms() {
 		List<String> expectedSynonyms = new ArrayList<>();
@@ -80,5 +77,5 @@ public class ChainRepositoryTest {
 		firstChain = null;
 		secondChain = null;
 		thirdChain = null;
-	}*/
+	}
 }
