@@ -21,7 +21,7 @@ import naakcii.by.api.subcategory.Subcategory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class CategoryRepositoryTest {
-/*	
+
 	@Autowired
 	private TestEntityManager testEntityManager;
 	
@@ -35,9 +35,9 @@ public class CategoryRepositoryTest {
 		category = new Category("Category name", true);
 		category.setIcon("Category icon");
 		category.setPriority(5);
-		Subcategory firstSubcategory = new Subcategory("1st subcategory", category, true);
+		Subcategory firstSubcategory = new Subcategory("1st subcategory", true, category);
 		firstSubcategory.setPriority(8);
-		Subcategory secondSubcategory = new Subcategory("2nd subcategory", category, true);
+		Subcategory secondSubcategory = new Subcategory("2nd subcategory", true, category);
 		secondSubcategory.setPriority(2);
 		testEntityManager.persistAndFlush(category);
 		testEntityManager.detach(category);
@@ -58,5 +58,5 @@ public class CategoryRepositoryTest {
 	@After
 	public void tearDown() {
 		category = null;
-	}*/
+	}
 }
