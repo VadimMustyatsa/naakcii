@@ -43,7 +43,7 @@ import naakcii.by.api.config.ApiConfigConstants;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ChainControllerIntegrationTest {
-/*	
+
 	private static final Logger logger = LogManager.getLogger(ChainControllerIntegrationTest.class);
 
 	@Autowired
@@ -67,13 +67,13 @@ public class ChainControllerIntegrationTest {
 	
 	private void createListOfChains() {
 		logger.info("Preparing of test data.");
-		Chain firstChain = new Chain("First chain", "First chain link", true);
+		Chain firstChain = new Chain("First chain", "First chain synonym", "First chain link", true);
 		firstChain.setLogo("First chain logo");
-		Chain secondChain = new Chain("Second chain", "Second chain link", true);
+		Chain secondChain = new Chain("Second chain", "Second chain synonym", "Second chain link", true);
 		secondChain.setLogo("Second chain logo");
-		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
+		Chain thirdChain = new Chain("Third chain", "Third chain synonym", "Third chain link", true);
 		thirdChain.setLogo("Third chain logo");
-		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", false);
+		Chain fourthChain = new Chain("Fourth chain", "Fourth chain synonym", "Fourth chain link", false);
 		fourthChain.setLogo("Fourth chain logo");
 		
 		try {
@@ -140,5 +140,5 @@ public class ChainControllerIntegrationTest {
 		stopWatch = null;
 		activeChains = null;
 		inactiveChains = null;
-	}*/
+	}
 }
