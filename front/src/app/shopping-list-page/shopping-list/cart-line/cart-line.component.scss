@@ -1,5 +1,8 @@
 .cart-line{
+  align-items: center;
   display:flex;
+  margin: 0;
+  // padding: 5px;
 }
 
 .item-whole-price, .item-discount-price, .promotional-deadline, .arrow-item, .bin-item, .item-quantity, .item-discount, .item-position {
@@ -21,6 +24,17 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.itemComment input {
+  margin: 0;
+  margin-top: 10px;
+  font-style: italic;
+  height: 30px;
+}
+
+.itemComment input:focus {
+  border-bottom: 1px solid #656565;
+  box-shadow: 0 1px 0 0 #656565;
+}
 
 .item-image {
   flex: 1;
@@ -33,10 +47,6 @@
   width: 100%;
 }
 
-.item-whole-price, .item-discount-price, .promotional-deadline, .arrow-item, .bin-item, .item-quantity, .item-discount, .item-position {
-  flex: 1;
-  text-align: center;
-}
 
 .btn-floating {
   transform: scale(0.5);
