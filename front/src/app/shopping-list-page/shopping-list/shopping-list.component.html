@@ -21,11 +21,11 @@
         </li>
         <li *ngFor="let chain of chainListExist">
           <div class="collapsible-header active shop-meta-data grey-text text-darken-2">
-            <app-chain-line [chain]="chain"></app-chain-line>
+            <app-chain-line [chain]="chain" style="flex:1;"></app-chain-line>
           </div>
           <div class="collapsible-body item-info"
           *ngFor="let curCart of getCartByChain(chain.chain.id)">
-              <app-cart-line [curCart]="curCart"></app-cart-line>
+              <app-cart-line [curCart]="curCart" style="flex:1;"></app-cart-line>
           </div>
 
         </li>
