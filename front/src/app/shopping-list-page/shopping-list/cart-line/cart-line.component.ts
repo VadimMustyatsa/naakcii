@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
+
 @Component({
   selector: 'app-cart-line',
   templateUrl: './cart-line.component.html',
@@ -7,8 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CartLineComponent implements OnInit {
   @Input() curCart
-  constructor() { 
-
+  constructor(public breakPointCheckService: BreakPointCheckService){
   }
 
   ngOnInit() {
