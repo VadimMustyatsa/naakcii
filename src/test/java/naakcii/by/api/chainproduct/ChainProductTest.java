@@ -33,7 +33,7 @@ public class ChainProductTest {
     }
 	
 	public ChainProductType getChainProductType() {
-		return new ChainProductType("Chain product name", "Synonym");
+		return new ChainProductType("Скидка", "discount");
 	}
 	
 	public Calendar getStartDate() {
@@ -47,12 +47,12 @@ public class ChainProductTest {
 	}
 	
 	@Test
-	public void test_chain_product_base_price_has_too_many_frchainProduct_digits() {
+	public void test_chain_product_base_price_has_too_many_fraction_digits() {
 		ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.25"), getChainProductType(), getStartDate(), getEndDate());
 		chainProduct.setBasePrice(new BigDecimal("10.575"));
 		Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct price has too many frchainProduct digits:", 1, constraintViolations.size());
-        assertEquals("ChainProduct's base price '10.575' must have up to '2' integer digits and '2' frchainProduct digits.", constraintViolations.iterator().next().getMessage());
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct price has too many fraction digits:", 1, constraintViolations.size());
+        assertEquals("ChainProduct's base price '10.575' must have up to '2' integer digits and '2' fraction digits.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test
@@ -82,11 +82,11 @@ public class ChainProductTest {
     }
 
     @Test
-    public void test_chain_product_discount_price_has_too_many_frchainProduct_digits() {
+    public void test_chain_product_discount_price_has_too_many_fraction_digits() {
         ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.575"), getChainProductType(), getStartDate(), getEndDate());
         Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
-        assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct discount price has too many frchainProduct digits:", 1, constraintViolations.size());
-        assertEquals("ChainProduct's discount price '5.575' must have up to '2' integer digits and '2' frchainProduct digits.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct discount price has too many fraction digits:", 1, constraintViolations.size());
+        assertEquals("ChainProduct's discount price '5.575' must have up to '2' integer digits and '2' fraction digits.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
@@ -106,12 +106,12 @@ public class ChainProductTest {
     }
 
     @Test
-	public void test_chain_product_discount_percent_has_too_many_frchainProduct_digits() {
+	public void test_chain_product_discount_percent_has_too_many_fraction_digits() {
 		ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.25"), getChainProductType(), getStartDate(), getEndDate());
 		chainProduct.setDiscountPercent(new BigDecimal("25.50"));
 		Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
-		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct discount has too many frchainProduct digits:", 1, constraintViolations.size());
-        assertEquals("ChainProduct's discount percent '25.50' must have up to '2' integer digits and '0' frchainProduct digits.", constraintViolations.iterator().next().getMessage());
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct discount has too many fraction digits:", 1, constraintViolations.size());
+        assertEquals("ChainProduct's discount percent '25.50' must have up to '2' integer digits and '0' fraction digits.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test

@@ -12,10 +12,12 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.util.CustomUnitStepSerializer;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
@@ -39,16 +41,17 @@ public class UnitOfMeasure {
     	message = "UOM's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
 	private String name;
-	
+
 	@Column(name = "UOM_STEP")
 	@NotNull(message = "UoM's step mustn't be null.")
-    @Digits(
-    	integer = 3, 
-    	fraction = 3,
-    	message = "UOM's step '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
-    )
-	@Positive(message = "UOM's step '${validatedValue}' must be positive.")
-    private BigDecimal step;
+	@Digits(
+			integer = 3,
+			fraction = 3,
+			message = "UOM's step '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
+	)
+	@Positive(message = "UoM's step '${validatedValue}' must be positive.")
+	@JsonSerialize(using = CustomUnitStepSerializer.class)
+	private BigDecimal step;
 	
 	public UnitOfMeasure(UnitCode unitCode) {
 		this.name = unitCode.getRepresentation();
