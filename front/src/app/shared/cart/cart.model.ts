@@ -61,8 +61,11 @@ export class Cart {
   private culcDiscountInMoney(cartLineList:CartLine[]):number{
     return cartLineList.reduce((curDiscount,line) => {
       if (line.product.discount>0){
-          return curDiscount + (line.product.totalPrice * line.quantity*line.product.discount/100);
+          return curDiscount + (line.product.allPrice * line.product.discount * line.quantity/100);
         }
+      else {
+        return curDiscount;
+      }
         // if (line.product.isConsiderBasePrice){
         //   return curDiscount + line.product.getSumDiscountInMoney(line.quantity);
         // }
@@ -73,7 +76,7 @@ export class Cart {
   private culcDiscountInPercent(cartLineList:CartLine[]):number{
     let curDiscount=this.culcDiscountInMoney(cartLineList);
     let basePrice=this.culcSumBasePrice(cartLineList);
-    return (basePrice-curDiscount)/basePrice*100;
+    return curDiscount/basePrice*100;
   }
 
   addLine(product: FoodList, quantity: number) {
