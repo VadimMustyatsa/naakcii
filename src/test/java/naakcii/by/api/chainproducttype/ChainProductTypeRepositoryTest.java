@@ -33,7 +33,7 @@ public class ChainProductTypeRepositoryTest {
     @Before
     public void setUp() {
         chainProductType = new ChainProductType("Скидка", "discount");
-        chainProductType.setTooltip("First tooltip");
+        chainProductType.setTooltip("Скидка tooltip");
         testEntityManager.persist(chainProductType);
         testEntityManager.flush();
     }
