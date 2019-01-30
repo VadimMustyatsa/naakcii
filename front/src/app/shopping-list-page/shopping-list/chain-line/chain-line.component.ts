@@ -22,11 +22,14 @@ export class ChainLineComponent implements OnInit {
     this.cartLineList=this.cart.getCartByChain(this.chainId);
   }
 
-  getCartAllPrice(){
-    return this.cart.getCartAllPriceByChain(this.chainId);
+  getAllPriceWithDiscount(){
+    return this.cart.getAllPriceDiscountForChain(this.chainId);
   }
 
   getDiscountInMoney(){
+    return this.cart.getCartAllPriceByChain(this.chainId)-this.cart.getCartTotalPriceByChain(this.chainId);
+  }
+  getDiscountInPercent(){
     return this.cart.getCartAllPriceByChain(this.chainId)-this.cart.getCartTotalPriceByChain(this.chainId);
   }
 
