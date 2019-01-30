@@ -32,12 +32,12 @@ public class CategoryRepositoryTest {
 	
 	@Before
 	public void setUp() {
-		category = new Category("Category name", true);
-		category.setIcon("Category icon");
+		category = new Category("Мясо и колбасные изделия", true);
+		category.setIcon("Мясо и колбасные изделия.png");
 		category.setPriority(5);
-		Subcategory firstSubcategory = new Subcategory("1st subcategory", true, category);
+		Subcategory firstSubcategory = new Subcategory("Колбасные изделия", true, category);
 		firstSubcategory.setPriority(8);
-		Subcategory secondSubcategory = new Subcategory("2nd subcategory", true, category);
+		Subcategory secondSubcategory = new Subcategory("Копчености", true, category);
 		secondSubcategory.setPriority(2);
 		testEntityManager.persistAndFlush(category);
 		testEntityManager.detach(category);

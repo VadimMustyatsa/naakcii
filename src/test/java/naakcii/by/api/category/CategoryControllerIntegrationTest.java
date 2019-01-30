@@ -69,25 +69,25 @@ public class CategoryControllerIntegrationTest {
 		
 	private void createListOfCategories() {
 		logger.info("Preparing of test data.");
-		Category firstCategory = new Category("First category", true);
-		Category secondCategory = new Category("Second category", true);
-		Category thirdCategory = new Category("Third category", true);
-		Category fourthCategory = new Category("Fourth category", false);
-		firstCategory.setIcon("First category icon");
+		Category firstCategory = new Category("Мясо и колбасные изделия", true);
+		Category secondCategory = new Category("Молочные продукты, яйца", true);
+		Category thirdCategory = new Category("Хлебобулочные изделия", true);
+		Category fourthCategory = new Category("Овощи и фрукты", false);
+		firstCategory.setIcon("Мясо и колбасные изделия.png");
 		firstCategory.setPriority(7);
-		secondCategory.setIcon("Second category icon");
+		secondCategory.setIcon("Молочные продукты, яйца.png");
 		secondCategory.setPriority(2);
-		thirdCategory.setIcon("Third category icon");
+		thirdCategory.setIcon("Хлебобулочные изделия.png");
 		thirdCategory.setPriority(4);
-		fourthCategory.setIcon("Fourth category icon");
+		fourthCategory.setIcon("Овощи и фрукты.png");
 		fourthCategory.setPriority(1);
-		Subcategory firstSubcategory = new Subcategory("1st subcategory", true, firstCategory);
+		Subcategory firstSubcategory = new Subcategory("Колбасные изделия", true, firstCategory);
 		firstSubcategory.setPriority(7);
-		Subcategory secondSubcategory = new Subcategory("2nd subcategory", true, secondCategory);
+		Subcategory secondSubcategory = new Subcategory("Масло", true, secondCategory);
 		secondSubcategory.setPriority(1);
-		Subcategory thirdSubcategory = new Subcategory("3rd subcategory", true, thirdCategory);
+		Subcategory thirdSubcategory = new Subcategory("Хлебцы", true, thirdCategory);
 		thirdSubcategory.setPriority(5);
-		Subcategory fourthSubcategory = new Subcategory("4th subcategory", true, fourthCategory);
+		Subcategory fourthSubcategory = new Subcategory("Грибы", true, fourthCategory);
 		fourthSubcategory.setPriority(3);
 				
 		try {
@@ -146,9 +146,9 @@ public class CategoryControllerIntegrationTest {
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should be: ["
-				   + "{\"name\":\"Second category\",\"priority\":2,\"icon\":\"Second category icon\",\"id\":2},"
-				   + "{\"name\":\"Third category\",\"priority\":4,\"icon\":\"Third category icon\",\"id\":3},"
-				   + "{\"name\":\"First category\",\"priority\":7,\"icon\":\"First category icon\",\"id\":1}"
+				   + "{\"name\":\"Молочные продукты, яйца\",\"priority\":2,\"icon\":\"Молочные продукты, яйца.png\",\"id\":2},"
+				   + "{\"name\":\"Хлебобулочные изделия\",\"priority\":4,\"icon\":\"Хлебобулочные изделия.png\",\"id\":3},"
+				   + "{\"name\":\"Мясо и колбасные изделия\",\"priority\":7,\"icon\":\"Мясо и колбасные изделия.png\",\"id\":1}"
 				   + "].", expectedJson, resultJson);
 		removeListOfCategories();
 	}
