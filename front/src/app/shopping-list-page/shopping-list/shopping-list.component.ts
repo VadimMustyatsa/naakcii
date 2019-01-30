@@ -46,19 +46,6 @@ export class ShoppingListComponent implements OnInit {
     return this.cart.getCartByChain(idChain);
   }
 
-
-  getCartAllPriceByChain(idChain: number) {
-    return this.cart.getCartAllPriceByChain(idChain);
-  }
-
-  getCartTotalPriceByChain(idChain: number) {
-    return this.cart.getCartTotalPriceByChain(idChain);
-  }
-
-  getSumDiscount(food: FoodList) {
-    return (food.allPrice - food.totalPrice).toFixed(2);
-  }
-
   getStorageByID(id: number): ChainLine {
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
@@ -85,7 +72,19 @@ export class ShoppingListComponent implements OnInit {
     this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
   }
 
-
+  getAllPriceBase():number{
+    return this.cart.getAllPriceBase();
+  }
+  getAllPriceDiscont():number{
+    return this.cart.getAllPriceDiscount();
+  }
+  getAllDiscountInMoney():number{
+    return this.cart.getAllDiscountInMoney();
+  }
+  getAllDiscountInPercent():number{
+    return this.cart.getAllDiscountInPercent();
+  }
+  
   onRemoveUndiscount(event){
      this.undiscount.forEach((i,index)=>{
        if (event.target.parentNode.id === i.id.toString()){

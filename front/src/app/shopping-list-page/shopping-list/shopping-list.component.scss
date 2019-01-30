@@ -63,6 +63,12 @@
 .collapsible {
   margin: 0.5rem 0 0;
 }
+.collapsible-header {
+  margin: 0;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
 .collapsible-body.empty {
   padding: 0;
 }
@@ -112,12 +118,7 @@
   margin: 10px 0;
 }
 
-.collapsible-header {
-  margin: 0;
-  padding: 5px;
-  font-weight: bold;
-  font-size: 16px;
-}
+
 
 .item-quantity {
   user-select: none;

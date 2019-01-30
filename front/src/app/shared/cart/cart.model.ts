@@ -115,10 +115,8 @@ export class Cart {
   }
  
   //цена без учета скидки всех товаров в корзине, где известна начальная цена
-  getAllPriceBase(idChain: number) {
-    return this.culcSumBasePrice(this.lines.filter( line=>{
-      return line.product.idStrore === idChain;
-    }));
+  getAllPriceBase() {
+    return this.culcSumBasePrice(this.lines);
   }
 
   //цена без учета скидки по выбранной сети, где известна начальная цена
@@ -152,12 +150,12 @@ export class Cart {
     }));
   }
 
-  //суммарная скдика товаров в корзине по выбранной сети в процентах
+  //суммарная скдика всех товаров в корзине в процентах
   getAllDiscountInPercent():number{
     return this.culcDiscountInPercent(this.lines);
   }
 
-  //суммарная скдика всех товаров в корзине в процентах
+  //суммарная скдика товаров в корзине по выбранной сети в процентах
   getAllDiscountByChainInPercent(idChain: number):number{
     return this.culcDiscountInPercent(this.lines.filter(line=>{
       return line.product.idStrore === idChain;
