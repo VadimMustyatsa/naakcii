@@ -39,8 +39,8 @@ public class ChainTest {
         return new UnitOfMeasure(UnitCode.KG); }
 
 	public void createChainProducts(Chain chain) {
-		Product product = new Product("1000123456789", "Product Name", getUnitOfMeasure(), true, new Subcategory("Subcategory name", true));
-		ChainProductType actionType = new ChainProductType("ChainProductType name", "Synonym");
+		Product product = new Product("1000123456789", "Козинак из арахиса 170г", getUnitOfMeasure(), true, new Subcategory("Снеки", true));
+		ChainProductType actionType = new ChainProductType("Скидка", "discount");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
@@ -49,8 +49,8 @@ public class ChainTest {
 	}
 
 	public void createInvalidChainProducts(Chain chain) {
-		Product product = new Product("1000123456789", "Product Name", getUnitOfMeasure(), true, new Subcategory("Subcategory name", true));
-		ChainProductType actionType = new ChainProductType("ChainProductType name", "Synonym");
+		Product product = new Product("1000123456789", "Козинак из арахиса 170г", getUnitOfMeasure(), true, new Subcategory("Снеки", true));
+		ChainProductType actionType = new ChainProductType("Скидка", "discount");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
@@ -60,7 +60,7 @@ public class ChainTest {
 
 	@Test
 	public void test_chain_name_is_null() {
-		Chain chain = new Chain(null, "1+1", "Chain link", true);
+		Chain chain = new Chain(null, "Almi", "www.almi.by", true);
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chain name is null:", 1, constraintViolations.size());
         assertEquals("Chain's name mustn't be null.", constraintViolations.iterator().next().getMessage());
@@ -68,23 +68,23 @@ public class ChainTest {
 
 	@Test
 	public void test_chain_name_is_too_short() {
-		Chain chain = new Chain("Ch", "1+1", "Chain link", true);
+		Chain chain = new Chain("Ал", "Almi", "www.almi.by", true);
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chain name is too short:", 1, constraintViolations.size());
-        assertEquals("Chain's name 'Ch' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Chain's name 'Ал' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test
 	public void test_chain_trimmed_name_is_too_short() {
-		Chain chain = new Chain("  Ch  ", "1+1", "Chain link", true);
+		Chain chain = new Chain("  Ал  ", "Almi", "www.almi.by", true);
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chain trimmed name is too short:", 1, constraintViolations.size());
-        assertEquals("Chain's name '  Ch  ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Chain's name '  Ал  ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 
     @Test
     public void test_chain_synonym_is_null() {
-        Chain chain = new Chain("Chain name", null, "Chain link", true);
+        Chain chain = new Chain("Алми", null, "www.almi.by", true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain synonym is null:", 1, constraintViolations.size());
         assertEquals("Chain's synonym chain mustn't be null.", constraintViolations.iterator().next().getMessage());
@@ -92,23 +92,23 @@ public class ChainTest {
 
     @Test
     public void test_chain_synonym_is_too_short() {
-        Chain chain = new Chain("Chain name", "11", "Chain link", true);
+        Chain chain = new Chain("Алми", "Al", "www.almi.by", true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain synonym is too short:", 1, constraintViolations.size());
-        assertEquals("Chain's synonym '11' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Chain's synonym 'Al' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
     public void test_chain_trimmed_synonym_is_too_short() {
-        Chain chain = new Chain("Chain name", "   11   ", "Chain link", true);
+        Chain chain = new Chain("Алми", "   Al   ", "www.almi.by", true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain trimmed synonym is too short:", 1, constraintViolations.size());
-        assertEquals("Chain's synonym '   11   ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Chain's synonym '   Al   ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
     public void test_chain_logo_is_too_long() {
-        Chain chain = new Chain("Chain name", "Synonym", "Chain link", true);
+        Chain chain = new Chain("Алми", "Synonym", "www.almi.by", true);
         StringBuilder str = new StringBuilder();
         for (int i = 0; i<256; i++) {
             str.append("a");
@@ -122,7 +122,7 @@ public class ChainTest {
 
     @Test
     public void test_chain_link_is_null() {
-        Chain chain = new Chain("Chain name", "Synonym", null, true);
+        Chain chain = new Chain("Алми", "Almi", null, true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain link is null:", 1, constraintViolations.size());
         assertEquals("Chain's link mustn't be null.", constraintViolations.iterator().next().getMessage());
@@ -130,7 +130,7 @@ public class ChainTest {
 
     @Test
     public void test_chain_link_is_too_short() {
-        Chain chain = new Chain("Chain name", "Synonym", "link", true);
+        Chain chain = new Chain("Алми", "Almi", "link", true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain link is too short:", 1, constraintViolations.size());
         assertEquals("Chain's link 'link' must be between '10' and '255' characters long.", constraintViolations.iterator().next().getMessage());
@@ -138,15 +138,15 @@ public class ChainTest {
 
     @Test
     public void test_chain_trimmed_link_is_too_short() {
-        Chain chain = new Chain("Chain name", "Synonym", "   link   ", true);
+        Chain chain = new Chain("Алми", "Almi", "   almi   ", true);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chain trimmed link is too short:", 1, constraintViolations.size());
-        assertEquals("Chain's link '   link   ' must be between '10' and '255' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Chain's link '   almi   ' must be between '10' and '255' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
     public void test_chain_set_of_chainProducts_contains_null_elements() {
-        Chain chain = new Chain("Chain name", "Synonym", "link_to_chain", true);
+        Chain chain = new Chain("Алми", "Almi", "www.almi.by", true);
         chain.getChainProducts().add(null);
         createChainProducts(chain);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
@@ -156,7 +156,7 @@ public class ChainTest {
 
     @Test
     public void test_chain_set_of_chainProducts_contains_invalid_elements() {
-        Chain chain = new Chain("Chain name", "Synonym", "link_to_chain", true);
+        Chain chain = new Chain("Алми", "Almi", "www.almi.by", true);
         createInvalidChainProducts(chain);
         chain.getChainProducts().add(null);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
@@ -172,7 +172,7 @@ public class ChainTest {
 
 	@Test
 	public void test_chain_isActive_field_is_null() {
-		Chain chain = new Chain("Chain name", "Synonym", "link_to_chain", null);
+		Chain chain = new Chain("Алми", "Almi", "www.almi.by", null);
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chain 'isActive' field is null:", 1, constraintViolations.size());
         assertEquals("Chain must have field 'isActive' defined.", constraintViolations.iterator().next().getMessage());
@@ -180,7 +180,7 @@ public class ChainTest {
 	
 	@Test
 	public void test_chain_is_valid() {
-		Chain chain = new Chain("Chain name", "Synonym", "link_to_chain", true);
+		Chain chain = new Chain("Алми", "Almi", "www.almi.by", true);
 		createChainProducts(chain);
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as chain is valid:", 0, constraintViolations.size());

@@ -36,12 +36,12 @@ public class ChainRepositoryTest {
 	
 	@Before
 	public void setUp() {
-		firstChain = new Chain("First chain name", "First chain synonym", "First chain link", true);
-		firstChain.setLogo("First chain logo");
-		secondChain = new Chain("Second chain name", "Second chain synonym", "Second chain link", true);
-		secondChain.setLogo("Second chain logo");
-		thirdChain = new Chain("Third chain name", "Third chain synonym","Third chain link", true);
-		thirdChain.setLogo("Third chain logo");
+		firstChain = new Chain("Алми", "Almi", "www.almi.by", true);
+		firstChain.setLogo("almi.png");
+		secondChain = new Chain("Евроопт", "Evroopt", "www.evroopt.by", true);
+		secondChain.setLogo("evroopt.png");
+		thirdChain = new Chain("Виталюр", "Vitalur","www.vitalur.by", true);
+		thirdChain.setLogo("vitalur.png");
 		testEntityManager.persist(firstChain);
 		testEntityManager.persist(secondChain);
 		testEntityManager.persistAndFlush(thirdChain);
@@ -68,7 +68,7 @@ public class ChainRepositoryTest {
 		expectedSynonyms.add(thirdChain.getSynonym());
 		List<String> resultSynonyms = chainRepository.getAllSynonyms();
 		assertEquals("Result list of synonyms should contain 3 elements.", expectedSynonyms, resultSynonyms);
-		assertTrue("Result list of synonyms should be: ['First chain synonym', 'Second chain synonym', 'Third chain synonym'].",
+		assertTrue("Result list of synonyms should be: ['Almi', 'Evroopt', 'Vitalur'].",
 				resultSynonyms.containsAll(expectedSynonyms));
 	}
 	
