@@ -3,10 +3,10 @@ package naakcii.by.api.util.parser.multisheet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,24 +27,28 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import naakcii.by.api.APIApplication;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.category.CategoryRepository;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
-import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.chainproduct.ChainProductRepository;
 import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.chainproducttype.ChainProductTypeRepository;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryCode;
 import naakcii.by.api.country.CountryRepository;
-import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductRepository;
 import naakcii.by.api.subcategory.Subcategory;
-import naakcii.by.api.subcategory.SubcategoryControllerIntegrationTest;
 import naakcii.by.api.subcategory.SubcategoryRepository;
+import naakcii.by.api.unitofmeasure.UnitCode;
+import naakcii.by.api.unitofmeasure.UnitOfMeasure;
+import naakcii.by.api.unitofmeasure.UnitOfMeasureRepository;
 import naakcii.by.api.util.ObjectFactory;
+import naakcii.by.api.util.parser.DataParser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = APIApplication.class)
@@ -52,21 +56,27 @@ import naakcii.by.api.util.ObjectFactory;
 @Transactional
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class DataParserTest {
-	/*
-	private static final Logger logger = LogManager.getLogger(SubcategoryControllerIntegrationTest.class);
-	private static final String FILE_WITH_BASIC_DATA = "src/test/resources/Basic_data.xlsx";
-	private static final String FILE_WITH_ACTIONS = "src/test/resources/Test_actions.xlsx";
-	private static final String SHEET_WITH_BASIC_ACTION_TYPES = "Basic_action_types";
+public class DataParserImplTest {
+	
+	private static final Logger logger = LogManager.getLogger(DataParserImplTest.class);
+	private static final String FILE_WITH_BASIC_DATA = "src" + File.separator + 
+													   "test" + File.separator + 
+													   "resources" + File.separator + 
+													   "Basic_data.xlsx";
+	private static final String FILE_WITH_CHAIN_PRODUCTS = "src" + File.separator + 
+														   "test" + File.separator +
+														   "resources" + File.separator + 
+														   "Test_chain_products.xlsx";
+	private static final String SHEET_WITH_BASIC_CHAIN_PRODUCT_TYPES = "Basic_chain_product_types";
 	private static final String SHEET_WITH_BASIC_CATEGORIES = "Basic_categories";
 	private static final String SHEET_WITH_BASIC_CHAINS = "Basic_chains";
 	private static final String SHEET_WITH_BASIC_SUBCATEGORIES = "Basic_subcategories";
-	private static final String SHEET_WITH_ACTIONS = "Actions";
+	private static final String SHEET_WITH_CHAIN_PRODUCTS = "Chain_products";
 	private static final String INDEFINITE_CATEGORY = "Indefinite category";
 	private static final String INDEFINITE_SUBCATEGORY = "Indefinite subcategory";
 	private static final String[] ACTION_TYPES = {"Скидка", "Хорошая цена", "1+1"};
 	
-	private DataParser dataParser;
+	private DataParserImpl dataParser;
 	
 	@Autowired
 	private TestEntityManager testEntityManager;
@@ -95,9 +105,12 @@ public class DataParserTest {
 	@Autowired
 	private CountryRepository countryRepository;
 	
+	@Autowired
+	private UnitOfMeasureRepository unitOfMeasureRepository;
+	
 	@Before
 	public void setUp() {
-		dataParser = new DataParser(
+		dataParser = new DataParserImpl(
 									objectFactory,
 									chainRepository,
 									categoryRepository,
@@ -105,13 +118,35 @@ public class DataParserTest {
 									productRepository,
 									actionRepository,
 									actionTypeRepository,
-									countryRepository
+									countryRepository,
+									unitOfMeasureRepository
 								   ); 
 	}
 	
 	@Test
 	public void test_create_countries() {
-		ParsingResult<Country> expectedParsingResult = new ParsingResult<>(Country.class, CountryCode.class.getName());
+		
+		//dataParser.parseBasicData();
+		//dataParser.parseChainProducts(FILE_WITH_CHAIN_PRODUCTS, "almi");
+		//dataParser.createBasicActionTypes();
+		/*System.out.println(Country.class.getName());
+		System.out.println(Country.class);
+		List<Class> l;
+		if (Country.class.equals(Country.class)) {
+			System.out.println("TRUE");
+		}
+		Class<?>[] classes = {naakcii.by.api.country.Country.class, naakcii.by.api.chain.Chain.class};
+		
+		List<Class<?>> cl = Arrays.asList(classes);
+		
+		if (cl.contains(Country.class)) {
+			System.out.println("Country");
+		}
+		
+		if (cl.contains(naakcii.by.api.category.Category.class)) {
+			System.out.println("Category");
+		}
+		/*ParsingResult<Country> expectedParsingResult = new ParsingResult<>(Country.class, CountryCode.class.getName());
 		expectedParsingResult.setNumberOfSavedInstances(101);
 		expectedParsingResult.setTotalNumberOfInstances(101);
 		ParsingResult<Country> parsingResult = dataParser.createCountries();
@@ -127,12 +162,13 @@ public class DataParserTest {
 				+ "{name:'Япония', alphaCode2:'JP', alphaCode3:'JPN'}"
 				+ "].", resultCountries.containsAll(expectedCountries));
 		assertEquals("Parsing result should be:"
-				+ "target class - naakcii.by.api.actiontype.ActionType;"
+				+ "target class - naakcii.by.api.country.Country;"
 				+ "file - naakcii.by.api.country.CountryCode;"
 				+ "sheet - null;"
 				+ "sheet index - null;"
 				+ "total number of instances - 101;"
 				+ "number of saved instances - 101;"
+				+ "number of unsaved instances - 0,"
 				+ "including"
 				+ "number of already existing instances - 0;"
 				+ "number of invalid instances - 0;"
@@ -145,15 +181,15 @@ public class DataParserTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			resultCountries.stream().forEach((Country country) -> testEntityManager.remove(country));
+			resultCountries.stream().forEach(testEntityManager::remove);
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Country.class);
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the removing of test data ('{}' instances): {}.", 
 					Country.class, exception);
-		}
+		}*/
 	}
-	
+/*	
 	@Test
 	public void test_create_action_types() {
 		ParsingResult<ChainProductType> expectedParsingResult = new ParsingResult<>(ChainProductType.class, FILE_WITH_BASIC_DATA);
@@ -632,10 +668,10 @@ public class DataParserTest {
 			logger.error("Exception has occurred during the removing of test data ('{}', '{}', '{}', '{}', '{}' and '{}' instances): {}.", 
 					Category.class, Subcategory.class, Product.class, Country.class, ChainProductType.class, Chain.class, exception);
 		}
-	}
+	}*/
 		
 	@After
 	public void tearDown() {
 		dataParser = null;
-	}*/
+	}
 }

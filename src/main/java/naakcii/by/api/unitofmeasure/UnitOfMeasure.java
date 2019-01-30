@@ -12,10 +12,13 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.util.CustomUnitStepSerializer;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
@@ -31,7 +34,7 @@ public class UnitOfMeasure {
     @Column(name = "UOM_ID")
     private Long id;
 	
-	@Column(name = "UOM_NAME", unique = true)
+	@Column(name = "UOM_NAME", unique = true, length = 50)
     @NotNull(message = "UoM's name mustn't be null.")
     @PureSize(
     	min = 2, 
@@ -48,6 +51,7 @@ public class UnitOfMeasure {
     	message = "UOM's step '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
 	@Positive(message = "UoM's step '${validatedValue}' must be positive.")
+	@JsonSerialize(using = CustomUnitStepSerializer.class)
     private BigDecimal step;
 	
 	public UnitOfMeasure(UnitCode unitCode) {

@@ -40,7 +40,7 @@ public class ChainProductType implements Serializable {
     )
 	private String name;
 	
-	@Column(name = "CHAIN_PRODUCT_TYPE_SYNONYM")
+	@Column(name = "CHAIN_PRODUCT_TYPE_SYNONYM", length = 50)
     @NotNull(message = "ChainProductType's synonym mustn't be null.")
     @PureSize(
     	min = 3, 

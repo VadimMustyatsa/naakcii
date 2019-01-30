@@ -4,10 +4,10 @@ import java.util.List;
 
 import naakcii.by.api.util.parser.multisheet.ParsingResult;
 
-public interface IDataParser {
+public interface DataParser {
 
-	List<ParsingResult<?>> parseBasicData(String file);
-	List<ParsingResult<?>> parseActionProducts(String file, String chainSynonym);
+	List<ParsingResult<?>> parseBasicData();
+	List<ParsingResult<?>> parseChainProducts(String file, String chainSynonym);
 	
 	default String printStackTrace(Exception exception) {
 		StringBuilder stackTrace = new StringBuilder();
