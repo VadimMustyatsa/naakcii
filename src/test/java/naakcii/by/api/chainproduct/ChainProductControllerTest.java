@@ -30,7 +30,7 @@ public class ChainProductControllerTest {
 	private List<ChainProductDTO> productDTOs;
 	
 	@Mock
-	private ChainProductService actionProductService;
+	private ChainProductService chainProductProductService;
 	
 	@Mock
 	private Set<Long> subcategoryIds;
@@ -40,7 +40,7 @@ public class ChainProductControllerTest {
 		
 	@Before
 	public void setUp() {
-		productController = new ChainProductController(actionProductService);
+		productController = new ChainProductController(chainProductProductService);
 	}
 	
 	@Test
@@ -48,9 +48,9 @@ public class ChainProductControllerTest {
 		Integer page = 0;
 		Integer size = 12;
 		Pageable pageRequest = PageRequest.of(page, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(chainProductProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(chainProductProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -58,9 +58,9 @@ public class ChainProductControllerTest {
 		Integer page = -5;
 		Integer size = 12;
 		Pageable pageRequest = PageRequest.of(DEFAULT_PAGE_NIMBER, size, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(chainProductProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(chainProductProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -68,9 +68,9 @@ public class ChainProductControllerTest {
 		Integer page = 2;
 		Integer size = 0;
 		Pageable pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(chainProductProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(chainProductProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 	
 	@Test
@@ -78,8 +78,8 @@ public class ChainProductControllerTest {
 		Integer page = -1;
 		Integer size = -5;
 		Pageable pageRequest = PageRequest.of(DEFAULT_PAGE_NIMBER, DEFAULT_PAGE_SIZE, Sort.DEFAULT_DIRECTION, DEFAULT_FIELD_FOR_SORTING);
-		when(actionProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
+		when(chainProductProductService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest)).thenReturn(productDTOs);
 		productController.getAllProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds, page, size);
-		verify(actionProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
+		verify(chainProductProductService).getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageRequest);
 	}
 }

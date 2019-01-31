@@ -30,19 +30,19 @@ public class ChainProductServiceImplTest {
 	private ChainProductService productService;
 	
 	@Mock
-	private ChainProductRepository actionRepository;
+	private ChainProductRepository chainProductRepository;
 	
 	@Mock
 	private ObjectFactory objectFactory;
 	
 	@Mock
-	private ChainProduct firstAction;
+	private ChainProduct firstChainProduct;
 	
 	@Mock
-	private ChainProduct secondAction;
+	private ChainProduct secondChainProduct;
 	
 	@Mock
-	private ChainProduct thirdAction;
+	private ChainProduct thirdChainProduct;
 	
 	@Mock
 	private ChainProductDTO firstProductDTO;
@@ -64,7 +64,7 @@ public class ChainProductServiceImplTest {
 	
 	@Before
 	public void setUp() {
-		productService = new ChainProductServiceImpl(actionRepository, objectFactory);
+		productService = new ChainProductServiceImpl(chainProductRepository, objectFactory);
 	}
 	
 	private Calendar getCurrentDate() {
@@ -74,14 +74,14 @@ public class ChainProductServiceImplTest {
 		);
 	}
 	
-	private List<ChainProduct> createListOfActions() {
-		List<ChainProduct> actions = new ArrayList<>();
-		actions.add(firstAction);
-		actions.add(null);
-		actions.add(secondAction);
-		actions.add(null);
-		actions.add(thirdAction);
-		return actions;
+	private List<ChainProduct> createListOfChainProducts() {
+		List<ChainProduct> chainProducts = new ArrayList<>();
+		chainProducts.add(firstChainProduct);
+		chainProducts.add(null);
+		chainProducts.add(secondChainProduct);
+		chainProducts.add(null);
+		chainProducts.add(thirdChainProduct);
+		return chainProducts;
 	}
 	
 	@Test
@@ -90,16 +90,16 @@ public class ChainProductServiceImplTest {
 		expectedProductDTOs.add(firstProductDTO);
 		expectedProductDTOs.add(secondProductDTO);
 		expectedProductDTOs.add(thirdProductDTO);
-		when(actionRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable))
-			.thenReturn(createListOfActions());
-		when(objectFactory.getInstance(ChainProductDTO.class, firstAction)).thenReturn(firstProductDTO);
-		when(objectFactory.getInstance(ChainProductDTO.class, secondAction)).thenReturn(secondProductDTO);
-		when(objectFactory.getInstance(ChainProductDTO.class, thirdAction)).thenReturn(thirdProductDTO);
+		when(chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable))
+			.thenReturn(createListOfChainProducts());
+		when(objectFactory.getInstance(ChainProductDTO.class, firstChainProduct)).thenReturn(firstProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, secondChainProduct)).thenReturn(secondProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, thirdChainProduct)).thenReturn(thirdProductDTO);
 		List<ChainProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageable);
-		verify(actionRepository).findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable);
-		verify(objectFactory).getInstance(ChainProductDTO.class, firstAction);
-		verify(objectFactory).getInstance(ChainProductDTO.class, secondAction);
-		verify(objectFactory).getInstance(ChainProductDTO.class, thirdAction);
+		verify(chainProductRepository).findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable);
+		verify(objectFactory).getInstance(ChainProductDTO.class, firstChainProduct);
+		verify(objectFactory).getInstance(ChainProductDTO.class, secondChainProduct);
+		verify(objectFactory).getInstance(ChainProductDTO.class, thirdChainProduct);
 		assertEquals("Size of the result list of product data transfer objects should be 3.", resultProductDTOs.size(), 3);
 		assertEquals("Result list of product data transfer objects should be: [firstProductDTO, secondProductDTO, thirdProductDTO].", expectedProductDTOs, resultProductDTOs);
 	}

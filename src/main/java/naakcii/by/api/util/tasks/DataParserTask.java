@@ -44,16 +44,17 @@ public class DataParserTask {
         StringBuilder fileHomePath = getHomePath();
         slackNotification.sendMessageToNotificationsChannel("_*Parsing start:*_");
         List<String> synonyms = chainRepository.getAllSynonyms();
+        slackNotification.sendMessageToNotificationsChannel("Chain list: _" + synonyms + "_");
         for (String chainSynonym : synonyms) {
-            logger.info("Scan folder: " + chainSynonym);
-            slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_");
-            StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
-            currentChainFolderPath.append(chainSynonym)
-                    .append(File.separator)
-                    .append(env.getProperty("ftp.action.data.folder.name"))
-                    .append(File.separator);
-            File folder = new File(currentChainFolderPath.toString());
             try {
+                logger.info("Scan folder: " + chainSynonym);
+                slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_");
+                StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
+                currentChainFolderPath.append(chainSynonym)
+                        .append(File.separator)
+                        .append(env.getProperty("ftp.action.data.folder.name"))
+                        .append(File.separator);
+                File folder = new File(currentChainFolderPath.toString());
                 File[] folderFiles = folder.listFiles();
                 if (folderFiles != null) {
                     for (File file : folderFiles) {

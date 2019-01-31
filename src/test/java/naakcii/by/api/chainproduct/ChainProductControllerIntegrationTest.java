@@ -14,6 +14,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import naakcii.by.api.unitofmeasure.UnitCode;
+import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -54,7 +56,7 @@ import naakcii.by.api.subcategory.Subcategory;
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ChainProductControllerIntegrationTest {
-/*	
+
 	private static final Logger logger = LogManager.getLogger(ChainProductControllerIntegrationTest.class);
 
 	@Autowired
@@ -65,26 +67,27 @@ public class ChainProductControllerIntegrationTest {
 	
 	private ObjectMapper objectMapper;
 	private StopWatch stopWatch;
-	private List<ChainProductType> actionTypes;
+	private List<ChainProductType> chainProductTypes;
 	private List<Category> categories;
 	private List<Chain> chains;
 	private List<Country> countries;
-	private ChainProduct firstAction;
-	private ChainProduct secondAction;
-	private ChainProduct thirdAction;
-	private ChainProduct fourthAction;
-	private ChainProduct fifthAction;
-	private ChainProduct sixthAction;
-	private ChainProduct seventhAction;
-	private ChainProduct eighthAction;
-	private ChainProduct ninthAction;
-	private ChainProduct tenthAction;
-	private ChainProduct eleventhAction;
-	private ChainProduct twelvethAction;
-	private ChainProduct thirteenthAction;
-	private ChainProduct fourteenthAction;
-	private ChainProduct fifteenthAction;
-	private ChainProduct sixteenthAction;
+	private List<UnitOfMeasure> unitOfMeasures;
+	private ChainProduct firstChainProduct;
+	private ChainProduct secondChainProduct;
+	private ChainProduct thirdChainProduct;
+	private ChainProduct fourthChainProduct;
+	private ChainProduct fifthChainProduct;
+	private ChainProduct sixthChainProduct;
+	private ChainProduct seventhChainProduct;
+	private ChainProduct eighthChainProduct;
+	private ChainProduct ninthChainProduct;
+	private ChainProduct tenthChainProduct;
+	private ChainProduct eleventhChainProduct;
+	private ChainProduct twelvethChainProduct;
+	private ChainProduct thirteenthChainProduct;
+	private ChainProduct fourteenthChainProduct;
+	private ChainProduct fifteenthChainProduct;
+	private ChainProduct sixteenthChainProduct;
 	private Long firstSubcategoryId;
 	private Long secondSubcategoryId;
 	private Long thirdSubcategoryId;
@@ -101,7 +104,7 @@ public class ChainProductControllerIntegrationTest {
 									 currentDate.get(Calendar.DAY_OF_MONTH)
 		);
 	}
-	
+
 	@Before
 	public void setUp() {
 		objectMapper = new ObjectMapper();
@@ -111,78 +114,90 @@ public class ChainProductControllerIntegrationTest {
 	private void createTestData() {
 		logger.info("Preparing of test data.");
 		//Creation of categories.
-		Category firstCategory = new Category("First category name", true);
-		firstCategory.setIcon("First category icon");
-		Category secondCategory = new Category("Second category name", true);
-		secondCategory.setIcon("Second category icon");
+		Category firstCategory = new Category("Мясо и колбасные изделия", true);
+		firstCategory.setIcon("Мясо и колбасные изделия.png");
+		Category secondCategory = new Category("Молочные продукты, яйца", true);
+		secondCategory.setIcon("Молочные продукты, яйца.png");
 		//Creation of subcategories.
-		Subcategory firstSubcategory = new Subcategory("First subcategory", firstCategory, true);
-		Subcategory secondSubcategory = new Subcategory("Second subcategory", firstCategory, true);
-		Subcategory thirdSubcategory = new Subcategory("Third subcategory", secondCategory, true);
-		Subcategory fourthSubcategory = new Subcategory("Fourth subcategory", secondCategory, true);
+		Subcategory firstSubcategory = new Subcategory("Говядина", true, firstCategory);
+		Subcategory secondSubcategory = new Subcategory("Колбасные изделия", true, firstCategory);
+		Subcategory thirdSubcategory = new Subcategory("Масло", true, secondCategory);
+		Subcategory fourthSubcategory = new Subcategory("Молоко", true, secondCategory);
 		//Creation of chains.
-		Chain firstChain = new Chain("First chain", "First chain link", true);
-		Chain secondChain = new Chain("Second chain", "Second chain link", true);
-		Chain thirdChain = new Chain("Third chain", "Third chain link", true);
-		Chain fourthChain = new Chain("Fourth chain", "Fourth chain link", true);
-		//Creation of action types.
-		ChainProductType firstActionType = new ChainProductType("First action type");
-		firstActionType.setTooltip("First action type tooltip text.");
-		ChainProductType secondActionType = new ChainProductType("Second action type");
-		secondActionType.setTooltip("Second action type tooltip text.");
+		Chain firstChain = new Chain("Алми", "Almi", "www.almi.by", true);
+		Chain secondChain = new Chain("Виталюр", "Vitalur", "www.vitalur.by", true);
+		Chain thirdChain = new Chain("Евроопт", "Evroopt", "www.evroopt.by", true);
+		Chain fourthChain = new Chain("БелМаркет", "Belmarket", "www.belmarket.by", true);
+		//Creation of chainProduct types.
+		ChainProductType firstChainProductType = new ChainProductType("Скидка", "discount");
+		firstChainProductType.setTooltip("Скидка всплывающее сообщение.");
+		ChainProductType secondChainProductType = new ChainProductType("Хорошая цена", "good_price");
+		secondChainProductType.setTooltip("Хорошая цена всплывающее сообщение.");
 		//Creation of countries.
 		Country firstCountry = new Country(CountryCode.BY);
 		Country secondCountry = new Country(CountryCode.LT);
+		//Creation of Unit of Measure
+		UnitOfMeasure firstUnitOfMeasure = new UnitOfMeasure(UnitCode.KG);
+		UnitOfMeasure secondUnitOfMeasure = new UnitOfMeasure(UnitCode.PC);
 		//Creation of products.
-		Product firstProduct = new Product("10000000000000", "First product", Unit.KG, true, firstSubcategory);
-		firstProduct.setManufacturer("First product manufacturer");
-		firstProduct.setBrand("First product brand");
+		Product firstProduct = new Product("10000000000000", "Полуфабрикат из говядины", firstUnitOfMeasure, true, firstSubcategory);
+		firstProduct.setManufacturer("ОАО Витебский мясокомбинат");
+		firstProduct.setBrand("Витебский мясокомбинат");
 		firstProduct.setCountryOfOrigin(firstCountry);
-		firstProduct.setPicture("Path to the picture of the first product");
-		Product secondProduct = new Product("20000000000000", "Second product", Unit.KG, true, firstSubcategory);
-		secondProduct.setManufacturer("Second product manufacturer");
-		secondProduct.setBrand("First product brand");
+		firstProduct.setPicture("beef.png");
+		Product secondProduct = new Product("20000000000000", "Котлетное мясо", firstUnitOfMeasure, true, firstSubcategory);
+		secondProduct.setManufacturer("ОАО Минский мясокомбинат");
+		secondProduct.setBrand("Минский мясокомбинат");
 		secondProduct.setCountryOfOrigin(secondCountry);
-		secondProduct.setPicture("Path to the picture of the second product");
-		Product thirdProduct = new Product("30000000000000", "Third product", Unit.KG, true, firstSubcategory);
-		thirdProduct.setManufacturer("Third product manufacturer");
-		thirdProduct.setBrand("First product brand");
+		secondProduct.setPicture("meet.png");
+		Product thirdProduct = new Product("30000000000000", "Тазобедренная часть", firstUnitOfMeasure, true, firstSubcategory);
+		thirdProduct.setManufacturer("ОАО Слонимский мясокомбинат");
+		thirdProduct.setBrand("Слонимский мясокомбинат");
 		thirdProduct.setCountryOfOrigin(firstCountry);
-		thirdProduct.setPicture("Path to the picture of the third product");
-		Product fourthProduct = new Product("40000000000000", "Fourth product", Unit.PC, true, secondSubcategory);
-		fourthProduct.setManufacturer("Fourth product manufacturer");
-		fourthProduct.setBrand("First product brand");
+		thirdProduct.setPicture("beef_thigh.png");
+		Product fourthProduct = new Product("40000000000000", "Сервелат", firstUnitOfMeasure, true, secondSubcategory);
+		fourthProduct.setManufacturer("ОАО Дзержинский мясокомбинат");
+		fourthProduct.setBrand("Дзержинский мясокомбинат");
 		fourthProduct.setCountryOfOrigin(secondCountry);
-		fourthProduct.setPicture("Path to the picture of the fourth product");
-		Product fifthProduct = new Product("50000000000000", "Fifth product", Unit.KG, true, secondSubcategory);
-		fifthProduct.setManufacturer("Fifth product manufacturer");
-		fifthProduct.setBrand("First product brand");
+		fourthProduct.setPicture("servelat.png");
+		Product fifthProduct = new Product("50000000000000", "Салями", secondUnitOfMeasure, true, secondSubcategory);
+		fifthProduct.setManufacturer("СООО Старфуд");
+		fifthProduct.setBrand("Смакі прысмакі");
 		fifthProduct.setCountryOfOrigin(firstCountry);
-		fifthProduct.setPicture("Path to the picture of the fifth product");
-		Product sixthProduct = new Product("60000000000000", "Sixth product", Unit.PC, true, thirdSubcategory);
-		sixthProduct.setManufacturer("Sixth product manufacturer");
-		sixthProduct.setBrand("First product brand");
+		fifthProduct.setPicture("salyami.png");
+		Product sixthProduct = new Product("60000000000000", "Масло сливочное 82.5%", firstUnitOfMeasure, true, thirdSubcategory);
+		sixthProduct.setManufacturer("ОАО Молочные горки");
+		sixthProduct.setBrand("Простоквашино");
 		sixthProduct.setCountryOfOrigin(secondCountry);
-		sixthProduct.setPicture("Path to the picture of the sixth product");
-		Product seventhProduct = new Product("70000000000000", "Seventh product", Unit.KG, true, thirdSubcategory);
-		seventhProduct.setManufacturer("Seventh product manufacturer");
-		seventhProduct.setBrand("First product brand");
+		sixthProduct.setPicture("butter1.png");
+		Product seventhProduct = new Product("70000000000000", "Масло особое", firstUnitOfMeasure, true, thirdSubcategory);
+		seventhProduct.setManufacturer("ОАО Барановичский мясомолочный комбинат");
+		seventhProduct.setBrand("Раніца");
 		seventhProduct.setCountryOfOrigin(firstCountry);
-		seventhProduct.setPicture("Path to the picture of the seventh product");
-		Product eighthProduct = new Product("80000000000000", "Eighth product", Unit.PC, true, fourthSubcategory);
-		eighthProduct.setManufacturer("Eighth product manufacturer");
-		eighthProduct.setBrand("First product brand");
+		seventhProduct.setPicture("butter2.png");
+		Product eighthProduct = new Product("80000000000000", "Молоко 2.5%", secondUnitOfMeasure, true, fourthSubcategory);
+		eighthProduct.setManufacturer("ОАО Молочные горки");
+		eighthProduct.setBrand("Простоквашино");
 		eighthProduct.setCountryOfOrigin(secondCountry);
-		eighthProduct.setPicture("Path to the picture of the eighth product");
-		Product ninthProduct = new Product("90000000000000", "Ninth product", Unit.PC, false, secondSubcategory);
-		ninthProduct.setManufacturer("Ninth product manufacturer");
-		ninthProduct.setBrand("First product brand");
+		eighthProduct.setPicture("milk.png");
+		Product ninthProduct = new Product("90000000000000", "Колбаса Купеческая", firstUnitOfMeasure, false, secondSubcategory);
+		ninthProduct.setManufacturer("ОАО Слонимский мясокомбинат");
+		ninthProduct.setBrand("Слонимский мясокомбинат");
 		ninthProduct.setCountryOfOrigin(firstCountry);
-		Product tenthProduct = new Product("10000000000000", "Tenth product", Unit.KG, false, thirdSubcategory);
-		tenthProduct.setManufacturer("Tenth product manufacturer");
-		tenthProduct.setBrand("First product brand");
+		Product tenthProduct = new Product("10000000000000", "Масло сладкосливочное", firstUnitOfMeasure, false, thirdSubcategory);
+		tenthProduct.setManufacturer("ОАО Слуцкий сыродельный комбинат");
+		tenthProduct.setBrand("Стары Менск");
 		tenthProduct.setCountryOfOrigin(secondCountry);
 		//Saving of all entities.
+		unitOfMeasures = new ArrayList<>();
+		try {
+			unitOfMeasures.add(testEntityManager.persist(firstUnitOfMeasure));
+			unitOfMeasures.add(testEntityManager.persist(secondUnitOfMeasure));
+			logger.info("Test data was created successfully: instances of '{}' were added to the database.", UnitOfMeasure.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", UnitOfMeasure.class, exception);
+		}
+
 		categories = new ArrayList<>();
 		
 		try {
@@ -207,11 +222,11 @@ public class ChainProductControllerIntegrationTest {
 			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Chain.class, exception);
 		}
 		
-		actionTypes = new ArrayList<>();
+		chainProductTypes = new ArrayList<>();
 		
 		try {
-			actionTypes.add(testEntityManager.persist(firstActionType));
-			actionTypes.add(testEntityManager.persist(secondActionType));
+			chainProductTypes.add(testEntityManager.persist(firstChainProductType));
+			chainProductTypes.add(testEntityManager.persist(secondChainProductType));
 			logger.info("Test data was created successfully: instances of '{}' were added to the database.", ChainProductType.class);
 		} catch(Exception exception) {
 			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", ChainProductType.class, exception);
@@ -227,120 +242,120 @@ public class ChainProductControllerIntegrationTest {
 			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Country.class, exception);
 		}
 		
-		//Creation of actions.
+		//Creation of chainProducts.
 		Calendar firstStartDate = getCurrentDate();
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar firstEndDate = getCurrentDate();
 		firstEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		firstAction = new ChainProduct(firstProduct, firstChain, new BigDecimal("5.50"), firstActionType, firstStartDate, firstEndDate);
-		firstAction.setBasePrice(new BigDecimal("6.05"));
-		firstAction.setDiscountPercent(new BigDecimal("9"));
+		firstChainProduct = new ChainProduct(firstProduct, firstChain, new BigDecimal("5.50"), firstChainProductType, firstStartDate, firstEndDate);
+		firstChainProduct.setBasePrice(new BigDecimal("6.05"));
+		firstChainProduct.setDiscountPercent(new BigDecimal("9"));
 		Calendar secondStartDate = getCurrentDate();
 		secondStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar secondEndDate = getCurrentDate();
 		secondEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		secondAction = new ChainProduct(firstProduct, secondChain, new BigDecimal("6.75"), firstActionType, secondStartDate, secondEndDate);
-		secondAction.setBasePrice(new BigDecimal("8.10"));
-		secondAction.setDiscountPercent(new BigDecimal("17"));
+		secondChainProduct = new ChainProduct(firstProduct, secondChain, new BigDecimal("6.75"), firstChainProductType, secondStartDate, secondEndDate);
+		secondChainProduct.setBasePrice(new BigDecimal("8.10"));
+		secondChainProduct.setDiscountPercent(new BigDecimal("17"));
 		Calendar thirdStartDate = getCurrentDate();
 		Calendar thirdEndDate = getCurrentDate();
 		thirdEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		thirdAction = new ChainProduct(firstProduct, thirdChain, new BigDecimal("2.25"), secondActionType, thirdStartDate, thirdEndDate);
-		thirdAction.setBasePrice(new BigDecimal("5.50"));
-		thirdAction.setDiscountPercent(new BigDecimal("50"));
+		thirdChainProduct = new ChainProduct(firstProduct, thirdChain, new BigDecimal("2.25"), secondChainProductType, thirdStartDate, thirdEndDate);
+		thirdChainProduct.setBasePrice(new BigDecimal("5.50"));
+		thirdChainProduct.setDiscountPercent(new BigDecimal("50"));
 		Calendar fourthStartDate = getCurrentDate();
 		fourthStartDate.add(Calendar.MONTH, -1);
 		Calendar fourthEndDate = getCurrentDate();
 		fourthEndDate.add(Calendar.MONTH, 1);
-		fourthAction = new ChainProduct(secondProduct, secondChain, new BigDecimal("12.50"), secondActionType, fourthStartDate, fourthEndDate);
-		fourthAction.setBasePrice(new BigDecimal("14.50"));
-		fourthAction.setDiscountPercent(new BigDecimal("14"));
+		fourthChainProduct = new ChainProduct(secondProduct, secondChain, new BigDecimal("12.50"), secondChainProductType, fourthStartDate, fourthEndDate);
+		fourthChainProduct.setBasePrice(new BigDecimal("14.50"));
+		fourthChainProduct.setDiscountPercent(new BigDecimal("14"));
 		Calendar fifthStartDate = getCurrentDate();
 		fifthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar fifthEndDate = getCurrentDate();
 		fifthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		fifthAction = new ChainProduct(secondProduct, thirdChain, new BigDecimal("5.25"), secondActionType, fifthStartDate, fifthEndDate);
-		fifthAction.setBasePrice(new BigDecimal("7.35"));
-		fifthAction.setDiscountPercent(new BigDecimal("29"));
+		fifthChainProduct = new ChainProduct(secondProduct, thirdChain, new BigDecimal("5.25"), secondChainProductType, fifthStartDate, fifthEndDate);
+		fifthChainProduct.setBasePrice(new BigDecimal("7.35"));
+		fifthChainProduct.setDiscountPercent(new BigDecimal("29"));
 		Calendar sixthStartDate = getCurrentDate();
 		sixthStartDate.add(Calendar.DAY_OF_MONTH, -10);
 		Calendar sixthEndDate = getCurrentDate();
 		sixthEndDate.add(Calendar.DAY_OF_MONTH, 10);
-		sixthAction = new ChainProduct(secondProduct, fourthChain, new BigDecimal("15.50"), firstActionType, sixthStartDate, sixthEndDate);
-		sixthAction.setBasePrice(new BigDecimal("17.05"));
-		sixthAction.setDiscountPercent(new BigDecimal("9"));
+		sixthChainProduct = new ChainProduct(secondProduct, fourthChain, new BigDecimal("15.50"), firstChainProductType, sixthStartDate, sixthEndDate);
+		sixthChainProduct.setBasePrice(new BigDecimal("17.05"));
+		sixthChainProduct.setDiscountPercent(new BigDecimal("9"));
 		Calendar seventhStartDate = getCurrentDate();
 		seventhStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar seventhEndDate = getCurrentDate();
 		seventhEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		seventhAction = new ChainProduct(thirdProduct, firstChain, new BigDecimal("2.50"), firstActionType, seventhStartDate, seventhEndDate);
-		seventhAction.setBasePrice(new BigDecimal("3.50"));
-		seventhAction.setDiscountPercent(new BigDecimal("29"));
+		seventhChainProduct = new ChainProduct(thirdProduct, firstChain, new BigDecimal("2.50"), firstChainProductType, seventhStartDate, seventhEndDate);
+		seventhChainProduct.setBasePrice(new BigDecimal("3.50"));
+		seventhChainProduct.setDiscountPercent(new BigDecimal("29"));
 		Calendar eighthStartDate = getCurrentDate();
 		eighthStartDate.add(Calendar.DAY_OF_MONTH, -20);
 		Calendar eighthEndDate = getCurrentDate();
 		eighthEndDate.add(Calendar.DAY_OF_MONTH, 20);
-		eighthAction = new ChainProduct(fourthProduct, secondChain, new BigDecimal("1.75"), firstActionType, eighthStartDate, eighthEndDate);
-		eighthAction.setBasePrice(new BigDecimal("3.50"));
-		eighthAction.setDiscountPercent(new BigDecimal("50"));
+		eighthChainProduct = new ChainProduct(fourthProduct, secondChain, new BigDecimal("1.75"), firstChainProductType, eighthStartDate, eighthEndDate);
+		eighthChainProduct.setBasePrice(new BigDecimal("3.50"));
+		eighthChainProduct.setDiscountPercent(new BigDecimal("50"));
 		Calendar ninthStartDate = getCurrentDate();
 		ninthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar ninthEndDate = getCurrentDate();
 		ninthEndDate.add(Calendar.DAY_OF_MONTH, 14);
-		ninthAction = new ChainProduct(fifthProduct, thirdChain, new BigDecimal("10.75"), secondActionType, ninthStartDate, ninthEndDate);
-		ninthAction.setBasePrice(new BigDecimal("15.05"));
-		ninthAction.setDiscountPercent(new BigDecimal("29"));
+		ninthChainProduct = new ChainProduct(fifthProduct, thirdChain, new BigDecimal("10.75"), secondChainProductType, ninthStartDate, ninthEndDate);
+		ninthChainProduct.setBasePrice(new BigDecimal("15.05"));
+		ninthChainProduct.setDiscountPercent(new BigDecimal("29"));
 		Calendar tenthStartDate = getCurrentDate();
 		tenthStartDate.add(Calendar.DAY_OF_MONTH, -14);
 		Calendar tenthEndDate = getCurrentDate();
 		tenthEndDate.add(Calendar.DAY_OF_MONTH, 7);
-		tenthAction = new ChainProduct(sixthProduct, fourthChain, new BigDecimal("5.50"), secondActionType, tenthStartDate, tenthEndDate);
-		tenthAction.setBasePrice(new BigDecimal("7.15"));
-		tenthAction.setDiscountPercent(new BigDecimal("23"));
+		tenthChainProduct = new ChainProduct(sixthProduct, fourthChain, new BigDecimal("5.50"), secondChainProductType, tenthStartDate, tenthEndDate);
+		tenthChainProduct.setBasePrice(new BigDecimal("7.15"));
+		tenthChainProduct.setDiscountPercent(new BigDecimal("23"));
 		Calendar eleventhStartDate = getCurrentDate();
 		eleventhStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar eleventhEndDate = getCurrentDate();
 		eleventhEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		eleventhAction = new ChainProduct(seventhProduct, secondChain, new BigDecimal("7.75"), firstActionType, eleventhStartDate, eleventhEndDate);
-		eleventhAction.setBasePrice(new BigDecimal("10.00"));
-		eleventhAction.setDiscountPercent(new BigDecimal("23"));
+		eleventhChainProduct = new ChainProduct(seventhProduct, secondChain, new BigDecimal("7.75"), firstChainProductType, eleventhStartDate, eleventhEndDate);
+		eleventhChainProduct.setBasePrice(new BigDecimal("10.00"));
+		eleventhChainProduct.setDiscountPercent(new BigDecimal("23"));
 		Calendar twelvethStartDate = getCurrentDate();
 		twelvethStartDate.add(Calendar.DAY_OF_MONTH, -21);
 		Calendar twelvethEndDate = getCurrentDate();
 		twelvethEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		twelvethAction = new ChainProduct(seventhProduct, thirdChain, new BigDecimal("1.00"), secondActionType, twelvethStartDate, twelvethEndDate);
-		twelvethAction.setBasePrice(new BigDecimal("1.50"));
-		twelvethAction.setDiscountPercent(new BigDecimal("33"));
+		twelvethChainProduct = new ChainProduct(seventhProduct, thirdChain, new BigDecimal("1.00"), secondChainProductType, twelvethStartDate, twelvethEndDate);
+		twelvethChainProduct.setBasePrice(new BigDecimal("1.50"));
+		twelvethChainProduct.setDiscountPercent(new BigDecimal("33"));
 		Calendar thirteenthStartDate = getCurrentDate();
 		thirteenthStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar thirteenthEndDate = getCurrentDate();
 		thirteenthEndDate.add(Calendar.DAY_OF_MONTH, 21);
-		thirteenthAction = new ChainProduct(eighthProduct, firstChain, new BigDecimal("4.00"), firstActionType, thirteenthStartDate, thirteenthEndDate);
-		thirteenthAction.setBasePrice(new BigDecimal("7.50"));
-		thirteenthAction.setDiscountPercent(new BigDecimal("47"));
+		thirteenthChainProduct = new ChainProduct(eighthProduct, firstChain, new BigDecimal("4.00"), firstChainProductType, thirteenthStartDate, thirteenthEndDate);
+		thirteenthChainProduct.setBasePrice(new BigDecimal("7.50"));
+		thirteenthChainProduct.setDiscountPercent(new BigDecimal("47"));
 		Calendar fourteenthStartDate = getCurrentDate();
 		fourteenthStartDate.add(Calendar.DAY_OF_MONTH, -28);
 		Calendar fourteenthEndDate = getCurrentDate();
 		fourteenthEndDate.add(Calendar.DAY_OF_MONTH, 28);
-		fourteenthAction = new ChainProduct(eighthProduct, fourthChain, new BigDecimal("15.00"), secondActionType, fourteenthStartDate, fourteenthEndDate);
-		fourteenthAction.setDiscountPrice(new BigDecimal("20.00"));
-		fourteenthAction.setDiscountPercent(new BigDecimal("25"));
+		fourteenthChainProduct = new ChainProduct(eighthProduct, fourthChain, new BigDecimal("15.00"), secondChainProductType, fourteenthStartDate, fourteenthEndDate);
+		fourteenthChainProduct.setDiscountPrice(new BigDecimal("20.00"));
+		fourteenthChainProduct.setDiscountPercent(new BigDecimal("25"));
 		Calendar fifteenthStartDate = getCurrentDate();
 		fifteenthStartDate.add(Calendar.DAY_OF_MONTH, -15);
 		Calendar fifteenthEndDate = getCurrentDate();
 		fifteenthEndDate.add(Calendar.DAY_OF_MONTH, 15);
-		fifteenthAction = new ChainProduct(ninthProduct, secondChain, new BigDecimal("0.85"), firstActionType, fifteenthStartDate, fifteenthEndDate);
-		fifteenthAction.setDiscountPrice(new BigDecimal("1.00"));
-		fifteenthAction.setDiscountPercent(new BigDecimal("15"));
+		fifteenthChainProduct = new ChainProduct(ninthProduct, secondChain, new BigDecimal("0.85"), firstChainProductType, fifteenthStartDate, fifteenthEndDate);
+		fifteenthChainProduct.setDiscountPrice(new BigDecimal("1.00"));
+		fifteenthChainProduct.setDiscountPercent(new BigDecimal("15"));
 		Calendar sixteenthStartDate = getCurrentDate();
 		sixteenthStartDate.add(Calendar.DAY_OF_MONTH, -5);
 		Calendar sixteenthEndDate = getCurrentDate();
 		sixteenthEndDate.add(Calendar.DAY_OF_MONTH, 5);
-		sixteenthAction = new ChainProduct(tenthProduct, thirdChain, new BigDecimal("1.15"), secondActionType, sixteenthStartDate, sixteenthEndDate);
-		sixteenthAction.setDiscountPrice(new BigDecimal("1.30"));
-		sixteenthAction.setDiscountPercent(new BigDecimal("12"));
+		sixteenthChainProduct = new ChainProduct(tenthProduct, thirdChain, new BigDecimal("1.15"), secondChainProductType, sixteenthStartDate, sixteenthEndDate);
+		sixteenthChainProduct.setDiscountPrice(new BigDecimal("1.30"));
+		sixteenthChainProduct.setDiscountPercent(new BigDecimal("12"));
 		testEntityManager.flush();
-		//Subcategory and action IDs saving.
+		//Subcategory and chainProduct IDs saving.
 		firstSubcategoryId = firstSubcategory.getId();
 		secondSubcategoryId = secondSubcategory.getId();
 		thirdSubcategoryId = thirdSubcategory.getId();
@@ -381,11 +396,21 @@ public class ChainProductControllerIntegrationTest {
 		} catch (Exception exception) {
 			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", Country.class, exception);
 		}
+
+		try {
+			unitOfMeasures.stream()
+					.map((UnitOfMeasure unitOfMeasure) -> testEntityManager.merge(unitOfMeasure))
+					.forEach((UnitOfMeasure unitOfMeasure) ->	testEntityManager.remove(unitOfMeasure));
+			testEntityManager.flush();
+			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", UnitOfMeasure.class);
+		} catch (Exception exception) {
+			logger.error("Exception has occurred during the cleaning of test data ('{}' instances): {}.", UnitOfMeasure.class, exception);
+		}
 		
 		try {
-			actionTypes.stream()
-					  .map((ChainProductType actionType) -> testEntityManager.merge(actionType))
-					  .forEach((ChainProductType actionType) ->	testEntityManager.remove(actionType));		  
+			chainProductTypes.stream()
+					  .map((ChainProductType chainProductType) -> testEntityManager.merge(chainProductType))
+					  .forEach((ChainProductType chainProductType) ->	testEntityManager.remove(chainProductType));
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ChainProductType.class);
 		} catch (Exception exception) {
@@ -434,16 +459,12 @@ public class ChainProductControllerIntegrationTest {
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ChainProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ChainProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ChainProductDTO(ninthAction));
+		expectedProductDTOs.add(new ChainProductDTO(twelvethChainProduct));
+		expectedProductDTOs.add(new ChainProductDTO(thirteenthChainProduct));
+		expectedProductDTOs.add(new ChainProductDTO(ninthChainProduct));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected JSON should contain: ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
-				   + "].", expectedJson, resultJson);	
+		assertEquals(expectedJson, resultJson);
 		removeTestData();
 	}
 	
@@ -536,15 +557,15 @@ public class ChainProductControllerIntegrationTest {
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(new ChainProductDTO(twelvethAction));
-		expectedProductDTOs.add(new ChainProductDTO(thirteenthAction));
-		expectedProductDTOs.add(new ChainProductDTO(ninthAction));
+		expectedProductDTOs.add(new ChainProductDTO(twelvethChainProduct));
+		expectedProductDTOs.add(new ChainProductDTO(thirteenthChainProduct));
+		expectedProductDTOs.add(new ChainProductDTO(ninthChainProduct));
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Seventh product\",\"measure\":\"кг\",\"manufacturer\":\"Seventh product manufacturer\",\"brand\":\"Seventh product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the seventh product\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Eighth product\",\"measure\":\"шт.\",\"manufacturer\":\"Eighth product manufacturer\",\"brand\":\"Eighth product brand\",\"countryOfOrigin\":\"Литва\",\"picture\":\"Path to the picture of the eighth product\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"actionType\":{\"name\":\"First action type\",\"tooltipText\":\"First action type tooltip text.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Fifth product\",\"measure\":\"кг\",\"manufacturer\":\"Fifth product manufacturer\",\"brand\":\"Fifth product brand\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"Path to the picture of the fifth product\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"actionType\":{\"name\":\"Second action type\",\"tooltipText\":\"Second action type tooltip text.\"}}"
+				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Масло особое\",\"unitOfMeasure\":{\"name\":\"кг\",\"step\":\"0.100\"},\"manufacturer\":\"ОАО Барановичский мясомолочный комбинат\",\"brand\":\"Раніца\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"butter2.png\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"chainProductType\":{\"name\":\"Хорошая цена\",\"tooltipText\":\"Хорошая цена всплывающее сообщение.\"}},"
+				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Молоко 2.5%\",\"unitOfMeasure\":{\"name\":\"шт\",\"step\":\"1.000\"},\"manufacturer\":\"ОАО Молочные горки\",\"brand\":\"Простоквашино\",\"countryOfOrigin\":\"Литва\",\"picture\":\"milk.png\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"chainProductType\":{\"name\":\"Скидка\",\"tooltipText\":\"Скидка всплывающее сообщение.\"}},"
+				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Салями\",\"unitOfMeasure\":{\"name\":\"шт\",\"step\":\"1.000\"},\"manufacturer\":\"СООО Старфуд\",\"brand\":\"Смакі прысмакі\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"salyami.png\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"chainProductType\":{\"name\":\"Хорошая цена\",\"tooltipText\":\"Хорошая цена всплывающее сообщение.\"}}"
 				   + "].", expectedJson, resultJson);	
 		removeTestData();
 	}
@@ -553,33 +574,34 @@ public class ChainProductControllerIntegrationTest {
 	public void tearDown() {
 		objectMapper = null;
 		stopWatch = null;
-		actionTypes = null;
+		chainProductTypes = null;
 		categories = null;
 		chains = null;
 		countries = null;
-		firstAction = null;
-		secondAction = null;
-		thirdAction = null;
-		fourthAction = null;
-		fifthAction = null;
-		sixthAction = null;
-		seventhAction = null;
-		eighthAction = null;
-		ninthAction = null;
-		tenthAction = null;
-		eleventhAction = null;
-		twelvethAction = null;
-		thirteenthAction = null;
-		fourteenthAction = null;
+		unitOfMeasures = null;
+		firstChainProduct = null;
+		secondChainProduct = null;
+		thirdChainProduct = null;
+		fourthChainProduct = null;
+		fifthChainProduct = null;
+		sixthChainProduct = null;
+		seventhChainProduct = null;
+		eighthChainProduct = null;
+		ninthChainProduct = null;
+		tenthChainProduct = null;
+		eleventhChainProduct = null;
+		twelvethChainProduct = null;
+		thirteenthChainProduct = null;
+		fourteenthChainProduct = null;
 		firstSubcategoryId = null;
 		secondSubcategoryId = null;
 		thirdSubcategoryId = null;
 		fourthSubcategoryId = null;
-		fifteenthAction = null;
-		sixteenthAction = null;
+		fifteenthChainProduct = null;
+		sixteenthChainProduct = null;
 		firstChainId = null;
 		secondChainId = null;
 		thirdChainId = null;
 		fourthChainId = null;
-	}*/
+	}
 }

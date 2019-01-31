@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -51,6 +53,7 @@ public class Statistics implements Serializable {
 
     @Column(name = "CREATION_DATE")
     @NotNull(message = "Creation date of the statistics mustn't be null.")
+    @Temporal(TemporalType.DATE)
     private Calendar creationDate;
 
     public Statistics(Integer chainQuantity, Integer discountedProducts, Integer averageDiscountPercentage, Calendar creationDate) {

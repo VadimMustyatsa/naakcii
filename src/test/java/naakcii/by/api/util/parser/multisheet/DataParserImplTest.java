@@ -125,7 +125,7 @@ public class DataParserImplTest {
 	
 	@Test
 	public void test_create_countries() {
-		
+		//dataParser.parseBasicData(UnitOfMeasure.class);
 		//dataParser.parseBasicData();
 		//dataParser.parseChainProducts(FILE_WITH_CHAIN_PRODUCTS, "almi");
 		//dataParser.createBasicActionTypes();
