@@ -1,49 +1,14 @@
-<app-shopping-list></app-shopping-list>
+<div class="listContainer">
+  <app-shopping-list></app-shopping-list>
+  <section>
+    <app-finalize-footer></app-finalize-footer>
+    <app-finalize-footer-button (openModal)="openModal()"></app-finalize-footer-button>
+  </section>
+</div>
 
-<div class="arrowCollapsibleBold">
+<div class="snack-wrap">
   <div id = "snackbar" class="snackbar animated">
     <p>Внимание! На сервисе представлены тестовые данные. Реальные данные появятся к январю.</p>
   </div>
 </div>
-
-<!-- Modal Structure -->
-<!--отдельный компонент-->
-
-<div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
-     [materializeActions]="modalActions">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4>Отлично!
-        Вы только что скачали свой список покупок.<br> Теперь вы можете:</h4>
-    </div>
-    <div>
-      <div class="modal-item">
-        <div class="modal-item-content">
-          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/1.png)'}"></div>
-          <p>Если в скаченном списке обнаружились какие-то недочёты, лучше его доработать, продолжив редактирование.</p>
-        </div>
-        <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn"
-                (click)="closeModal()">Редактировать
-        </button>
-      </div>
-      <div class="modal-item">
-        <div class="modal-item-content">
-          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/2.png)'}"></div>
-          <p>Если полученный список совсем вам не нравится, можно составить новый список с нуля.</p>
-        </div>
-        <button type="button" class="deep-orange waves-effect waves-light disable waves-effect waves-light btn"
-                (click)="onRedirect()">Составить новый
-        </button>
-      </div>
-      <div class="modal-item">
-        <div class="modal-item-content">
-          <div class="modal-icon" [ngStyle]="{'background-image':'url(assets/images/Modal/3.png)'}"></div>
-          <p>Если полученный список вас устраивает, вы можете завершить работу с сервисом,
-            закрыв текущую вкладку браузера, и отправляться в магазин за покупками с максимальной экономией.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+<app-modal-final [modalActions]="modalActions"></app-modal-final>

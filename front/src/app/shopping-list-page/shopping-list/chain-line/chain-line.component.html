@@ -1,4 +1,9 @@
-<div class="chain-line">
+<div class="chain-line"
+  [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+  [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+  [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+  [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+  [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div class="shop-name">
     <div>
       <img src="{{chain.chain.imgLogoSmall}}">

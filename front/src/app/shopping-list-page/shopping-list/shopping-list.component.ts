@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,EventEmitter,} from '@angular/core';
 
+import { Router } from '@angular/router';
 import {isUndefined} from 'util';
-import {FoodList} from '../../shared/foodList/foods.foodList.model';
+
 import {BreakPointCheckService} from '../../shared/services/breakpoint-check.service';
 import {Cart, CartLine} from '../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../shared/chain/chain.model';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
-import {UndiscountService} from '../../shared/services/undiscount.service';
+import setImgStyles from '../../shared/utils/setImgStyles';
 
 @Component({
   selector: 'app-shopping-list',
@@ -16,16 +17,13 @@ import {UndiscountService} from '../../shared/services/undiscount.service';
 })
 
 export class ShoppingListComponent implements OnInit {
-  undiscountProduct: any;
   chainListExist: ChainLine[] = null;
-  undiscount: Array<{ text: string; id: string }>;
-
+  
   constructor(public chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
-              private undiscountStorage: UndiscountService,
               public cart: Cart,
   ) { 
-    this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
+    
   }
 
   ngOnInit() {
@@ -57,60 +55,7 @@ export class ShoppingListComponent implements OnInit {
     return 'unknown';
   }
 
-  deleteCartLine(cartLine: CartLine) {
-    this.cart.removeLine(cartLine.product.id);
-    this.chainListExist = this.getExistListChain();
-  }
-
-  subItem(curFood: CartLine) {
-    if (curFood.quantity > 1) {
-      this.cart.updateQuantity(curFood.product, Number(curFood.quantity - 1));
-    }
-  }
-
-  addItem(curFood: CartLine) {
-    this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
-  }
-
-  getAllPriceBase():number{
-    return this.cart.getAllPriceBase();
-  }
-  getAllPriceDiscont():number{
-    return this.cart.getAllPriceDiscount();
-  }
-  getAllDiscountInMoney():number{
-    return this.cart.getAllDiscountInMoney();
-  }
-  getAllDiscountInPercent():number{
-    return this.cart.getAllDiscountInPercent();
-  }
-  
-  onRemoveUndiscount(event){
-     this.undiscount.forEach((i,index)=>{
-       if (event.target.parentNode.id === i.id.toString()){
-         this.undiscount.splice(index,1);
-       }
-     });
-    this.undiscountStorage.setToUndiscount(this.undiscount);
-  }
-
-  addUndiscountProduct() {
-    const { undiscountProduct } = this;
-    if (undiscountProduct.length > 2) {
-      this.undiscount.push({
-        text: undiscountProduct,
-        id: (+(new Date())).toString()
-      });
-      this.undiscountProduct = '';
-    }
-  }
   setImgStyles(pict) {
-    return {
-      'background-image': `url("assets/images/Products/${pict}")`,
-      'background-size': 'contain',
-      'background-repeat': 'no-repeat',
-      'background-position': 'center'
-    };
+    setImgStyles(pict);
   }
-
 }

@@ -2,16 +2,17 @@ import {
   Component,
   ElementRef,
   OnInit,
-  EventEmitter,
   ChangeDetectionStrategy,
-  HostListener
+  HostListener,
+  EventEmitter
 } from '@angular/core';
 
 import {MaterializeAction} from 'angular2-materialize';
+
+import {BreakPointCheckService} from '../shared/services/breakpoint-check.service';
 import {Title} from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { PdfGeneratorService } from '../shared/services/pdf-generator.service';
-import { UndiscountService } from '../shared/services/undiscount.service';
+
+
 import {Cart} from '../shared/cart/cart.model';
 
 @Component({
@@ -24,6 +25,7 @@ import {Cart} from '../shared/cart/cart.model';
 })
 export class ShoppingListPageComponent implements OnInit {
 
+  modalActions = new EventEmitter<string | MaterializeAction>();
   params = [
     {
       onOpen: (el) => {
@@ -36,23 +38,12 @@ export class ShoppingListPageComponent implements OnInit {
       }
     }
   ];
-  modalActions = new EventEmitter<string | MaterializeAction>();
-
-  openModal() {
-    this.modalActions.emit({action: 'modal', params: ['open']});
-  }
-
-  closeModal() {
-    this.modalActions.emit({action: 'modal', params: ['close']});
-  }
-
-  constructor(private router: Router,
-              //private el: ElementRef,
+  
+  constructor(//private el: ElementRef,
               private titleService: Title,
-              private PDFGenerator: PdfGeneratorService,
-              private undiscountStorage: UndiscountService,
-              public cart: Cart) {
-    
+              public cart: Cart,
+              public breakPointCheckService: BreakPointCheckService
+    ) {
   }
 
   @HostListener('click', ['$event.target'])
@@ -66,22 +57,12 @@ export class ShoppingListPageComponent implements OnInit {
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
   }
 
- 
-  onRedirect() {
-    this.closeModal();
-    sessionStorage.clear();
-    this.undiscountStorage.clearUndiscount();
-    this.cart.lines = [];
-    this.router.navigateByUrl('/form-shopping-list');
-  }
-
-  generatePDF() {
-    this.PDFGenerator.generatePDF();
-  }
-
   onEventStop(event) {
     event.stopPropagation();
   }
+
+  openModal() {
+    this.modalActions.emit({action: 'modal', params: ['open']});
+  }
+
 }
-
-

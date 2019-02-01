@@ -1,8 +1,3 @@
-.listContainer {
-  max-width: 1200px;
-  margin: 0 auto 130px auto;
-}
-
 .list {
   display: flex;
   justify-content: center;
@@ -117,8 +112,6 @@
   padding: 5px 0;
   margin: 10px 0;
 }
-
-
 
 .item-quantity {
   user-select: none;
@@ -279,4 +272,88 @@
 }
 .block{
   display: block;
+}
+
+.isTablet {
+  .non-discounted-products-arrow {
+    flex: 1;
+  }
+  .tablet-none {
+    display: none;
+  }
+  .list-header {
+    .empty-small {
+      flex: .5;
+    }
+  }
+  .non-discounted-products {
+    flex: 11;
+  }
+  .undiscount-product-input {
+    flex: 6;
+  }
+  .chosen-undiscount-products_item {
+    flex: 10.5;
+  }
+  .total-line {
+    .empty-large {
+      flex: 5.3;
+    }
+  }
+  .total-sum {
+    display: flex;
+    justify-content: space-between;
+  }
+  .item-image {
+    flex: .7;
+  }
+
+
+  .finalizeFooterButton {
+    a {
+      width: 80px;
+    }
+  }
+}
+
+.isHandset {
+  .undiscount {
+    padding-top: 7px;
+    .item-image {
+    }
+    .undiscount-product-input {
+      flex: 5;
+      padding-top: 15px;
+      label {
+        padding-top: 5px;
+      }
+    }
+    .chosen-undiscount-products {
+      padding-left: 10px;
+    .item-image {
+      height: 40px;
+    }
+  }
+    .chosen-undiscount-products_item {
+      flex: 7.5;
+    }
+    span {
+      padding-top: 20px;
+    }
+  }
+}
+
+.isMobile {
+  .mobile-none {
+    display: none;
+  }
+  .undiscount-product-input {
+    flex: 3;
+  }
+}
+
+.isNetBook .list-header {
+  div {
+    font-size: 12px;
+  }
 }

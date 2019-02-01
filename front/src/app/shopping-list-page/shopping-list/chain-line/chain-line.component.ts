@@ -2,6 +2,8 @@ import { Component, OnInit,Input } from '@angular/core';
 
 import {Cart, CartLine} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
+import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
+import setImgStyles from '../../../shared/utils/setImgStyles'
 
 @Component({
   selector: 'app-chain-line',
@@ -13,7 +15,8 @@ export class ChainLineComponent implements OnInit {
   public chainId:number;
   @Input() chain:ChainLine;
   
-  constructor(public cart: Cart) { 
+  constructor(public cart: Cart,
+    public breakPointCheckService: BreakPointCheckService) { 
 
     }
 
@@ -36,12 +39,7 @@ export class ChainLineComponent implements OnInit {
   }
 
   setImgStyles(pict) {
-    return {
-      'background-image': `url("assets/images/Products/${pict}")`,
-      'background-size': 'contain',
-      'background-repeat': 'no-repeat',
-      'background-position': 'center'
-    };
+    setImgStyles(pict);
   }
 
 }

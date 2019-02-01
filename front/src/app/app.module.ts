@@ -53,7 +53,13 @@ import { TooltipDirective } from "./shared/directives/tooltip/tooltip.directive"
 import { ShoppingListComponent } from './shopping-list-page/shopping-list/shopping-list.component';
 import { ChainLineComponent } from './shopping-list-page/shopping-list/chain-line/chain-line.component';
 import { CartLineComponent } from './shopping-list-page/shopping-list/cart-line/cart-line.component';
-import { FinalizeFooterComponent } from './shopping-list-page/shopping-list/finalize-footer/finalize-footer.component';
+import { FinalizeFooterComponent } from './shopping-list-page/finalize-footer/finalize-footer.component';
+import { ModalFinalComponent } from './shopping-list-page/modal-final/modal-final.component';
+import { FinalizeFooterButtonComponent } from './shopping-list-page/finalize-footer-button/finalize-footer-button.component';
+import { UndiscountHeaderComponent } from './shopping-list-page/shopping-list/undiscount-header/undiscount-header.component';
+import { UndiscountLinesComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-lines.component';
+import { UndiscountAddComponent } from './shopping-list-page/shopping-list/undiscount-add/undiscount-add.component';
+import { UndiscountLineComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-line/undiscount-line.component';
 
 registerLocaleData(localeFr);
 
@@ -86,7 +92,13 @@ registerLocaleData(localeFr);
     ShoppingListComponent,
     ChainLineComponent,
     CartLineComponent,
-    FinalizeFooterComponent
+    FinalizeFooterComponent,
+    ModalFinalComponent,
+    FinalizeFooterButtonComponent,
+    UndiscountHeaderComponent,
+    UndiscountLinesComponent,
+    UndiscountAddComponent,
+    UndiscountLineComponent
   ],
   imports: [
     BrowserModule,

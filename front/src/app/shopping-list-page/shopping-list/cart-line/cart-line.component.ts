@@ -1,27 +1,39 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Output } from '@angular/core';
 
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
-
+import {Cart, CartLine} from '../../../shared/cart/cart.model';
+import setImgStyles from '../../../shared/utils/setImgStyles';
 @Component({
   selector: 'app-cart-line',
   templateUrl: './cart-line.component.html',
   styleUrls: ['./cart-line.component.scss']
 })
 export class CartLineComponent implements OnInit {
-  @Input() curCart
-  constructor(public breakPointCheckService: BreakPointCheckService){
+  @Input() curCartline:CartLine;
+
+  constructor(public breakPointCheckService: BreakPointCheckService,
+    public cart: Cart
+    ){
   }
 
   ngOnInit() {
-    console.log(this.curCart);
   }
-  
+  subItem() {
+    if (this.curCartline.quantity > 1) {
+      this.cart.updateQuantity(this.curCartline.product, Number(this.curCartline.quantity - 1));
+    }
+  }
+
+  addItem() {
+    this.cart.updateQuantity(this.curCartline.product, Number(this.curCartline.quantity + 1));
+  }
+
+  deleteCartLine() {
+    this.cart.removeLine(this.curCartline.product.id);
+    // this.chainListExist = this.getExistListChain();
+  }
+ 
   setImgStyles(pict) {
-    return {
-      'background-image': `url("assets/images/Products/${pict}")`,
-      'background-size': 'contain',
-      'background-repeat': 'no-repeat',
-      'background-position': 'center'
-    };
+    setImgStyles(pict);
   }
 }
