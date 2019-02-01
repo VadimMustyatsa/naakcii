@@ -16,12 +16,35 @@ export class UndiscountService {
   getFromUndiscount() {
     return this.undiscount;
   }
-
+  saveToStorage(){
+    this.sessionStorage.setToUndiscountStorage(this.undiscount);
+  }
   setToUndiscount(undiscount) {
     this.undiscount = (undiscount);
-    this.sessionStorage.setToUndiscountStorage(undiscount)
+    this.saveToStorage();
   }
   clearUndiscount(){
     this.undiscount = [];
   }
+  addProduct(text:string){
+    this.undiscount.push({
+      text:text,
+      id:((new Date()).getTime()).toString()
+    });
+  }
+
+  delProduct(id:string){
+    this.undiscount.forEach((el,index)=>{
+      if(el.id === id){
+        this.undiscount.splice(index,1);
+      }
+    });
+    this.saveToStorage();
+  }
+
+  getCount():number{
+    return this.undiscount.length;
+  }
+
+  
 }
