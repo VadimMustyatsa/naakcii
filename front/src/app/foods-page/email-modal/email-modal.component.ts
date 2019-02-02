@@ -14,6 +14,7 @@ export class EmailModalComponent implements OnInit, OnDestroy {
   public messageSwitcher = false;
   public successMessageTimeOut: number;
   public animationDurationTimeOut: number;
+  public email: string;
 
   @Output() childEvent = new EventEmitter();
   onClose = () => {
@@ -27,8 +28,8 @@ export class EmailModalComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      this.subscribeService.addEmail(form.value['email']).subscribe(rez=>{},err=>{console.log(err)});
-      this.sessionStorageService.setSenderEmailOpened(form.value['email']);
+      this.subscribeService.addEmail(this.email).subscribe(res=>{},err=>{console.log(err)});
+      this.sessionStorageService.setSenderEmailOpened(this.email);
       this.messageSwitcher = true;
       this.successMessageTimeOut = setTimeout(this.onClose, SUCCESS_MESSAGE_TIME);
     }
