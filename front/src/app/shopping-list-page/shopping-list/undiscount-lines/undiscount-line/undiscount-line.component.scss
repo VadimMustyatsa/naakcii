@@ -1,0 +1,23 @@
+.undiscount-line{
+    display: flex;
+    flex:1;
+}
+.chosen-undiscount-products_item {
+    display: flex;    
+    flex: 16.5;
+    .item-image {
+        flex: 1;
+        color: #C4C4C4;
+        align-self: center;
+    }
+    .custom-item-description {
+        flex: 12;
+        align-self: center;
+    }
+}
+.deleteCartLine {
+    cursor: pointer;
+}
+.chosen-undiscount-products_bin {
+    flex: 1;
+}

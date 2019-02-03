@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {UndiscountService} from '../../../shared/services/undiscount.service';
+import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-undiscount-header',
@@ -10,7 +11,8 @@ import {UndiscountService} from '../../../shared/services/undiscount.service';
 export class UndiscountHeaderComponent implements OnInit {
 
   constructor(
-    private undiscountStorage: UndiscountService
+    private undiscountStorage: UndiscountService,
+    public breakPointCheckService: BreakPointCheckService,
     ) { 
 
   }

@@ -24,15 +24,15 @@
           </div>
           <div class="collapsible-body item-info"
           *ngFor="let curCartline of getCartByChain(chain.chain.id)">
-              <app-cart-line [curCartline]="curCartline" style="flex:1;"></app-cart-line>
+              <app-cart-line [curCartline]="curCartline" (delItem)=refreshChain() style="flex:1;"></app-cart-line>
           </div>
         </li>
         <li>
           <div class="collapsible-header active row chainList grey-text text-darken-2 non-discounted-line">
-            <app-undiscount-header></app-undiscount-header>
+            <app-undiscount-header style="flex:1;"></app-undiscount-header>
           </div>
           <div class="collapsible-body empty">
-            <app-undiscount-lines></app-undiscount-lines>
+            <app-undiscount-lines style="flex:1;"></app-undiscount-lines>
           </div>
         </li>
         <li>

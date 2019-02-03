@@ -1,0 +1,42 @@
+.item-image {
+    flex: 1;
+    height: 80px;
+    padding: 5px;
+    align-self: center;
+}
+  
+.item-image img {
+    display: block;
+    width: 100%;
+}
+
+.input-field {
+    margin-top: 0;
+  }
+  
+.undiscount {
+    display: flex;
+    .item-image {
+      flex: .9;
+      margin: 0 5px;
+    }
+    .undiscount-product-input {
+      flex: 10;
+      padding-top: 25px;
+      label {
+        padding-top: 30px;
+      }
+    }
+    span {
+      flex: .69;
+      padding-top: 35px;
+    }
+    .material-icons {
+      color: lightgray;
+      font-size: 2rem;
+      cursor: pointer;
+      &:hover {
+        color: gray;
+      }
+    }
+  }

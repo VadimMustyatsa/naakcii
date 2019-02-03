@@ -1,0 +1,26 @@
+.undiscount-header{
+    display: flex;
+    flex:1; 
+}
+
+.non-discounted-products {
+    flex: 3.3;
+    padding-left: 20px;
+}
+
+.non-discounted-products-quantity {
+    flex: 8;
+}
+
+.non-discounted-products-arrow {
+    flex: .65;
+}
+
+.isTablet {
+    .non-discounted-products-arrow {
+        flex: 1;
+    }
+    .tablet-none {
+        display: none;
+    }
+}
