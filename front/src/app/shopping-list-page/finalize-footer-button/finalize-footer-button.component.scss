@@ -1,0 +1,58 @@
+.finalizeFooterButton {
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: fixed;
+    bottom: -4px;
+    z-index: 3;
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    div {
+        margin-bottom: 3px;
+    }
+    a {
+        width: 230px;
+        margin: 0 10px 10px 0;
+        padding: 0;
+        font-size: 13px;
+    }
+}
+  
+.button-icon-pdf {
+div {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    margin-bottom: -8px;
+    background-repeat: no-repeat;
+}
+}
+
+.viber-btn {
+background-color: #DFDFDF;
+color: #9F9F9F;
+div {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin-left: 5px;
+    margin-bottom: -8px;
+    background-repeat: no-repeat;
+}
+}
+
+.back-to-products-btn {
+    i {
+        vertical-align: bottom;
+    }
+}
+
+.isTablet.finalizeFooterButton {
+    a {
+     width: 80px;
+    }
+}
+

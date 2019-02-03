@@ -1,4 +1,9 @@
-<div class="finalizeFooterButton">
+<div class="finalizeFooterButton"
+[class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+[class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+[class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+[class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+[class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
     <div class="back-to-products-btn">
       <a routerLink="/form-shopping-list" class="deep-orange waves-effect btn">
         <i class="material-icons">arrow_back</i>
