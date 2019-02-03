@@ -78,7 +78,9 @@ export class Cart {
     let basePrice=this.culcSumBasePrice(cartLineList);
     return curDiscount/basePrice*100;
   }
-
+  getCount():number{
+    return this.lines.length;
+  }
   addLine(product: FoodList, quantity: number) {
 
     let line = this.lines.find(line => line.product.id == product.id);
