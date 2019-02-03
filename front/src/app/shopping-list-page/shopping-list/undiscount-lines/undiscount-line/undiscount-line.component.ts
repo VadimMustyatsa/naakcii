@@ -25,5 +25,4 @@ export class UndiscountLineComponent implements OnInit {
   setImgStyles(pict) {
     return setImgStyles(pict);
   }
-
 }

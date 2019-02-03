@@ -23,5 +23,4 @@ export class UndiscountHeaderComponent implements OnInit {
   getCouunt(){
     return this.undiscountStorage.getCount();
   }
-
 }

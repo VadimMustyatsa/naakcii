@@ -17,26 +17,26 @@
 .undiscount {
     display: flex;
     .item-image {
-      flex: .9;
-      margin: 0 5px;
+        flex: .9;
+        margin: 0 5px;
     }
     .undiscount-product-input {
-      flex: 10;
-      padding-top: 25px;
-      label {
-        padding-top: 30px;
-      }
+        flex: 10;
+        padding-top: 25px;
+        label {
+            padding-top: 30px;
+        }
     }
     span {
-      flex: .69;
-      padding-top: 35px;
+        flex: .69;
+        padding-top: 35px;
     }
     .material-icons {
-      color: lightgray;
-      font-size: 2rem;
-      cursor: pointer;
-      &:hover {
-        color: gray;
-      }
+        color: lightgray;
+        font-size: 2rem;
+        cursor: pointer;
+        &:hover {
+            color: gray;
+        }
     }
-  }
+}

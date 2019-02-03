@@ -1,3 +1,19 @@
+:host /deep/ .isTablet .tablet-none {
+  display: none;
+}
+
+:host /deep/ .isMobile .mobile-none {
+  display: none;
+}
+
+:host /deep/ .flex {
+  display: flex
+}
+
+:host /deep/ .block {
+  display: block;
+}
+
 .listContainer {
   max-width: 1200px;
   margin: 0 auto 130px auto;
@@ -69,4 +85,3 @@
   0% {top:25px; }
   100% {top:-70px; }
 }
-
