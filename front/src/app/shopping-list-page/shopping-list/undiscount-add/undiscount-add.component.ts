@@ -24,6 +24,6 @@ export class UndiscountAddComponent implements OnInit {
     }
   }
   setImgStyles(pict) {
-    setImgStyles(pict);
+    return setImgStyles(pict);
   }
 }

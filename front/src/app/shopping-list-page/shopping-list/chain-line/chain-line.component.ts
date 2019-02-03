@@ -39,7 +39,7 @@ export class ChainLineComponent implements OnInit {
   }
 
   setImgStyles(pict) {
-    setImgStyles(pict);
+    return setImgStyles(pict);
   }
 
 }
