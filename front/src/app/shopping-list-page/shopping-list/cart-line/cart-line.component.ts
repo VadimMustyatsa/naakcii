@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 import {Cart, CartLine} from '../../../shared/cart/cart.model';
@@ -11,6 +11,7 @@ import setImgStyles from '../../../shared/utils/setImgStyles';
 export class CartLineComponent implements OnInit {
   @Input() curCartline:CartLine;
 
+  @Output() delItem:EventEmitter<void> = new EventEmitter();
   constructor(public breakPointCheckService: BreakPointCheckService,
     public cart: Cart
     ){
@@ -30,10 +31,10 @@ export class CartLineComponent implements OnInit {
 
   deleteCartLine() {
     this.cart.removeLine(this.curCartline.product.id);
-    // this.chainListExist = this.getExistListChain();
+    this.delItem.emit();
   }
  
   setImgStyles(pict) {
-    setImgStyles(pict);
+    return setImgStyles(pict);
   }
 }
