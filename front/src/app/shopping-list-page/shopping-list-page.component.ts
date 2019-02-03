@@ -6,13 +6,10 @@ import {
   HostListener,
   EventEmitter
 } from '@angular/core';
-
+import {Title} from '@angular/platform-browser';
 import {MaterializeAction} from 'angular2-materialize';
 
 import {BreakPointCheckService} from '../shared/services/breakpoint-check.service';
-import {Title} from '@angular/platform-browser';
-
-
 import {Cart} from '../shared/cart/cart.model';
 
 @Component({
@@ -26,21 +23,8 @@ import {Cart} from '../shared/cart/cart.model';
 export class ShoppingListPageComponent implements OnInit {
 
   modalActions = new EventEmitter<string | MaterializeAction>();
-  params = [
-    {
-      onOpen: (el) => {
-        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
-        console.log('open')
-      },
-      onClose: (el) => {
-        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_right';
-        console.log('close')
-      }
-    }
-  ];
   
-  constructor(//private el: ElementRef,
-              private titleService: Title,
+  constructor(private titleService: Title,
               public cart: Cart,
               public breakPointCheckService: BreakPointCheckService
     ) {
@@ -64,5 +48,4 @@ export class ShoppingListPageComponent implements OnInit {
   openModal() {
     this.modalActions.emit({action: 'modal', params: ['open']});
   }
-
 }
