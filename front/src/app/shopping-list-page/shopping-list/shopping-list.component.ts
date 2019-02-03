@@ -1,6 +1,4 @@
-import {Component, OnInit,EventEmitter,} from '@angular/core';
-
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import {isUndefined} from 'util';
 
 import {BreakPointCheckService} from '../../shared/services/breakpoint-check.service';
@@ -23,8 +21,18 @@ export class ShoppingListComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               public cart: Cart,
   ) { 
-    
   }
+
+  params = [
+    {
+      onOpen: (el) => {
+        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
+      },
+      onClose: (el) => {
+        el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_right';
+      }
+    }
+  ];
 
   ngOnInit() {
     this.chainListExist = this.getExistListChain();
@@ -39,7 +47,9 @@ export class ShoppingListComponent implements OnInit {
     });
     return chainListExist;
   }
-
+  refreshChain(){
+    this.chainListExist = this.getExistListChain();
+  }
   getCartByChain(idChain: number): CartLine[] {
     return this.cart.getCartByChain(idChain);
   }
@@ -56,6 +66,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   setImgStyles(pict) {
-    setImgStyles(pict);
+    return setImgStyles(pict);
   }
 }
