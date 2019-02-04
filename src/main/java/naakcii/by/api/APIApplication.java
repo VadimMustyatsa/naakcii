@@ -1,7 +1,5 @@
 package naakcii.by.api;
 
-import naakcii.by.api.util.parser.DataParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class APIApplication extends SpringBootServletInitializer implements CommandLineRunner {
-
-    //@Autowired
-    //IDataParser dataParser;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -30,7 +25,6 @@ public class APIApplication extends SpringBootServletInitializer implements Comm
     @Override
     public void run(String... args) throws Exception {
         // TODO Auto-generated method stub
-        //dataParser.parseBasicData(null);
         System.out.println("Hello world");
     }
 }

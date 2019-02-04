@@ -12,6 +12,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -75,6 +76,17 @@ public class CategoryTest {
 		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as category's priority is negative:", 1, constraintViolations.size());
 		assertEquals("Category's priority '-10' must be positive.", constraintViolations.iterator().next().getMessage());
+	}
+	
+	@Test
+	public void test_category_icon_is_too_long() {
+		Category category = new Category("Напитки, кофе, чай, соки", true);
+		createSubcategories(category);
+		String icon = StringUtils.repeat("path_to_the_icon", "/", 20);
+		category.setIcon(icon);
+		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as path to the icon of the category is too long:", 1, constraintViolations.size());
+		assertEquals("Path to the icon of the category '" + icon + "' mustn't be more than '255' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test

@@ -145,9 +145,9 @@ public class SubcategoryControllerIntegrationTest {
         logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
         String resultJson = mvcResult.getResponse().getContentAsString();
         assertEquals("Expected JSON should be: ["
-                + "{\"id\":1,\"name\":\"Масло\",\"categoryId\":1,\"priority\":1},"
-                + "{\"id\":3,\"name\":\"Кисломолочные изделия\",\"categoryId\":1,\"priority\":7},"
-                + "{\"id\":2,\"name\":\"Мороженое\",\"categoryId\":1,\"priority\":9}"
+                + "{id:1, name:'Масло', categoryId:1, priority:1},"
+                + "{id:3, name:'Кисломолочные изделия', categoryId:1, priority:7},"
+                + "{id:2, name:'Мороженое', categoryId:1, priority:9}"
                 + "].", expectedJson, resultJson);
         removeListOfSubcategories();
     }

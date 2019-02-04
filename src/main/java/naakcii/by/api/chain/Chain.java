@@ -25,7 +25,7 @@ import naakcii.by.api.util.annotations.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "logo", "chainProducts", "synonym"})
+@EqualsAndHashCode(exclude = {"id", "logo", "chainProducts"})
 @Entity
 @Table(name = "CHAIN")
 public class Chain implements Serializable {

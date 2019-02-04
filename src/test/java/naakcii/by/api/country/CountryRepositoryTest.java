@@ -11,10 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringRunner.class)
@@ -30,26 +27,38 @@ public class CountryRepositoryTest {
     private TestEntityManager testEntityManager;
 
     private Country firstCountry;
+    private Country secondCountry;
+    private Country thirdCountry;
 
     @Before
     public void setUp() {
         firstCountry = new Country(CountryCode.AM);
-        Country secondCountry = new Country(CountryCode.BY);
+        secondCountry = new Country(CountryCode.BY);
+        thirdCountry = new Country(CountryCode.BE);
         testEntityManager.persist(firstCountry);
         testEntityManager.persist(secondCountry);
-        testEntityManager.flush();
-        testEntityManager.detach(firstCountry);
+        testEntityManager.persistAndFlush(thirdCountry);
+        testEntityManager.clear();
     }
 
     @Test
     public void test_find_by_alpha_code2() {
-        Optional<Country> countryOptional = countryRepository.findByAlphaCode2(firstCountry.getAlphaCode2());
-        assertTrue("Number of country's  in the database should be", countryOptional.isPresent());
-        assertEquals("Армения", countryOptional.get().getName());
+    	Country expectedCountry = secondCountry;
+    	Country resultCountry = countryRepository.findByAlphaCode2(secondCountry.getAlphaCode2()).get();
+        assertEquals("Result country should be: {name:'Беларусь', alphaCode2:'BY', alphaCode3:'BLR'}.", expectedCountry, resultCountry);
+    }
+    
+    @Test
+    public void test_find_by_alpha_code2_and_alpha_code3() {
+    	Country expectedCountry = firstCountry;
+    	Country resultCountry = countryRepository.findByAlphaCode2AndAlphaCode3(firstCountry.getAlphaCode2(), firstCountry.getAlphaCode3()).get();
+        assertEquals("Result country should be: {name:'Армения', alphaCode2:'AM', alphaCode3:'ARM'}.", expectedCountry, resultCountry);
     }
 
     @After
     public void tearDown() {
         firstCountry = null;
+        secondCountry = null;
+        thirdCountry = null;
     }
 }

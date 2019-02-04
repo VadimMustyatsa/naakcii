@@ -372,14 +372,10 @@ public class ChainProductControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			categories.stream()
-					  .map((Category category) -> testEntityManager.merge(category))
-					  .forEach((Category category) ->	testEntityManager.remove(category));
+			categories.stream().forEach((Category category) ->	testEntityManager.remove(testEntityManager.merge(category)));
 			logger.info("Test data was cleaned successfully: instances of '{}', '{}', '{}' and '{}' were removed from the database.",
 					Category.class, Subcategory.class, Product.class, ChainProduct.class);
-			chains.stream()
-					  .map((Chain chain) -> testEntityManager.merge(chain))
-					  .forEach((Chain chain) ->	testEntityManager.remove(chain));		  
+			chains.stream().forEach((Chain chain) ->	testEntityManager.remove(testEntityManager.merge(chain)));		  
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
 		} catch (Exception exception) {
@@ -388,9 +384,7 @@ public class ChainProductControllerIntegrationTest {
 		}
 		
 		try {
-			countries.stream()
-					  .map((Country country) -> testEntityManager.merge(country))
-					  .forEach((Country country) ->	testEntityManager.remove(country));		  
+			countries.stream().forEach((Country country) ->	testEntityManager.remove(testEntityManager.merge(country)));		  
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Country.class);
 		} catch (Exception exception) {
@@ -398,9 +392,7 @@ public class ChainProductControllerIntegrationTest {
 		}
 
 		try {
-			unitOfMeasures.stream()
-					.map((UnitOfMeasure unitOfMeasure) -> testEntityManager.merge(unitOfMeasure))
-					.forEach((UnitOfMeasure unitOfMeasure) ->	testEntityManager.remove(unitOfMeasure));
+			unitOfMeasures.stream().forEach((UnitOfMeasure unitOfMeasure) ->	testEntityManager.remove(testEntityManager.merge(unitOfMeasure)));
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", UnitOfMeasure.class);
 		} catch (Exception exception) {
@@ -408,9 +400,7 @@ public class ChainProductControllerIntegrationTest {
 		}
 		
 		try {
-			chainProductTypes.stream()
-					  .map((ChainProductType chainProductType) -> testEntityManager.merge(chainProductType))
-					  .forEach((ChainProductType chainProductType) ->	testEntityManager.remove(chainProductType));
+			chainProductTypes.stream().forEach((ChainProductType chainProductType) ->	testEntityManager.remove(testEntityManager.merge(chainProductType)));
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", ChainProductType.class);
 		} catch (Exception exception) {
@@ -563,9 +553,9 @@ public class ChainProductControllerIntegrationTest {
 		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{\"productId\":7,\"chainId\":7,\"name\":\"Масло особое\",\"unitOfMeasure\":{\"name\":\"кг\",\"step\":\"0.100\"},\"manufacturer\":\"ОАО Барановичский мясомолочный комбинат\",\"brand\":\"Раніца\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"butter2.png\",\"basePrice\":1.50,\"discountPercent\":33,\"discountPrice\":1.00,\"startDate\":\"1542488400000\",\"1546117200000\":\"26-12-2018\",\"chainProductType\":{\"name\":\"Хорошая цена\",\"tooltipText\":\"Хорошая цена всплывающее сообщение.\"}},"
-				   + "{\"productId\":6,\"chainId\":6,\"name\":\"Молоко 2.5%\",\"unitOfMeasure\":{\"name\":\"шт\",\"step\":\"1.000\"},\"manufacturer\":\"ОАО Молочные горки\",\"brand\":\"Простоквашино\",\"countryOfOrigin\":\"Литва\",\"picture\":\"milk.png\",\"basePrice\":7.50,\"discountPercent\":47,\"discountPrice\":4.00,\"startDate\":\"1543698000000\",\"endDate\":\"1546117200000\",\"chainProductType\":{\"name\":\"Скидка\",\"tooltipText\":\"Скидка всплывающее сообщение.\"}},"
-				   + "{\"productId\":1,\"chainId\":1,\"name\":\"Салями\",\"unitOfMeasure\":{\"name\":\"шт\",\"step\":\"1.000\"},\"manufacturer\":\"СООО Старфуд\",\"brand\":\"Смакі прысмакі\",\"countryOfOrigin\":\"Беларусь\",\"picture\":\"salyami.png\",\"basePrice\":15.05,\"discountPercent\":29,\"discountPrice\":10.75,\"startDate\":\"1543698000000\",\"endDate\":\"1545512400000\",\"chainProductType\":{\"name\":\"Хорошая цена\",\"tooltipText\":\"Хорошая цена всплывающее сообщение.\"}}"
+				   + "{productId:7, chainId:7, name:'Масло особое',unitOfMeasure:{name:'кг', step:0.1}, manufacturer:'ОАО Барановичский мясомолочный комбинат', brand :'Раніца', countryOfOrigin:'Беларусь', picture: 'butter2.png', basePrice:1.50, discountPercent:33, discountPrice:1.00, startDate:1542488400000, endDate:1546117200000, chainProductType:{name: 'Хорошая цена, tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}},"
+				   + "{productId:6, chainId:6, name:'Молоко 2.5%', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'ОАО Молочные горки', brand:'Простоквашино', countryOfOrigin:'Литва', picture:'milk.png', basePrice:7.50, discountPercent:47, discountPrice:4.00, startDate:1543698000000, endDate:1546117200000, chainProductType:{name:'Скидка', tooltipText:'Скидка всплывающее сообщение.', synonym:'discount'},"
+				   + "{productId:1, chainId:1, name:'Салями', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'СООО Старфуд', brand:'Смакі прысмакі', countryOfOrigin:'Беларусь', picture:'salyami.png', basePrice:15.05, discountPercent:29, discountPrice:10.75, startDate:1543698000000, endDate:1545512400000, chainProductType:{name:'Хорошая цена', tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}}"
 				   + "].", expectedJson, resultJson);	
 		removeTestData();
 	}

@@ -16,6 +16,8 @@ import javax.validation.ValidatorFactory;
 
 import naakcii.by.api.unitofmeasure.UnitCode;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,27 +37,24 @@ public class ChainTest {
         validator = factory.getValidator();
     }
 
-    public UnitOfMeasure getUnitOfMeasure() {
-        return new UnitOfMeasure(UnitCode.KG); }
-
 	public void createChainProducts(Chain chain) {
-		Product product = new Product("1000123456789", "Козинак из арахиса 170г", getUnitOfMeasure(), true, new Subcategory("Снеки", true));
-		ChainProductType actionType = new ChainProductType("Скидка", "discount");
+		Product product = new Product("4620004251220", "Козинак из арахиса 170г", new UnitOfMeasure(UnitCode.KG), true, new Subcategory("Снеки", true));
+		ChainProductType chainProductTypeType = new ChainProductType("Скидка", "discount");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
-		ChainProduct firstAction = new ChainProduct(product, chain, new BigDecimal("5.50"), actionType, startDate, endDate);
-		ChainProduct secondAction = new ChainProduct(product, chain, new BigDecimal("3.75"), actionType, startDate, endDate);
+		ChainProduct firstChainProduct = new ChainProduct(product, chain, new BigDecimal("5.50"), chainProductTypeType, startDate, endDate);
+		ChainProduct secondChainProduct = new ChainProduct(product, chain, new BigDecimal("3.75"), chainProductTypeType, startDate, endDate);
 	}
 
 	public void createInvalidChainProducts(Chain chain) {
-		Product product = new Product("1000123456789", "Козинак из арахиса 170г", getUnitOfMeasure(), true, new Subcategory("Снеки", true));
-		ChainProductType actionType = new ChainProductType("Скидка", "discount");
+		Product product = new Product("4620004251220", "Козинак из арахиса 170г", new UnitOfMeasure(UnitCode.PC), true, new Subcategory("Снеки", true));
+		ChainProductType chainProductTypeType = new ChainProductType("Скидка", "discount");
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
-		ChainProduct firstAction = new ChainProduct(product, chain, null, actionType, startDate, endDate);
-		ChainProduct secondAction = new ChainProduct(product, chain, new BigDecimal("2.00"), null, startDate, endDate);
+		ChainProduct firstChainProduct = new ChainProduct(product, chain, null, chainProductTypeType, startDate, endDate);
+		ChainProduct secondChainProduct = new ChainProduct(product, chain, new BigDecimal("2.00"), null, startDate, endDate);
 	}
 
 	@Test
@@ -109,15 +108,11 @@ public class ChainTest {
     @Test
     public void test_chain_logo_is_too_long() {
         Chain chain = new Chain("Алми", "Synonym", "www.almi.by", true);
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i<256; i++) {
-            str.append("a");
-        }
-        chain.setLogo(str.toString());
+        String logo = StringUtils.repeat("path_to_the_logo", "/", 20);
+        chain.setLogo(logo);
         Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
-        assertEquals("Expected size of the ConstraintViolation set should be 1, as chain logo is too long:", 1, constraintViolations.size());
-        String s = chain.getLogo();
-        assertEquals("Path to the logo of the chain '" + s + "' mustn't be more than '255' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Expected size of the ConstraintViolation set should be 1, as path to the logo of the chain is too long:", 1, constraintViolations.size());
+        assertEquals("Path to the logo of the chain '" + logo + "' mustn't be more than '255' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
@@ -169,7 +164,6 @@ public class ChainTest {
         assertTrue(messages.contains("ChainProduct's discount price mustn't be null."));
     }
 
-
 	@Test
 	public void test_chain_isActive_field_is_null() {
 		Chain chain = new Chain("Алми", "Almi", "www.almi.by", null);
@@ -182,6 +176,7 @@ public class ChainTest {
 	public void test_chain_is_valid() {
 		Chain chain = new Chain("Алми", "Almi", "www.almi.by", true);
 		createChainProducts(chain);
+		chain.setLogo("D:/chains/almi/logo/almi.jpg");
 		Set<ConstraintViolation<Chain>> constraintViolations = validator.validate(chain);
 		assertEquals("Expected size of the ConstraintViolation set should be 0, as chain is valid:", 0, constraintViolations.size());
 	}

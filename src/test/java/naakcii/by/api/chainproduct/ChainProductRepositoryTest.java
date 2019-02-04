@@ -204,15 +204,7 @@ public class ChainProductRepositoryTest {
 		secondChainId = secondChain.getId();
 		thirdChainId = thirdChain.getId();
 		fourthChainId = fourthChain.getId();
-		testEntityManager.detach(firstChainProductType);
-		testEntityManager.detach(secondChainProductType);
-		testEntityManager.detach(firstUnitOfMeasure);
-		testEntityManager.detach(secondUnitOfMeasure);
-		testEntityManager.detach(firstChain);
-		testEntityManager.detach(secondChain);
-		testEntityManager.detach(thirdChain);
-		testEntityManager.detach(fourthChain);
-		testEntityManager.detach(category);
+		testEntityManager.clear();
 	}
 		
 	@Test

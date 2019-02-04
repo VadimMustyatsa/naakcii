@@ -9,6 +9,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -68,6 +69,16 @@ private static Validator validator;
 		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's trimmed synonym is too short:", 1, constraintViolations.size());
         assertEquals("ChainProductType's synonym ' pr ' must be between '3' and '25' characters long.", constraintViolations.iterator().next().getMessage());
+	}
+	
+	@Test
+	public void test_chainProductType_tooltip_is_too_long() {
+		ChainProductType chainProductType = new ChainProductType("Хорошая цена", "good_price");
+		String tooltip = StringUtils.repeat("long_tooltip", "; ", 25);
+		chainProductType.setTooltip(tooltip);
+		Set<ConstraintViolation<ChainProductType>> constraintViolations = validator.validate(chainProductType);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProductType's tooltip is too long:", 1, constraintViolations.size());
+        assertEquals("ChainProductType's tooltip '" + tooltip + "' mustn't be more than '255' characters long.", constraintViolations.iterator().next().getMessage());
 	}
 	
 	@Test

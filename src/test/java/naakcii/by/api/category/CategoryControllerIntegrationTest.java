@@ -108,12 +108,8 @@ public class CategoryControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			activeCategories.stream()
-					.map((Category category) -> testEntityManager.merge(category))
-					.forEach((Category category) ->	testEntityManager.remove(category));
-			inactiveCategories.stream()
-					.map((Category category) -> testEntityManager.merge(category))
-					.forEach((Category category) ->	testEntityManager.remove(category));
+			activeCategories.stream().forEach((Category category) -> testEntityManager.remove(testEntityManager.merge(category)));
+			inactiveCategories.stream().forEach((Category category) -> testEntityManager.remove(testEntityManager.merge(category)));
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' and '{}' were removed from the database.",
 					Category.class, Subcategory.class);
@@ -146,9 +142,9 @@ public class CategoryControllerIntegrationTest {
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
 		assertEquals("Expected JSON should be: ["
-				   + "{\"name\":\"Молочные продукты, яйца\",\"priority\":2,\"icon\":\"Молочные продукты, яйца.png\",\"id\":2},"
-				   + "{\"name\":\"Хлебобулочные изделия\",\"priority\":4,\"icon\":\"Хлебобулочные изделия.png\",\"id\":3},"
-				   + "{\"name\":\"Мясо и колбасные изделия\",\"priority\":7,\"icon\":\"Мясо и колбасные изделия.png\",\"id\":1}"
+				   + "{name:'Молочные продукты, яйца', priority:2, icon:'Молочные продукты, яйца.png', id:2},"
+				   + "{name:'Хлебобулочные изделия', priority:4, icon:'Хлебобулочные изделия.png', id:3},"
+				   + "{name:'Мясо и колбасные изделия', priority:7, icon:'Мясо и колбасные изделия.png', id:1}"
 				   + "].", expectedJson, resultJson);
 		removeListOfCategories();
 	}

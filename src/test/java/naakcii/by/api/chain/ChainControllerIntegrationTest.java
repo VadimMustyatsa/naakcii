@@ -92,12 +92,8 @@ public class ChainControllerIntegrationTest {
 		logger.info("Removing of test data.");
 		
 		try {
-			activeChains.stream()
-					.map((Chain chain) -> testEntityManager.merge(chain))
-					.forEach((Chain chain) ->	testEntityManager.remove(chain));	
-			inactiveChains.stream()
-					.map((Chain chain) -> testEntityManager.merge(chain))
-					.forEach((Chain chain) ->	testEntityManager.remove(chain));	
+			activeChains.stream().forEach((Chain chain) ->	testEntityManager.remove(testEntityManager.merge(chain)));	
+			inactiveChains.stream().forEach((Chain chain) ->	testEntityManager.remove(testEntityManager.merge(chain)));	
 			testEntityManager.flush();
 			logger.info("Test data was cleaned successfully: instances of '{}' were removed from the database.", Chain.class);
 		} catch (Exception exception) {
@@ -126,13 +122,11 @@ public class ChainControllerIntegrationTest {
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/chains");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals(
-				"Expected JSON should be: ["
-				   + "{\"id\":1,\"name\":\"Алми\",\"logo\":\"almi.png\",\"link\":\"www.almi.by\"},"
-				   + "{\"id\":2,\"name\":\"Виталюр\",\"logo\":\"vitalur.png\",\"link\":\"www.vitalur.by\"},"
-						+ "{\"id\":3,\"name\":\"Евроопт\",\"logo\":\"evroopt.png\",\"link\":\"www.evroopt.by\"}"
-				   + "].",
-				expectedJson, resultJson);
+		assertEquals("Expected JSON should be: ["
+				+ "{id:1, name:'Алми', logo:'almi.png', link:'www.almi.by'},"
+				+ "{id:2, name:'Виталюр', logo:'vitalur.png', link:'www.vitalur.by'},"
+				+ "{id:3, name:'Евроопт', logo:'evroopt.png', link:'www.evroopt.by'}"
+				+ "].",	expectedJson, resultJson);
 		removeListOfChains();
 	}
 	

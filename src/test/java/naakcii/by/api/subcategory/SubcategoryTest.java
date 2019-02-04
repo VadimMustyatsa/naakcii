@@ -53,8 +53,8 @@ public class SubcategoryTest {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_MONTH, 5);
-        ChainProduct firstAction = new ChainProduct(firstProduct, chain, new BigDecimal("3.39"), chainProductType, startDate, endDate);
-        ChainProduct secondAction = new ChainProduct(secondProduct, chain, new BigDecimal("3.19"), chainProductType, startDate, endDate);
+        ChainProduct firstChainProduct = new ChainProduct(firstProduct, chain, new BigDecimal("3.39"), chainProductType, startDate, endDate);
+        ChainProduct secondChainProduct = new ChainProduct(secondProduct, chain, new BigDecimal("3.19"), chainProductType, startDate, endDate);
     }
 
     public void createInvalidProducts(Subcategory subcategory) {
@@ -65,8 +65,8 @@ public class SubcategoryTest {
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_MONTH, 5);
-        ChainProduct firstAction = new ChainProduct(firstProduct, chain, new BigDecimal("3.39"), chainProductType, startDate, endDate);
-        ChainProduct secondAction = new ChainProduct(secondProduct, chain, new BigDecimal("3.19"), chainProductType, startDate, endDate);
+        ChainProduct firstChainProduct = new ChainProduct(firstProduct, chain, new BigDecimal("3.39"), chainProductType, startDate, endDate);
+        ChainProduct secondChainProduct = new ChainProduct(secondProduct, chain, new BigDecimal("3.19"), chainProductType, startDate, endDate);
     }
 
     @Test

@@ -1,6 +1,8 @@
 package naakcii.by.api.subcategory;
 
 import naakcii.by.api.category.Category;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +14,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,11 +47,8 @@ public class SubcategoryRepositoryTest {
         secondSubcategory.setPriority(2);
         thirdSubcategory = new Subcategory("Свинина", true, category);
         thirdSubcategory.setPriority(3);
-        testEntityManager.persist(category);
-        testEntityManager.persist(firstSubcategory);
-        testEntityManager.persist(secondSubcategory);
-        testEntityManager.persist(thirdSubcategory);
-        testEntityManager.flush();
+        testEntityManager.persistAndFlush(category);
+        testEntityManager.detach(category);
     }
 
     @Test
@@ -67,24 +65,42 @@ public class SubcategoryRepositoryTest {
 
     @Test
     public void test_find_by_is_active_true_and_category_id_order_by_priority_asc() {
-        List<Subcategory> subcategoryList = subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByPriorityAsc(category.getId());
-        assertTrue(subcategoryList.size() == 2);
-        assertEquals("Колбасные изделия", subcategoryList.get(0).getName());
-        assertEquals("Свинина", subcategoryList.get(1).getName());
+    	List<Subcategory> expectedSubcategories = new ArrayList<>();
+    	expectedSubcategories.add(firstSubcategory);
+    	expectedSubcategories.add(thirdSubcategory);
+        List<Subcategory> resultSubcategories = subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByPriorityAsc(category.getId());
+        assertEquals("Result list of subcategories should contain 2 elements.", 2,  resultSubcategories.size());
+        assertEquals("Result list of subcategories should be: ["
+        		+ "{name:'Колбасные изделия', isActive:true, priority:1},"
+        		+ "{name:'Свинина', isActive:true, priority:3}"
+        		+ "]", expectedSubcategories, resultSubcategories);
     }
 
     @Test
     public void test_find_by_is_active_true_and_category_id_order_by_priority_desc() {
-        List<Subcategory> subcategoryList = subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByPriorityDesc(category.getId());
-        assertTrue(subcategoryList.size() == 2);
-        assertEquals("Свинина", subcategoryList.get(0).getName());
-        assertEquals("Колбасные изделия", subcategoryList.get(1).getName());
+    	List<Subcategory> expectedSubcategories = new ArrayList<>();
+    	expectedSubcategories.add(thirdSubcategory);
+    	expectedSubcategories.add(firstSubcategory);
+        List<Subcategory> resultSubcategories = subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByPriorityDesc(category.getId());
+        assertEquals("Result list of subcategories should contain 2 elements.", 2,  resultSubcategories.size());
+        assertEquals("Result list of subcategories should be: ["
+        		+ "{name:'Свинина', isActive:true},"
+        		+ "{name:'Колбасные изделия', isActive:true}"
+        		+ "]", expectedSubcategories, resultSubcategories);
     }
 
     @Test
     public void test_find_by_name_and_category_name() {
-        Optional<Subcategory> subcategoryOptional = subcategoryRepository.findByNameAndCategoryName(firstSubcategory.getName(), category.getName());
-        assertTrue(subcategoryOptional.isPresent() == true);
-        assertEquals("Колбасные изделия", subcategoryOptional.get().getName());
+    	Subcategory expectedSubcategory = secondSubcategory;
+        Subcategory resultSubcategory = subcategoryRepository.findByNameAndCategoryName(secondSubcategory.getName(), category.getName()).get();
+        assertEquals("Result subcategory should be: {name:'Копчености', isActive:false, priority:2}.", expectedSubcategory, resultSubcategory);
+    }
+    
+    @After
+    public void tearDown() {
+    	category = null;
+    	firstSubcategory = null;
+    	secondSubcategory = null;
+    	thirdSubcategory = null;
     }
 }

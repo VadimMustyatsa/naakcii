@@ -76,7 +76,7 @@ public class SubscriberControllerIntegrationTest {
                 .andReturn();
         stopWatch.stop();
         logger.info("Execution of request '{}({})' has finished.", "POST", "/subscribers");
-        logger.info("Execution time is: {} ms.", stopWatch.getTotalTimeMillis());
+        logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
         String resultJson = mvcResult.getResponse().getContentAsString();
         assertEquals("Expected json should be: {"
                 + "\"id\":1,"

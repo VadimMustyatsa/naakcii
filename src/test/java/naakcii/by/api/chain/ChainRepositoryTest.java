@@ -67,7 +67,7 @@ public class ChainRepositoryTest {
 		expectedSynonyms.add(secondChain.getSynonym());
 		expectedSynonyms.add(thirdChain.getSynonym());
 		List<String> resultSynonyms = chainRepository.getAllSynonyms();
-		assertEquals("Result list of synonyms should contain 3 elements.", expectedSynonyms, resultSynonyms);
+		assertEquals("Result list of synonyms should contain 3 elements.", 3, resultSynonyms.size());
 		assertTrue("Result list of synonyms should be: ['Almi', 'Evroopt', 'Vitalur'].",
 				resultSynonyms.containsAll(expectedSynonyms));
 	}

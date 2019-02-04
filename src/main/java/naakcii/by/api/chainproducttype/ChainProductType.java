@@ -51,8 +51,8 @@ public class ChainProductType implements Serializable {
 	
 	@Column(name = "CHAIN_PRODUCT_TYPE_TOOLTIP")
 	@Size(
-		max = 225,
-		message = "ChainProductType's tooltip '${vallidatedVAlue}' mustn't be more than '{max}' characters long."
+		max = 255,
+		message = "ChainProductType's tooltip '${validatedValue}' mustn't be more than '{max}' characters long."
 	)
 	private String tooltip;
 	

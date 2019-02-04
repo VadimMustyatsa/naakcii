@@ -12,13 +12,10 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.util.CustomUnitStepSerializer;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor

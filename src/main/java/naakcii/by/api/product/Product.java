@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -27,6 +26,7 @@ import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
+import naakcii.by.api.util.annotations.Barcode;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
@@ -46,12 +46,7 @@ public class Product implements Serializable {
 	
 	@Column(name = "PRODUCT_BARCODE")
 	@NotNull(message = "Product's bar-code mustn't be null.")
-	@Size(
-	    min = 4, 
-	    max = 14,
-	    message = "Product's bar-code '${validatedValue}' must be between '{min}' and '{max}' characters long."
-	)
-	@Pattern(regexp = "[0-9]+", message = "Product's bar-code must contain only digits.")
+	@Barcode
 	private String barcode;
 	
 	@Column(name = "PRODUCT_NAME")
@@ -148,7 +143,7 @@ public class Product implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("picture - " + picture + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("unit of measure (step) - " + (unitOfMeasure == null ? null : unitOfMeasure.getName() + "(" + unitOfMeasure.getStep() + ")") + ";");
+		result.append("\t").append("unit of measure id/name - " + (unitOfMeasure == null ? null + "/" + null : unitOfMeasure.getId() + "/" + unitOfMeasure.getName()) + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("manufacturer - " + manufacturer + ";");
 		result.append(System.lineSeparator());
