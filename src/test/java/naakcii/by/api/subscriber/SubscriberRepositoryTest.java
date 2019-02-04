@@ -28,7 +28,7 @@ public class SubscriberRepositoryTest {
     private TestEntityManager entityManager;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Subscriber firstSubscriber = new Subscriber();
         Subscriber secondSubscriber = new Subscriber();
         firstSubscriber.setEmail("firstsubscriber@gmail.com");
@@ -58,7 +58,7 @@ public class SubscriberRepositoryTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void test_incorrect_save() throws Exception {
+    public void test_incorrect_save() {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Email should be valid");
         Subscriber subscriber = new Subscriber();

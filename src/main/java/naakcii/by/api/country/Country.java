@@ -29,7 +29,7 @@ public class Country {
     @Column(name = "COUNTRY_ID")
     private Long id;
 	
-	@Column(name = "COUNTRY_NAME", unique = true)
+	@Column(name = "COUNTRY_NAME", unique = true, length = 50)
     @NotNull(message = "Country's name mustn't be null.")
     @PureSize(
     	min = 3, 
@@ -38,7 +38,7 @@ public class Country {
     )
 	private String name;
 	
-	@Column(name = "COUNTRY_ALPHA_CODE_2", unique = true)
+	@Column(name = "COUNTRY_ALPHA_CODE_2", unique = true, length = 2)
     @NotBlank(message = "Country's AlphaCode2 mustn't be blank.")
     @Size(
     	min = 2, 
@@ -47,7 +47,7 @@ public class Country {
     )
 	private String alphaCode2;
 	
-	@Column(name = "COUNTRY_ALPHA_CODE_3", unique = true)
+	@Column(name = "COUNTRY_ALPHA_CODE_3", unique = true, length = 3)
     @NotBlank(message = "Country's AlphaCode3 mustn't be blank.")
     @Size(
     	min = 3, 

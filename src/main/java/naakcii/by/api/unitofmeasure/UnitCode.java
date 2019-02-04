@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public enum UnitCode {
 	
-	KG("кг", new BigDecimal("0.100")), 
-	PC("шт.", new BigDecimal("1"));
+	KG("кг", new BigDecimal("0.1")), 
+	PC("шт", new BigDecimal("1.0"));
 	
 	private String representation;
 	private BigDecimal defaultStep;

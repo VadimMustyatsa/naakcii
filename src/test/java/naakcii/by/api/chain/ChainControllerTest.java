@@ -18,8 +18,7 @@ public class ChainControllerTest {
 	private List<ChainDTO> chainDTOs;
 	
 	@Mock
-	private
-	ChainService chainService;
+	private ChainService chainService;
 	
 	@Before
 	public void setUp() {

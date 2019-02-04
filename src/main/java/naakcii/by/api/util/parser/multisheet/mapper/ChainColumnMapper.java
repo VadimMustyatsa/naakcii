@@ -38,37 +38,35 @@ public class ChainColumnMapper implements ColumnMapper {
 			switch (cellValue) {
 				case NAME_COLUMN:
 					nameColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Chain.class.getDeclaredField(NAME_FIELD));
+					logger.info(SUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getDeclaredField(NAME_FIELD));
 					break;
 				
 				case LINK_COLUMN:
 					linkColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Chain.class.getDeclaredField(LINK_FIELD));
+					logger.info(SUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getDeclaredField(LINK_FIELD));
 					break;
 					
 				case LOGO_COLUMN:
 					logoColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Chain.class.getDeclaredField(LOGO_FIELD));
+					logger.info(SUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getDeclaredField(LOGO_FIELD));
 					break;
 					
 				case IS_ACTIVE_COLUMN:
 					isActiveColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Chain.class.getDeclaredField(IS_ACTIVE_FIELD));
+					logger.info(SUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getDeclaredField(IS_ACTIVE_FIELD));
 					break;
 					
 				case SYNONYM_COLUMN:
 					synonymColumnIndex = columnIndex;
-					logger.info(columnMappingMessage, cellValue, columnIndex, Chain.class.getDeclaredField(SYNONYM_FIELD));
+					logger.info(SUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getDeclaredField(SYNONYM_FIELD));
 					break;
 					
 				default:
-					logger.warn("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}'.",
-							cellValue, columnIndex, Chain.class);
+					logger.warn(UNSUCCESS_MAPPING_MESSAGE, cellValue, columnIndex, Chain.class.getName());
 					break;
 			}
 		} catch (Exception exception) {
-			logger.error("Column '{}' with index '{}' hasn't been mapped on any field of entity '{}' due to exception: {}.",
-					cellValue, columnIndex, Chain.class, printStackTrace(exception));
+			logger.error(EXCEPTION_MAPPING_MESSAGE,	cellValue, columnIndex, Chain.class.getName(), printStackTrace(exception));
 		}	
 	}
 	
@@ -94,22 +92,21 @@ public class ChainColumnMapper implements ColumnMapper {
 	
 	public String toString() {
 		try(Formatter formatter = new Formatter()) {
-			formatter.format("Columns mapping on fields of entity '%s':", Chain.class.getName());
-			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Chain.class.getDeclaredField(NAME_FIELD), nameColumnIndex, NAME_COLUMN, ';');
-			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Chain.class.getDeclaredField(LINK_FIELD), linkColumnIndex, LINK_COLUMN, ';');
-			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Chain.class.getDeclaredField(LOGO_FIELD), logoColumnIndex, LOGO_COLUMN, ';');
-			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Chain.class.getDeclaredField(IS_ACTIVE_FIELD), isActiveColumnIndex, IS_ACTIVE_COLUMN, ';');
-			formatter.format("%n");
-			formatter.format(resultColumnMappingMessage, Chain.class.getDeclaredField(SYNONYM_FIELD), synonymColumnIndex, SYNONYM_COLUMN, '.');
+			formatter.format(RESULT_HEADER_MESSAGE, Chain.class.getName());
+			formatter.format(System.lineSeparator());
+			formatter.format(RESULT_MAPPING_MESSAGE, Chain.class.getDeclaredField(NAME_FIELD), nameColumnIndex, NAME_COLUMN, ';');
+			formatter.format(System.lineSeparator());
+			formatter.format(RESULT_MAPPING_MESSAGE, Chain.class.getDeclaredField(LINK_FIELD), linkColumnIndex, LINK_COLUMN, ';');
+			formatter.format(System.lineSeparator());
+			formatter.format(RESULT_MAPPING_MESSAGE, Chain.class.getDeclaredField(LOGO_FIELD), logoColumnIndex, LOGO_COLUMN, ';');
+			formatter.format(System.lineSeparator());
+			formatter.format(RESULT_MAPPING_MESSAGE, Chain.class.getDeclaredField(IS_ACTIVE_FIELD), isActiveColumnIndex, IS_ACTIVE_COLUMN, ';');
+			formatter.format(System.lineSeparator());
+			formatter.format(RESULT_MAPPING_MESSAGE, Chain.class.getDeclaredField(SYNONYM_FIELD), synonymColumnIndex, SYNONYM_COLUMN, '.');
 			return formatter.toString();
 		} catch (Exception exception) {
-			logger.error("Exception has occurred during the process of getting mapping result for entity '{}': {}.", 
-					Chain.class, printStackTrace(exception));
-			return "Exception has occurred during the process of getting mapping result for entity '" + Chain.class + "' (see logs).";
+			logger.error(RESULT_EXCEPTION_MESSAGE, Chain.class.getName(), printStackTrace(exception));
+			return "Exception has occurred during the process of getting mapping result for entity '" + Chain.class.getName() + "' (see logs above).";
 		}
 	}
 }

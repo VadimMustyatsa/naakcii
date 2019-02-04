@@ -12,7 +12,7 @@ public interface ChainRepository extends CrudRepository<Chain, Long> {
 	
 	List<Chain> findAllByIsActiveTrueOrderByNameAsc();
 	List<Chain> findAllByIsActiveTrueOrderByNameDesc();
-	Optional<Chain> findByName(String chainName);
+	Optional<Chain> findByNameAndSynonym(String chainName, String chainSynonym);
 	Optional<Chain> findBySynonym(String chainSynonym);
 	
 	@Modifying

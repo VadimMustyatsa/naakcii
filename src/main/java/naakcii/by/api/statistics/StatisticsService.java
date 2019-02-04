@@ -4,10 +4,10 @@ import java.util.Calendar;
 
 public interface StatisticsService {
 
-    StatisticsDTO findCurrentStatistics();
+    StatisticsDTO getCurrentStatistics();
 
-    Statistics updateStatistics(Integer chainQuantity,
-                                Integer discountedProducts,
-                                Integer averageDiscountPercentage,
-                                Calendar creationDate);
+    StatisticsDTO updateStatistics(Integer chainQuantity,
+                                   Integer discountedProducts,
+                                   Integer averageDiscountPercentage,
+                                   Calendar creationDate);
 }

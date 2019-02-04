@@ -1,7 +1,7 @@
 package naakcii.by.api.util.tasks;
 
 import naakcii.by.api.chain.ChainRepository;
-import naakcii.by.api.util.parser.IDataParser;
+import naakcii.by.api.util.parser.DataParser;
 import naakcii.by.api.util.parser.multisheet.ParsingResult;
 import naakcii.by.api.util.slack.SlackNotification;
 import org.apache.logging.log4j.LogManager;
@@ -24,12 +24,12 @@ public class DataParserTask {
     private static final Logger logger = LogManager.getLogger(DataParserTask.class);
     private SlackNotification slackNotification;
     private ChainRepository chainRepository;
-    private IDataParser dataParser;
+    private DataParser dataParser;
     private Environment env;
 
     @Autowired
     public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepositor,
-                          IDataParser dataParser, Environment env) {
+                          DataParser dataParser, Environment env) {
         this.slackNotification = slackNotification;
         this.chainRepository = chainRepositor;
         this.dataParser = dataParser;
@@ -63,7 +63,7 @@ public class DataParserTask {
                         if (matcher.find()) {
                             logger.info("Next file was parsed: " + file.getName());
                             slackNotification.sendMessageToNotificationsChannel("Next file was parsed: `" + file.getName() + "`");
-                            List<ParsingResult<?>> parsingResults = dataParser.parseActionProducts(file.getPath(), chainSynonym);
+                            List<ParsingResult<?>> parsingResults = dataParser.parseChainProducts(file.getPath(), chainSynonym);
                             parsingResults.forEach((ParsingResult<?> result) ->
                                     slackNotification.sendCodeSnippetToNotificationsChannel(result.toString()));
                         } else {

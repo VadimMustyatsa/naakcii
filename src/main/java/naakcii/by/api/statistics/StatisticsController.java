@@ -19,6 +19,6 @@ public class StatisticsController {
     @GetMapping(produces = ApiConfigConstants.API_V_2_0)
     @ApiOperation("Возвращает статистику по сервису НаАкции.Бел")
     public StatisticsDTO getStatistics() {
-        return statisticsService.findCurrentStatistics();
+        return statisticsService.getCurrentStatistics();
     }
 }

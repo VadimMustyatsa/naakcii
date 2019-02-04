@@ -1,6 +1,6 @@
 package naakcii.by.api;
 
-import naakcii.by.api.util.parser.IDataParser;
+import naakcii.by.api.util.parser.DataParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -46,7 +46,7 @@ public class Chain implements Serializable {
 	)
 	private String name;
 	
-	@Column(name = "CHAIN_SYNONYM", unique = true)
+	@Column(name = "CHAIN_SYNONYM", unique = true, length = 50)
 	@NotNull(message = "Chain's synonym chain mustn't be null.")
 	@PureSize(
 	   	min = 3, 

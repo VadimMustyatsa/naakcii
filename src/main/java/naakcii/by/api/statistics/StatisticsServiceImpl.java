@@ -9,28 +9,32 @@ import java.util.Calendar;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
-    @Autowired
     private StatisticsRepository statisticsRepository;
-
-    @Autowired
     private ObjectFactory objectFactory;
 
+    @Autowired
+    public StatisticsServiceImpl(StatisticsRepository statisticsRepository, ObjectFactory objectFactory) {
+        this.statisticsRepository = statisticsRepository;
+        this.objectFactory = objectFactory;
+    }
+
     @Override
-    public StatisticsDTO findCurrentStatistics() {
+    public StatisticsDTO getCurrentStatistics() {
         Statistics statistics = statisticsRepository.findFirstByOrderByIdAsc();
         return objectFactory.getInstance(StatisticsDTO.class, statistics);
     }
 
     @Override
-    public Statistics updateStatistics(Integer chainQuantity,
-                                       Integer discountedProducts,
-                                       Integer averageDiscountPercentage,
-                                       Calendar creationDate) {
+    public StatisticsDTO updateStatistics(Integer chainQuantity,
+                                          Integer discountedProducts,
+                                          Integer averageDiscountPercentage,
+                                          Calendar creationDate) {
         Statistics statistics = statisticsRepository.findFirstByOrderByIdAsc();
         statistics.setChainQuantity(chainQuantity);
         statistics.setDiscountedProducts(discountedProducts);
         statistics.setAverageDiscountPercentage(averageDiscountPercentage);
         statistics.setCreationDate(creationDate);
-        return statisticsRepository.save(statistics);
+        Statistics updatedStatistics = statisticsRepository.save(statistics);
+        return objectFactory.getInstance(StatisticsDTO.class, updatedStatistics);
     }
 }

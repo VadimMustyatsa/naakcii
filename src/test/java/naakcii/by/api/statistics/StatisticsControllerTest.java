@@ -36,7 +36,7 @@ public class StatisticsControllerTest {
         statisticsDTO.setAverageDiscountPercentage(11);
         statisticsDTO.setDiscountedProducts(111);
         statisticsDTO.setCreationDateMillis(100000L);
-        given(statisticsService.findCurrentStatistics()).willReturn(statisticsDTO);
+        given(statisticsService.getCurrentStatistics()).willReturn(statisticsDTO);
         mockMvc.perform(get("/statistics")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(ApiConfigConstants.API_V_2_0))
