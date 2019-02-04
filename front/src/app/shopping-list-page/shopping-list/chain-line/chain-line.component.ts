@@ -25,21 +25,20 @@ export class ChainLineComponent implements OnInit {
     this.cartLineList = this.cart.getCartByChain(this.chainId);
   }
 
-  getAllPriceDiscount() {
+  public getAllPriceDiscount(): number {
     return this.cart.getAllPriceDiscountByChain(this.chainId);
   }
-  getAllPriceBase() {
+  public getAllPriceBase(): number {
     return this.cart.getAllPriceBaseByChain(this.chainId);
   }
-  getDiscountInMoney() {
+  public getDiscountInMoney(): number {
     return this.cart.getAllDiscountByChainInMoney(this.chainId);
   }
-  getDiscountInPercent() {
+  public getDiscountInPercent(): number {
     return this.cart.getAllDiscountByChainInPercent(this.chainId);
   }
 
-  setImgStyles(pict) {
+  public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
-
 }

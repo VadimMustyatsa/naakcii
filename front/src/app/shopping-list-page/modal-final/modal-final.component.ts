@@ -18,11 +18,11 @@ export class ModalFinalComponent implements OnInit {
 
   ngOnInit() {
   }
-  closeModal() {
+  public closeModal(): void {
     this.modalActions.emit({action: 'modal', params: ['close']});
   }
 
-  onRedirect() {
+  public onRedirect(): void {
     this.closeModal();
     sessionStorage.clear();
     this.undiscountStorage.clearUndiscount();

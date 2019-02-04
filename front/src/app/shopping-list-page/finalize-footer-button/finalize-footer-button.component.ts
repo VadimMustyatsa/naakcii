@@ -11,17 +11,16 @@ import {Cart} from '../../shared/cart/cart.model';
 export class FinalizeFooterButtonComponent implements OnInit {
   @Output() openModal: EventEmitter<void> = new EventEmitter();
 
-  constructor(public breakPointCheckService: BreakPointCheckService,
-              private PDFGenerator: PdfGeneratorService,
+  constructor(private PDFGenerator: PdfGeneratorService,
+              public breakPointCheckService: BreakPointCheckService,
               public cart: Cart
-
     ) {
   }
 
   ngOnInit() {
   }
 
-  generatePDF() {
+  public generatePDF(): void {
     if (this.cart.getCount() > 0) {
       this.PDFGenerator.generatePDF();
       this.openModal.emit();

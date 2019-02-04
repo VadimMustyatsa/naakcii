@@ -23,7 +23,7 @@ export class UndiscountAddComponent implements OnInit {
       this.undiscountProduct = '';
     }
   }
-  setImgStyles(pict) {
+  public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
 }

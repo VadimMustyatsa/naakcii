@@ -11,8 +11,8 @@ import {BreakPointCheckService} from '../../shared/services/breakpoint-check.ser
 })
 export class FinalizeFooterComponent implements OnInit {
   undiscount: Array<{ text: string; id: string }>;
-  constructor(public cart: Cart,
-              private undiscountStorage: UndiscountService,
+  constructor(private undiscountStorage: UndiscountService,
+              public cart: Cart,
               public breakPointCheckService: BreakPointCheckService,
     ) {
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
@@ -20,16 +20,16 @@ export class FinalizeFooterComponent implements OnInit {
 
   ngOnInit() {
   }
-  getAllPriceBase(): number {
+  public getAllPriceBase(): number {
     return this.cart.getAllPriceBase();
   }
-  getAllPriceDiscont(): number {
+  public getAllPriceDiscont(): number {
     return this.cart.getAllPriceDiscount();
   }
-  getAllDiscountInMoney(): number {
+  public getAllDiscountInMoney(): number {
     return this.cart.getAllDiscountInMoney();
   }
-  getAllDiscountInPercent(): number {
+  public getAllDiscountInPercent(): number {
     return this.cart.getAllDiscountInPercent();
   }
 }

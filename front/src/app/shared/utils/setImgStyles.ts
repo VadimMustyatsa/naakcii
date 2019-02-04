@@ -1,4 +1,4 @@
-export default function setImgStyles(pict) {
+export default function setImgStyles(pict: string): {} {
     return {
       'background-image': `url("assets/images/Products/${pict}")`,
       'background-size': 'contain',

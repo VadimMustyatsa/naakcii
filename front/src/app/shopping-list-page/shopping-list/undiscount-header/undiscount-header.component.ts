@@ -20,7 +20,7 @@ export class UndiscountHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  getCouunt() {
+  public getCouunt(): number {
     return this.undiscountStorage.getCount();
   }
 }

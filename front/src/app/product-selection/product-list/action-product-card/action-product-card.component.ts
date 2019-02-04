@@ -14,21 +14,21 @@ import {SessionStorageService} from "../../../shared/services/session-storage.se
   providers: [FoodsStorageService]
 })
 export class ActionProductCardComponent implements OnInit{
-  public selectAmount:number;
+  public selectAmount: number;
 
   nameMaxWidth = 80;
 
   @Input() product: FoodList;
- 
-  @Output() openModal:EventEmitter<void> = new EventEmitter();
+
+  @Output() openModal: EventEmitter<void> = new EventEmitter();
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService ) {
   }
 
-  ngOnInit(){
-    this.selectAmount=1;
+  ngOnInit() {
+    this.selectAmount = 1;
   }
 
   getStorageByID(id: number): ChainLine {
@@ -50,13 +50,13 @@ export class ActionProductCardComponent implements OnInit{
   }
 
   selectFood() {
-    this.cart.addLine(this.product, this.selectAmount);  //добавляем в корзину
-    this.selectAmount = 1;  //сбрасываем на 1 на карточке
-    if(this.emailSenderIsNotOpened){this.openModal.emit();}
+    this.cart.addLine(this.product, this.selectAmount);  // добавляем в корзину
+    this.selectAmount = 1;  // сбрасываем на 1 на карточке
+    if (this.emailSenderIsNotOpened) {this.openModal.emit(); }
   }
 
   get emailSenderIsNotOpened (){
-    return !this.sessionStorageService.getSenderEmailOpened()
+    return !this.sessionStorageService.getSenderEmailOpened();
   }
 
   subItem() {
@@ -78,12 +78,12 @@ export class ActionProductCardComponent implements OnInit{
     };
   }
 
-  //проверяем выделена ли сеть данной карточки в фильтре сетей
+  // проверяем выделена ли сеть данной карточки в фильтре сетей
   isVisibleChain(idStrore: number) {
     let selected = false;
     this.chainLst.lines.map(chain => {
       if (chain.chain.selected) {
-        if (chain.chain.id == idStrore) {
+        if (chain.chain.id === idStrore) {
           selected = true;
         }
       }

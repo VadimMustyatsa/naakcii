@@ -12,7 +12,7 @@ export class UndiscountLineComponent implements OnInit {
   @Input() item: {id: string, text: string};
 
   constructor(private undiscountStorage: UndiscountService
-    ){
+    ) {
   }
 
   ngOnInit() {
@@ -22,7 +22,7 @@ export class UndiscountLineComponent implements OnInit {
    this.undiscountStorage.delProduct(this.item.id);
  }
 
-  setImgStyles(pict) {
+  public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
 }

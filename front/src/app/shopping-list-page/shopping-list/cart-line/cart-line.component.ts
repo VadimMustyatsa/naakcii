@@ -10,31 +10,31 @@ import setImgStyles from '../../../shared/utils/setImgStyles';
 })
 export class CartLineComponent implements OnInit {
   @Input() curCartline: CartLine;
-
   @Output() delItem: EventEmitter<void> = new EventEmitter();
+
   constructor(public breakPointCheckService: BreakPointCheckService,
-    public cart: Cart
+              public cart: Cart
     ) {
   }
 
   ngOnInit() {
   }
-  subItem() {
+  public subItem(): void {
     if (this.curCartline.quantity > 1) {
       this.cart.updateQuantity(this.curCartline.product, Number(this.curCartline.quantity - 1));
     }
   }
 
-  addItem() {
+  public addItem(): void {
     this.cart.updateQuantity(this.curCartline.product, Number(this.curCartline.quantity + 1));
   }
 
-  deleteCartLine() {
+  public deleteCartLine(): void {
     this.cart.removeLine(this.curCartline.product.id);
     this.delItem.emit();
   }
 
-  setImgStyles(pict) {
+  public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
 }

@@ -15,7 +15,7 @@ import setImgStyles from '../../shared/utils/setImgStyles';
 })
 
 export class ShoppingListComponent implements OnInit {
-  chainListExist: ChainLine[] = null;
+  public chainListExist: ChainLine[] = null;
 
   constructor(public chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
@@ -23,7 +23,7 @@ export class ShoppingListComponent implements OnInit {
   ) {
   }
 
-  params = [
+  public params = [
     {
       onOpen: (el) => {
         el.prevObject[0].querySelector('.arrowCollapsibleBold').innerHTML = 'arrow_drop_down';
@@ -38,7 +38,7 @@ export class ShoppingListComponent implements OnInit {
     this.chainListExist = this.getExistListChain();
   }
 
-  getExistListChain() {
+  private getExistListChain() {
     const chainListExist: ChainLine[] = [];
     this.cart.lines.map(line => {
       if (isUndefined(chainListExist.find(x => x.chain.id === line.product.idStrore))) {
@@ -47,25 +47,25 @@ export class ShoppingListComponent implements OnInit {
     });
     return chainListExist;
   }
-  refreshChain() {
+  public refreshChain(): void {
     this.chainListExist = this.getExistListChain();
   }
-  getCartByChain(idChain: number): CartLine[] {
+  public getCartByChain(idChain: number): CartLine[] {
     return this.cart.getCartByChain(idChain);
   }
 
-  getStorageByID(id: number): ChainLine {
+  public getStorageByID(id: number): ChainLine {
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
-  getNameStorage(id: number): String {
+  public getNameStorage(id: number): String {
     if (this.getStorageByID(id)) {
       return this.getStorageByID(id).chain.name;
     }
     return 'unknown';
   }
 
-  setImgStyles(pict) {
+  public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
 }
