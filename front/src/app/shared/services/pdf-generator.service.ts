@@ -13,7 +13,7 @@ export class PdfGeneratorService {
   }
 
   generatePDF() {
-    let data = this.cart.generateJsonListPDF(); //сформированный список по сетям
+    let data = this.cart.generateJsonListPDF(); // сформированный список по сетям
     const docDefinition = {};
     const docContent = [];
     const docStyle = {};
@@ -101,7 +101,7 @@ export class PdfGeneratorService {
         docContent.push(itemColumnList);
       });
     }
-//--------------------------------------------------------------------------
+// -------------------------------------------------------------------------
     let table = {}; //обрамление
     let bodyTable = {};
     let bodyBodyTable = [];
@@ -126,7 +126,7 @@ export class PdfGeneratorService {
     if (this.undiscountStorage.getFromUndiscount()[0]) {
       docContent.push(table);
     }
-//---------------------------------------------------------------------
+// ---------------------------------------------------------------------
 
     this.undiscountStorage.getFromUndiscount().map(item => {
       let itemColumnList = {}; //строка
@@ -146,7 +146,7 @@ export class PdfGeneratorService {
       }
     });
 
-    //итоговая сумма------------------------------
+    // итоговая сумма------------------------------
     let itemColumnList = {}; //строка
     let columns = [];
 

@@ -14,22 +14,22 @@ export class FinalizeFooterComponent implements OnInit {
   constructor(public cart: Cart,
               private undiscountStorage: UndiscountService,
               public breakPointCheckService: BreakPointCheckService,
-    ) { 
+    ) {
     this.undiscount = this.undiscountStorage.getFromUndiscount() || [];
   }
 
   ngOnInit() {
   }
-  getAllPriceBase():number{
+  getAllPriceBase(): number {
     return this.cart.getAllPriceBase();
   }
-  getAllPriceDiscont():number{
+  getAllPriceDiscont(): number {
     return this.cart.getAllPriceDiscount();
   }
-  getAllDiscountInMoney():number{
+  getAllDiscountInMoney(): number {
     return this.cart.getAllDiscountInMoney();
   }
-  getAllDiscountInPercent():number{
+  getAllDiscountInPercent(): number {
     return this.cart.getAllDiscountInPercent();
   }
 }
