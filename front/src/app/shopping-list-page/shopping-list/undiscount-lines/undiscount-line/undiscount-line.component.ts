@@ -9,7 +9,7 @@ import setImgStyles from '../../../../shared/utils/setImgStyles';
   styleUrls: ['./undiscount-line.component.scss']
 })
 export class UndiscountLineComponent implements OnInit {
-  @Input() item:{id:string,text:string};
+  @Input() item: {id: string, text: string};
 
   constructor(private undiscountStorage: UndiscountService
     ){
@@ -18,7 +18,7 @@ export class UndiscountLineComponent implements OnInit {
   ngOnInit() {
   }
 
-  onRemoveUndiscount(){
+  onRemoveUndiscount() {
    this.undiscountStorage.delProduct(this.item.id);
  }
 

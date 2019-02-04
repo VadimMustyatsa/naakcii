@@ -16,14 +16,14 @@ import {Cart} from '../shared/cart/cart.model';
   selector: 'app-finalize-page',
   templateUrl: './shopping-list-page.component.html',
   styleUrls: ['./shopping-list-page.component.scss'],
-  
+
   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class ShoppingListPageComponent implements OnInit {
 
   modalActions = new EventEmitter<string | MaterializeAction>();
-  
+
   constructor(private titleService: Title,
               public cart: Cart,
               public breakPointCheckService: BreakPointCheckService

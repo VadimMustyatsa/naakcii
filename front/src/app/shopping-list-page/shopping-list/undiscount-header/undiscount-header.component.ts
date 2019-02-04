@@ -13,14 +13,14 @@ export class UndiscountHeaderComponent implements OnInit {
   constructor(
     private undiscountStorage: UndiscountService,
     public breakPointCheckService: BreakPointCheckService,
-    ) { 
+    ) {
 
   }
 
   ngOnInit() {
   }
 
-  getCouunt(){
+  getCouunt() {
     return this.undiscountStorage.getCount();
   }
 }

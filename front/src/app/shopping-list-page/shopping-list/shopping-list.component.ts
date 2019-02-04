@@ -16,11 +16,11 @@ import setImgStyles from '../../shared/utils/setImgStyles';
 
 export class ShoppingListComponent implements OnInit {
   chainListExist: ChainLine[] = null;
-  
+
   constructor(public chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               public cart: Cart,
-  ) { 
+  ) {
   }
 
   params = [
@@ -47,7 +47,7 @@ export class ShoppingListComponent implements OnInit {
     });
     return chainListExist;
   }
-  refreshChain(){
+  refreshChain() {
     this.chainListExist = this.getExistListChain();
   }
   getCartByChain(idChain: number): CartLine[] {

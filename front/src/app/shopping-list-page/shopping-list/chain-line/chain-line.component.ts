@@ -11,30 +11,30 @@ import setImgStyles from '../../../shared/utils/setImgStyles'
   styleUrls: ['./chain-line.component.scss']
 })
 export class ChainLineComponent implements OnInit {
-  public cartLineList:CartLine[];
-  public chainId:number;
-  @Input() chain:ChainLine;
-  
+  public cartLineList: CartLine[];
+  public chainId: number;
+  @Input() chain: ChainLine;
+
   constructor(public cart: Cart,
     public breakPointCheckService: BreakPointCheckService) { 
 
     }
 
   ngOnInit() {
-    this.chainId=this.chain.chain.id;
-    this.cartLineList=this.cart.getCartByChain(this.chainId);
+    this.chainId = this.chain.chain.id;
+    this.cartLineList = this.cart.getCartByChain(this.chainId);
   }
 
-  getAllPriceDiscount(){
+  getAllPriceDiscount() {
     return this.cart.getAllPriceDiscountByChain(this.chainId);
   }
-  getAllPriceBase(){
+  getAllPriceBase() {
     return this.cart.getAllPriceBaseByChain(this.chainId);
   }
-  getDiscountInMoney(){
+  getDiscountInMoney() {
     return this.cart.getAllDiscountByChainInMoney(this.chainId);
   }
-  getDiscountInPercent(){
+  getDiscountInPercent() {
     return this.cart.getAllDiscountByChainInPercent(this.chainId);
   }
 

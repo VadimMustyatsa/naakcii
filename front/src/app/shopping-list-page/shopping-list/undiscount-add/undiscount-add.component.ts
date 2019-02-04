@@ -9,7 +9,7 @@ import setImgStyles from '../../../shared/utils/setImgStyles';
   styleUrls: ['./undiscount-add.component.scss']
 })
 export class UndiscountAddComponent implements OnInit {
-  undiscountProduct:string;
+  undiscountProduct: string;
   constructor(
     private undiscountStorage: UndiscountService
   ) { }
@@ -18,9 +18,9 @@ export class UndiscountAddComponent implements OnInit {
   }
 
   addUndiscountProduct() {
-    if (this.undiscountProduct.length > 2){
+    if (this.undiscountProduct.length > 2) {
       this.undiscountStorage.addProduct(this.undiscountProduct);
-      this.undiscountProduct='';
+      this.undiscountProduct = '';
     }
   }
   setImgStyles(pict) {

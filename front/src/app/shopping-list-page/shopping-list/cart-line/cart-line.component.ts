@@ -9,12 +9,12 @@ import setImgStyles from '../../../shared/utils/setImgStyles';
   styleUrls: ['./cart-line.component.scss']
 })
 export class CartLineComponent implements OnInit {
-  @Input() curCartline:CartLine;
+  @Input() curCartline: CartLine;
 
-  @Output() delItem:EventEmitter<void> = new EventEmitter();
+  @Output() delItem: EventEmitter<void> = new EventEmitter();
   constructor(public breakPointCheckService: BreakPointCheckService,
     public cart: Cart
-    ){
+    ) {
   }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class CartLineComponent implements OnInit {
     this.cart.removeLine(this.curCartline.product.id);
     this.delItem.emit();
   }
- 
+
   setImgStyles(pict) {
     return setImgStyles(pict);
   }

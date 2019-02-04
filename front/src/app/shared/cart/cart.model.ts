@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {FoodList} from '../foodList/foods.foodList.model';
 import {Chain, ChainLine} from '../chain/chain.model';
-import {isUndefined} from "util";
-import {SessionStorageService} from "../services/session-storage.service";
+import {isUndefined} from 'util';
+import {SessionStorageService} from '../services/session-storage.service';
 
 @Injectable()
 export class Cart {
   public lines: CartLine[];
-  public storageCount : {
+  public storageCount: {
     itemCount: number;
     cartAllPrice: number;
     cartTotalPrice: number;
@@ -19,8 +19,8 @@ export class Cart {
   public cartAverageDiscount: number;
 
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
-  this.lines= this.sessionStorageService.getCartFromSessionStorage() || [];
-    this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
+  this.lines = this.sessionStorageService.getCartFromSessionStorage() || [];
+  this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
       {
         itemCount: 0,
         cartAllPrice: 0,
@@ -28,15 +28,15 @@ export class Cart {
         cartAverageDiscount: 0
       };
    this.itemCount = this.storageCount.itemCount;
-    this.cartAllPrice = this.storageCount.cartAllPrice;    //без скидок
-    this.cartTotalPrice = this.storageCount.cartTotalPrice;  //с учетом скидок
-    this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    //средний процент скидки по всем карточкам
+    this.cartAllPrice = this.storageCount.cartAllPrice;    // без скидок
+    this.cartTotalPrice = this.storageCount.cartTotalPrice;  // с учетом скидок
+    this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    // средний процент скидки по всем карточкам
   }
 
-   //суммарная стоимость товаров у которых известна цена до скидки
-   private culcSumBasePrice(cartLineList:CartLine[]):number{
-    return cartLineList.reduce((sum,line) => {
-      if (line.product.discount>0){
+   // суммарная стоимость товаров у которых известна цена до скидки
+   private culcSumBasePrice(cartLineList: CartLine[]): number {
+    return cartLineList.reduce((sum, line) => {
+      if (line.product.discount > 0) {
         return sum + (line.product.allPrice * line.quantity);
       } else {
         return sum;
@@ -46,125 +46,124 @@ export class Cart {
       // } else {
       //   return sum;
       // }
-    },0);
+    }, 0);
   }
 
-  //суммарная стоимость с учетом скидки
-  private culcSumDiscountPrice(cartLineList:CartLine[]):number{
-    return cartLineList.reduce((sum,line) => {
+  // суммарная стоимость с учетом скидки
+  private culcSumDiscountPrice(cartLineList: CartLine[]): number {
+    return cartLineList.reduce((sum, line) => {
       return sum + (line.product.totalPrice * line.quantity);
-        //return sum+line.product.getSumDiscountPrice(line.quantity)
-    },0);
+        // return sum+line.product.getSumDiscountPrice(line.quantity)
+    }, 0);
   }
 
-  //сумма скидки по товарам у которых известна цена до скидки
-  private culcDiscountInMoney(cartLineList:CartLine[]):number{
-    return cartLineList.reduce((curDiscount,line) => {
-      if (line.product.discount>0){
-          return curDiscount + (line.product.allPrice * line.product.discount * line.quantity/100);
-        }
-      else {
+  // сумма скидки по товарам у которых известна цена до скидки
+  private culcDiscountInMoney(cartLineList: CartLine[]): number {
+    return cartLineList.reduce((curDiscount, line) => {
+      if (line.product.discount > 0) {
+          return curDiscount + (line.product.allPrice * line.product.discount * line.quantity / 100);
+      } else {
         return curDiscount;
       }
         // if (line.product.isConsiderBasePrice){
         //   return curDiscount + line.product.getSumDiscountInMoney(line.quantity);
         // }
-    },0);
+    }, 0);
   }
 
-  //расчет скидки в процентах, для товаров у которых есть начальная цена
-  private culcDiscountInPercent(cartLineList:CartLine[]):number{
-    let curDiscount=this.culcDiscountInMoney(cartLineList);
-    let basePrice=this.culcSumBasePrice(cartLineList);
-    return curDiscount/basePrice*100;
+  // расчет скидки в процентах, для товаров у которых есть начальная цена
+  private culcDiscountInPercent(cartLineList: CartLine[]): number {
+    const curDiscount = this.culcDiscountInMoney(cartLineList);
+    const basePrice = this.culcSumBasePrice(cartLineList);
+    return curDiscount / basePrice * 100;
   }
-  getCount():number{
+  getCount(): number {
     return this.lines.length;
   }
   addLine(product: FoodList, quantity: number) {
 
-    let line = this.lines.find(line => line.product.id == product.id);
-    if (line != undefined) {
+    const line = this.lines.find(lineEl => lineEl.product.id === product.id);
+    if (line !== undefined) {
       line.quantity += quantity;
     } else {
-      this.lines.unshift(new CartLine(product, quantity, ""));
+      this.lines.unshift(new CartLine(product, quantity, ''));
     }
     this.recalculate();
   }
 
   updateQuantity(product: FoodList, quantity: number) {
-    let line = this.lines.find(line => line.product.id == product.id);
-    if (line != undefined) {
+    const line = this.lines.find(lineEl => lineEl.product.id === product.id);
+    if (line !== undefined) {
       line.quantity = Number(quantity);
     }
     this.recalculate();
   }
 
   removeLine(id: number) {
-    let index = this.lines.findIndex(line => line.product.id == id);
+    const index: number = this.lines.findIndex(line => line.product.id === id);
     this.lines.splice(index, 1);
     this.recalculate();
   }
 
-  getCartByChain(idChain: number):CartLine[] {
+  getCartByChain(idChain: number): CartLine[] {
     const cartListByChain: CartLine[] = [];
     this.lines.map(line => {
-      if (line.product.idStrore == idChain) {
+      if (line.product.idStrore === idChain) {
         cartListByChain.push(line);
       }
     });
     return cartListByChain;
   }
- 
-  //цена без учета скидки всех товаров в корзине, где известна начальная цена
+
+  // цена без учета скидки всех товаров в корзине, где известна начальная цена
   getAllPriceBase() {
     return this.culcSumBasePrice(this.lines);
   }
 
-  //цена без учета скидки по выбранной сети, где известна начальная цена
+  // цена без учета скидки по выбранной сети, где известна начальная цена
   getAllPriceBaseByChain(idChain: number) {
-    return this.culcSumBasePrice(this.lines.filter( line=>{
+    return this.culcSumBasePrice(this.lines.filter( line => {
       return line.product.idStrore === idChain;
     }));
   }
 
-  //стоимость с учетом скидки всех товаров в карзине
+  // стоимость с учетом скидки всех товаров в карзине
   getAllPriceDiscount() {
     return this.culcSumDiscountPrice(this.lines);
   }
-  
-  //стоимость с учетом скидки по выбранной сети
+
+  // стоимость с учетом скидки по выбранной сети
   getAllPriceDiscountByChain(idChain: number) {
-    return this.culcSumDiscountPrice(this.lines.filter( line=>{
+    return this.culcSumDiscountPrice(this.lines.filter( line => {
       return line.product.idStrore === idChain;
     }));
   }
 
-  //суммарная скдика всех товаров в корзине в деньгах
-  getAllDiscountInMoney():number{
+  // суммарная скдика всех товаров в корзине в деньгах
+  getAllDiscountInMoney(): number {
     return this.culcDiscountInMoney(this.lines);
   }
 
-  //суммарная скдика всех товаров в корзине по выбранной сети в деньгах
-  getAllDiscountByChainInMoney(idChain: number):number{
-    return this.culcDiscountInMoney(this.lines.filter(line=>{
+  // суммарная скдика всех товаров в корзине по выбранной сети в деньгах
+  getAllDiscountByChainInMoney(idChain: number): number {
+    return this.culcDiscountInMoney(this.lines.filter(line => {
       return line.product.idStrore === idChain;
     }));
   }
 
-  //суммарная скдика всех товаров в корзине в процентах
-  getAllDiscountInPercent():number{
+  // суммарная скдика всех товаров в корзине в процентах
+  getAllDiscountInPercent(): number {
     return this.culcDiscountInPercent(this.lines);
   }
 
-  //суммарная скдика товаров в корзине по выбранной сети в процентах
-  getAllDiscountByChainInPercent(idChain: number):number{
-    return this.culcDiscountInPercent(this.lines.filter(line=>{
+  // суммарная скдика товаров в корзине по выбранной сети в процентах
+  getAllDiscountByChainInPercent(idChain: number): number {
+    return this.culcDiscountInPercent(this.lines.filter(line => {
       return line.product.idStrore === idChain;
     }));
   }
 
-  //генерация JSON итогового списка для PDF-----------------------------------
+  // генерация JSON итогового списка для PDF-----------------------------------
   generateJsonListPDF() {
     let pdf = {};
     let chainSort = {};

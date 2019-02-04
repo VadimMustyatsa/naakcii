@@ -3,13 +3,13 @@ import {FoodsStorageService} from '../Storage/foods.storage.service';
 import {Storag} from '../Storage/foods.storage.model';
 import {Observer} from 'rxjs/Observer';
 import {SharedState, SHARED_STATE, MODES} from '../../product-selection/sharedState.model';
-import {SessionStorageService} from "../services/session-storage.service";
+import {SessionStorageService} from '../services/session-storage.service';
 
 @Injectable()
 export class Chain {
   public lines: ChainLine[];
   public itemAllCount: number = 0;
-  public chainAverageDiscount = 0;    //средний процент скидки по всем сетям
+  public chainAverageDiscount = 0;    // средний процент скидки по всем сетям
 
   constructor(private chainService: FoodsStorageService,
               private sessionStorageService: SessionStorageService,
