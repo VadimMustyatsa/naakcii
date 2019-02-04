@@ -1,5 +1,8 @@
 package naakcii.by.api.subcategory;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +13,7 @@ import naakcii.by.api.config.ApiConfigConstants;
 
 import java.util.List;
 
+@Api(description = "REST API для сущности Subcategory")
 @RestController
 @RequestMapping({"/subcategories"})
 public class SubcategoryController {
@@ -22,7 +26,10 @@ public class SubcategoryController {
     }
 
     @GetMapping(path = "/{categoryId}", produces = ApiConfigConstants.API_V_2_0)
-    public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(@PathVariable("categoryId") Long categoryId) {
+    @ApiOperation("Возвращает список всех подкатегорий заданного id товара")
+    public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(
+            @ApiParam(value = "Id категории товара", required = true)
+            @PathVariable("categoryId") Long categoryId) {
         return subcategoryService.getAllSubcategoriesByCategoryId(categoryId);
     }
 }
