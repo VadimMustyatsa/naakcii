@@ -1,0 +1,20 @@
+<div class="total-line finalizeFooter wrapper"
+  [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+  [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+  [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+  [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches"
+  [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
+  <div class="empty-large">Итого:</div>
+  <div class="item-position tablet-none">{{cart.lines.length + undiscount.length}}</div>
+  <div class="item-quantity"></div>
+  <div class="item-whole-price tablet-none">
+    <span *ngIf="getAllPriceBase() > 0">{{getAllPriceBase()| number:"1.2-2"}}</span>
+    <span *ngIf="getAllPriceBase() == 0">нет данных</span>
+  </div>
+  <div class="item-discount tablet-none">{{getAllDiscountInMoney()| currency: "BYN":
+    "code-narrow"}}
+  </div>
+  <div class="item-discount-price allTotalPrice">{{getAllPriceDiscont() | currency: "BYN": "code-narrow"}}</div>
+  <div class="empty-small"></div>
+</div>
+  

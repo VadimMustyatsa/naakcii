@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
-import {RestDataService} from "../services/rest-data.service";
+import {RestDataService} from '../services/rest-data.service';
 
 @Injectable()
 export class FoodsStorageService {
@@ -26,6 +26,3 @@ export class FoodsStorageService {
       });
   }
 }
-
-
-

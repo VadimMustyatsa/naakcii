@@ -13,7 +13,7 @@ export interface Product {
   name: string;
   picture: string;
   price: number;
-  startDate: string
+  startDate: string;
   subcategoryId: number;
   type: string;
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RestDataService} from "../services/rest-data.service";
+import {RestDataService} from '../services/rest-data.service';
 
 @Injectable()
 export class FoodsSubCategoriesService {

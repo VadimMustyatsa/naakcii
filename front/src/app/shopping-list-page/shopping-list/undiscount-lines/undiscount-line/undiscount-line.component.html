@@ -1,0 +1,10 @@
+<div class="undiscount-line">
+  <div class="chosen-undiscount-products_item">
+    <div class="item-image" [ngStyle]="setImgStyles('customChoice.svg')"></div>
+    <div class="custom-item-description"> {{item.text}}</div>
+  </div>
+  <div class="chosen-undiscount-products_bin">
+    <a (click)="onRemoveUndiscount()">
+    <i class="material-icons center grey-text text-darken-1 deleteCartLine">delete_forever</i></a>
+  </div>
+</div>

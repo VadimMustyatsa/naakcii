@@ -8,4 +8,3 @@ export class Storag {
   imgLogoSmall: string;
   selected: boolean;
 }
-

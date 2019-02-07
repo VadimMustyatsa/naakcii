@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import * as CONSTANTS from "../../CONSTANTS";
+import * as CONSTANTS from '../../CONSTANTS';
 
 
 @Injectable()
@@ -20,7 +20,7 @@ export class SessionStorageService {
   }
 
   setCartCountToSessionStorage(count) {
-    sessionStorage.setItem(CONSTANTS.STORAGE_KEY_COUNT, JSON.stringify(count))
+    sessionStorage.setItem(CONSTANTS.STORAGE_KEY_COUNT, JSON.stringify(count));
   }
 
   getChainFromSessionStorage() {
@@ -43,7 +43,7 @@ export class SessionStorageService {
     sessionStorage.setItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL, email);
   }
 
-  getSenderEmailOpened():string {
+  getSenderEmailOpened(): string {
     return sessionStorage.getItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL);
   }
 }

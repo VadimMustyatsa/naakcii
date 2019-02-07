@@ -28,7 +28,7 @@ import { ProductStorageListComponent } from './product-selection/product-storage
 import { HttpClientModule } from '@angular/common/http';
 import { FoodsStorageService } from './shared/Storage/foods.storage.service';
 import { Cart } from './shared/cart/cart.model';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingListPageComponent } from './shopping-list-page/shopping-list-page.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakPointCheckService } from './shared/services/breakpoint-check.service';
 import { Chain} from './shared/chain/chain.model';
@@ -50,6 +50,16 @@ import { EmailModalComponent } from './product-selection/email-modal/email-modal
 import { SubscribeService } from "./shared/services/subscribe.service";
 import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
 import { TooltipDirective } from "./shared/directives/tooltip/tooltip.directive";
+import { ShoppingListComponent } from './shopping-list-page/shopping-list/shopping-list.component';
+import { ChainLineComponent } from './shopping-list-page/shopping-list/chain-line/chain-line.component';
+import { CartLineComponent } from './shopping-list-page/shopping-list/cart-line/cart-line.component';
+import { FinalizeFooterComponent } from './shopping-list-page/finalize-footer/finalize-footer.component';
+import { ModalFinalComponent } from './shopping-list-page/modal-final/modal-final.component';
+import { FinalizeFooterButtonComponent } from './shopping-list-page/finalize-footer-button/finalize-footer-button.component';
+import { UndiscountHeaderComponent } from './shopping-list-page/shopping-list/undiscount-header/undiscount-header.component';
+import { UndiscountLinesComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-lines.component';
+import { UndiscountAddComponent } from './shopping-list-page/shopping-list/undiscount-add/undiscount-add.component';
+import { UndiscountLineComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-line/undiscount-line.component';
 
 registerLocaleData(localeFr);
 
@@ -72,13 +82,23 @@ registerLocaleData(localeFr);
     ProductStorageListComponent,
     AppCutStringPipe,
     ProductStorageListComponent,
-    ShoppingListComponent,
+    ShoppingListPageComponent,
     HomeDiplomComponent,
     HomePartnersComponent,
     TooltipDirective,
     ScrollToTopDirective,
     EmailModalComponent,
-    DateGeneratorDirective
+    DateGeneratorDirective,
+    ShoppingListComponent,
+    ChainLineComponent,
+    CartLineComponent,
+    FinalizeFooterComponent,
+    ModalFinalComponent,
+    FinalizeFooterButtonComponent,
+    UndiscountHeaderComponent,
+    UndiscountLinesComponent,
+    UndiscountAddComponent,
+    UndiscountLineComponent
   ],
   imports: [
     BrowserModule,
