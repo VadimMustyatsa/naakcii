@@ -58,10 +58,10 @@ public class ChainProductTest {
 	@Test
 	public void test_chain_product_base_price_is_too_high() {
 		ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.25"), getChainProductType(), getStartDate(), getEndDate());
-        chainProduct.setBasePrice(new BigDecimal("27.50"));
+        chainProduct.setBasePrice(new BigDecimal("77.50"));
 		Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct price is too high:", 1, constraintViolations.size());
-        assertEquals("ChainProduct's base price '27.50' must be lower than '25'.", constraintViolations.iterator().next().getMessage());
+        assertEquals("ChainProduct's base price '77.50' must be lower than '75'.", constraintViolations.iterator().next().getMessage());
 	}
 
 	@Test
@@ -91,10 +91,10 @@ public class ChainProductTest {
 
     @Test
     public void test_chain_product_discount_price_is_too_high() {
-        ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("30.50"), getChainProductType(), getStartDate(), getEndDate());
+        ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("55.50"), getChainProductType(), getStartDate(), getEndDate());
         Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct discount price is too high:", 1, constraintViolations.size());
-        assertEquals("ChainProduct's discount price '30.50' must be lower than '25'.", constraintViolations.iterator().next().getMessage());
+        assertEquals("ChainProduct's discount price '55.50' must be lower than '50'.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test

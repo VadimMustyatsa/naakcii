@@ -5,11 +5,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.logging.log4j.LogManager;
@@ -67,6 +70,12 @@ public class DataParserImplTest {
 														   "test" + File.separator +
 														   "resources" + File.separator + 
 														   "Test_chain_products.xlsx";
+	private static final String TEST_FILE_WITH_CHAIN_PRODUCTS = "src" + File.separator + 
+			   													"test" + File.separator +
+			   													"resources" + File.separator + 
+			   													"testcases" + File.separator +
+			   													"prostore" + File.separator +
+			   													"2018_02_08_14.xlsx";
 	private static final String SHEET_WITH_BASIC_CHAIN_PRODUCT_TYPES = "Basic_chain_product_types";
 	private static final String SHEET_WITH_BASIC_CATEGORIES = "Basic_categories";
 	private static final String SHEET_WITH_BASIC_CHAINS = "Basic_chains";
@@ -124,7 +133,16 @@ public class DataParserImplTest {
 	}
 	
 	@Test
-	public void test_create_countries() {
+	public void test_create_countries() throws InterruptedException {
+		//dataParser.parseChainProducts(TEST_FILE_WITH_CHAIN_PRODUCTS, "prostore");
+		//Query q1 = testEntityManager.getEntityManager().createQuery("Select count(*) from Product p");
+		//System.out.println(q1.getSingleResult());
+		//Query q2 = testEntityManager.getEntityManager().createQuery("Select count(*) from ChainProduct cp");
+		//System.out.println(q2.getSingleResult());
+		//BigDecimal bd = new BigDecimal("7.995").setScale(2, RoundingMode.HALF_UP);
+		//BigDecimal bd1 = new BigDecimal("7.725").setScale(2, RoundingMode.HALF_UP);
+		//System.out.println(bd);
+		//System.out.println(bd1);
 		//dataParser.parseBasicData(UnitOfMeasure.class);
 		//dataParser.parseBasicData();
 		//dataParser.parseChainProducts(FILE_WITH_CHAIN_PRODUCTS, "almi");

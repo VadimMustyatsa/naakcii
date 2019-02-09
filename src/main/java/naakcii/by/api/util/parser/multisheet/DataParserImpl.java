@@ -1012,7 +1012,6 @@ public class DataParserImpl implements DataParser{
 								}
 							}
 						} else {
-							chainProduct.setProduct(product);
 							logger.error("Source: '{}'. Sheet: '{}'. Row number '{}'. Target instances: '{}' and '{}'. Chain synonym: '{}'. Exception(s) has occurred during the validation of new instance of '{}'. See validation exception(s) below.", 
 									file, sheet.getSheetName(), row.getRowNum(), Product.class.getName(), ChainProduct.class.getName(), chainSynonym, Product.class.getName());
 							productParsingResult.increaseNumberOfUnsavedInstances();

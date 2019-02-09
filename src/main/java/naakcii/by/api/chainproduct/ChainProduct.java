@@ -95,7 +95,7 @@ public class ChainProduct implements Serializable {
     	message = "ChainProduct's base price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
-    	value = "25", 
+    	value = "75", 
     	inclusive = true,
     	message = "ChainProduct's base price '${validatedValue}' must be lower than '{value}'."
     )
@@ -114,7 +114,7 @@ public class ChainProduct implements Serializable {
     	message = "ChainProduct's discount price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
-        value = "25", 
+        value = "50", 
         inclusive = true,
         message = "ChainProduct's discount price '${validatedValue}' must be lower than '{value}'."
     )
