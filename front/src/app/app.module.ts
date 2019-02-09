@@ -41,7 +41,7 @@ import { HomePartnersComponent } from './home-page/home-partners/home-partners.c
 import { PdfGeneratorService } from './shared/services/pdf-generator.service';
 import { AppRouterModule } from './shared/routing/router.module';
 import { FinalizePageGuard } from './shared/guards/finalize-page.guard';
-import { TooltipDirective } from './shared/directives/tooltip.directive';
+import { TooltipDirective } from './shared/directives/tooltip/tooltip.directive';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { UndiscountService } from './shared/services/undiscount.service';
 import { RestDataService } from './shared/services/rest-data.service';
