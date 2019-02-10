@@ -7,11 +7,13 @@ import naakcii.by.api.util.slack.SlackNotification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -25,26 +27,34 @@ public class DataParserTask {
     private SlackNotification slackNotification;
     private ChainRepository chainRepository;
     private DataParser dataParser;
-    private Environment env;
+
+    @Value("${ftp.action.data.path}")
+    private String dataPath;
+
+    @Value("${ftp.action.data.folder.name}")
+    private String dataFolder;
+
+    @Value("${ftp.action.log.path}")
+    private String logFolder;
 
     @Autowired
     public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepositor,
-                          DataParser dataParser, Environment env) {
+                          DataParser dataParser) {
         this.slackNotification = slackNotification;
         this.chainRepository = chainRepositor;
         this.dataParser = dataParser;
-        this.env = env;
     }
 
-    @Scheduled(cron = "0 15 3 * * *")
+    @Scheduled(cron = "* 0/30 * * * *")
     public void parsingTask() {
         logger.info("Parsing start:");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy_MM_dd");
-        StringBuilder fileHomePath = getHomePath();
+        StringBuilder fileHomePath = new StringBuilder(dataPath);
         slackNotification.sendMessageToNotificationsChannel("_*Parsing start:*_");
         List<String> synonyms = chainRepository.getAllSynonyms();
-        slackNotification.sendMessageToNotificationsChannel("Chain list: _" + synonyms + "_");
+        slackNotification.sendMessageToNotificationsChannel("Found chains: _"
+                + synonyms.size() + "_ List of chains: _" + synonyms + "_");
         for (String chainSynonym : synonyms) {
             try {
                 logger.info("Scan folder: " + chainSynonym);
@@ -52,7 +62,7 @@ public class DataParserTask {
                 StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
                 currentChainFolderPath.append(chainSynonym)
                         .append(File.separator)
-                        .append(env.getProperty("ftp.action.data.folder.name"))
+                        .append(dataFolder)
                         .append(File.separator);
                 File folder = new File(currentChainFolderPath.toString());
                 File[] folderFiles = folder.listFiles();
@@ -65,30 +75,31 @@ public class DataParserTask {
                             slackNotification.sendMessageToNotificationsChannel("Next file was parsed: `" + file.getName() + "`");
                             List<ParsingResult<?>> parsingResults = dataParser.parseChainProducts(file.getPath(), chainSynonym);
                             parsingResults.forEach((ParsingResult<?> result) ->
-                                    slackNotification.sendCodeSnippetToNotificationsChannel(result.toString()));
+                                    saveAndNotifyParsingResult(result.toString(), file.getName()));
                         } else {
                             logger.info("Next file was skipped: " + file.getName());
-                            slackNotification.sendMessageToNotificationsChannel("Next file was skipped: " + file.getName());
                         }
                     }
                 }
             } catch (Exception e) {
-                slackNotification.sendMessageToNotificationsChannel("Parsing task terminated: " + e.getMessage());
+                slackNotification.sendMessageToNotificationsChannel("Parsing task was terminated: " + e.getMessage());
                 logger.info(e.getMessage());
             }
         }
     }
 
-    private StringBuilder getHomePath() {
-        StringBuilder homePath = new StringBuilder();
-        String osName = System.getProperty("os.name");
-        if (osName.toLowerCase().startsWith("windows")) {
-            homePath.append(env.getProperty("ftp.action.data.windows.home.path"))
-                    .append(File.separator);
-        } else if (osName.toLowerCase().startsWith("linux")) {
-            homePath.append(env.getProperty("ftp.action.data.linux.home.path"))
-                    .append(File.separator);
+    private void saveAndNotifyParsingResult(String result, String filename) {
+        String logFileName = filename.replaceAll("\\.", "_");
+        File file = new File(logFolder + logFileName + ".log");
+        try (
+                Writer writer = new FileWriter(file)
+        ) {
+            writer.write(result);
+            slackNotification.sendCodeSnippetToNotificationsChannel(file);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            slackNotification.sendMessageToNotificationsChannel(e.getMessage());
         }
-        return homePath;
+
     }
 }
