@@ -2,6 +2,7 @@ package naakcii.by.api.util.slack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,23 +21,28 @@ import java.net.URI;
 public class SlackNotification {
 
     private static final Logger logger = LogManager.getLogger(SlackNotification.class);
-    private static final String NOTIFICATION_WEBHOOK = "https://hooks.slack.com/services/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";
-    private static final String BOT_TOKEN = "xoxb-311663550839-528317188997-WbtXTzeafDhZynpilj3LEFZu";
-    private static final String SNIPPET_URL = "https://slack.com/api/files.upload";
-    private static final String SNIPPET_CHANNEL = "notifications";
+    private static final String SLACK_FILE_UPLOAD_URL = "https://slack.com/api/files.upload";
+    private static final String SLACK_CHAT_POST_MESSAGE_URL = "https://slack.com/api/chat.postMessage";
+
+    @Value("${slack.bot.oauth.token}")
+    private String botToken;
+
+    @Value("${slack.notification.channel}")
+    private String notificationChannel;
 
     public void sendMessageToNotificationsChannel(String message) {
-        sendMessageToSlackWebHook(message, NOTIFICATION_WEBHOOK);
-    }
-
-    private void sendMessageToSlackWebHook(String message, String webHook) {
         try {
-            String body = String.format("{\"text\":\"%s\"}", message);
+            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_CHAT_POST_MESSAGE_URL)
+                    .queryParam("token", botToken)
+                    .queryParam("channel", notificationChannel)
+                    .queryParam("text", message)
+                    .build()
+                    .toUri();
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-            HttpEntity<String> entity = new HttpEntity<String>(body, headers);
-            restTemplate.exchange(webHook, HttpMethod.POST, entity, String.class);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -44,9 +50,9 @@ public class SlackNotification {
 
     public void sendCodeSnippetToNotificationsChannel(File snippet) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(SNIPPET_URL)
-                    .queryParam("token", BOT_TOKEN)
-                    .queryParam("channels", SNIPPET_CHANNEL)
+            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_FILE_UPLOAD_URL)
+                    .queryParam("token", botToken)
+                    .queryParam("channels", notificationChannel)
                     .build()
                     .toUri();
             RestTemplate restTemplate = new RestTemplate();
