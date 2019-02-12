@@ -38,14 +38,14 @@ public class DataParserTask {
     private String logFolder;
 
     @Autowired
-    public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepositor,
+    public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepository,
                           DataParser dataParser) {
         this.slackNotification = slackNotification;
-        this.chainRepository = chainRepositor;
+        this.chainRepository = chainRepository;
         this.dataParser = dataParser;
     }
 
-    @Scheduled(cron = "* 0/30 * * * *")
+    @Scheduled(cron = "0 0/30 * * * *")
     public void parsingTask() {
         logger.info("Parsing start:");
         Calendar calendar = Calendar.getInstance();
@@ -53,18 +53,17 @@ public class DataParserTask {
         StringBuilder fileHomePath = new StringBuilder(dataPath);
         slackNotification.sendMessageToNotificationsChannel("_*Parsing start:*_");
         List<String> synonyms = chainRepository.getAllSynonyms();
-        slackNotification.sendMessageToNotificationsChannel("Found chains: _"
-                + synonyms.size() + "_ List of chains: _" + synonyms + "_");
+        slackNotification.sendMessageToNotificationsChannel("_ List of chains: _" + synonyms + "_");
         for (String chainSynonym : synonyms) {
             try {
-                logger.info("Scan folder: " + chainSynonym);
-                slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_");
                 StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
                 currentChainFolderPath.append(chainSynonym)
                         .append(File.separator)
                         .append(dataFolder)
                         .append(File.separator);
                 File folder = new File(currentChainFolderPath.toString());
+                logger.info("Scan folder: " + chainSynonym);
+                slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_ `(" + folder + ")`");
                 File[] folderFiles = folder.listFiles();
                 if (folderFiles != null) {
                     for (File file : folderFiles) {
