@@ -50,15 +50,14 @@ public class SlackNotification {
 
     public void sendCodeSnippetToNotificationsChannel(File snippet) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_FILE_UPLOAD_URL)
-                    .queryParam("token", botToken)
-                    .queryParam("channels", notificationChannel)
-                    .build()
-                    .toUri();
+            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_FILE_UPLOAD_URL).build().toUri();
             RestTemplate restTemplate = new RestTemplate();
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
             body.add("file", new FileSystemResource(snippet));
-            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, new HttpHeaders());
+            body.add("token", botToken);
+            body.add("channels", notificationChannel);
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
             restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
         } catch (Exception e) {
             logger.error(e.getMessage());

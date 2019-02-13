@@ -76,6 +76,7 @@ public class DataParserTask {
                             parsingResults.forEach((ParsingResult<?> result) ->
                                     saveAndNotifyParsingResult(result.toString(), file.getName()));
                         } else {
+                            slackNotification.sendMessageToNotificationsChannel("Next file was skipped: `" + file.getName() + "`");
                             logger.info("Next file was skipped: " + file.getName());
                         }
                     }
