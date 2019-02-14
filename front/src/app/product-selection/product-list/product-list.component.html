@@ -5,7 +5,6 @@
      [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
      [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div *ngIf="isVisibleProd()">
-    
     <div class="food-cards">
         <div *ngFor="let curFood of foodList">
           <app-action-product-card [product]="curFood" (openModal)="openModal()">

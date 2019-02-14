@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit,EventEmitter} from '@angular/core';
+import {Component, Inject, OnInit, EventEmitter} from '@angular/core';
 import {MaterializeAction} from "angular2-materialize";
 
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import {Observable} from 'rxjs/Observable';
-import {FoodList} from '../../shared/foodList/foods.foodList.model';
+// import {FoodList} from '../../shared/foodList/foods.foodList.model';
+import {ChainProduct} from '../../shared/model/chain-product.model';
 import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service';
 import {FoodsStorageService} from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
@@ -18,7 +19,7 @@ import {BreakPointCheckService} from '../../shared/services/breakpoint-check.ser
 
 })
 export class ProductListComponent implements OnInit {
-  foodList: FoodList[] = [];
+  foodList: ChainProduct[] = [];
   selectedSubCatListID = [];
   countLoadCard = 0;
   firstLoadedCard = 12;
@@ -32,8 +33,11 @@ export class ProductListComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
-
+  ngDoCheck() {
+    // console.log('ngDoCheck() ProductListComponent');
+  }
   ngOnInit() {
+    console.log('ngOnInit() ProductListComponent');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
@@ -51,15 +55,16 @@ export class ProductListComponent implements OnInit {
             this.isNextCard = false;
             this.foodList.length = 0;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
+              console.log(productList);
               productList.map(product => {
                 if (!this.checkDuplicate(this.foodList, product)) {
                   this.foodList.push(product);
                 }
               });
-              if (productList.length == this.firstLoadedCard) {
+              if (productList.length === this.firstLoadedCard) {
                 this.isNextCard = true;
                 this.countLoadCard += this.firstLoadedCard;
-                if (this.countVisibleProd() < this.firstLoadedCard) {  //необходимо догрузить
+                if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
                   this.updateFoodList();
                 }
               } else {
@@ -81,26 +86,29 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
+    // console.log('isVisibleProd() ProductListComponent');
     let isProduct = false;
     this.foodList.map(food => {
       this.chainLst.lines.map(chain => {
-        if (chain.chain.id === food.idStrore) {
+        if (chain.chain.id === food.chainId) {
           if (chain.chain.selected) {
             isProduct = true;
           }
         }
       });
     });
+    // console.log(isProduct);
     return isProduct;
   }
-  //--------------------------------------------------
+  // --------------------------------------------------
 
-  //считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
+  // считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
   countVisibleProd() {
+    console.log('countVisibleProd() ProductListComponent');
     let countProduct = 0;
     this.foodList.map(food => {
       this.chainLst.lines.map(chain => {
-        if (chain.chain.id === food.idStrore) {
+        if (chain.chain.id === food.chainId) {
           if (chain.chain.selected) {
             countProduct += 1;
           }
@@ -109,10 +117,11 @@ export class ProductListComponent implements OnInit {
     });
     return countProduct;
   }
-  //-----------------------------------------------------
+  // -----------------------------------------------------
 
-  //проверяем есть ли хоть одна выбранная сеть-----------
+  // проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
+    console.log('isCheckedChain() ProductListComponent');
     let isChain = false;
     this.chainLst.lines.map(chain => {
       if (chain.chain.selected) {
@@ -121,25 +130,26 @@ export class ProductListComponent implements OnInit {
     });
     return isChain;
   }
-  //-----------------------------------------------------
+  // -----------------------------------------------------
 
-  //Догружаем следующую порцию карточек------------------
+  // Догружаем следующую порцию карточек------------------
   updateFoodList() {
+    console.log('updateFoodList() ProductListComponent');
     if (!this.isNextCard) {
       return;
     }
     this.isNextCard = false;
-    let first = this.countLoadCard;
-    let last = this.countLoadCard + this.loadedCard;
+    const first = this.countLoadCard;
+    const last = this.countLoadCard + this.loadedCard;
     this.showLoadingCard = true;
     this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
       productList.map(product => {
         this.foodList.push(product);
       });
-      if (productList.length == this.loadedCard) {
+      if (productList.length === this.loadedCard) {
         this.isNextCard = true;
         this.countLoadCard += this.loadedCard;
-        if (this.countVisibleProd() < this.firstLoadedCard) {  //необходимо догрузить
+        if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
           this.updateFoodList();
         }
       } else {
@@ -148,10 +158,10 @@ export class ProductListComponent implements OnInit {
       this.showLoadingCard = false;
     });
   }
-  //-----------------------------------------------------
+  // -----------------------------------------------------
   checkDuplicate(foodList, product) {
-    return foodList.some(el => el.id === product.id)
-  };
+    return foodList.some(el => el.id === product.id );
+  }
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal() {

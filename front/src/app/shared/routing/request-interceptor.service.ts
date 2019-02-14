@@ -11,7 +11,7 @@ export class RequestInterceptorService implements HttpInterceptor {
 
     let request = req.clone({
       url: `${environment.baseUrl}/api/${req.url}`,
-      setHeaders: {
+        setHeaders: {
         Authorization: 'Accept=application/vnd.naakcii.api-v2.0+json'
       }
     });

@@ -1,4 +1,4 @@
-<div *ngIf="isVisibleChain(product.idStrore)" class="foodCard"
+<div *ngIf="isVisibleChain()" class="foodCard"
     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"

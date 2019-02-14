@@ -18,7 +18,7 @@ export class ProductsTotalComponent implements OnInit {
           el.prevObject[0].querySelector('.arrowCollapsibleLite').innerHTML = 'keyboard_arrow_down';
       },
       onClose: (el) => {
-        if( el.prevObject[0]) {
+        if ( el.prevObject[0]) {
           el.prevObject[0].querySelector('.arrowCollapsibleLite').innerHTML = 'keyboard_arrow_right';
         }
       }
@@ -30,7 +30,7 @@ export class ProductsTotalComponent implements OnInit {
   ngOnInit() { }
 
   deleteFoodCard(curFood: CartLine) {
-    this.cart.removeLine(curFood.product.id);
+    this.cart.removeLine(curFood.product.productId);
   }
   subItem(curFood: CartLine) {
     if (curFood.quantity > 1) {

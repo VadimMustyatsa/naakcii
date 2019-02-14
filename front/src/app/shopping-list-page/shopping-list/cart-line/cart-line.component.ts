@@ -30,7 +30,7 @@ export class CartLineComponent implements OnInit {
   }
 
   public deleteCartLine(): void {
-    this.cart.removeLine(this.curCartline.product.id);
+    this.cart.removeLine(this.curCartline.product.productId);
     this.delItem.emit();
   }
 

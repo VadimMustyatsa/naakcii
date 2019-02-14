@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, Output,OnInit} from '@angular/core';
-import {FoodList} from '../../../shared/foodList/foods.foodList.model';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import {ChainProduct} from '../../../shared/model/chain-product.model';
 import {FoodsStorageService} from '../../../shared/Storage/foods.storage.service';
 import {Cart} from '../../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../../shared/chain/chain.model';
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
-import {SessionStorageService} from "../../../shared/services/session-storage.service";
+import {SessionStorageService} from '../../../shared/services/session-storage.service';
 
 @Component({
   selector: 'app-action-product-card',
@@ -13,22 +13,24 @@ import {SessionStorageService} from "../../../shared/services/session-storage.se
   styleUrls: ['./action-product-card.component.scss'],
   providers: [FoodsStorageService]
 })
-export class ActionProductCardComponent implements OnInit{
+export class ActionProductCardComponent implements OnInit {
   public selectAmount: number;
 
   nameMaxWidth = 80;
 
-  @Input() product: FoodList;
+  @Input() product: ChainProduct;
 
   @Output() openModal: EventEmitter<void> = new EventEmitter();
 
-  constructor(public  chainLst: Chain,
+  constructor(public chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
               private cart: Cart, private sessionStorageService: SessionStorageService ) {
   }
 
   ngOnInit() {
     this.selectAmount = 1;
+    // console.log(this.product);
+    // console.log(this.chainLst);
   }
 
   getStorageByID(id: number): ChainLine {
@@ -55,7 +57,7 @@ export class ActionProductCardComponent implements OnInit{
     if (this.emailSenderIsNotOpened) {this.openModal.emit(); }
   }
 
-  get emailSenderIsNotOpened (){
+  get emailSenderIsNotOpened() {
     return !this.sessionStorageService.getSenderEmailOpened();
   }
 
@@ -79,15 +81,16 @@ export class ActionProductCardComponent implements OnInit{
   }
 
   // проверяем выделена ли сеть данной карточки в фильтре сетей
-  isVisibleChain(idStrore: number) {
+  isVisibleChain() {
     let selected = false;
     this.chainLst.lines.map(chain => {
       if (chain.chain.selected) {
-        if (chain.chain.id === idStrore) {
+        if (chain.chain.id === this.product.chainId) {
           selected = true;
         }
       }
     });
+    // console.log(`isVisibleChain() ActionProductCardComponent ${selected}`);
     return selected;
   }
 }
