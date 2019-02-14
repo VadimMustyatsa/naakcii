@@ -61,7 +61,8 @@ export class Cart {
   private culcDiscountInMoney(cartLineList: CartLine[]): number {
     return cartLineList.reduce((curDiscount, line) => {
       if (line.product.discount > 0) {
-          return curDiscount + (line.product.allPrice * line.product.discount * line.quantity / 100);
+          // return curDiscount + (line.product.allPrice * line.product.discount * line.quantity / 100);
+          return curDiscount + (line.product.allPrice - line.product.totalPrice) * line.quantity ;
       } else {
         return curDiscount;
       }
