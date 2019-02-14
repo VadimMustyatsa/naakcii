@@ -29,24 +29,22 @@ export class ActionProductCardComponent implements OnInit {
 
   ngOnInit() {
     this.selectAmount = 1;
-    // console.log(this.product);
-    // console.log(this.chainLst);
   }
 
   getStorageByID(id: number): ChainLine {
     return this.chainLst.lines.find(x => x.chain.id === id);
   }
 
-  getNameStorage(id: number): String {
-    if (this.getStorageByID(id)) {
-      return this.getStorageByID(id).chain.name;
+  getNameStorage(): String {
+    if (this.getStorageByID(this.product.chainId)) {
+      return this.getStorageByID(this.product.chainId).chain.name;
     }
     return 'unknown';
   }
 
-  getImgStorage(id: number): String {
-    if (this.getStorageByID(id)) {
-      return this.getStorageByID(id).chain.imgLogoSmall;
+  getImgStorage(): String {
+    if (this.getStorageByID(this.product.chainId)) {
+      return this.getStorageByID(this.product.chainId).chain.imgLogoSmall;
     }
     return 'unknown';
   }
@@ -71,9 +69,9 @@ export class ActionProductCardComponent implements OnInit {
     this.selectAmount += 1;
   }
 
-  setImgStyles(pict) {
+  setImgStyles() {
     return {
-      'background-image': `url("assets/images/Products/${pict.img}")`,
+      'background-image': `url("assets/images/Products/${this.product.picture}")`,
       'background-size': 'contain',
       'background-repeat': 'no-repeat',
       'background-position': 'center'
@@ -90,7 +88,6 @@ export class ActionProductCardComponent implements OnInit {
         }
       }
     });
-    // console.log(`isVisibleChain() ActionProductCardComponent ${selected}`);
     return selected;
   }
 }

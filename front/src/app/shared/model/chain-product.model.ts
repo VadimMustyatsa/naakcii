@@ -22,12 +22,13 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
                     tooltip: string};
 
   constructor(_chainProduct: FoodList,  private idCategory: number) {
+    // console.log(_chainProduct);
     this.productId = _chainProduct['id'];
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];
-    this.picture = _chainProduct['img'];
-    this.basePrice = _chainProduct['allPrice'];
-    this.discountPrice = _chainProduct['totalPrice'];
+    this.picture = _chainProduct['picture'].replace('%', '%25');
+    this.basePrice = _chainProduct['price'];
+    this.discountPrice = _chainProduct['discountPrice'];
     this.discountPercent = _chainProduct['discount'];
     this.unitOfMeasure = this.generateMeasure(); // генерируется пока API 1
     this.chainProductType = this.generatechainProductType(_chainProduct['discount']);
@@ -42,7 +43,28 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
       case  A_DISCOUNT_PERCENT:
         return true;
       case A_ONE_PLUS_ONE:
+        return false;
+    }
+  }
+  // есть ли у акции для данного товара иконка
+  get isIcon(): boolean {
+    switch (this.chainProductType.name) {
+      case  A_GOOD_PRICE:
         return true;
+      case  A_DISCOUNT_PERCENT:
+        return false;
+      case A_ONE_PLUS_ONE:
+        return false;
+    }
+  }
+  get textIcon(): string {
+    switch (this.chainProductType.name) {
+      case  A_GOOD_PRICE:
+        return 'thumb_up';
+      case  A_DISCOUNT_PERCENT:
+        return `${this.discountPercent}%`;
+      case A_ONE_PLUS_ONE:
+        return `1+1`;
     }
   }
   getSumWithDiscount(quantity: number): number {

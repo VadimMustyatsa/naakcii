@@ -5,13 +5,13 @@
     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div class="card sticky-action">
-    <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles(product)">
-      <div *ngIf="product.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
-        {{product.discount}}%
+    <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
+      <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3">
+        {{product.textIcon}}
       </div>
-      <div *ngIf="product.discount === 0"
+      <div *ngIf="product.isIcon"
           class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
-        <i tooltip="Товар на акции «Хорошая цена», размер скидки сетью не публикуется" class="material-icons">thumb_up</i>
+        <i [tooltip]="product.chainProductType.tooltip" class="material-icons">{{product.textIcon}}</i>
       </div>
     </div>
 
@@ -24,18 +24,18 @@
       </div>
       <div class="foodStorage">
         <div class="grey-text">
-          {{getNameStorage(product.idStrore)}}
+          {{getNameStorage()}}
         </div>
         <div>
-          <img src="{{getImgStorage(product.idStrore)}}">
+          <img src="{{getImgStorage()}}">
         </div>
       </div>
-      <div *ngIf="product.discount > 0" class="foodAllPrice">
-        {{product.allPrice | number:"1.2-2"}} руб.
+      <div *ngIf="product.isConsiderBasePrice" class="foodAllPrice">
+        {{product.basePrice | number:"1.2-2"}} руб.
       </div>
-      <div *ngIf="product.discount == 0" class="foodAllPriceNo">&nbsp;</div>
+      <div *ngIf="!product.isConsiderBasePrice" class="foodAllPriceNo">&nbsp;</div>
       <div class="foodTotalPrice">
-        {{product.totalPrice | number:"1.2-2"}} руб.
+        {{product.discountPrice | number:"1.2-2"}} руб.
       </div>
 
       <div class="amountItem center">

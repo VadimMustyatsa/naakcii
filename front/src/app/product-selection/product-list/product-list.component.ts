@@ -37,7 +37,7 @@ export class ProductListComponent implements OnInit {
     // console.log('ngDoCheck() ProductListComponent');
   }
   ngOnInit() {
-    console.log('ngOnInit() ProductListComponent');
+    // console.log('ngOnInit() ProductListComponent');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
@@ -55,7 +55,7 @@ export class ProductListComponent implements OnInit {
             this.isNextCard = false;
             this.foodList.length = 0;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
-              console.log(productList);
+              // console.log(productList);
               productList.map(product => {
                 if (!this.checkDuplicate(this.foodList, product)) {
                   this.foodList.push(product);
@@ -159,8 +159,8 @@ export class ProductListComponent implements OnInit {
     });
   }
   // -----------------------------------------------------
-  checkDuplicate(foodList, product) {
-    return foodList.some(el => el.id === product.id );
+  checkDuplicate(foodList: ChainProduct[], product: ChainProduct) {
+    return foodList.some(el => el.chainId === product.chainId );
   }
 
   modalActions = new EventEmitter<string|MaterializeAction>();
