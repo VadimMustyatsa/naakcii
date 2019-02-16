@@ -33,12 +33,12 @@ export class ProductsTotalComponent implements OnInit {
     this.cart.removeLine(curFood.product.productId);
   }
   subItem(curFood: CartLine) {
-    if (curFood.quantity > 1) {
-      this.cart.updateQuantity(curFood.product, Number(curFood.quantity - 1));
+    if (curFood.quantity > curFood.product.changeStep * 1.001) {
+      this.cart.updateQuantity(curFood.product, Number(curFood.quantity - curFood.product.changeStep));
     }
   }
   addItem(curFood: CartLine) {
-    this.cart.updateQuantity(curFood.product, Number(curFood.quantity + 1));
+    this.cart.updateQuantity(curFood.product, Number(curFood.quantity + curFood.product.changeStep));
   }
 
   getStorageByID(id: number): ChainLine {

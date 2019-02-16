@@ -28,7 +28,7 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectAmount = 1;
+    this.selectAmount = this.product.changeStep;
   }
 
   getStorageByID(id: number): ChainLine {
@@ -51,7 +51,7 @@ export class ActionProductCardComponent implements OnInit {
 
   selectFood() {
     this.cart.addLine(this.product, this.selectAmount);  // добавляем в корзину
-    this.selectAmount = 1;  // сбрасываем на 1 на карточке
+    this.selectAmount = this.product.changeStep;  // сбрасываем на 1 на карточке
     if (this.emailSenderIsNotOpened) {this.openModal.emit(); }
   }
 
@@ -60,13 +60,13 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   subItem() {
-    if (this.selectAmount > 1) {
-      this.selectAmount -= 1;
+    if (this.selectAmount > this.product.changeStep * 1.001) {
+      this.selectAmount -= this.product.changeStep;
     }
   }
 
   addItem() {
-    this.selectAmount += 1;
+    this.selectAmount += this.product.changeStep;
   }
 
   setImgStyles() {

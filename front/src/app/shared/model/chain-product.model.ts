@@ -21,6 +21,8 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
   chainProductType: {name: string,
                     tooltip: string};
 
+  changeStep: number;
+
   constructor(_chainProduct: FoodList,  private idCategory: number) {
     // console.log(_chainProduct);
     this.productId = _chainProduct['id'];
@@ -33,6 +35,7 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
     this.unitOfMeasure = this.generateMeasure(); // генерируется пока API 1
     this.chainProductType = this.generatechainProductType(_chainProduct['discount']);
     this.endDate = this.genereateEndDate();
+    this.changeStep = this.generateChangeStep();
   }
 
   // есть ли у товара базовая цена
@@ -82,6 +85,21 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
     return this.basePrice * this.discountPercent * quantity / 100;
   }
 
+  // определение шага изменения количества товара
+  generateChangeStep() {
+    let baseKf = 1;
+    if (this.unitOfMeasure === MEASURE_KG) {
+      baseKf = 0.1;
+    }
+    switch (this.chainProductType.name) {
+      case  A_GOOD_PRICE:
+        return baseKf;
+      case  A_DISCOUNT_PERCENT:
+        return baseKf;
+      case A_ONE_PLUS_ONE:
+        return baseKf * 2;
+    }
+  }
   // на основе категории присваивает весовой или штучный !убрать после включения API 2!
   generateMeasure() {
     if ((this.idCategory === 1002) ||
