@@ -26,4 +26,8 @@ export class FinalizeFooterButtonComponent implements OnInit {
       this.openModal.emit();
     }
   }
+  public openModalEv(): void {
+    if (this.cart.getCount() > 0) {
+    }
+  }
 }

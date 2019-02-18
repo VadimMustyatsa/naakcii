@@ -39,7 +39,7 @@
   <div class="item-discount-price">
     <span>{{(curCartline.product.totalPrice*curCartline.quantity)| currency: "BYN": "code-narrow"}}</span><br>
   </div>
-  <div class="promotional-deadline tablet-none">{{discountMonth | date : "d MMMM"}}</div>
+  <div class="promotional-deadline tablet-none"></div>
   <div class="bin-item">
     <a class="deleteCartLine" (click)="deleteCartLine()">
       <i class="material-icons grey-text text-darken-1">delete_forever</i>
