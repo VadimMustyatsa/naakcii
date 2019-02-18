@@ -19,7 +19,6 @@ export class FoodsFoodListService {
         return productList.map(product => {
           product['picture'] = product['picture'].replace('%', '%25');
           // {...product, picture: product['picture'], boxWeight: '', selectAmount: ''};
-          console.log(product['discount']);
           if (product['discount'] > 0) {
             _allPrice = product['discountPrice'] / (1 - product['discount'] / 100);
             // console.log(_allPrice);
