@@ -4,7 +4,6 @@
 .toolbar_logo{
   height:40px;
   width: 216px;
-  margin: auto;
   align-self: center;
 }
 
@@ -15,4 +14,8 @@ display: flex;
 .container{
   display: flex;
   align-content: center;
+}
+a {
+  margin: auto;
+  display: block;
 }
