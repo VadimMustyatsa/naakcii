@@ -1,3 +1,21 @@
 .navbar-fixed {
   z-index: 1000;
 }
+.toolbar_logo{
+  height:40px;
+  width: 216px;
+  align-self: center;
+}
+
+.nav-wrapper{
+display: flex;
+}
+
+.container{
+  display: flex;
+  align-content: center;
+}
+a {
+  margin: auto;
+  display: block;
+}

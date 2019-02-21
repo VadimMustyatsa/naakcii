@@ -27,9 +27,10 @@
         <label for="email">
         </label>
         <input id="email" type="email" name="email" [(ngModel)]="email"
-               required
-               minlength="6"
-               pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
+              placeholder="Введите email"
+              required
+              minlength="6"
+              pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
       </div>
       <div class="modal-item">
         <div class="modal-item-content">

@@ -36,7 +36,7 @@ export class RestDataService {
 
   get statistics(): Observable<Statistics> {
     // return this.http.get<Statistics>('/statistics');
-    return this.http.get<Statistics>('statistic');
+    return this.http.get<Statistics>('statistics');
   }
 
   addSubscriber(body) {

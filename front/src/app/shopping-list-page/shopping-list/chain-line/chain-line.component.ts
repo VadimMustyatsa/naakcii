@@ -16,7 +16,7 @@ export class ChainLineComponent implements OnInit {
   @Input() chain: ChainLine;
 
   constructor(public cart: Cart,
-    public breakPointCheckService: BreakPointCheckService) { 
+    public breakPointCheckService: BreakPointCheckService) {
 
     }
 

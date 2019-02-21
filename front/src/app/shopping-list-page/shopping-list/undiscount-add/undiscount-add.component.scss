@@ -40,3 +40,8 @@
         }
     }
 }
+input[type=text]:not(.broser-default):focus{
+  border-bottom: 1px solid #656565;
+  -webkit-box-shadow: 0 1px 0 0 #656565;
+  box-shadow: 0 1px 0 0 #656565;
+}

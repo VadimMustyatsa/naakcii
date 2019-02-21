@@ -12,8 +12,7 @@
   </div>
   <div class="pdf-btn">
     <a href="javascript:void(0);" (click)="generatePDF()"
-        class="deep-orange waves-effect waves-light btn button-icon-pdf"
-        (click)="openModal()">
+        class="deep-orange waves-effect waves-light btn button-icon-pdf">
       <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Скачать</span>
       <div [ngStyle]="{'background-image':'url(assets/images/pdf.svg)'}"></div>
     </a>
