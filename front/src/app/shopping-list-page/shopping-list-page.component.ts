@@ -27,8 +27,7 @@ export class ShoppingListPageComponent implements OnInit {
   constructor(private titleService: Title,
               public cart: Cart,
               public breakPointCheckService: BreakPointCheckService
-    ) { console.log('Constructor ShoppingListPageComponent');
-  }
+    ) { }
 
   @HostListener('click', ['$event.target'])
   onClick(btn) {
