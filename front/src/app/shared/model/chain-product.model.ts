@@ -37,7 +37,6 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
     this.endDate = this.genereateEndDate();
     this.changeStep = this.generateChangeStep();
   }
-
   // есть ли у товара базовая цена
   get isConsiderBasePrice(): boolean {
     switch (this.chainProductType.name) {
@@ -60,6 +59,13 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
         return false;
     }
   }
+
+  get isFractionalPart(): boolean {
+    if (this.unitOfMeasure === MEASURE_KG) {
+      return true; }
+    return false;
+  }
+
   get textIcon(): string {
     switch (this.chainProductType.name) {
       case  A_GOOD_PRICE:
@@ -70,6 +76,8 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
         return `1+1`;
     }
   }
+
+
   getSumWithDiscount(quantity: number): number {
     return this.discountPrice * quantity;
   }
