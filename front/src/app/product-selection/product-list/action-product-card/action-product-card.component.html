@@ -42,7 +42,8 @@
         <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
           <i class="material-icons">remove</i>
         </a>
-        <span class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure}}</span>
+        <span *ngIf="product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure | lowercase}}</span>
+        <span *ngIf="!product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount}} {{product.unitOfMeasure | lowercase}}</span>
         <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
           <i class="material-icons">add</i>
         </a>
