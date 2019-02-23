@@ -9,34 +9,45 @@ import {SessionStorageService} from '../services/session-storage.service';
 export class Cart {
   public lines: CartLine[];
   public storageCount: {
-    itemCount: number;
-    cartAllPrice: number;
-    cartTotalPrice: number;
-    cartAverageDiscount: number;
+    sumAllBasePrice: number;
+    sumAllDiscountPrice: number;
+    sumDiscountInMoney: number;
+    sumDiscountInPercent: number;
+    // cartAverageDiscount: number;
   };
-  public itemCount: number;
-  public cartAllPrice: number ;
-  public cartTotalPrice: number;
-  public cartAverageDiscount: number;
+  private sumAllBasePrice: number ;
+  private sumAllDiscountPrice: number;
+  private sumDiscountInMoney: number ;
+  private sumDiscountInPercent: number;
+  // public cartAverageDiscount: number;
 
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
-  this.lines = this.sessionStorageService.getCartFromSessionStorage() || [];
+  const linesJSON = this.sessionStorageService.getCartFromSessionStorage() || [];
+  this.lines = linesJSON.map(line => {
+    line.__proto__ = CartLine.prototype;
+    line.product.__proto__ = ChainProduct.prototype;
+    return line;
+  });
+
   this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
       {
-        itemCount: 0,
         cartAllPrice: 0,
-        cartTotalPrice: 0,
-        cartAverageDiscount: 0
+        sumAllDiscountPrice: 0,
+        sumDiscountInMoney: 0,
+        sumDiscountInPercent: 0,
+        // cartAverageDiscount: 0
       };
-  this.itemCount = this.storageCount.itemCount;
-  this.cartAllPrice = this.storageCount.cartAllPrice;    // без скидок
-  this.cartTotalPrice = this.storageCount.cartTotalPrice;  // с учетом скидок
-  this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    // средний процент скидки по всем карточкам
+  this.sumAllBasePrice = this.storageCount.sumAllBasePrice;    // без скидок
+  this.sumAllDiscountPrice = this.storageCount.sumAllDiscountPrice;  // с учетом скидок
+  this.sumDiscountInMoney = this.storageCount.sumDiscountInMoney;
+  this.sumDiscountInPercent = this.storageCount.sumDiscountInPercent;
+  // this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    // средний процент скидки по всем карточкам
   }
 
    // суммарная стоимость товаров у которых известна цена до скидки
    private culcSumBasePrice(cartLineList: CartLine[]): number {
-    return cartLineList.reduce((sum, line) => {
+    return cartLineList.reduce((sum: number, line: CartLine) => {
+      // console.log(line);
       if (line.product.isConsiderBasePrice) {
         return sum + line.product.getSumBasePrice(line.quantity);
       } else {
@@ -47,6 +58,7 @@ export class Cart {
 
   // суммарная стоимость с учетом скидки
   private culcSumDiscountPrice(cartLineList: CartLine[]): number {
+    // console.log(cartLineList);
     return cartLineList.reduce((sum, line) => {
       return sum + line.product.getSumDiscountPrice(line.quantity);
     }, 0);
@@ -109,7 +121,7 @@ export class Cart {
 
   // цена без учета скидки всех товаров в корзине, где известна начальная цена
   getAllPriceBase() {
-    return this.culcSumBasePrice(this.lines);
+    return this.sumAllBasePrice;
   }
 
   // цена без учета скидки по выбранной сети, где известна начальная цена
@@ -121,7 +133,7 @@ export class Cart {
 
   // стоимость с учетом скидки всех товаров в карзине
   getAllPriceDiscount() {
-    return this.culcSumDiscountPrice(this.lines);
+    return this.sumAllDiscountPrice;
   }
 
   // стоимость с учетом скидки по выбранной сети
@@ -133,7 +145,7 @@ export class Cart {
 
   // суммарная скдика всех товаров в корзине в деньгах
   getAllDiscountInMoney(): number {
-    return this.culcDiscountInMoney(this.lines);
+    return this.sumDiscountInMoney;
   }
 
   // суммарная скдика всех товаров в корзине по выбранной сети в деньгах
@@ -145,7 +157,7 @@ export class Cart {
 
   // суммарная скдика всех товаров в корзине в процентах
   getAllDiscountInPercent(): number {
-    return this.culcDiscountInPercent(this.lines);
+    return  this.sumDiscountInPercent;
   }
 
   // суммарная скдика товаров в корзине по выбранной сети в процентах
@@ -209,34 +221,28 @@ export class Cart {
   // -------------------------------------------------------------------------
 
   clear() {
-    // this.lines = [];
-    // this.itemCount = 0;
-    // this.cartAllPrice = 0;
-    // this.cartTotalPrice = 0;
+    this.lines = [];
+    this.sumAllBasePrice = 0;
+    this.sumAllDiscountPrice = 0;
+    this.sumDiscountInMoney = 0;
+    this.sumDiscountInPercent = 0;
     // this.cartAverageDiscount = 0;
   }
 
   private recalculate() {
-    // this.itemCount = 0;
-    // this.cartAllPrice = 0;
-    // this.cartTotalPrice = 0;
+    this.sumAllBasePrice = this.culcSumBasePrice(this.lines);
+    this.sumAllDiscountPrice = this.culcSumDiscountPrice(this.lines);
+    this.sumDiscountInMoney = this.culcDiscountInMoney(this.lines);
+    this.sumDiscountInPercent = this.culcDiscountInPercent(this.lines);
     // this.cartAverageDiscount = 0;
-    // this.lines.forEach(l => {
-    //   this.itemCount += l.quantity;
-    //   if (l.product.allPrice > 0) {
-    //     this.cartAllPrice += (l.quantity * l.product.allPrice);
-    //   } else {
-    //     this.cartAllPrice += (l.quantity * l.product.totalPrice);
-    //   }
-    //   this.cartTotalPrice += (l.quantity * l.product.totalPrice);
-    // });
-    // this.sessionStorageService.setCartToSessionStorage(this.lines);
-    // this.sessionStorageService.setCartCountToSessionStorage({
-    //   itemCount: this.itemCount,
-    //   cartAllPrice: this.cartAllPrice,
-    //   cartTotalPrice: this.cartTotalPrice,
-    //   cartAverageDiscount: this.cartAverageDiscount,
-    // });
+    this.sessionStorageService.setCartToSessionStorage(this.lines);
+    this.sessionStorageService.setCartCountToSessionStorage({
+      cartAllPrice: this.sumAllBasePrice,
+      cartTotalPrice: this.sumAllDiscountPrice,
+      sumDiscountInMoney: this.sumDiscountInMoney,
+      sumDiscountInPercent: this.sumDiscountInPercent
+    // cartAverageDiscount: this.cartAverageDiscount,
+    });
   }
 }
 
@@ -245,8 +251,8 @@ export class CartLine {
   constructor(public product: ChainProduct,
               public quantity: number,
               public comment: string) {
+                // console.log(this.product);
   }
-
   get lineTotal() {
     return this.product.getSumWithDiscount(this.quantity);
   }
