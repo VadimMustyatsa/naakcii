@@ -30,6 +30,9 @@ public class StatisticsServiceImpl implements StatisticsService {
                                           Integer averageDiscountPercentage,
                                           Calendar creationDate) {
         Statistics statistics = statisticsRepository.findFirstByOrderByIdAsc();
+        if (statistics == null) {
+            statistics = new Statistics();
+        }
         statistics.setChainQuantity(chainQuantity);
         statistics.setDiscountedProducts(discountedProducts);
         statistics.setAverageDiscountPercentage(averageDiscountPercentage);
