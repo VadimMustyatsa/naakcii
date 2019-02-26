@@ -33,11 +33,8 @@ export class ProductListComponent implements OnInit {
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
-  ngDoCheck() {
-    // console.log('ngDoCheck() ProductListComponent');
-  }
+
   ngOnInit() {
-    // console.log('ngOnInit() ProductListComponent');
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.SELECT_SUBCATEGORY) {
         this.foodList = [];
@@ -55,7 +52,6 @@ export class ProductListComponent implements OnInit {
             this.isNextCard = false;
             this.foodList.length = 0;
             this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
-              // console.log(productList);
               productList.map(product => {
                 if (!this.checkDuplicate(this.foodList, product)) {
                   this.foodList.push(product);
@@ -86,7 +82,6 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
-    // console.log('isVisibleProd() ProductListComponent');
     let isProduct = false;
     this.foodList.map(food => {
       this.chainLst.lines.map(chain => {
@@ -97,14 +92,12 @@ export class ProductListComponent implements OnInit {
         }
       });
     });
-    // console.log(isProduct);
     return isProduct;
   }
   // --------------------------------------------------
 
   // считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
   countVisibleProd() {
-    console.log('countVisibleProd() ProductListComponent');
     let countProduct = 0;
     this.foodList.map(food => {
       this.chainLst.lines.map(chain => {
@@ -121,7 +114,6 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
-    console.log('isCheckedChain() ProductListComponent');
     let isChain = false;
     this.chainLst.lines.map(chain => {
       if (chain.chain.selected) {
@@ -134,7 +126,6 @@ export class ProductListComponent implements OnInit {
 
   // Догружаем следующую порцию карточек------------------
   updateFoodList() {
-    console.log('updateFoodList() ProductListComponent');
     if (!this.isNextCard) {
       return;
     }

@@ -39,6 +39,4 @@ export class CartLineComponent implements OnInit {
   public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
-
-  // public getSumBasePrice(): number{}
 }

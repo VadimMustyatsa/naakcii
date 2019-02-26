@@ -16,7 +16,6 @@ export class FoodsFoodListService {
     selectedSubCatListID.map(id => {
       listID += String(id.id) + ',';
     });
-    // console.log(this.categoryService.getSelectCategory().id);
     const dataGet = {SubcategoryList: listID, first: first, last: last};
     return this.restDataService.getProducts(dataGet)
       .map(productList => {
