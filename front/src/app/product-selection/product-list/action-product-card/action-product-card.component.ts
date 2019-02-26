@@ -6,6 +6,7 @@ import {Chain, ChainLine} from '../../../shared/chain/chain.model';
 import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.service';
 
 import {SessionStorageService} from '../../../shared/services/session-storage.service';
+import roundTo2Digits from '../../../shared/utils/roundTo2Digits';
 
 @Component({
   selector: 'app-action-product-card',
@@ -28,7 +29,7 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectAmount = this.product.changeStep;
+    this.selectAmount = this.product.startAmount;
   }
 
   getStorageByID(id: number): ChainLine {
@@ -51,7 +52,7 @@ export class ActionProductCardComponent implements OnInit {
 
   selectFood() {
     this.cart.addLine(this.product, this.selectAmount);  // добавляем в корзину
-    this.selectAmount = this.product.changeStep;  // сбрасываем на 1 на карточке
+    this.selectAmount = this.product.startAmount;  // сбрасываем на 1 на карточке
     if (this.emailSenderIsNotOpened) {this.openModal.emit(); }
   }
 
@@ -60,13 +61,13 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   subItem() {
-    if (this.selectAmount > this.product.changeStep * 1.001) {
-      this.selectAmount -= this.product.changeStep;
+    if (this.selectAmount > this.product.changeStep) {
+      this.selectAmount = roundTo2Digits(this.selectAmount - this.product.changeStep);
     }
   }
 
   addItem() {
-    this.selectAmount += this.product.changeStep;
+    this.selectAmount = roundTo2Digits(this.selectAmount + this.product.changeStep);
   }
 
   setImgStyles() {
