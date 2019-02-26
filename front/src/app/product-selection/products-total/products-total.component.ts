@@ -4,6 +4,8 @@ import {Cart, CartLine} from '../../shared/cart/cart.model';
 import {Chain, ChainLine} from '../../shared/chain/chain.model';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
 
+import roundTo2Digits from '../../shared/utils/roundTo2Digits';
+
 @Component({
   selector: 'app-foods-total-items',
   templateUrl: './products-total.component.html',
@@ -27,18 +29,19 @@ export class ProductsTotalComponent implements OnInit {
   constructor(public  chainLst: Chain, public breakPointCheckService: BreakPointCheckService,
               public cart: Cart) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   deleteFoodCard(curFood: CartLine) {
     this.cart.removeLine(curFood.product.productId);
   }
   subItem(curFood: CartLine) {
-    if (curFood.quantity > curFood.product.changeStep * 1.001) {
-      this.cart.updateQuantity(curFood.product, Number(curFood.quantity - curFood.product.changeStep));
+    if (curFood.quantity > curFood.product.changeStep) {
+      this.cart.updateQuantity(curFood.product, roundTo2Digits(curFood.quantity - curFood.product.changeStep));
     }
   }
   addItem(curFood: CartLine) {
-    this.cart.updateQuantity(curFood.product, Number(curFood.quantity + curFood.product.changeStep));
+    this.cart.updateQuantity(curFood.product, roundTo2Digits(curFood.quantity + curFood.product.changeStep));
   }
 
   getStorageByID(id: number): ChainLine {
