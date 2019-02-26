@@ -3,6 +3,7 @@ export default function setImgStyles(pict: string): {} {
       'background-image': `url("assets/images/Products/${pict}")`,
       'background-size': 'contain',
       'background-repeat': 'no-repeat',
-      'background-position': 'center'
+      'background-position': 'center',
+      'margin': '10px'
     };
   }
