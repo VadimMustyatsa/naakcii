@@ -17,14 +17,13 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
   discountPercent: number;
   discountPrice: number;
   startDate: number;
-  endDate: number;
+  endDateMS: number;
   chainProductType: {name: string,
                     tooltip: string};
 
   changeStep: number;
 
   constructor(_chainProduct: FoodList,  private idCategory: number) {
-    // console.log(_chainProduct);
     this.productId = _chainProduct['id'];
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];
@@ -34,7 +33,7 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
     this.discountPercent = _chainProduct['discount'];
     this.unitOfMeasure = this.generateMeasure(); // генерируется пока API 1
     this.chainProductType = this.generatechainProductType(_chainProduct['discount']);
-    this.endDate = this.genereateEndDate();
+    this.endDateMS = this.genereateEndDate();
     this.changeStep = this.generateChangeStep();
   }
   // есть ли у товара базовая цена
@@ -77,8 +76,21 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
     }
   }
 
+  get startAmount(): number {
+    if (this.chainProductType.name === A_ONE_PLUS_ONE) {
+      return 2;
+    }
+    return 1;
+  }
+
+  get endDate() {
+    return new Date(this.endDateMS);
+  }
 
   getSumWithDiscount(quantity: number): number {
+    if (this.chainProductType.name === A_ONE_PLUS_ONE) {
+      return this.discountPrice * quantity / 2;
+    }
     return this.discountPrice * quantity;
   }
   getSumBasePrice(quantity: number): number {
@@ -131,6 +143,6 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
   }
   genereateEndDate() {
     const currentDate = new Date();
-    return currentDate.getTime() + (Math.floor(Math.random() * 14 ) + 2) * 60 * 60 * 24;
+    return currentDate.getTime() + (Math.round(Math.random() * 14 ) + 2) * 60 * 60 * 24 * 1000;
   }
 }
