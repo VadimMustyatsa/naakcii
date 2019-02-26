@@ -16,7 +16,7 @@
         <span>Итог:</span>
       </div>
       <div>
-        <span>{{cart.cartTotalPrice | number:"1.2-2"}} руб.</span>
+        <span>{{cart.getAllPriceDiscount() | number:"1.2-2"}} руб.</span>
       </div>
     </li>
 
@@ -28,7 +28,8 @@
             <a class="btn-floating btn teal grey" (click)="subItem(curFood)">
               <i class="material-icons">remove</i>
             </a>
-            <span class="grey-text text-darken-2">{{curFood.quantity | number:"1.1"}}</span>
+            <span *ngIf="curFood.product.isFractionalPart" class="grey-text text-darken-2">{{curFood.quantity | number:"1.1"}}  {{curFood.product.unitOfMeasure | lowercase}}</span>
+            <span *ngIf="!curFood.product.isFractionalPart" class="grey-text text-darken-2">{{curFood.quantity}}  {{curFood.product.unitOfMeasure | lowercase}}</span>
             <a class="btn-floating btn teal grey" (click)="addItem(curFood)">
               <i class="material-icons">add</i>
             </a>
@@ -58,7 +59,7 @@
               Торговая сеть
             </div>
             <div class="col m6">
-              "{{getNameStorage(curFood.product.idStrore)}}"
+              "{{getNameStorage(curFood.product.chainId)}}"
             </div>
           </div>
           <div class="actionPrice row">
@@ -66,15 +67,20 @@
               Цена на акции
             </div>
             <div class="col m6">
-              {{curFood.product.totalPrice | number:"1.2-2"}} руб
+              {{curFood.product.discountPrice | number:"1.2-2"}} руб
             </div>
           </div>
           <div class="discount row">
             <div class="col m6">
-              % скидки
+              скидка
             </div>
             <div class="col m6">
-              {{curFood.product.discount}} %
+              <div *ngIf="!curFood.product.isIcon">
+                {{curFood.product.textIcon}}
+              </div>
+              <div *ngIf="curFood.product.isIcon" class="icon">
+                  <i class="tiny material-icons">{{curFood.product.textIcon}}</i>
+              </div>
             </div>
           </div>
           <div class="itemSum row">
@@ -82,7 +88,7 @@
               Итог
             </div>
             <div class="col m6">
-              {{(curFood.product.totalPrice * curFood.quantity) | number:"1.2-2"}} руб
+              {{ curFood.product.getSumWithDiscount(curFood.quantity) | number:"1.2-2"}} руб
             </div>
           </div>
 
