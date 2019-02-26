@@ -20,7 +20,8 @@
     <a class="btn-floating btn teal grey tablet-none" (click)="subItem()">
       <i class="material-icons">remove</i>
     </a>
-    <span>{{curCartline.quantity}}</span>
+    <span *ngIf="product.isFractionalPart">{{curCartline.quantity | number:"1.1"}}  {{product.unitOfMeasure | lowercase}}</span>
+    <span *ngIf="!product.isFractionalPart">{{curCartline.quantity}}  {{product.unitOfMeasure | lowercase}}</span>
     <a class="btn-floating btn teal grey tablet-none" (click)="addItem()">
       <i class="material-icons">add</i>
     </a>
@@ -28,18 +29,21 @@
 
   <div class="item-whole-price tablet-none">
     <span *ngIf="product.isConsiderBasePrice">{{product.getSumBasePrice(curCartline.quantity)| currency: "BYN": "code-narrow"}}</span>
-    <span *ngIf="!product.isConsiderBasePrice">нет данных</span>
   </div>
   <div class="item-discount tablet-none">
-    <span *ngIf="!product.isConsiderBasePrice">&ndash;</span>
     <span *ngIf="product.isConsiderBasePrice">{{product.getSumDiscountInMoney(curCartline.quantity) | currency: "BYN": "code-narrow"}}</span><br>
     <span *ngIf="product.isConsiderBasePrice">({{product.discountPercent}} %)</span>
-
+    <span *ngIf="!product.isConsiderBasePrice">
+      <i *ngIf="product.isIcon" class="material-icons">{{product.textIcon}}</i>
+      <i *ngIf="!product.isIcon">"{{product.textIcon}}"</i>
+    </span>
   </div>
   <div class="item-discount-price">
     <span>{{product.getSumWithDiscount(curCartline.quantity)| currency: "BYN": "code-narrow"}}</span><br>
   </div>
-  <div class="promotional-deadline tablet-none"></div>
+  <div class="promotional-deadline tablet-none">
+      {{ product.endDate|date:'d MMMM' }}
+  </div>
   <div class="bin-item">
     <a class="deleteCartLine" (click)="deleteCartLine()">
       <i class="material-icons grey-text text-darken-1">delete_forever</i>
