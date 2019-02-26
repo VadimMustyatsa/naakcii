@@ -8,18 +8,11 @@ import {SessionStorageService} from '../services/session-storage.service';
 @Injectable()
 export class Cart {
   public lines: CartLine[];
-  public storageCount: {
-    sumAllBasePrice: number;
-    sumAllDiscountPrice: number;
-    sumDiscountInMoney: number;
-    sumDiscountInPercent: number;
-    // cartAverageDiscount: number;
-  };
+
   private sumAllBasePrice: number ;
   private sumAllDiscountPrice: number;
   private sumDiscountInMoney: number ;
   private sumDiscountInPercent: number;
-  // public cartAverageDiscount: number;
 
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
   const linesJSON = this.sessionStorageService.getCartFromSessionStorage() || [];
@@ -28,26 +21,12 @@ export class Cart {
     line.product.__proto__ = ChainProduct.prototype;
     return line;
   });
-
-  this.storageCount = this.sessionStorageService.getCartCountFromSessionStorage() ||
-      {
-        cartAllPrice: 0,
-        sumAllDiscountPrice: 0,
-        sumDiscountInMoney: 0,
-        sumDiscountInPercent: 0,
-        // cartAverageDiscount: 0
-      };
-  this.sumAllBasePrice = this.storageCount.sumAllBasePrice;    // без скидок
-  this.sumAllDiscountPrice = this.storageCount.sumAllDiscountPrice;  // с учетом скидок
-  this.sumDiscountInMoney = this.storageCount.sumDiscountInMoney;
-  this.sumDiscountInPercent = this.storageCount.sumDiscountInPercent;
-  // this.cartAverageDiscount = this.storageCount.cartAverageDiscount;    // средний процент скидки по всем карточкам
+  this.recalculate();
   }
 
    // суммарная стоимость товаров у которых известна цена до скидки
-   private culcSumBasePrice(cartLineList: CartLine[]): number {
+  private culcSumBasePrice(cartLineList: CartLine[]): number {
     return cartLineList.reduce((sum: number, line: CartLine) => {
-      // console.log(line);
       if (line.product.isConsiderBasePrice) {
         return sum + line.product.getSumBasePrice(line.quantity);
       } else {
@@ -58,9 +37,8 @@ export class Cart {
 
   // суммарная стоимость с учетом скидки
   private culcSumDiscountPrice(cartLineList: CartLine[]): number {
-    // console.log(cartLineList);
     return cartLineList.reduce((sum, line) => {
-      return sum + line.product.getSumDiscountPrice(line.quantity);
+      return sum + line.product.getSumWithDiscount(line.quantity);
     }, 0);
   }
 
@@ -226,7 +204,6 @@ export class Cart {
     this.sumAllDiscountPrice = 0;
     this.sumDiscountInMoney = 0;
     this.sumDiscountInPercent = 0;
-    // this.cartAverageDiscount = 0;
   }
 
   private recalculate() {
@@ -234,15 +211,7 @@ export class Cart {
     this.sumAllDiscountPrice = this.culcSumDiscountPrice(this.lines);
     this.sumDiscountInMoney = this.culcDiscountInMoney(this.lines);
     this.sumDiscountInPercent = this.culcDiscountInPercent(this.lines);
-    // this.cartAverageDiscount = 0;
     this.sessionStorageService.setCartToSessionStorage(this.lines);
-    this.sessionStorageService.setCartCountToSessionStorage({
-      cartAllPrice: this.sumAllBasePrice,
-      cartTotalPrice: this.sumAllDiscountPrice,
-      sumDiscountInMoney: this.sumDiscountInMoney,
-      sumDiscountInPercent: this.sumDiscountInPercent
-    // cartAverageDiscount: this.cartAverageDiscount,
-    });
   }
 }
 
@@ -251,7 +220,6 @@ export class CartLine {
   constructor(public product: ChainProduct,
               public quantity: number,
               public comment: string) {
-                // console.log(this.product);
   }
   get lineTotal() {
     return this.product.getSumWithDiscount(this.quantity);
