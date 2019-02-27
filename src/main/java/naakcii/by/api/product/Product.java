@@ -156,4 +156,28 @@ public class Product implements Serializable {
 		result.append("\t").append("isActive - " + isActive + ".");
     	return result.toString();
     }
+
+    public String getSubcategoryName() {
+		return subcategory.getName();
+	}
+
+	public void setSubcategoryName(String subcategoryName) {
+		subcategory.setName(subcategoryName);
+	}
+
+	public String getCategoryName() {
+		return subcategory.getCategory().getName();
+	}
+
+	public void setCategoryName(String categoryName) {
+		subcategory.getCategory().setName(categoryName);
+	}
+
+	public String getUnitOfMeasureName() {
+		return unitOfMeasure.getName();
+	}
+
+	public String getCountryName() {
+		return countryOfOrigin.getName();
+	}
 }

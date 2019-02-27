@@ -29,4 +29,14 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     			.map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
     			.collect(Collectors.toList());
     }
+
+    @Override
+    public List<Subcategory> getAllSubcategoriesByCategoryName(String categoryName) {
+        return subcategoryRepository.findByCategoryName(categoryName);
+    }
+
+    @Override
+    public Subcategory findByName(String subcategoryName) {
+        return subcategoryRepository.findByName(subcategoryName);
+    }
 }
