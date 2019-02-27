@@ -1,10 +1,10 @@
 package naakcii.by.api.unitofmeasure;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
-public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long>{
+import java.util.Optional;
 
-	Optional<UnitOfMeasure> findByName(String unitOfMeasureName);
+public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long> {
+
+    Optional<UnitOfMeasure> findByNameIgnoreCase(String unitOfMeasureName);
 }
