@@ -1,17 +1,17 @@
-<div *ngIf="isVisibleChain(product.idStrore)" class="foodCard"
+<div *ngIf="isVisibleChain()" class="foodCard"
     [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
     [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
     [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
     [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div class="card sticky-action">
-    <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles(product)">
-      <div *ngIf="product.discount > 0" class="foodDiscount deep-orange center-align white-text z-depth-3">
-        {{product.discount}}%
+    <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
+      <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3">
+        {{product.textIcon}}
       </div>
-      <div *ngIf="product.discount === 0"
+      <div *ngIf="product.isIcon"
           class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
-        <i tooltip="Товар на акции «Хорошая цена», размер скидки сетью не публикуется" class="material-icons">thumb_up</i>
+        <i [tooltip]="product.chainProductType.tooltip" class="material-icons">{{product.textIcon}}</i>
       </div>
     </div>
 
@@ -24,25 +24,26 @@
       </div>
       <div class="foodStorage">
         <div class="grey-text">
-          {{getNameStorage(product.idStrore)}}
+          {{getNameStorage()}}
         </div>
         <div>
-          <img src="{{getImgStorage(product.idStrore)}}">
+          <img src="{{getImgStorage()}}">
         </div>
       </div>
-      <div *ngIf="product.discount > 0" class="foodAllPrice">
-        {{product.allPrice | number:"1.2-2"}} руб.
+      <div *ngIf="product.isConsiderBasePrice" class="foodAllPrice">
+        {{product.basePrice | number:"1.2-2"}} руб.
       </div>
-      <div *ngIf="product.discount == 0" class="foodAllPriceNo">&nbsp;</div>
+      <div *ngIf="!product.isConsiderBasePrice" class="foodAllPriceNo">&nbsp;</div>
       <div class="foodTotalPrice">
-        {{product.totalPrice | number:"1.2-2"}} руб.
+        {{product.discountPrice | number:"1.2-2"}} руб.
       </div>
 
       <div class="amountItem center">
         <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
           <i class="material-icons">remove</i>
         </a>
-        <span class="grey-text text-darken-2">{{selectAmount}}</span>
+        <span *ngIf="product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure | lowercase}}</span>
+        <span *ngIf="!product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount}} {{product.unitOfMeasure | lowercase}}</span>
         <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
           <i class="material-icons">add</i>
         </a>
@@ -50,7 +51,7 @@
       </div>
       <div class="endStock">
       <span class="grey-text">
-        Окончание акции: <span appDateGenerator></span>
+        Окончание акции: <span> {{ product.endDate|date:'d MMMM' }}</span>
       </span>
       </div>
     </div>

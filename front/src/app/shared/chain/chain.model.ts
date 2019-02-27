@@ -14,7 +14,7 @@ export class Chain {
   constructor(private chainService: FoodsStorageService,
               private sessionStorageService: SessionStorageService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
-    this.lines = this.sessionStorageService.getChainFromSessionStorage()||[];
+    this.lines = this.sessionStorageService.getChainFromSessionStorage() || [];
     this.chainService.getAll().subscribe(chainList => {
       chainList.map(line => {
         this.addLine(line);

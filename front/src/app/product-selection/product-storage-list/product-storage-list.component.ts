@@ -70,7 +70,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     const num = +this.chainListText.substr(-1);
-    if (!this.cart.cartTotalPrice && num === 0) {
+    if (!this.cart.getAllPriceDiscount() && num === 0) {
       this.overlayElement.nativeElement.style.display = 'block';
       setTimeout(() => this.actionsCollapsible.emit({action: 'collapsible', params: ['open', 0]}), 200);
     }
@@ -103,7 +103,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   }
 
   correctAllChainsCheck() {
-     sessionStorage.setItem('naakciiChainStorage', JSON.stringify(this.chainLst.lines));
+    sessionStorage.setItem('naakciiChainStorage', JSON.stringify(this.chainLst.lines));
     if (this.chainLst.lines.length > 0) {
       let cnt = 0;
       let curChain: Storag;

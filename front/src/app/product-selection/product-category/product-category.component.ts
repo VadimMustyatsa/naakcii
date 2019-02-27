@@ -11,7 +11,7 @@ import {BreakPointCheckService} from "../../shared/services/breakpoint-check.ser
   selector: 'app-foods-group',
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.scss'],
-  providers: [FoodsCategoriesService]
+  // providers: [FoodsCategoriesService]
 })
 export class ProductCategoryComponent implements OnInit {
   categories: Category[];
@@ -55,7 +55,7 @@ export class ProductCategoryComponent implements OnInit {
       touch: true,
       loop: true,
       custom: 'banner'
-    }
+    };
   }
   public myfunc(event: Event) {
     // carouselLoad will trigger this funnction when your load value reaches

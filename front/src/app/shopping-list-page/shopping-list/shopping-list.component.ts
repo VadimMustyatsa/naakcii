@@ -41,8 +41,8 @@ export class ShoppingListComponent implements OnInit {
   private getExistListChain() {
     const chainListExist: ChainLine[] = [];
     this.cart.lines.map(line => {
-      if (isUndefined(chainListExist.find(x => x.chain.id === line.product.idStrore))) {
-        chainListExist.push(this.getStorageByID(line.product.idStrore));
+      if (isUndefined(chainListExist.find(x => x.chain.id === line.product.chainId))) {
+        chainListExist.push(this.getStorageByID(line.product.chainId));
       }
     });
     return chainListExist;

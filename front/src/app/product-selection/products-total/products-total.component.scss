@@ -68,6 +68,8 @@
 .amountItem span {
   font-size: 12px;
   font-weight: bold;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 .collapsItem {
   padding: 0px!important;
@@ -116,6 +118,10 @@
   box-shadow: 0 1px 0 0 #656565;
 }
 /*********************************/
+
+.discount .icon{
+  // transform: scale(0.7);
+}
 
 .isHandset {
   #goFoodsBtn {
