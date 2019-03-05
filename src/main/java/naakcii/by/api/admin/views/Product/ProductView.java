@@ -1,26 +1,39 @@
 package naakcii.by.api.admin.views.Product;
 
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.provider.CallbackDataProvider;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.AbstractStreamResource;
 import naakcii.by.api.admin.MainView;
 import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+@HtmlImport("src/styles.html")
 @Route(value = AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends VerticalLayout {
+
+    private static final String NO_IMAGE = "/images/customProduct.png";
 
     private ProductService productService;
     private ProductForm form;
@@ -32,6 +45,7 @@ public class ProductView extends VerticalLayout {
     private Binder<Product> binder = new Binder<>(Product.class);
 
     private TextField search;
+    private Button addProduct;
 
     @Autowired
     public ProductView(ProductService productService, ProductForm form) {
@@ -39,15 +53,27 @@ public class ProductView extends VerticalLayout {
         this.productService = productService;
         this.form = form;
 
-        this.grid = new Grid<>(Product.class);
+        this.grid = new Grid<>();
+
+        grid.addColumn(new ComponentRenderer<>(product -> {
+            if ((product.getPicture() != null) && !StringUtils.isEmpty(product.getPicture())) {
+                Image image = new Image(product.getPicture(), product.getName());
+                image.setWidth("50px");
+                image.setHeight("50px");
+                return image;
+            } else {
+                Image imageEmpty = new Image(NO_IMAGE, "No image");
+                imageEmpty.setHeight("50px");
+                imageEmpty.setWidth("50px");
+                return imageEmpty;
+            }}
+        ))
+            .setHeader("Изображение");
+        grid.addColumn(Product::getName).setFlexGrow(5).setHeader("Товар");
+        grid.addColumn(Product::getCategoryName).setHeader("Категория");
+        grid.addColumn(Product::getSubcategoryName).setHeader("Подкатегория");
 
         grid.setDataProvider(updateList(productService));
-
-        grid.setColumns("picture", "name", "categoryName", "subcategoryName");
-        grid.getColumnByKey("name").setFlexGrow(5).setHeader("Товар");
-        grid.getColumnByKey("picture").setHeader("Изображение");
-        grid.getColumnByKey("categoryName").setHeader("Категория");
-        grid.getColumnByKey("subcategoryName").setHeader("Подкатегория");
 
         //drag and drop columns order
         grid.setColumnReorderingAllowed(true);
@@ -55,12 +81,24 @@ public class ProductView extends VerticalLayout {
         search = new TextField("Поиск товара");
         search.setValueChangeMode(ValueChangeMode.EAGER);
         search.setPlaceholder("Введите наименование товара");
-        search.setWidth("50%");
+        search.setWidth("400px");
         search.addValueChangeListener(e ->{
             grid.setItems(productService.searchName(e.getValue()));
         });
 
-        add(search, grid);
+        addProduct = new Button("Добавить товар");
+        addProduct.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
+        addProduct.addClickListener(e-> {
+           grid.asSingleSelect().clear();
+            form.setBinder(binder, new Product());
+            binder.addStatusChangeListener(status -> {
+                getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
+            });
+            dialog.open();
+        });
+        HorizontalLayout toolbar = new HorizontalLayout(search, addProduct);
+
+        add(toolbar, grid);
         dialog.add(form);
 
         grid.asSingleSelect().addValueChangeListener(event -> {
@@ -73,6 +111,7 @@ public class ProductView extends VerticalLayout {
         });
 
         setupEventListeners();
+        grid.getDataProvider().refreshAll();
     }
 
     //Lazy loading
@@ -105,11 +144,18 @@ public class ProductView extends VerticalLayout {
 
     private void cancel() {
         getDialog().close();
+        grid.getDataProvider().refreshAll();
     }
 
     private void save() {
         Product product = getProductForm().getProduct();
         product.setSubcategory(getProductForm().getSubcategory());
+        product.setUnitOfMeasure(getProductForm().getUnitOfMeasure().orElse(null));
+        try {
+            binder.writeBean(product);
+        } catch (ValidationException e) {
+            e.printStackTrace();
+        }
         productService.save(product);
         Notification.show(product.getName() + " сохранён");
         closeUpdate();

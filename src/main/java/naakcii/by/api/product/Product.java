@@ -22,7 +22,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
@@ -95,12 +94,7 @@ public class Product implements Serializable {
 	@NotNull(message = "Product must have subcategory.")
 	@Valid
 	private Subcategory subcategory;
-	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	private	Set<
-		@Valid 
-		@NotNull(message = "Product must have list of chainProducts without null elements.") 
-		ChainProduct> chainProducts = new HashSet<ChainProduct>();
+
 	
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")
@@ -121,16 +115,7 @@ public class Product implements Serializable {
 		this.subcategory = subcategory;
 		subcategory.getProducts().add(this);
 	}
-	
-	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive, Subcategory subcategory, Set<ChainProduct> chainProducts) {
-		this.barcode = barcode;
-		this.name = name;
-		this.unitOfMeasure = unitOfMeasure;
-		this.isActive = isActive;
-		this.subcategory = subcategory;
-		this.chainProducts = chainProducts;
-		subcategory.getProducts().add(this);
-	}
+
 	
 	public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + Product.class + ":");
@@ -176,6 +161,13 @@ public class Product implements Serializable {
 	public String getUnitOfMeasureName() {
 		return unitOfMeasure.getName();
 	}
+
+	public void setUnitOfMeasureName(String unitOfMeasureName) {
+	    if(unitOfMeasure == null) {
+	        unitOfMeasure = new UnitOfMeasure();
+        }
+	    unitOfMeasure.setName(unitOfMeasureName);
+    }
 
 	public String getCountryName() {
 		return countryOfOrigin.getName();

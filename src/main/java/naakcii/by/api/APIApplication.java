@@ -12,8 +12,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import naakcii.by.api.util.parser.DataParser;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +22,6 @@ import java.io.IOException;
 @SpringBootApplication
 @EnableScheduling
 public class APIApplication extends SpringBootServletInitializer implements CommandLineRunner {
-
-//    private static final String FILE_WITH_CHAIN_PRODUCTS = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "Test_chain_products.xlsx";
-//
-//	@Autowired
-//	private DataParser dataParser;
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -56,9 +49,6 @@ public class APIApplication extends SpringBootServletInitializer implements Comm
 
     @Override
     public void run(String... args) throws Exception {
-        // TODO Auto-generated method stub
-//        dataParser.parseBasicData();
-//        dataParser.parseChainProducts(FILE_WITH_CHAIN_PRODUCTS, "almi");
         System.out.println("Hello world");
     }
 
