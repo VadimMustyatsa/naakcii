@@ -81,7 +81,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         search = new TextField("Поиск товара");
         search.setValueChangeMode(ValueChangeMode.EAGER);
         search.setPlaceholder("Введите наименование товара");
-        search.setWidth("400px");
+        search.setWidth("50%");
         search.addValueChangeListener(e ->{
             grid.setItems(productService.searchName(e.getValue()));
         });
@@ -97,6 +97,8 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
             dialog.open();
         });
         HorizontalLayout toolbar = new HorizontalLayout(search, addProduct);
+        toolbar.setWidth("100%");
+        addProduct.getStyle().set("margin-left", "auto");
 
         add(toolbar, grid);
         dialog.add(form);
