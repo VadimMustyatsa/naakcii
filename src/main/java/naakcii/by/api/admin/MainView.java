@@ -9,11 +9,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.material.Material;
 import naakcii.by.api.admin.components.AppNavigation;
 import naakcii.by.api.admin.utils.AppConsts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 
 @Route("")
@@ -25,9 +27,9 @@ public class MainView extends VerticalLayout implements RouterLayout {
     private AppNavigation appNavigation;
 
     @Autowired
-    public MainView() {
+    public MainView(@Value("${adminka.token}") String path) {
         setSizeFull();
-        appNavigation = new AppNavigation();
+        appNavigation = new AppNavigation(AppConsts.PAGE_PRODUCT + "/" + path);
         add(appNavigation);
         setHorizontalComponentAlignment(Alignment.CENTER, appNavigation);
     }

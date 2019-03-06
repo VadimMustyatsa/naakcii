@@ -6,8 +6,6 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,20 +16,19 @@ import com.vaadin.flow.data.provider.CallbackDataProvider;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.AbstractStreamResource;
+import com.vaadin.flow.router.*;
 import naakcii.by.api.admin.MainView;
 import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 @HtmlImport("src/styles.html")
 @Route(value = AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
-public class ProductView extends VerticalLayout {
+public class ProductView extends VerticalLayout implements HasUrlParameter<String> {
 
     private static final String NO_IMAGE = "/images/customProduct.png";
 
@@ -46,6 +43,9 @@ public class ProductView extends VerticalLayout {
 
     private TextField search;
     private Button addProduct;
+
+    @Value("${adminka.token}")
+    private String adminkaPath;
 
     @Autowired
     public ProductView(ProductService productService, ProductForm form) {
@@ -173,5 +173,12 @@ public class ProductView extends VerticalLayout {
 
     public ProductForm getProductForm() {
         return form;
+    }
+
+    @Override
+    public void setParameter(BeforeEvent event, String parameter) {
+        if (!parameter.equals(adminkaPath)) {
+            throw new IllegalArgumentException();
+        }
     }
 }

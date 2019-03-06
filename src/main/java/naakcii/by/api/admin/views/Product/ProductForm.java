@@ -69,9 +69,12 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         this.subcategoryService = subcategoryService;
         this.unitOfMeasureService = unitOfMeasureService;
 
+        setSizeFull();
         name = new TextField("Наименование товара");
+        name.setWidth("100%");
 
         picture = new TextField("Адрес картинки");
+        picture.setWidth("50%");
         MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
         upload = new Upload(buffer);
         uploadImage(buffer);
@@ -82,27 +85,34 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         categoryName.addValueChangeListener(event -> {
            subcategoryName.setItems(getAllSubcategoriesNames(event.getValue()));
         });
+        categoryName.setWidth("50%");
         subcategoryName = new ComboBox<>("Подкатегория");
         subcategoryName.addValueChangeListener(event -> {
             subcategory = subcategoryService.findByName(event.getValue());
         });
+        subcategoryName.setWidth("50%");
         HorizontalLayout categories = new HorizontalLayout(categoryName, subcategoryName);
 
         barcode = new TextField("Штрих-код");
+        barcode.setWidth("50%");
         unitOfMeasureName = new ComboBox<>("Единица измерения");
         unitOfMeasureName.setItems(getAllUnitsOfMeasure());
         unitOfMeasureName.addValueChangeListener(e-> {
            unitOfMeasure = unitOfMeasureService.findUnitOfMeasureByName(e.getValue());
         });
+        unitOfMeasureName.setWidth("50%");
         HorizontalLayout layout1 = new HorizontalLayout(barcode, unitOfMeasureName);
 
         manufacturer = new TextField("Производитель");
         manufacturer.setReadOnly(true);
+        manufacturer.setWidth("50%");
         brand = new TextField("Торговая марка");
         brand.setReadOnly(true);
+        brand.setWidth("50%");
         HorizontalLayout layout2 = new HorizontalLayout(manufacturer, brand);
 
         countryOfOrigin = new TextField("Страна происхождения");
+        countryOfOrigin.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
         isActive.setReadOnly(true);
         buttons = new FormButtonsBar();

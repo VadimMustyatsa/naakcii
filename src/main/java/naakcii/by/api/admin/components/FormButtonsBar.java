@@ -19,6 +19,7 @@ public class FormButtonsBar extends HorizontalLayout {
         cancel = new Button("Отменить");
         add(save, cancel, delete);
         setAlignItems(Alignment.STRETCH);
+        getStyle().set("margin-top", "30px");
         save.setEnabled(false);
     }
 
