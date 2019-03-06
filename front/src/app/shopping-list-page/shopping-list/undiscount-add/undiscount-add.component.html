@@ -1,7 +1,7 @@
 <div class="undiscount">
   <div class="item-image" [ngStyle]="setImgStyles('undiscount.png')"></div>
   <div class="input-field undiscount-product-input">
-    <label for="undiscount-products">Дополните список неакционными товарами</label>
+    <label for="undiscount-products">Дополните список товарами без скидки, которые вам нужны</label>
     <input type="text" id="undiscount-products" [(ngModel)]="undiscountProduct" app-scroll-to-top="10000"
             (keyup.enter)="addUndiscountProduct()">
   </div>
