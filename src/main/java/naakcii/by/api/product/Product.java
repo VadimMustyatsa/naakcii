@@ -1,10 +1,7 @@
 package naakcii.by.api.product;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +28,7 @@ import naakcii.by.api.util.annotations.PureSize;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "chainProducts", "manufacturer", "brand", "countryOfOrigin"})
+@EqualsAndHashCode(exclude = {"id", "picture", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -116,6 +113,16 @@ public class Product implements Serializable {
 		subcategory.getProducts().add(this);
 	}
 
+	public Product(ProductDTO productDTO) {
+		this.id = productDTO.getId();
+		this.barcode = productDTO.getBarcode();
+		this.name = productDTO.getName();
+		this.picture = productDTO.getPicture();
+		this.manufacturer = productDTO.getManufacturer();
+		this.brand = productDTO.getBrand();
+		this.isActive = productDTO.getIsActive();
+	}
+
 	
 	public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + Product.class + ":");
@@ -141,35 +148,4 @@ public class Product implements Serializable {
 		result.append("\t").append("isActive - " + isActive + ".");
     	return result.toString();
     }
-
-    public String getSubcategoryName() {
-		return subcategory.getName();
-	}
-
-	public void setSubcategoryName(String subcategoryName) {
-		subcategory.setName(subcategoryName);
-	}
-
-	public String getCategoryName() {
-		return subcategory.getCategory().getName();
-	}
-
-	public void setCategoryName(String categoryName) {
-		subcategory.getCategory().setName(categoryName);
-	}
-
-	public String getUnitOfMeasureName() {
-		return unitOfMeasure.getName();
-	}
-
-	public void setUnitOfMeasureName(String unitOfMeasureName) {
-	    if(unitOfMeasure == null) {
-	        unitOfMeasure = new UnitOfMeasure();
-        }
-	    unitOfMeasure.setName(unitOfMeasureName);
-    }
-
-	public String getCountryName() {
-		return countryOfOrigin.getName();
-	}
 }

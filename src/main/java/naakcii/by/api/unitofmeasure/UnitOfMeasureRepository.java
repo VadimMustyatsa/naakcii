@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long>{
 
-	Optional<UnitOfMeasure> findByNameIgnoreCase(String unitOfMeasureName);
+	UnitOfMeasure findByNameIgnoreCase(String unitOfMeasureName);
 }

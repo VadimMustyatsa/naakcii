@@ -4,6 +4,6 @@ import java.util.Optional;
 
 public interface UnitOfMeasureService {
 
-    Optional<UnitOfMeasure> findUnitOfMeasureByName(String name);
+    UnitOfMeasure findUnitOfMeasureByName(String name);
 
 }

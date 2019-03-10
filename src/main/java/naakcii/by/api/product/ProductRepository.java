@@ -22,5 +22,5 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     @Query("update Product product set product.isActive = false where product.id = :productId")
     int softDelete(@Param("productId") Long productId);
 
-    List<Product> findByNameContaining(String search);
+    List<Product> findByNameContainingOrderByName(String search);
 }

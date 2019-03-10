@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    Page<Product> fetchProducts(int offset, int limit);
+    Page<ProductDTO> fetchProducts(int offset, int limit);
 
     int getProductCount();
 
@@ -14,5 +14,7 @@ public interface ProductService {
 
     void softDelete(Product product);
 
-    List<Product> searchName(String search);
+    List<ProductDTO> searchName(String search);
+
+    Product findProduct(Long id);
 }

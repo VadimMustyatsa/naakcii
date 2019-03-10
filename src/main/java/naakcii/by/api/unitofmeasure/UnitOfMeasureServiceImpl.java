@@ -15,7 +15,7 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
     @Override
-    public Optional<UnitOfMeasure> findUnitOfMeasureByName(String name) {
+    public UnitOfMeasure findUnitOfMeasureByName(String name) {
         return unitOfMeasureRepository.findByNameIgnoreCase(name);
     }
 }

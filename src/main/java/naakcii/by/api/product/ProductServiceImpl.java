@@ -1,30 +1,37 @@
 package naakcii.by.api.product;
 
+import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private ObjectFactory objectFactory;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, ObjectFactory objectFactory) {
         this.productRepository = productRepository;
+        this.objectFactory = objectFactory;
     }
 
     @Override
-    public Page<Product> fetchProducts(int offset, int limit) {
+    public Page<ProductDTO> fetchProducts(int offset, int limit) {
         int page = offset / limit;
-        Pageable pageRequest = PageRequest.of(page, limit);
+        Pageable pageRequest = PageRequest.of(page, limit, Sort.by("name"));
         Page<Product> items = productRepository.findAll(pageRequest);
-        return items;
+
+        return new PageImpl<ProductDTO>(items.stream()
+        .map(product -> new ProductDTO(product))
+        .collect(Collectors.toList()));
     }
 
     @Override
@@ -44,7 +51,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> searchName(String search) {
-        return productRepository.findByNameContaining(search);
+    public List<ProductDTO> searchName(String search) {
+        return productRepository.findByNameContainingOrderByName(search)
+                .stream()
+                .filter(Objects::nonNull)
+                .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Product findProduct(Long id) {
+        return productRepository.findById(id).orElse(null);
     }
 }

@@ -20,13 +20,14 @@ import com.vaadin.flow.router.*;
 import naakcii.by.api.admin.MainView;
 import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.product.ProductDTO;
 import naakcii.by.api.product.ProductService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 @HtmlImport("src/styles.html")
-@Route(value = AppConsts.PAGE_PRODUCT, layout = MainView.class)
+@Route(value = "admin" + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends VerticalLayout implements HasUrlParameter<String> {
 
@@ -34,12 +35,12 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
 
     private ProductService productService;
     private ProductForm form;
-    private Product product;
+    private ProductDTO productDTO;
 
-    private Grid<Product> grid;
+    private Grid<ProductDTO> grid;
 
     private Dialog dialog = new Dialog();
-    private Binder<Product> binder = new Binder<>(Product.class);
+    private Binder<ProductDTO> binder = new Binder<>(ProductDTO.class);
 
     private TextField search;
     private Button addProduct;
@@ -55,9 +56,9 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
 
         this.grid = new Grid<>();
 
-        grid.addColumn(new ComponentRenderer<>(product -> {
-            if ((product.getPicture() != null) && !StringUtils.isEmpty(product.getPicture())) {
-                Image image = new Image(product.getPicture(), product.getName());
+        grid.addColumn(new ComponentRenderer<>(productDTO -> {
+            if ((productDTO.getPicture() != null) && !StringUtils.isEmpty(productDTO.getPicture())) {
+                Image image = new Image(productDTO.getPicture(), productDTO.getName());
                 image.setWidth("50px");
                 image.setHeight("50px");
                 return image;
@@ -69,9 +70,9 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
             }}
         ))
             .setHeader("Изображение");
-        grid.addColumn(Product::getName).setFlexGrow(5).setHeader("Товар");
-        grid.addColumn(Product::getCategoryName).setHeader("Категория");
-        grid.addColumn(Product::getSubcategoryName).setHeader("Подкатегория");
+        grid.addColumn(ProductDTO::getName).setFlexGrow(5).setHeader("Товар");
+        grid.addColumn(ProductDTO::getCategoryName).setHeader("Категория");
+        grid.addColumn(ProductDTO::getSubcategoryName).setHeader("Подкатегория");
 
         grid.setDataProvider(updateList(productService));
 
@@ -88,9 +89,10 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
 
         addProduct = new Button("Добавить товар");
         addProduct.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
+        addProduct.setHeight("70%");
         addProduct.addClickListener(e-> {
            grid.asSingleSelect().clear();
-            form.setBinder(binder, new Product());
+            form.setBinder(binder, new ProductDTO());
             binder.addStatusChangeListener(status -> {
                 getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
             });
@@ -117,7 +119,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     //Lazy loading
-    protected CallbackDataProvider<Product, Void> updateList(ProductService productService) {
+    protected CallbackDataProvider<ProductDTO, Void> updateList(ProductService productService) {
         return DataProvider
                     .fromCallbacks(query -> productService
                                     .fetchProducts(query.getOffset(), query.getLimit()).stream(),
@@ -138,9 +140,10 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
 
     //soft delete
     private void delete() {
-        Product product = getProductForm().getProduct();
+        ProductDTO productDTO = getProductForm().getProductDTO();
+        Product product = productService.findProduct(productDTO.getId());
         productService.softDelete(product);
-        Notification.show(product.getName() + " присвоен статус 'Не активен'");
+        Notification.show(productDTO.getName() + " присвоен статус 'Не активен'");
         closeUpdate();
     }
 
@@ -150,16 +153,18 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     private void save() {
-        Product product = getProductForm().getProduct();
-        product.setSubcategory(getProductForm().getSubcategory());
-        product.setUnitOfMeasure(getProductForm().getUnitOfMeasure().orElse(null));
+        ProductDTO productDTO = getProductForm().getProductDTO();
         try {
-            binder.writeBean(product);
+            binder.writeBean(productDTO);
         } catch (ValidationException e) {
             e.printStackTrace();
         }
+        Product product = new Product(productDTO);
+        product.setSubcategory(getProductForm().getSubcategory());
+        product.setUnitOfMeasure(getProductForm().getUnitOfMeasure());
+        product.setCountryOfOrigin(getProductForm().getCountryOfOrigin());
         productService.save(product);
-        Notification.show(product.getName() + " сохранён");
+        Notification.show(productDTO.getName() + " сохранён");
         closeUpdate();
     }
 

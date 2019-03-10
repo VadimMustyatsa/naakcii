@@ -16,7 +16,10 @@ import naakcii.by.api.admin.components.FormButtonsBar;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.category.CategoryDTO;
 import naakcii.by.api.category.CategoryService;
+import naakcii.by.api.country.Country;
+import naakcii.by.api.country.CountryService;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.product.ProductDTO;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.subcategory.SubcategoryService;
 import naakcii.by.api.unitofmeasure.UnitCode;
@@ -42,9 +45,11 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     private CategoryService categoryService;
     private SubcategoryService subcategoryService;
     private UnitOfMeasureService unitOfMeasureService;
-    private Product product;
+    private CountryService countryService;
+    private ProductDTO productDTO;
     private Subcategory subcategory;
-    private Optional<UnitOfMeasure> unitOfMeasure;
+    private UnitOfMeasure unitOfMeasure;
+    private Country countryOfOrigin;
 
     private TextField name;
     private TextField picture;
@@ -55,7 +60,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     private ComboBox<String> unitOfMeasureName;
     private TextField manufacturer;
     private TextField brand;
-    private TextField countryOfOrigin;
+    private TextField countryOfOriginName;
     private Checkbox isActive;
     private FormButtonsBar buttons;
 
@@ -64,10 +69,11 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
     @Autowired
     public ProductForm(CategoryService categoryService, SubcategoryService subcategoryService,
-                       UnitOfMeasureService unitOfMeasureService) {
+                       UnitOfMeasureService unitOfMeasureService, CountryService countryService) {
         this.categoryService = categoryService;
         this.subcategoryService = subcategoryService;
         this.unitOfMeasureService = unitOfMeasureService;
+        this.countryService = countryService;
 
         setSizeFull();
         name = new TextField("Наименование товара");
@@ -111,13 +117,14 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         brand.setWidth("50%");
         HorizontalLayout layout2 = new HorizontalLayout(manufacturer, brand);
 
-        countryOfOrigin = new TextField("Страна происхождения");
-        countryOfOrigin.setWidth("50%");
+        countryOfOriginName = new TextField("Страна происхождения");
+        countryOfOrigin = countryService.findByName(countryOfOriginName.getValue());
+        countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
         isActive.setReadOnly(true);
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
-                countryOfOrigin, isActive, buttons);
+                countryOfOriginName, isActive, buttons);
     }
 
     private void uploadImage(MultiFileMemoryBuffer buffer) {
@@ -151,18 +158,17 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     }
 
 
-    public void setBinder(Binder<Product> binder, Product product) {
-        this.product = product;
-        binder.forField(name).asRequired("Наименование товара не может быть пустым").bind(Product::getName, Product::setName);
+    public void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
+        this.productDTO = productDTO;
+        binder.forField(name).asRequired("Наименование товара не может быть пустым").bind(ProductDTO::getName, ProductDTO::setName);
         binder.bind(picture, "picture");
-        binder.bind(categoryName, Product::getCategoryName, Product::setCategoryName);
-        binder.bind(subcategoryName, Product::getSubcategoryName, Product::setSubcategoryName);
-        binder.forField(barcode).asRequired("Баркод не может быть пустым и должен соответствовать требованиям").bind(Product::getBarcode, Product::setBarcode);
-        binder.bind(unitOfMeasureName, Product::getUnitOfMeasureName, Product::setUnitOfMeasureName);
+        binder.bind(categoryName, "categoryName");
+        binder.bind(subcategoryName, "subcategoryName");
+        binder.forField(barcode).asRequired("Баркод не может быть пустым и должен соответствовать требованиям").bind(ProductDTO::getBarcode, ProductDTO::setBarcode);
+        binder.forField(unitOfMeasureName).asRequired("единица измерения не может быть пустой").bind(ProductDTO::getUnitOfMeasureName, ProductDTO::setUnitOfMeasureName);
         binder.bind(manufacturer, "manufacturer");
         binder.bind(brand, "brand");
-        if (product !=null && product.getCountryOfOrigin()!=null) {
-            binder.bind(countryOfOrigin, Product::getCountryName, null); }
+        binder.bind(countryOfOriginName, "countryOfOriginName");
         binder.bind(isActive, "isActive");
     }
 
@@ -189,13 +195,17 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         return buttons;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductDTO getProductDTO() {
+        return productDTO;
     }
 
     public Subcategory getSubcategory() {
         return subcategory;
     }
 
-    public Optional<UnitOfMeasure> getUnitOfMeasure() {return unitOfMeasure;};
+    public UnitOfMeasure getUnitOfMeasure() {return unitOfMeasure;};
+
+    public Country getCountryOfOrigin() {
+        return countryOfOrigin;
+    }
 }
