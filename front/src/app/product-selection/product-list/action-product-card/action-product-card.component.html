@@ -6,11 +6,11 @@
     [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
   <div class="card sticky-action">
     <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
-      <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3">
+      <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
         {{product.textIcon}}
       </div>
       <div *ngIf="product.isIcon"
-          class="foodDiscount deep-orange center-align white-text z-depth-3 good-price">
+          class="foodDiscount deep-orange center-align white-text z-depth-3 good-price nonselectable">
         <i [tooltip]="product.chainProductType.tooltip" class="material-icons">{{product.textIcon}}</i>
       </div>
     </div>
