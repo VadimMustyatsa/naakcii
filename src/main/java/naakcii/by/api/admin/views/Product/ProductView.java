@@ -1,5 +1,6 @@
 package naakcii.by.api.admin.views.Product;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -93,10 +94,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         addProduct.addClickListener(e-> {
            grid.asSingleSelect().clear();
            getProductForm().setBinder(binder, new ProductDTO());
-            binder.addStatusChangeListener(status -> {
-                getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
-            });
-            dialog.open();
+           dialog.open();
         });
         HorizontalLayout toolbar = new HorizontalLayout(search, addProduct);
         toolbar.setWidth("100%");
@@ -108,14 +106,12 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         grid.asSingleSelect().addValueChangeListener(event -> {
             getProductForm().setBinder(binder, event.getValue());
             binder.readBean(event.getValue());
-            binder.addStatusChangeListener(status -> {
-                getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
-            });
             dialog.open();
         });
 
         setupEventListeners();
         grid.getDataProvider().refreshAll();
+        getProductForm().getButtons().getSaveButton().addClickShortcut(Key.ENTER);
     }
 
     //Lazy loading
@@ -154,18 +150,16 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
 
     private void save() {
         ProductDTO productDTO = getProductForm().getProductDTO();
-        try {
-            binder.writeBean(productDTO);
-        } catch (ValidationException e) {
-            e.printStackTrace();
+        boolean isValid = binder.writeBeanIfValid(productDTO);
+        if (isValid) {
+            Product product = new Product(productDTO);
+            product.setSubcategory(getProductForm().getSubcategory());
+            product.setUnitOfMeasure(getProductForm().getUnitOfMeasure());
+            product.setCountryOfOrigin(getProductForm().getCountryOfOrigin());
+            productService.save(product);
+            Notification.show(productDTO.getName() + " сохранён");
+            closeUpdate();
         }
-        Product product = new Product(productDTO);
-        product.setSubcategory(getProductForm().getSubcategory());
-        product.setUnitOfMeasure(getProductForm().getUnitOfMeasure());
-        product.setCountryOfOrigin(getProductForm().getCountryOfOrigin());
-        productService.save(product);
-        Notification.show(productDTO.getName() + " сохранён");
-        closeUpdate();
     }
 
     private void closeUpdate() {

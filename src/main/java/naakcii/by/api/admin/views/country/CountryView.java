@@ -1,5 +1,6 @@
 package naakcii.by.api.admin.views.country;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -9,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
@@ -61,9 +61,6 @@ public class CountryView extends VerticalLayout implements HasUrlParameter<Strin
         addCountry.addClickListener(e-> {
             grid.asSingleSelect().clear();
             getForm().setBinder(binder, new CountryDTO());
-            binder.addStatusChangeListener(status -> {
-                getForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
-            });
             dialog.open();
         });
 
@@ -83,14 +80,13 @@ public class CountryView extends VerticalLayout implements HasUrlParameter<Strin
         grid.asSingleSelect().addValueChangeListener(e-> {
            getForm().setBinder(binder, e.getValue());
            binder.readBean(e.getValue());
-            binder.addStatusChangeListener(status -> {
-                getForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
-            });
             dialog.open();
         });
 
         setupEventListeners();
         grid.getDataProvider().refreshAll();
+
+        getForm().getButtons().getSaveButton().addClickShortcut(Key.ENTER);
     }
 
     private void updateList(String search) {
@@ -113,14 +109,12 @@ public class CountryView extends VerticalLayout implements HasUrlParameter<Strin
 
     private void save() {
         CountryDTO countryDTO = getForm().getCountryDTO();
-        try {
-            binder.writeBean(countryDTO);
-        } catch (ValidationException e) {
-            e.printStackTrace();
+        boolean isValid = binder.writeBeanIfValid(countryDTO);
+        if(isValid) {
+            countryService.saveCountryDTO(countryDTO);
+            Notification.show(countryDTO.getName() + " сохранён");
+            closeUpdate();
         }
-        countryService.saveCountryDTO(countryDTO);
-        Notification.show(countryDTO.getName() + " сохранён");
-        closeUpdate();
     }
 
     private void cancel() {

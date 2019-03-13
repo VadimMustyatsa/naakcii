@@ -11,6 +11,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.validator.RegexpValidator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import naakcii.by.api.admin.components.FormButtonsBar;
 import naakcii.by.api.admin.views.CrudForm;
@@ -108,10 +109,8 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         HorizontalLayout layout1 = new HorizontalLayout(barcode, unitOfMeasureName);
 
         manufacturer = new TextField("Производитель");
-        manufacturer.setReadOnly(true);
         manufacturer.setWidth("50%");
         brand = new TextField("Торговая марка");
-        brand.setReadOnly(true);
         brand.setWidth("50%");
         HorizontalLayout layout2 = new HorizontalLayout(manufacturer, brand);
 
@@ -122,7 +121,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         });
         countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
-        isActive.setReadOnly(true);
+//        isActive.setReadOnly(true);
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
@@ -167,14 +166,32 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
     public void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
         this.productDTO = productDTO;
-        binder.forField(name).asRequired("Наименование товара не может быть пустым").bind(ProductDTO::getName, ProductDTO::setName);
-        binder.bind(picture, "picture");
-        binder.bind(categoryName, "categoryName");
-        binder.bind(subcategoryName, "subcategoryName");
-        binder.forField(barcode).asRequired("Баркод не может быть пустым и должен соответствовать требованиям").bind(ProductDTO::getBarcode, ProductDTO::setBarcode);
-        binder.forField(unitOfMeasureName).asRequired("единица измерения не может быть пустой").bind(ProductDTO::getUnitOfMeasureName, ProductDTO::setUnitOfMeasureName);
-        binder.bind(manufacturer, "manufacturer");
-        binder.bind(brand, "brand");
+        binder.forField(name).asRequired("Наименование товара не может быть пустым")
+                .withValidator(field -> field.length()>=3, "Не менее 3-х символов")
+                .withValidator(field -> field.length()<=100, "Не более 100 символов")
+                .bind(ProductDTO::getName, ProductDTO::setName);
+        binder.forField(picture)
+                .withValidator(field -> field.length()<=255, "Не более 255 символов")
+                .bind(ProductDTO::getPicture, ProductDTO::setPicture);
+        binder.forField(categoryName)
+                .asRequired("Поле не может быть пустым")
+                .bind(ProductDTO::getCategoryName, ProductDTO::setCategoryName);
+        binder.forField(subcategoryName)
+                .withValidator(field -> (!field.isEmpty()),"Поле не может быть пустым")
+                .bind(ProductDTO::getSubcategoryName, ProductDTO::setSubcategoryName);
+        binder.forField(barcode)
+                .asRequired("Поле не может быть пустым")
+                .withValidator(field -> (field.length() == 4 || field.length() == 8 || field.length() == 12
+                    || field.length() == 13 || field.length() == 14), "4, 8, 12, 13 или 14 символов")
+                .withValidator(new RegexpValidator("Должны быть только цифры","^[0-9]*$"))
+                .bind(ProductDTO::getBarcode, ProductDTO::setBarcode);
+        binder.forField(unitOfMeasureName).asRequired("Поле не может быть пустым").bind(ProductDTO::getUnitOfMeasureName, ProductDTO::setUnitOfMeasureName);
+        binder.forField(manufacturer)
+                .withValidator(field -> field.length()<=50, "Не более 50 символов")
+                .bind(ProductDTO::getManufacturer, ProductDTO::setManufacturer);
+        binder.forField(brand)
+                .withValidator(field -> field.length()<=50, "Не более 50 символов")
+                .bind(ProductDTO::getBrand, ProductDTO::setBrand);
         binder.bind(countryOfOriginName, "countryOfOriginName");
         binder.bind(isActive, "isActive");
     }

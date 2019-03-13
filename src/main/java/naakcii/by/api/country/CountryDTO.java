@@ -20,4 +20,12 @@ public class CountryDTO {
         this.alphaCode2 = country.getAlphaCode2();
         this.alphaCode3 = country.getAlphaCode3();
     }
+
+    public void setAlphaCode2UpperCase(String code) {
+        this.alphaCode2 = code.toUpperCase();
+    }
+
+    public void setAlphaCode3UpperCase(String code) {
+        this.alphaCode3 = code.toUpperCase();
+    }
 }
