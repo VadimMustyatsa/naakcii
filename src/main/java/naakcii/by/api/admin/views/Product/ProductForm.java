@@ -18,7 +18,6 @@ import naakcii.by.api.category.CategoryDTO;
 import naakcii.by.api.category.CategoryService;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryService;
-import naakcii.by.api.product.Product;
 import naakcii.by.api.product.ProductDTO;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.subcategory.SubcategoryService;
@@ -29,12 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Tag("product-dialog")
 @HtmlImport("product-dialog.html")
@@ -60,7 +58,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     private ComboBox<String> unitOfMeasureName;
     private TextField manufacturer;
     private TextField brand;
-    private TextField countryOfOriginName;
+    private ComboBox<String> countryOfOriginName;
     private Checkbox isActive;
     private FormButtonsBar buttons;
 
@@ -117,14 +115,24 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         brand.setWidth("50%");
         HorizontalLayout layout2 = new HorizontalLayout(manufacturer, brand);
 
-        countryOfOriginName = new TextField("Страна происхождения");
-        countryOfOrigin = countryService.findByName(countryOfOriginName.getValue());
+        countryOfOriginName = new ComboBox<>("Страна происхождения");
+        countryOfOriginName.setItems(getAllCountryNames());
+        countryOfOriginName.addValueChangeListener(e -> {
+            countryOfOrigin = countryService.findByName(e.getValue());
+        });
         countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
         isActive.setReadOnly(true);
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
+    }
+
+    private List<String> getAllCountryNames() {
+        return countryService.findAll()
+                .stream()
+                .map(country -> country.getName())
+                .collect(Collectors.toList());
     }
 
     private void uploadImage(MultiFileMemoryBuffer buffer) {
@@ -156,7 +164,6 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         }
         return unitCodesRepresentation;
     }
-
 
     public void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
         this.productDTO = productDTO;

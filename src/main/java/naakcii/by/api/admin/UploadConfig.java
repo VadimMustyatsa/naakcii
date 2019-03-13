@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class UploadConfig implements WebMvcConfigurer {
 
-    @Value("${upload.location}")
+    @Value("${images.static.resource}")
     private String uploadLocation;
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**").addResourceLocations("file:///" + uploadLocation,
+        registry.addResourceHandler("/images/**").addResourceLocations(uploadLocation,
                 "classpath:/META-INF/resources/static/");
     }
 }

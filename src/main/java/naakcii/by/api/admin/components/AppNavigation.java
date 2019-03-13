@@ -6,14 +6,19 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 public class AppNavigation extends HorizontalLayout {
 
     private Button goToProduct;
+    private Button goToCountry;
 
-   public AppNavigation(String path) {
+   public AppNavigation(String pathProduct, String pathCountry) {
        goToProduct = new Button("Товары");
        goToProduct.addClickListener(e-> {
-            goToProduct.getUI().ifPresent(ui -> ui.navigate(path));
+            goToProduct.getUI().ifPresent(ui -> ui.navigate(pathProduct));
+       });
+       goToCountry = new Button("Страны");
+       goToCountry.addClickListener(e-> {
+           goToCountry.getUI().ifPresent(ui -> ui.navigate(pathCountry));
        });
 
-       add(goToProduct);
+       add(goToProduct, goToCountry);
 
    }
 }

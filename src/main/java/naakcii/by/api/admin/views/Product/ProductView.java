@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-@HtmlImport("src/styles.html")
+@HtmlImport("styles.html")
 @Route(value = "admin" + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends VerticalLayout implements HasUrlParameter<String> {
@@ -92,7 +92,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         addProduct.setHeight("70%");
         addProduct.addClickListener(e-> {
            grid.asSingleSelect().clear();
-            form.setBinder(binder, new ProductDTO());
+           getProductForm().setBinder(binder, new ProductDTO());
             binder.addStatusChangeListener(status -> {
                 getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());
             });
@@ -100,13 +100,13 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         });
         HorizontalLayout toolbar = new HorizontalLayout(search, addProduct);
         toolbar.setWidth("100%");
-        addProduct.getStyle().set("margin-left", "auto");
+        addProduct.getStyle().set("margin-left", "auto").set("margin-top", "auto");
 
         add(toolbar, grid);
         dialog.add(form);
 
         grid.asSingleSelect().addValueChangeListener(event -> {
-            form.setBinder(binder, event.getValue());
+            getProductForm().setBinder(binder, event.getValue());
             binder.readBean(event.getValue());
             binder.addStatusChangeListener(status -> {
                 getProductForm().getButtons().getSaveButton().setEnabled(!status.hasValidationErrors());

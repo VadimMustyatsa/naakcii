@@ -25,7 +25,8 @@ public class MainView extends VerticalLayout implements RouterLayout, HasUrlPara
     @Autowired
     public MainView(@Value("${adminka.token}") String path) {
         setSizeFull();
-        appNavigation = new AppNavigation("admin" + "/" + AppConsts.PAGE_PRODUCT + "/" + path);
+        appNavigation = new AppNavigation("admin" + "/" + AppConsts.PAGE_PRODUCT + "/" + path
+                ,"admin" + "/" + AppConsts.PAGE_COUNTRY + "/" + path);
         add(appNavigation);
         setHorizontalComponentAlignment(Alignment.CENTER, appNavigation);
     }

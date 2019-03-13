@@ -61,6 +61,13 @@ public class Country {
 		this.alphaCode3 = countryCode.getAlphaCode3();
 		this.name = countryCode.getCountryName();
 	}
+
+	public Country(CountryDTO countryDTO) {
+		this.id = countryDTO.getId();
+		this.name = countryDTO.getName();
+		this.alphaCode2 = countryDTO.getAlphaCode2();
+		this.alphaCode3 = countryDTO.getAlphaCode3();
+	}
 	
 	public String toString() {
 		StringBuilder result = new StringBuilder("Instance of " + Country.class + ":");

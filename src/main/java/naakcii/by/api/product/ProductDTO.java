@@ -30,8 +30,8 @@ public class ProductDTO {
         this.manufacturer = product.getManufacturer();
         this.brand = product.getBrand();
         if (product.getCountryOfOrigin() != null) {
-        this.countryOfOriginName = product.getCountryOfOrigin().getName(); }
-        else {
+            this.countryOfOriginName = product.getCountryOfOrigin().getName();
+        } else {
             this.countryOfOriginName = null;
         }
         this.categoryName = product.getSubcategory().getCategory().getName();
