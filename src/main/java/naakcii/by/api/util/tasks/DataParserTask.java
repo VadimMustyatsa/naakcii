@@ -56,7 +56,7 @@ public class DataParserTask {
         this.statisticsService = statisticsService;
     }
 
-    @Scheduled(cron = "0 0/30 * * * *")
+    @Scheduled(cron = "0 15 3 * * *")
     public void parsingTask() {
         logger.info("Parsing start:");
         Calendar calendar = Calendar.getInstance();
@@ -65,6 +65,7 @@ public class DataParserTask {
         slackNotification.sendMessageToNotificationsChannel("_*Parsing start:*_");
         List<String> synonyms = chainRepository.getAllSynonyms();
         slackNotification.sendMessageToNotificationsChannel("_ List of chains: _" + synonyms);
+
         for (String chainSynonym : synonyms) {
             try {
                 StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
@@ -76,10 +77,12 @@ public class DataParserTask {
                 logger.info("Scan folder: " + chainSynonym);
                 slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_ `(" + folder + ")`");
                 File[] folderFiles = folder.listFiles();
+
                 if (folderFiles != null) {
                     for (File file : folderFiles) {
                         Pattern pattern = Pattern.compile(".*" + date.format(calendar.getTime()) + "\\.xlsx");
                         Matcher matcher = pattern.matcher(file.getName());
+
                         if (matcher.find()) {
                             logger.info("Next file was parsed: " + file.getName());
                             slackNotification.sendMessageToNotificationsChannel("Next file was parsed: `" + file.getName() + "`");
@@ -104,6 +107,7 @@ public class DataParserTask {
     private void saveAndNotifyParsingResult(String result, String filename, String targetClass) {
         String logFileName = filename.replaceAll("\\.", "_");
         File file = new File(logFolder + logFileName + "_" + targetClass.toLowerCase() + ".log");
+
         try (
                 Writer writer = new FileWriter(file)
         ) {
@@ -121,13 +125,13 @@ public class DataParserTask {
         Integer products = productRepository.countProductsByIsActiveTrue();
         BigDecimal averageDiscountPercentage = chainProductRepository.findAverageDiscountPercentage();
         Calendar calendar = Calendar.getInstance();
+
         if (chains != null && products != null && averageDiscountPercentage != null) {
             statisticsService.updateStatistics(chains, products, averageDiscountPercentage.intValue(), calendar);
             slackNotification.sendMessageToNotificationsChannel("*Statistics was updated:*"
                     + " `chains:` " + chains
                     + " `products:` " + products
-                    + " `average discount percentage:` " + averageDiscountPercentage.intValue()
-            );
+                    + " `average discount percentage:` " + averageDiscountPercentage.intValue());
         } else {
             slackNotification.sendMessageToNotificationsChannel("Statistics update was terminated: NULL value");
         }
