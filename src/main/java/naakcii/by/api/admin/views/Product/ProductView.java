@@ -3,7 +3,6 @@ package naakcii.by.api.admin.views.Product;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
@@ -12,12 +11,14 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.provider.CallbackDataProvider;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import naakcii.by.api.admin.MainView;
 import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.product.Product;
@@ -27,12 +28,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-@HtmlImport("styles.html")
+//@HtmlImport("src/styles.html")
 @Route(value = "admin" + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends VerticalLayout implements HasUrlParameter<String> {
 
-    private static final String NO_IMAGE = "/images/customProduct.png";
+    @Value("${no.image}")
+    private String noImage;
 
     private ProductService productService;
     private ProductForm form;
@@ -64,7 +66,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
                 image.setHeight("50px");
                 return image;
             } else {
-                Image imageEmpty = new Image(NO_IMAGE, "No image");
+                Image imageEmpty = new Image(noImage, "No image");
                 imageEmpty.setHeight("50px");
                 imageEmpty.setWidth("50px");
                 return imageEmpty;
@@ -84,9 +86,9 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         search.setValueChangeMode(ValueChangeMode.EAGER);
         search.setPlaceholder("Введите наименование товара");
         search.setWidth("50%");
-        search.addValueChangeListener(e ->{
-            grid.setItems(productService.searchName(e.getValue()));
-        });
+        search.addValueChangeListener(e ->
+            grid.setItems(productService.searchName(e.getValue()))
+        );
 
         addProduct = new Button("Добавить товар");
         addProduct.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
@@ -115,14 +117,14 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     //Lazy loading
-    protected CallbackDataProvider<ProductDTO, Void> updateList(ProductService productService) {
+    private CallbackDataProvider<ProductDTO, Void> updateList(ProductService productService) {
         return DataProvider
                     .fromCallbacks(query -> productService
                                     .fetchProducts(query.getOffset(), query.getLimit()).stream(),
                             query -> productService.getProductCount());
     }
 
-    public void setupEventListeners() {
+    private void setupEventListeners() {
         getProductForm().getButtons().addSaveListener(e -> save());
         getProductForm().getButtons().addCancelListener(e -> cancel());
         getProductForm().getButtons().addDeleteListener(e -> delete());
@@ -168,11 +170,11 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         grid.getDataProvider().refreshAll();
     }
 
-    public Dialog getDialog() {
+    private Dialog getDialog() {
         return dialog;
     }
 
-    public ProductForm getProductForm() {
+    private ProductForm getProductForm() {
         return form;
     }
 

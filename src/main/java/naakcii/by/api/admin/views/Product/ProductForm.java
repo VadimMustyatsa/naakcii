@@ -66,6 +66,9 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     @Value("${upload.location}")
     private String uploadLocation;
 
+    @Value("${images.path.pattern}")
+    private String pathPattern;
+
     @Autowired
     public ProductForm(CategoryService categoryService, SubcategoryService subcategoryService,
                        UnitOfMeasureService unitOfMeasureService, CountryService countryService) {
@@ -87,14 +90,14 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
         categoryName = new ComboBox<>("Категория");
         categoryName.setItems(getAllCategoriesNames());
-        categoryName.addValueChangeListener(event -> {
-           subcategoryName.setItems(getAllSubcategoriesNames(event.getValue()));
-        });
+        categoryName.addValueChangeListener(event ->
+           subcategoryName.setItems(getAllSubcategoriesNames(event.getValue()))
+        );
         categoryName.setWidth("50%");
         subcategoryName = new ComboBox<>("Подкатегория");
-        subcategoryName.addValueChangeListener(event -> {
-            subcategory = subcategoryService.findByName(event.getValue());
-        });
+        subcategoryName.addValueChangeListener(event ->
+            subcategory = subcategoryService.findByName(event.getValue())
+        );
         subcategoryName.setWidth("50%");
         HorizontalLayout categories = new HorizontalLayout(categoryName, subcategoryName);
 
@@ -102,9 +105,9 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         barcode.setWidth("50%");
         unitOfMeasureName = new ComboBox<>("Единица измерения");
         unitOfMeasureName.setItems(getAllUnitsOfMeasure());
-        unitOfMeasureName.addValueChangeListener(e-> {
-           unitOfMeasure = unitOfMeasureService.findUnitOfMeasureByName(e.getValue());
-        });
+        unitOfMeasureName.addValueChangeListener(e->
+           unitOfMeasure = unitOfMeasureService.findUnitOfMeasureByName(e.getValue())
+        );
         unitOfMeasureName.setWidth("50%");
         HorizontalLayout layout1 = new HorizontalLayout(barcode, unitOfMeasureName);
 
@@ -116,9 +119,9 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
         countryOfOriginName = new ComboBox<>("Страна происхождения");
         countryOfOriginName.setItems(getAllCountryNames());
-        countryOfOriginName.addValueChangeListener(e -> {
-            countryOfOrigin = countryService.findByName(e.getValue());
-        });
+        countryOfOriginName.addValueChangeListener(e ->
+            countryOfOrigin = countryService.findByName(e.getValue())
+        );
         countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
 //        isActive.setReadOnly(true);
@@ -130,7 +133,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     private List<String> getAllCountryNames() {
         return countryService.findAll()
                 .stream()
-                .map(country -> country.getName())
+                .map(Country::getName)
                 .collect(Collectors.toList());
     }
 
@@ -145,7 +148,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
                 File targetFile = new File(uploadLocation+event.getFileName());
                 OutputStream outStream = new FileOutputStream(targetFile);
                 outStream.write(buf);
-                picture.setValue("/images/" + event.getFileName());
+                picture.setValue(pathPattern + event.getFileName());
                 outStream.flush();
                 outStream.close();
             } catch (IOException ex) {
@@ -164,7 +167,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         return unitCodesRepresentation;
     }
 
-    public void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
+    protected void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
         this.productDTO = productDTO;
         binder.forField(name).asRequired("Наименование товара не может быть пустым")
                 .withValidator(field -> field.length()>=3, "Не менее 3-х символов")
@@ -219,17 +222,17 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         return buttons;
     }
 
-    public ProductDTO getProductDTO() {
+    protected ProductDTO getProductDTO() {
         return productDTO;
     }
 
-    public Subcategory getSubcategory() {
+    protected Subcategory getSubcategory() {
         return subcategory;
     }
 
-    public UnitOfMeasure getUnitOfMeasure() {return unitOfMeasure;};
+    protected UnitOfMeasure getUnitOfMeasure() {return unitOfMeasure;}
 
-    public Country getCountryOfOrigin() {
+    protected Country getCountryOfOrigin() {
         return countryOfOrigin;
     }
 }
