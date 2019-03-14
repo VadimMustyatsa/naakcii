@@ -1,8 +1,7 @@
 package naakcii.by.api.country;
 
-import org.springframework.data.domain.Page;
-
 import java.util.List;
+
 
 public interface CountryService {
 

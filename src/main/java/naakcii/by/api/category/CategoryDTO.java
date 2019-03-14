@@ -16,11 +16,14 @@ public class CategoryDTO {
     private Integer priority;
 
     private String icon;
+
+    private Boolean isActive;
     
     public CategoryDTO(Category category) {
     	this.Id = category.getId();
     	this.name = category.getName();
     	this.priority = category.getPriority();
     	this.icon = category.getIcon();
+    	this.isActive = category.getIsActive();
     }
 }

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 //@HtmlImport("src/styles.html")
-@Route(value = "admin" + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
+@Route(value = AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends VerticalLayout implements HasUrlParameter<String> {
 
@@ -57,7 +57,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         this.productService = productService;
         this.form = form;
 
-        this.grid = new Grid<>();
+        grid = new Grid<>();
 
         grid.addColumn(new ComponentRenderer<>(productDTO -> {
             if ((productDTO.getPicture() != null) && !StringUtils.isEmpty(productDTO.getPicture())) {

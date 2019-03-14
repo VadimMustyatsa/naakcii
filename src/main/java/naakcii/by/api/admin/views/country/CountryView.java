@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 
-@Route(value = "admin" + "/" + AppConsts.PAGE_COUNTRY, layout = MainView.class)
+@Route(value = AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_COUNTRY, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_COUNTRY)
 public class CountryView extends VerticalLayout implements HasUrlParameter<String> {
 

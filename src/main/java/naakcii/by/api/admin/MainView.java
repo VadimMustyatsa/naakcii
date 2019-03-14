@@ -17,7 +17,7 @@ import java.util.List;
 
 @Route(AppConsts.PAGE_MAIN)
 @Theme(Material.class)
-@PageTitle("Admin Panel")
+@PageTitle(AppConsts.TITLE_MAIN)
 @Viewport(AppConsts.VIEWPORT)
 public class MainView extends VerticalLayout implements RouterLayout, HasUrlParameter<String> {
 
@@ -34,6 +34,8 @@ public class MainView extends VerticalLayout implements RouterLayout, HasUrlPara
                         AppConsts.TITLE_PRODUCT));
         pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_COUNTRY + "/" + path, AppConsts.ICON_COUNTRY,
                 AppConsts.TITLE_COUNTRY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CATEGORY + "/" + path, AppConsts.ICON_CATEGORY,
+                AppConsts.TITLE_CATEGORY));
         appNavigation = new AppNavigation();
         appNavigation.init(pages, AppConsts.PAGE_DEFAULT, path);
         add(appNavigation);
