@@ -3,13 +3,14 @@ package naakcii.by.api.category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.entity.AbstractDTOEntity;
 
 @NoArgsConstructor
 @Setter
 @Getter
-public class CategoryDTO {
+public class CategoryDTO extends AbstractDTOEntity {
 
-    private Long Id;
+    private Long id;
 
     private String name;
 
@@ -18,9 +19,9 @@ public class CategoryDTO {
     private String icon;
 
     private Boolean isActive;
-    
-    public CategoryDTO(Category category) {
-    	this.Id = category.getId();
+
+    public CategoryDTO(Category category){
+    	this.id = category.getId();
     	this.name = category.getName();
     	this.priority = category.getPriority();
     	this.icon = category.getIcon();

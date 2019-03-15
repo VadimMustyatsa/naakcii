@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Route(AppConsts.PAGE_MAIN)
 @Theme(Material.class)
 @PageTitle(AppConsts.TITLE_MAIN)

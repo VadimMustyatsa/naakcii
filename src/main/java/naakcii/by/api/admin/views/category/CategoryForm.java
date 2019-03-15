@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Scope;
 
 @SpringComponent
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CategoryForm extends VerticalLayout implements CrudForm {
+public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO> {
 
     private TextField name;
     private TextField icon;
@@ -45,6 +45,7 @@ public class CategoryForm extends VerticalLayout implements CrudForm {
         add(name, icon, imageUpload, priority, isActive, buttons);
     }
 
+    @Override
     public void setBinder(Binder<CategoryDTO> binder, CategoryDTO categoryDTO) {
         this.categoryDTO = categoryDTO;
         binder.forField(name)
@@ -70,6 +71,16 @@ public class CategoryForm extends VerticalLayout implements CrudForm {
     @Override
     public TextField getImageField() {
         return icon;
+    }
+
+    @Override
+    public CategoryDTO getDTO() {
+        return categoryDTO;
+    }
+
+    @Override
+    public String getChangedDTOName() {
+        return categoryDTO.getName();
     }
 
     public CategoryDTO getCategoryDTO() {

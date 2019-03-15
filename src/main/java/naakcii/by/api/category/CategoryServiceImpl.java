@@ -1,5 +1,6 @@
 package naakcii.by.api.category;
 
+import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService, CrudService<CategoryDTO> {
 
     private CategoryRepository categoryRepository;
     private ObjectFactory objectFactory;
@@ -48,13 +49,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void saveCategoryDTO(CategoryDTO categoryDTO) {
-        categoryRepository.save(new Category(categoryDTO));
+    public CategoryDTO createNewDTO() {
+        return new CategoryDTO();
     }
 
     @Override
-    public void delete(CategoryDTO categoryDTO) {
-        Category category = categoryRepository.findById(categoryDTO.getId()).orElse(null);
+    public void saveDTO(CategoryDTO entityDTO) {
+        categoryRepository.save(new Category(entityDTO));
+    }
+
+    @Override
+    public void deleteDTO(CategoryDTO entityDTO) {
+        Category category = categoryRepository.findById(entityDTO.getId()).orElse(null);
         categoryRepository.delete(category);
     }
 }
