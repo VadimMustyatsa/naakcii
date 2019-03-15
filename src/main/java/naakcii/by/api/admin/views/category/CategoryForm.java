@@ -8,9 +8,11 @@ import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.validator.RegexpValidator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import naakcii.by.api.admin.components.FormButtonsBar;
+import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.category.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -23,11 +25,12 @@ public class CategoryForm extends VerticalLayout implements CrudForm {
     private TextField priority;
     private Checkbox isActive;
 
+    private ImageUpload imageUpload;
     private FormButtonsBar buttons;
     private CategoryDTO categoryDTO;
 
     @Autowired
-    public CategoryForm() {
+    public CategoryForm(@Value("${category.icons.upload.location}") String uploadLocation, @Value("${category.icons.path.pattern}") String pathPattern) {
         setSizeFull();
         name = new TextField("Категория");
         name.focus();
@@ -37,8 +40,9 @@ public class CategoryForm extends VerticalLayout implements CrudForm {
         priority = new TextField("Порядок отображения");
         isActive = new Checkbox("Активна");
         buttons = new FormButtonsBar();
+        imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
 
-        add(name, icon, priority, isActive, buttons);
+        add(name, icon, imageUpload, priority, isActive, buttons);
     }
 
     public void setBinder(Binder<CategoryDTO> binder, CategoryDTO categoryDTO) {
@@ -65,7 +69,7 @@ public class CategoryForm extends VerticalLayout implements CrudForm {
 
     @Override
     public TextField getImageField() {
-        return null;
+        return icon;
     }
 
     public CategoryDTO getCategoryDTO() {
