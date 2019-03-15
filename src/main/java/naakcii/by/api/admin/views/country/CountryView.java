@@ -25,7 +25,7 @@ public class CountryView extends CrudView<CountryDTO> {
     }
 
     @Override
-    protected Binder<CountryDTO> getBinder() {
+    public Binder<CountryDTO> getBinder() {
         return binder;
     }
 

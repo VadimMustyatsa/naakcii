@@ -20,13 +20,12 @@ import org.springframework.context.annotation.Scope;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO> {
 
-    private TextField name;
-    private TextField icon;
-    private TextField priority;
-    private Checkbox isActive;
+    private final TextField name;
+    private final TextField icon;
+    private final TextField priority;
+    private final Checkbox isActive;
 
-    private ImageUpload imageUpload;
-    private FormButtonsBar buttons;
+    private final FormButtonsBar buttons;
     private CategoryDTO categoryDTO;
 
     @Autowired
@@ -40,7 +39,7 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
         priority = new TextField("Порядок отображения");
         isActive = new Checkbox("Активна");
         buttons = new FormButtonsBar();
-        imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
+        ImageUpload imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
 
         add(name, icon, imageUpload, priority, isActive, buttons);
     }
@@ -81,9 +80,5 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
     @Override
     public String getChangedDTOName() {
         return categoryDTO.getName();
-    }
-
-    public CategoryDTO getCategoryDTO() {
-        return categoryDTO;
     }
 }

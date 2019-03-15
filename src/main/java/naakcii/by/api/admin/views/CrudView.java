@@ -2,18 +2,14 @@ package naakcii.by.api.admin.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
+import naakcii.by.api.admin.components.SearchBar;
 import naakcii.by.api.entity.AbstractDTOEntity;
 import naakcii.by.api.service.CrudService;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +25,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
     private final CrudForm<E> form;
     private final Grid<E> grid;
 
-    protected abstract Binder<E> getBinder();
+    public abstract Binder<E> getBinder();
 
     protected abstract void setupGrid();
 
@@ -40,23 +36,12 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
         dialog.add((Component) getForm());
 
-        TextField search = new TextField("Поиск");
-        search.setValueChangeMode(ValueChangeMode.EAGER);
-        search.setPlaceholder("Введите название");
-        search.addValueChangeListener(e-> updateList(e.getValue()));
-        Button addEntity = new Button("Добавить");
-        addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
-        addEntity.setHeight("70%");
-        addEntity.addClickListener(e -> onComponentEvent());
-
-        HorizontalLayout toolbar = new HorizontalLayout(search, addEntity);
-        toolbar.setWidth("100%");
-        addEntity.getStyle().set("margin-left", "auto").set("margin-top", "auto");
+        SearchBar searchBar = new SearchBar(this);
         
         grid = new Grid<>();
         setupGrid();
         updateList(null);
-        add(toolbar, grid);
+        add(searchBar, grid);
 
         grid.asSingleSelect().addValueChangeListener(e-> {
             getForm().setBinder(getBinder(), e.getValue());
@@ -111,7 +96,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         grid.getDataProvider().refreshAll();
     }
 
-    private void updateList(String search) {
+    public void updateList(String search) {
         if(StringUtils.isEmpty(search)) {
             grid.setItems(crudService.findAllDTOs());
         } else {
@@ -119,26 +104,24 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         }
     }
 
-    private CrudForm<E> getForm() {
+    public CrudForm<E> getForm() {
         return form;
     }
 
-    private Dialog getDialog() {
+    public Dialog getDialog() {
         return dialog;
     }
 
     public Grid<E> getGrid() {return grid;}
+
+    public CrudService<E> getCrudService() {
+        return crudService;
+    }
 
     @Override
     public void setParameter(BeforeEvent event, String parameter) {
         if (!parameter.equals(adminkaPath)) {
             throw new IllegalArgumentException();
         }
-    }
-
-    private void onComponentEvent() {
-        grid.asSingleSelect().clear();
-        getForm().setBinder(getBinder(), crudService.createNewDTO());
-        dialog.open();
     }
 }

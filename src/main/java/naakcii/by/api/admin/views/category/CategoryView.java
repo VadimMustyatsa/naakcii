@@ -32,7 +32,7 @@ public class CategoryView extends CrudView<CategoryDTO> {
     }
 
     @Override
-    protected Binder<CategoryDTO> getBinder() {
+    public Binder<CategoryDTO> getBinder() {
         return binder;
     }
 
