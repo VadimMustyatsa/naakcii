@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Scope;
 
 @SpringComponent
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class CountryForm extends VerticalLayout implements CrudForm {
+public class CountryForm extends VerticalLayout implements CrudForm<CountryDTO> {
 
     private TextField name;
     private TextField alphaCode2;
@@ -33,6 +33,33 @@ public class CountryForm extends VerticalLayout implements CrudForm {
         add(name, alphaCode2, alphaCode3, buttons);
     }
 
+//    public void setBinder(Binder<CountryDTO> binder, CountryDTO countryDTO) {
+//        this.countryDTO = countryDTO;
+//        binder.forField(name)
+//                .asRequired("Введите название страны")
+//                .withValidator(field -> field.trim().length()>=3, "Длина не менее 3-х букв")
+//                .withValidator(field -> field.trim().length()<=50, "Длина не более 50-ти букв")
+//                .bind(CountryDTO::getName, CountryDTO::setName);
+//        binder.forField(alphaCode2)
+//                .asRequired("Поле не может быть пустым")
+//                .withValidator(field-> field.length()==2, "Длина должна быть равна 2-м символам")
+//                .bind(CountryDTO::getAlphaCode2, CountryDTO::setAlphaCode2UpperCase);
+//        binder.forField(alphaCode3)
+//                .asRequired("Поле не может быть пустым")
+//                .withValidator(field-> field.length()==3, "Длина должна быть равна 3-м символам")
+//                .bind(CountryDTO::getAlphaCode3, CountryDTO::setAlphaCode3UpperCase);
+//    }
+    @Override
+    public FormButtonsBar getButtons() {
+        return buttons;
+    }
+
+    @Override
+    public TextField getImageField() {
+        return null;
+    }
+
+    @Override
     public void setBinder(Binder<CountryDTO> binder, CountryDTO countryDTO) {
         this.countryDTO = countryDTO;
         binder.forField(name)
@@ -49,14 +76,15 @@ public class CountryForm extends VerticalLayout implements CrudForm {
                 .withValidator(field-> field.length()==3, "Длина должна быть равна 3-м символам")
                 .bind(CountryDTO::getAlphaCode3, CountryDTO::setAlphaCode3UpperCase);
     }
+
     @Override
-    public FormButtonsBar getButtons() {
-        return buttons;
+    public CountryDTO getDTO() {
+        return countryDTO;
     }
 
     @Override
-    public TextField getImageField() {
-        return null;
+    public String getChangedDTOName() {
+        return countryDTO.getName();
     }
 
     public CountryDTO getCountryDTO() {

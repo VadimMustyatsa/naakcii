@@ -3,11 +3,12 @@ package naakcii.by.api.country;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.entity.AbstractDTOEntity;
 
 @NoArgsConstructor
 @Setter
 @Getter
-public class CountryDTO {
+public class CountryDTO extends AbstractDTOEntity {
 
     private Long id;
     private String name;

@@ -1,6 +1,5 @@
 package naakcii.by.api.admin.views;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -28,11 +27,11 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
     private final CrudService<E> crudService;
     private final Dialog dialog = new Dialog();
     private final CrudForm<E> form;
-    private final TextField search;
-    private final Button addEntity;
     private final Grid<E> grid;
 
     protected abstract Binder<E> getBinder();
+
+    protected abstract void setupGrid();
 
     public CrudView(CrudForm<E> form, CrudService<E> crudService) {
         this.form = form;
@@ -41,15 +40,14 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
         dialog.add((Component) getForm());
 
-        search = new TextField("Поиск");
+        TextField search = new TextField("Поиск");
         search.setValueChangeMode(ValueChangeMode.EAGER);
         search.setPlaceholder("Введите название");
-        search.setWidth("50%");
         search.addValueChangeListener(e-> updateList(e.getValue()));
-        addEntity = new Button("Добавить");
+        Button addEntity = new Button("Добавить");
         addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
         addEntity.setHeight("70%");
-        addEntity.addClickListener(this::onComponentEvent);
+        addEntity.addClickListener(e -> onComponentEvent());
 
         HorizontalLayout toolbar = new HorizontalLayout(search, addEntity);
         toolbar.setWidth("100%");
@@ -72,7 +70,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         getForm().getButtons().getSaveButton().addClickShortcut(Key.ENTER);
     }
 
-    protected void setupEventListeners() {
+    private void setupEventListeners() {
         getForm().getButtons().addSaveListener(e -> save());
         getForm().getButtons().addCancelListener(e -> cancel());
         getForm().getButtons().addDeleteListener(e -> delete());
@@ -84,7 +82,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         });
     }
 
-    protected void save() {
+    private void save() {
         E entityDTO = getForm().getDTO();
         boolean isValid = getBinder().writeBeanIfValid(entityDTO);
         if(isValid) {
@@ -94,28 +92,26 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         }
     }
 
-    protected void cancel() {
+    private void cancel() {
         getDialog().close();
         grid.getDataProvider().refreshAll();
     }
 
-    protected void delete() {
+    private void delete() {
         E entityDTO = getForm().getDTO();
         crudService.deleteDTO(entityDTO);
         Notification.show(getForm().getChangedDTOName() + " удалён");
         closeUpdate();
     }
 
-    protected void closeUpdate() {
+    private void closeUpdate() {
         grid.asSingleSelect().clear();
         getDialog().close();
         updateList(null);
         grid.getDataProvider().refreshAll();
     }
 
-    protected abstract void setupGrid(); //implementation: grid addColumns
-
-    protected void updateList(String search) {
+    private void updateList(String search) {
         if(StringUtils.isEmpty(search)) {
             grid.setItems(crudService.findAllDTOs());
         } else {
@@ -123,11 +119,11 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         }
     }
 
-    public CrudForm<E> getForm() {
+    private CrudForm<E> getForm() {
         return form;
     }
 
-    public Dialog getDialog() {
+    private Dialog getDialog() {
         return dialog;
     }
 
@@ -140,7 +136,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         }
     }
 
-    private void onComponentEvent(ClickEvent<Button> e) {
+    private void onComponentEvent() {
         grid.asSingleSelect().clear();
         getForm().setBinder(getBinder(), crudService.createNewDTO());
         dialog.open();

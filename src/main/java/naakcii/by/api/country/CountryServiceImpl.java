@@ -1,18 +1,20 @@
 package naakcii.by.api.country;
 
+import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class CountryServiceImpl implements CountryService {
+public class CountryServiceImpl implements CountryService, CrudService<CountryDTO> {
 
-    private CountryRepository countryRepository;
-    private ObjectFactory objectFactory;
+    private final CountryRepository countryRepository;
+    private final ObjectFactory objectFactory;
 
     @Autowired
     public CountryServiceImpl(CountryRepository countryRepository, ObjectFactory objectFactory) {
@@ -49,13 +51,21 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public void saveCountryDTO(CountryDTO countryDTO) {
-        countryRepository.save(new Country(countryDTO));
+    public CountryDTO createNewDTO() {
+        return new CountryDTO();
     }
 
     @Override
-    public void delete(CountryDTO countryDTO) {
-        Country country = countryRepository.findById(countryDTO.getId()).orElse(null);
+    public void saveDTO(CountryDTO entityDTO) {
+        countryRepository.save(new Country(entityDTO));
+    }
+
+    @Override
+    public void deleteDTO(CountryDTO entityDTO) {
+        Country country = countryRepository.findById(entityDTO.getId()).orElse(null);
+        if(country == null) {
+            throw new EntityNotFoundException();
+        }
         countryRepository.delete(country);
     }
 }
