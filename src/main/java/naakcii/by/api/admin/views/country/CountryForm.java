@@ -37,8 +37,8 @@ public class CountryForm extends VerticalLayout implements CrudForm {
         this.countryDTO = countryDTO;
         binder.forField(name)
                 .asRequired("Введите название страны")
-                .withValidator(field -> field.length()>=3, "Длина не менее 3-х букв")
-                .withValidator(field -> field.length()<=50, "Длина не более 50-ти букв")
+                .withValidator(field -> field.trim().length()>=3, "Длина не менее 3-х букв")
+                .withValidator(field -> field.trim().length()<=50, "Длина не более 50-ти букв")
                 .bind(CountryDTO::getName, CountryDTO::setName);
         binder.forField(alphaCode2)
                 .asRequired("Поле не может быть пустым")
@@ -52,6 +52,11 @@ public class CountryForm extends VerticalLayout implements CrudForm {
     @Override
     public FormButtonsBar getButtons() {
         return buttons;
+    }
+
+    @Override
+    public TextField getImageField() {
+        return null;
     }
 
     public CountryDTO getCountryDTO() {

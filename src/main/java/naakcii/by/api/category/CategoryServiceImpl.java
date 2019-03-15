@@ -46,4 +46,15 @@ public class CategoryServiceImpl implements CategoryService {
                 .map((Category category) -> objectFactory.getInstance(CategoryDTO.class, category))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void saveCategoryDTO(CategoryDTO categoryDTO) {
+        categoryRepository.save(new Category(categoryDTO));
+    }
+
+    @Override
+    public void delete(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.findById(categoryDTO.getId()).orElse(null);
+        categoryRepository.delete(category);
+    }
 }

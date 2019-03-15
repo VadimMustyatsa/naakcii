@@ -11,8 +11,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.provider.CallbackDataProvider;
-import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEvent;
@@ -73,11 +71,10 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
             }}
         ))
             .setHeader("Изображение");
-        grid.addColumn(ProductDTO::getName).setFlexGrow(5).setHeader("Товар");
-        grid.addColumn(ProductDTO::getCategoryName).setHeader("Категория");
-        grid.addColumn(ProductDTO::getSubcategoryName).setHeader("Подкатегория");
-
-        grid.setDataProvider(updateList(productService));
+        grid.addColumn(ProductDTO::getName).setFlexGrow(5).setHeader("Товар").setSortable(true);
+        grid.addColumn(ProductDTO::getCategoryName).setHeader("Категория").setSortable(true);
+        grid.addColumn(ProductDTO::getSubcategoryName).setHeader("Подкатегория").setSortable(true);
+        updateList(null);
 
         //drag and drop columns order
         grid.setColumnReorderingAllowed(true);
@@ -87,7 +84,7 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         search.setPlaceholder("Введите наименование товара");
         search.setWidth("50%");
         search.addValueChangeListener(e ->
-            grid.setItems(productService.searchName(e.getValue()))
+            updateList(e.getValue())
         );
 
         addProduct = new Button("Добавить товар");
@@ -116,12 +113,12 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
         getProductForm().getButtons().getSaveButton().addClickShortcut(Key.ENTER);
     }
 
-    //Lazy loading
-    private CallbackDataProvider<ProductDTO, Void> updateList(ProductService productService) {
-        return DataProvider
-                    .fromCallbacks(query -> productService
-                                    .fetchProducts(query.getOffset(), query.getLimit()).stream(),
-                            query -> productService.getProductCount());
+    private void updateList(String search) {
+        if(StringUtils.isEmpty(search)) {
+            grid.setItems(productService.findAllDTOs());
+        } else {
+            grid.setItems(productService.searchName(search));
+        }
     }
 
     private void setupEventListeners() {
@@ -165,8 +162,9 @@ public class ProductView extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     private void closeUpdate() {
+        grid.asSingleSelect().clear();
         getDialog().close();
-        updateList(productService);
+        updateList(null);
         grid.getDataProvider().refreshAll();
     }
 

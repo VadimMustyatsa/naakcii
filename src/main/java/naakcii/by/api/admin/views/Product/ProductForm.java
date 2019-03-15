@@ -4,16 +4,14 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.upload.Upload;
-import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.validator.RegexpValidator;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import naakcii.by.api.admin.components.FormButtonsBar;
+import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.category.CategoryDTO;
 import naakcii.by.api.category.CategoryService;
@@ -30,7 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +49,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
     private TextField name;
     private TextField picture;
-    private Upload upload;
+    private ImageUpload imageUpload;
     private ComboBox<String> categoryName;
     private ComboBox<String> subcategoryName;
     private TextField barcode;
@@ -63,15 +60,10 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     private Checkbox isActive;
     private FormButtonsBar buttons;
 
-    @Value("${upload.location}")
-    private String uploadLocation;
-
-    @Value("${images.path.pattern}")
-    private String pathPattern;
-
     @Autowired
     public ProductForm(CategoryService categoryService, SubcategoryService subcategoryService,
-                       UnitOfMeasureService unitOfMeasureService, CountryService countryService) {
+                       UnitOfMeasureService unitOfMeasureService, CountryService countryService,
+                       @Value("${upload.location}") String uploadLocation, @Value("${images.path.pattern}") String pathPattern) {
         this.categoryService = categoryService;
         this.subcategoryService = subcategoryService;
         this.unitOfMeasureService = unitOfMeasureService;
@@ -83,10 +75,8 @@ public class ProductForm extends VerticalLayout implements CrudForm {
 
         picture = new TextField("Адрес картинки");
         picture.setWidth("50%");
-        MultiFileMemoryBuffer buffer = new MultiFileMemoryBuffer();
-        upload = new Upload(buffer);
-        uploadImage(buffer);
-        HorizontalLayout chosePic = new HorizontalLayout(picture, upload);
+        imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
+        HorizontalLayout chosePic = new HorizontalLayout(picture, imageUpload);
 
         categoryName = new ComboBox<>("Категория");
         categoryName.setItems(getAllCategoriesNames());
@@ -124,7 +114,6 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         );
         countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Акционный товар");
-//        isActive.setReadOnly(true);
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
@@ -135,27 +124,6 @@ public class ProductForm extends VerticalLayout implements CrudForm {
                 .stream()
                 .map(Country::getName)
                 .collect(Collectors.toList());
-    }
-
-    private void uploadImage(MultiFileMemoryBuffer buffer) {
-        upload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
-        upload.setMaxFiles(1);
-        upload.addSucceededListener(event-> {
-            try {
-                byte[] buf = new byte[(int)event.getContentLength()];
-                InputStream is = buffer.getInputStream(event.getFileName());
-                is.read(buf);
-                File targetFile = new File(uploadLocation+event.getFileName());
-                OutputStream outStream = new FileOutputStream(targetFile);
-                outStream.write(buf);
-                picture.setValue(pathPattern + event.getFileName());
-                outStream.flush();
-                outStream.close();
-            } catch (IOException ex) {
-                Notification.show("Error");
-                ex.printStackTrace();
-            }
-        });
     }
 
     private List<String> getAllUnitsOfMeasure() {
@@ -170,8 +138,8 @@ public class ProductForm extends VerticalLayout implements CrudForm {
     protected void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
         this.productDTO = productDTO;
         binder.forField(name).asRequired("Наименование товара не может быть пустым")
-                .withValidator(field -> field.length()>=3, "Не менее 3-х символов")
-                .withValidator(field -> field.length()<=100, "Не более 100 символов")
+                .withValidator(field -> field.trim().length()>=3, "Не менее 3-х символов")
+                .withValidator(field -> field.trim().length()<=100, "Не более 100 символов")
                 .bind(ProductDTO::getName, ProductDTO::setName);
         binder.forField(picture)
                 .withValidator(field -> field.length()<=255, "Не более 255 символов")
@@ -215,6 +183,11 @@ public class ProductForm extends VerticalLayout implements CrudForm {
             subcategoriesNames.add(temp.getName());
         }
         return subcategoriesNames;
+    }
+
+    @Override
+    public TextField getImageField() {
+        return picture;
     }
 
     @Override

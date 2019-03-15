@@ -2,11 +2,9 @@ package naakcii.by.api.product;
 
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,22 +19,6 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl(ProductRepository productRepository, ObjectFactory objectFactory) {
         this.productRepository = productRepository;
         this.objectFactory = objectFactory;
-    }
-
-    @Override
-    public Page<ProductDTO> fetchProducts(int offset, int limit) {
-        int page = offset / limit;
-        Pageable pageRequest = PageRequest.of(page, limit, Sort.by("name"));
-        Page<Product> items = productRepository.findAll(pageRequest);
-
-        return new PageImpl<ProductDTO>(items.stream()
-        .map(product -> new ProductDTO(product))
-        .collect(Collectors.toList()));
-    }
-
-    @Override
-    public int getProductCount() {
-        return (int) productRepository.count();
     }
 
     @Override
@@ -62,5 +44,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findProduct(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<ProductDTO> findAllDTOs() {
+        return productRepository.findAllByOrderByName()
+                .stream()
+                .filter(Objects::nonNull)
+                .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
+                .collect(Collectors.toList());
     }
 }

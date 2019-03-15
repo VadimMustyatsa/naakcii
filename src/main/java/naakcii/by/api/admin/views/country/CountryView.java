@@ -69,9 +69,9 @@ public class CountryView extends VerticalLayout implements HasUrlParameter<Strin
         addCountry.getStyle().set("margin-left", "auto").set("margin-top", "auto");
 
         grid = new Grid<>();
-        grid.addColumn(CountryDTO::getName).setHeader("Страна");
-        grid.addColumn(CountryDTO::getAlphaCode2).setHeader("Код2");
-        grid.addColumn(CountryDTO::getAlphaCode3).setHeader("Код3");
+        grid.addColumn(CountryDTO::getName).setHeader("Страна").setSortable(true);
+        grid.addColumn(CountryDTO::getAlphaCode2).setHeader("Код2").setSortable(true);
+        grid.addColumn(CountryDTO::getAlphaCode3).setHeader("Код3").setSortable(true);
         updateList(null);
 
         add(toolbar, grid);
