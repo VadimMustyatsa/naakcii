@@ -18,5 +18,5 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     int softDelete(@Param("productId") Long productId);
 
     List<Product> findAllByOrderByName();
-    List<Product> findByNameContainingOrderByName(String search);
+    List<Product> findAllByNameContainingIgnoreCase(String search);
 }

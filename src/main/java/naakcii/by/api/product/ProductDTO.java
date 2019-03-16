@@ -3,11 +3,12 @@ package naakcii.by.api.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.entity.AbstractDTOEntity;
 
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductDTO {
+public class ProductDTO extends AbstractDTOEntity {
 
     private Long id;
     private String barcode;

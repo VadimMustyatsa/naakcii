@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> searchName(String search) {
-        return productRepository.findByNameContainingOrderByName(search)
+        return productRepository.findAllByNameContainingIgnoreCase(search)
                 .stream()
                 .filter(Objects::nonNull)
                 .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))

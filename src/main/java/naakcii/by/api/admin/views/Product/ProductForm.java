@@ -3,7 +3,6 @@ package naakcii.by.api.admin.views.Product;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -33,10 +32,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Tag("product-dialog")
-@HtmlImport("product-dialog.html")
+//@HtmlImport("product-dialog.html")
 @SpringComponent
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ProductForm extends VerticalLayout implements CrudForm {
+public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> {
 
     private CategoryService categoryService;
     private SubcategoryService subcategoryService;
@@ -113,7 +112,7 @@ public class ProductForm extends VerticalLayout implements CrudForm {
             countryOfOrigin = countryService.findByName(e.getValue())
         );
         countryOfOriginName.setWidth("50%");
-        isActive = new Checkbox("Акционный товар");
+        isActive = new Checkbox("Активен");
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
@@ -135,7 +134,8 @@ public class ProductForm extends VerticalLayout implements CrudForm {
         return unitCodesRepresentation;
     }
 
-    protected void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
+    @Override
+    public void setBinder(Binder<ProductDTO> binder, ProductDTO productDTO) {
         this.productDTO = productDTO;
         binder.forField(name).asRequired("Наименование товара не может быть пустым")
                 .withValidator(field -> field.trim().length()>=3, "Не менее 3-х символов")
@@ -165,6 +165,16 @@ public class ProductForm extends VerticalLayout implements CrudForm {
                 .bind(ProductDTO::getBrand, ProductDTO::setBrand);
         binder.bind(countryOfOriginName, "countryOfOriginName");
         binder.bind(isActive, "isActive");
+    }
+
+    @Override
+    public ProductDTO getDTO() {
+        return productDTO;
+    }
+
+    @Override
+    public String getChangedDTOName() {
+        return productDTO.getName();
     }
 
     private List<String> getAllCategoriesNames() {
