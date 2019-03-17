@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +25,22 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
 
     @Override
     public Country findByName(String name) {
-        return countryRepository.findByName(name).orElse(null);
+        return countryRepository.findByNameIgnoreCase(name).orElse(null);
     }
 
     @Override
     public List<Country> findAll() {
         return countryRepository.findAllByOrderByName();
+    }
+
+    @Override
+    public Optional<Country> findByAlphaCode2(String alphaCode2) {
+        return countryRepository.findByAlphaCode2IgnoreCase(alphaCode2);
+    }
+
+    @Override
+    public Optional<Country> findByAlphaCode3(String alphaCode3) {
+        return countryRepository.findByAlphaCode3IgnoreCase(alphaCode3);
     }
 
     @Override
@@ -56,8 +67,8 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
     }
 
     @Override
-    public void saveDTO(CountryDTO entityDTO) {
-        countryRepository.save(new Country(entityDTO));
+    public CountryDTO saveDTO(CountryDTO entityDTO) {
+        return new CountryDTO(countryRepository.save(new Country(entityDTO)));
     }
 
     @Override
@@ -65,7 +76,8 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
         Country country = countryRepository.findById(entityDTO.getId()).orElse(null);
         if(country == null) {
             throw new EntityNotFoundException();
-        }
+        } else {
         countryRepository.delete(country);
+        }
     }
 }

@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public interface CountryRepository extends CrudRepository<Country, Long> {
 
-	Optional<Country> findByName(String name);
+	Optional<Country> findByAlphaCode2IgnoreCase(String alphaCode2);
+	Optional<Country> findByAlphaCode3IgnoreCase(String alphaCode3);
+	Optional<Country> findByNameIgnoreCase(String name);
 	List<Country> findAllByOrderByName();
 	List<Country> findAllByNameContainingIgnoreCase(String name);
 }

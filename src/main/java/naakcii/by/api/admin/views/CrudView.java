@@ -4,6 +4,8 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
@@ -49,6 +51,9 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
             dialog.open();
         });
 
+        //drag and drop columns order
+        grid.setColumnReorderingAllowed(true);
+
         setupEventListeners();
         grid.getDataProvider().refreshAll();
 
@@ -71,10 +76,21 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
         E entityDTO = getForm().getDTO();
         boolean isValid = getBinder().writeBeanIfValid(entityDTO);
         if(isValid) {
-            crudService.saveDTO(entityDTO);
-            Notification.show(getForm().getChangedDTOName() + " сохранён");
-            closeUpdate();
-        }
+                try {
+                    E savedEntity = crudService.saveDTO(entityDTO);
+                    if (savedEntity != null) {
+                        Notification.show(getForm().getChangedDTOName() + " сохранён");
+                        closeUpdate();
+                    }
+                } catch (Exception e) {
+                    NativeButton button = new NativeButton("Закрыть");
+                    Label error = new Label(e.toString());
+                    Notification notification = new Notification(error, button);
+                    notification.setPosition(Notification.Position.TOP_STRETCH);
+                    notification.open();
+                    button.addClickListener(event -> notification.close());
+                }
+            }
     }
 
     private void cancel() {

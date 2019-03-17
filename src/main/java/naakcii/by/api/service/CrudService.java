@@ -12,7 +12,7 @@ public interface CrudService<DTO extends AbstractDTOEntity> {
 
     DTO createNewDTO();
 
-    void saveDTO(DTO entityDTO);
+    DTO saveDTO(DTO entityDTO);
 
     void deleteDTO(DTO entityDTO);
 }
