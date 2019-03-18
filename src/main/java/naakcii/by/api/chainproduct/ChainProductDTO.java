@@ -49,7 +49,7 @@ public class ChainProductDTO {
     
     public ChainProductDTO(ChainProduct chainProduct) {
     	this.productId = chainProduct.getId().getProductId();
-    	this.chainId = chainProduct.getId().getProductId();
+    	this.chainId = chainProduct.getId().getChainId();
     	this.chainName = chainProduct.getChain().getName();
     	this.name = chainProduct.getProduct().getName();
     	this.unitOfMeasure = new UnitOfMeasureDTO(chainProduct.getProduct().getUnitOfMeasure());
