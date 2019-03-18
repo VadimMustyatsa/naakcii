@@ -5,19 +5,20 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import naakcii.by.api.admin.views.CrudForm;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 
 public class ImageUpload extends HorizontalLayout {
 
-    private String uploadLocation;
+    private final String uploadLocation;
 
-    private String pathPattern;
+    private final String pathPattern;
 
-    private MultiFileMemoryBuffer buffer;
-    private Upload upload;
+    private final MultiFileMemoryBuffer buffer;
+    private final Upload upload;
 
-    private CrudForm form;
+    private final CrudForm form;
 
     public ImageUpload(CrudForm form, String uploadLocation, String pathPattern) {
         this.form = form;
@@ -33,7 +34,7 @@ public class ImageUpload extends HorizontalLayout {
         upload.setAcceptedFileTypes(fileTypes);
     }
 
-    public void uploadImage() {
+    private void uploadImage() {
         upload.setMaxFileSize(10000000);
         upload.setMaxFiles(1);
         upload.addSucceededListener(event-> {
@@ -47,6 +48,17 @@ public class ImageUpload extends HorizontalLayout {
                 form.getImageField().setValue(pathPattern + event.getFileName());
                 outStream.flush();
                 outStream.close();
+                String fileName = event.getFileName();
+                if(fileName.indexOf('%')>=0) {
+                    fileName = fileName.replace("%", "proc");
+                    File renamedFile = new File(uploadLocation + fileName);
+                    if (renamedFile.exists()) {
+                        form.getImageField().setValue(pathPattern + fileName);
+                    } else {
+                        FileUtils.moveFile(FileUtils.getFile(targetFile), FileUtils.getFile(renamedFile));
+                        form.getImageField().setValue(pathPattern + fileName);
+                    }
+                }
             } catch (IOException ex) {
                 Notification.show("Error");
                 ex.printStackTrace();
