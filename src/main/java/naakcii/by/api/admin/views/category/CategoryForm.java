@@ -55,7 +55,6 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
                 .asRequired("Поле не может быть пустым")
                 .withValidator(field -> field.trim().length()>=3, "Не менее 3-х символов")
                 .withValidator(field -> field.trim().length()<=50, "Не более 50 символов")
-                .withValidator(field -> categoryService.findByName(field)==null, "Эта категория уже существует")
                 .bind(CategoryDTO::getName, CategoryDTO::setName);
         binder.forField(icon)
                 .withValidator(field -> field.length()<=255, "Не более 255 символов")

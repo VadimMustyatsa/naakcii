@@ -54,6 +54,7 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
         picture = new TextField("Адрес картинки");
         picture.setWidth("50%");
         ImageUpload imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
+        imageUpload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
         HorizontalLayout chosePic = new HorizontalLayout(picture, imageUpload);
 
         categoryName = new ComboBox<>("Категория");

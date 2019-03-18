@@ -29,9 +29,12 @@ public class ImageUpload extends HorizontalLayout {
         add(upload);
     }
 
+    public void setAcceptedFileTypes(String... fileTypes) {
+        upload.setAcceptedFileTypes(fileTypes);
+    }
+
     public void uploadImage() {
-//        upload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif", "image/svg+xml");
-        upload.setMaxFileSize(3000000);
+        upload.setMaxFileSize(10000000);
         upload.setMaxFiles(1);
         upload.addSucceededListener(event-> {
             try {

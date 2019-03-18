@@ -1,5 +1,6 @@
 package naakcii.by.api.category;
 
+import com.vaadin.flow.component.notification.Notification;
 import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,7 +71,13 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
 
     @Override
     public CategoryDTO saveDTO(CategoryDTO entityDTO) {
-        return new CategoryDTO(categoryRepository.save(new Category(entityDTO)));
+        Optional<Category> category = categoryRepository.findByNameIgnoreCase(entityDTO.getName());
+        if (category.isPresent() && entityDTO.getId() == null) {
+            Notification.show("Данная категория уже внесена в базу");
+            return null;
+        } else {
+            return new CategoryDTO(categoryRepository.save(new Category(entityDTO)));
+        }
     }
 
     @Override
