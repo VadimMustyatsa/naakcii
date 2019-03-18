@@ -77,11 +77,18 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
 
     @Override
     public CountryDTO saveDTO(CountryDTO entityDTO) {
-        Optional<Country> country = countryRepository.findByNameIgnoreCaseAndAlphaCode2AndAlphaCode3(entityDTO.getName(), entityDTO.getAlphaCode2(),
-                entityDTO.getAlphaCode3());
-        if (country.isPresent() && entityDTO.getId() == null) {
-            Notification.show("Данная страна уже внесена в базу");
-            return null;
+        if (entityDTO.getId() == null) {
+            if (countryRepository.findByNameIgnoreCase(entityDTO.getName()).isPresent()) {
+                Notification.show("Данная страна уже внесена в базу");
+                return null;
+            } else if (countryRepository.findByAlphaCode2IgnoreCase(entityDTO.getAlphaCode2()).isPresent()) {
+                Notification.show("Данный код2 уже внесен в базу");
+                return null;
+            } else if (countryRepository.findByAlphaCode3IgnoreCase(entityDTO.getAlphaCode3()).isPresent()) {
+                Notification.show("Данный код3 уже внесен в базу");
+                return null;
+            }
+            return new CountryDTO(countryRepository.save(new Country(entityDTO)));
         } else {
             return new CountryDTO(countryRepository.save(new Country(entityDTO)));
         }

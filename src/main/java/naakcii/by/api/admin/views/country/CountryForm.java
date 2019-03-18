@@ -53,17 +53,17 @@ public class CountryForm extends VerticalLayout implements CrudForm<CountryDTO> 
                 .asRequired("Введите название страны")
                 .withValidator(field -> field.trim().length()>=3, "Длина не менее 3-х букв")
                 .withValidator(field -> field.trim().length()<=50, "Длина не более 50-ти букв")
-                .withValidator(field -> countryService.findByName(field)==null, "Эта страна уже существует")
+//                .withValidator(field -> countryService.findByName(field)==null, "Эта страна уже существует")
                 .bind(CountryDTO::getName, CountryDTO::setName);
         binder.forField(alphaCode2)
                 .asRequired("Поле не может быть пустым")
                 .withValidator(field-> field.length()==2, "Длина должна быть равна 2-м символам")
-                .withValidator(field -> !countryService.findByAlphaCode2(field).isPresent(), "Этот код уже существует")
+//                .withValidator(field -> !countryService.findByAlphaCode2(field).isPresent(), "Этот код уже существует")
                 .bind(CountryDTO::getAlphaCode2, CountryDTO::setAlphaCode2UpperCase);
         binder.forField(alphaCode3)
                 .asRequired("Поле не может быть пустым")
                 .withValidator(field-> field.length()==3, "Длина должна быть равна 3-м символам")
-                .withValidator(field -> !countryService.findByAlphaCode3(field).isPresent(), "Этот код уже существует")
+//                .withValidator(field -> !countryService.findByAlphaCode3(field).isPresent(), "Этот код уже существует")
                 .bind(CountryDTO::getAlphaCode3, CountryDTO::setAlphaCode3UpperCase);
     }
 
