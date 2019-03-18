@@ -44,6 +44,14 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
     }
 
     @Override
+    public List<String> getAllCountryNames() {
+        return countryRepository.findAllByOrderByName()
+                .stream()
+                .map(Country::getName)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<CountryDTO> findAllDTOs() {
         return countryRepository.findAllByOrderByName()
                 .stream()

@@ -52,7 +52,7 @@ public class ProductView extends CrudView<ProductDTO> {
             }}
         ))
             .setHeader("Изображение");
-        getGrid().addColumn(ProductDTO::getName).setFlexGrow(5).setHeader("Товар").setSortable(true);
+        getGrid().addColumn(ProductDTO::getName).setFlexGrow(4).setHeader("Товар").setSortable(true);
         getGrid().addColumn(ProductDTO::getCategoryName).setHeader("Категория").setSortable(true);
         getGrid().addColumn(ProductDTO::getSubcategoryName).setHeader("Подкатегория").setSortable(true);
     }

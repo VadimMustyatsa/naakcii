@@ -11,6 +11,7 @@ import naakcii.by.api.admin.components.FormButtonsBar;
 import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.category.CategoryDTO;
+import naakcii.by.api.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -26,10 +27,13 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
     private final Checkbox isActive;
 
     private final FormButtonsBar buttons;
+    private CategoryService categoryService;
     private CategoryDTO categoryDTO;
 
     @Autowired
-    public CategoryForm(@Value("${category.icons.upload.location}") String uploadLocation, @Value("${category.icons.path.pattern}") String pathPattern) {
+    public CategoryForm(@Value("${category.icons.upload.location}") String uploadLocation, @Value("${category.icons.path.pattern}") String pathPattern,
+                        CategoryService categoryService) {
+        this.categoryService = categoryService;
         setSizeFull();
         name = new TextField("Категория");
         name.focus();
@@ -51,6 +55,7 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
                 .asRequired("Поле не может быть пустым")
                 .withValidator(field -> field.trim().length()>=3, "Не менее 3-х символов")
                 .withValidator(field -> field.trim().length()<=50, "Не более 50 символов")
+                .withValidator(field -> categoryService.findByName(field)==null, "Эта категория уже существует")
                 .bind(CategoryDTO::getName, CategoryDTO::setName);
         binder.forField(icon)
                 .withValidator(field -> field.length()<=255, "Не более 255 символов")

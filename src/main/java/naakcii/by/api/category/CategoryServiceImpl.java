@@ -5,6 +5,7 @@ import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryServiceImpl implements CategoryService, CrudService<CategoryDTO> {
 
-    private CategoryRepository categoryRepository;
-    private ObjectFactory objectFactory;
+    private final CategoryRepository categoryRepository;
+    private final ObjectFactory objectFactory;
     
     @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, ObjectFactory objectFactory) {
@@ -28,6 +29,19 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     			.filter(Objects::nonNull)
     			.map((Category category) -> objectFactory.getInstance(CategoryDTO.class, category))
     			.collect(Collectors.toList());
+    }
+
+    @Override
+    public Category findByName(String name) {
+        return categoryRepository.findByNameIgnoreCase(name).orElse(null);
+    }
+
+    @Override
+    public List<String> getAllActiveCategoriesNames() {
+        return categoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
+                .stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -54,13 +68,17 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     }
 
     @Override
-    public void saveDTO(CategoryDTO entityDTO) {
-        categoryRepository.save(new Category(entityDTO));
+    public CategoryDTO saveDTO(CategoryDTO entityDTO) {
+        return new CategoryDTO(categoryRepository.save(new Category(entityDTO)));
     }
 
     @Override
     public void deleteDTO(CategoryDTO entityDTO) {
         Category category = categoryRepository.findById(entityDTO.getId()).orElse(null);
-        categoryRepository.delete(category);
+        if(category == null) {
+            throw new EntityNotFoundException();
+        } else {
+            categoryRepository.delete(category);
+        }
     }
 }

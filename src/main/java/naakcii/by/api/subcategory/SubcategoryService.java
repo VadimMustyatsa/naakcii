@@ -6,7 +6,9 @@ public interface SubcategoryService {
 
     List<SubcategoryDTO> getAllSubcategoriesByCategoryId(Long categoryId);
 
-    List<Subcategory> getAllSubcategoriesByCategoryName(String categoryName);
+    List<String> getAllSubcategoriesNames(String categoryName);
 
-    Subcategory findByName(String subcategoryName);
+//    Subcategory findByName(String subcategoryName);
+
+    Subcategory findByNameAndCategoryName(String subcategoryName, String categoryName);
 }

@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
     @Override
     public ProductDTO saveDTO(ProductDTO entityDTO) {
         Product product = new Product(entityDTO);
-        product.setSubcategory(subcategoryService.findByName(entityDTO.getSubcategoryName()));
+        product.setSubcategory(subcategoryService.findByNameAndCategoryName(entityDTO.getSubcategoryName(), entityDTO.getCategoryName()));
         product.setUnitOfMeasure(unitOfMeasureService.findUnitOfMeasureByName(entityDTO.getUnitOfMeasureName()));
         product.setCountryOfOrigin(countryService.findByName(entityDTO.getCountryOfOriginName()));
         Optional<Product> productDB = productRepository.findByNameAndBarcodeAndUnitOfMeasure(product.getName(), product.getBarcode(), product.getUnitOfMeasure());

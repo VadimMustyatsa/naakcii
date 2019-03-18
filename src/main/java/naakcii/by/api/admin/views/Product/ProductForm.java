@@ -12,24 +12,15 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import naakcii.by.api.admin.components.FormButtonsBar;
 import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
-import naakcii.by.api.category.CategoryDTO;
 import naakcii.by.api.category.CategoryService;
-import naakcii.by.api.country.Country;
 import naakcii.by.api.country.CountryService;
 import naakcii.by.api.product.ProductDTO;
-import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.subcategory.SubcategoryService;
-import naakcii.by.api.unitofmeasure.UnitCode;
-import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 import naakcii.by.api.unitofmeasure.UnitOfMeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Tag("product-dialog")
 //@HtmlImport("product-dialog.html")
@@ -37,36 +28,24 @@ import java.util.stream.Collectors;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> {
 
-    private CategoryService categoryService;
-    private SubcategoryService subcategoryService;
-    private UnitOfMeasureService unitOfMeasureService;
-    private CountryService countryService;
     private ProductDTO productDTO;
-    private Subcategory subcategory;
-    private UnitOfMeasure unitOfMeasure;
-    private Country countryOfOrigin;
 
-    private TextField name;
-    private TextField picture;
-    private ImageUpload imageUpload;
-    private ComboBox<String> categoryName;
+    private final TextField name;
+    private final TextField picture;
+    private final ComboBox<String> categoryName;
     private ComboBox<String> subcategoryName;
-    private TextField barcode;
-    private ComboBox<String> unitOfMeasureName;
-    private TextField manufacturer;
-    private TextField brand;
-    private ComboBox<String> countryOfOriginName;
-    private Checkbox isActive;
-    private FormButtonsBar buttons;
+    private final TextField barcode;
+    private final ComboBox<String> unitOfMeasureName;
+    private final TextField manufacturer;
+    private final TextField brand;
+    private final ComboBox<String> countryOfOriginName;
+    private final Checkbox isActive;
+    private final FormButtonsBar buttons;
 
     @Autowired
     public ProductForm(CategoryService categoryService, SubcategoryService subcategoryService,
                        UnitOfMeasureService unitOfMeasureService, CountryService countryService,
                        @Value("${upload.location}") String uploadLocation, @Value("${images.path.pattern}") String pathPattern) {
-        this.categoryService = categoryService;
-        this.subcategoryService = subcategoryService;
-        this.unitOfMeasureService = unitOfMeasureService;
-        this.countryService = countryService;
 
         setSizeFull();
         name = new TextField("Наименование товара");
@@ -74,29 +53,21 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
 
         picture = new TextField("Адрес картинки");
         picture.setWidth("50%");
-        imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
+        ImageUpload imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
         HorizontalLayout chosePic = new HorizontalLayout(picture, imageUpload);
 
         categoryName = new ComboBox<>("Категория");
-        categoryName.setItems(getAllCategoriesNames());
-        categoryName.addValueChangeListener(event ->
-           subcategoryName.setItems(getAllSubcategoriesNames(event.getValue()))
-        );
+        categoryName.setItems(categoryService.getAllActiveCategoriesNames());
+        categoryName.addValueChangeListener(event -> subcategoryName.setItems(subcategoryService.getAllSubcategoriesNames(event.getValue())));
         categoryName.setWidth("50%");
         subcategoryName = new ComboBox<>("Подкатегория");
-        subcategoryName.addValueChangeListener(event ->
-            subcategory = subcategoryService.findByName(event.getValue())
-        );
         subcategoryName.setWidth("50%");
         HorizontalLayout categories = new HorizontalLayout(categoryName, subcategoryName);
 
         barcode = new TextField("Штрих-код");
         barcode.setWidth("50%");
         unitOfMeasureName = new ComboBox<>("Единица измерения");
-        unitOfMeasureName.setItems(getAllUnitsOfMeasure());
-        unitOfMeasureName.addValueChangeListener(e->
-           unitOfMeasure = unitOfMeasureService.findUnitOfMeasureByName(e.getValue())
-        );
+        unitOfMeasureName.setItems(unitOfMeasureService.getAllUnitOfMeasureNames());
         unitOfMeasureName.setWidth("50%");
         HorizontalLayout layout1 = new HorizontalLayout(barcode, unitOfMeasureName);
 
@@ -107,31 +78,12 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
         HorizontalLayout layout2 = new HorizontalLayout(manufacturer, brand);
 
         countryOfOriginName = new ComboBox<>("Страна происхождения");
-        countryOfOriginName.setItems(getAllCountryNames());
-        countryOfOriginName.addValueChangeListener(e ->
-            countryOfOrigin = countryService.findByName(e.getValue())
-        );
+        countryOfOriginName.setItems(countryService.getAllCountryNames());
         countryOfOriginName.setWidth("50%");
         isActive = new Checkbox("Активен");
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
-    }
-
-    private List<String> getAllCountryNames() {
-        return countryService.findAll()
-                .stream()
-                .map(Country::getName)
-                .collect(Collectors.toList());
-    }
-
-    private List<String> getAllUnitsOfMeasure() {
-        UnitCode[] unitCodes = UnitCode.values();
-        List<String> unitCodesRepresentation = new ArrayList<>();
-        for (UnitCode temp : unitCodes) {
-            unitCodesRepresentation.add(temp.getRepresentation());
-        }
-        return unitCodesRepresentation;
     }
 
     @Override
@@ -148,7 +100,7 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
                 .asRequired("Поле не может быть пустым")
                 .bind(ProductDTO::getCategoryName, ProductDTO::setCategoryName);
         binder.forField(subcategoryName)
-                .withValidator(field -> (!field.isEmpty()),"Поле не может быть пустым")
+                .withValidator(field -> (!field.isEmpty()), "Поле не может быть пустым")
                 .bind(ProductDTO::getSubcategoryName, ProductDTO::setSubcategoryName);
         binder.forField(barcode)
                 .asRequired("Поле не может быть пустым")
@@ -177,24 +129,6 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
         return productDTO.getName();
     }
 
-    private List<String> getAllCategoriesNames() {
-        List<CategoryDTO> allCategories = categoryService.getAllCategories();
-        List<String> categoriesNames = new ArrayList<>();
-        for(CategoryDTO temp : allCategories) {
-            categoriesNames.add(temp.getName());
-        }
-        return categoriesNames;
-    }
-
-    private List<String> getAllSubcategoriesNames(String categoryName) {
-        List<Subcategory> subcategories = subcategoryService.getAllSubcategoriesByCategoryName(categoryName);
-        List<String> subcategoriesNames = new ArrayList<>();
-        for (Subcategory temp : subcategories) {
-            subcategoriesNames.add(temp.getName());
-        }
-        return subcategoriesNames;
-    }
-
     @Override
     public TextField getImageField() {
         return picture;
@@ -203,19 +137,5 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
     @Override
     public FormButtonsBar getButtons() {
         return buttons;
-    }
-
-    protected ProductDTO getProductDTO() {
-        return productDTO;
-    }
-
-    protected Subcategory getSubcategory() {
-        return subcategory;
-    }
-
-    protected UnitOfMeasure getUnitOfMeasure() {return unitOfMeasure;}
-
-    protected Country getCountryOfOrigin() {
-        return countryOfOrigin;
     }
 }

@@ -13,4 +13,6 @@ public interface CountryService {
     Optional<Country> findByAlphaCode2(String alphaCode2);
 
     Optional<Country> findByAlphaCode3(String alphaCode3);
+
+    List<String> getAllCountryNames();
 }

@@ -1,23 +1,26 @@
 package naakcii.by.api.subcategory;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
+import naakcii.by.api.category.CategoryRepository;
+import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import naakcii.by.api.util.ObjectFactory;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class SubcategoryServiceImpl implements SubcategoryService {
 	   
     private SubcategoryRepository subcategoryRepository;
+    private CategoryRepository categoryRepository;
     private ObjectFactory objectFactory;
     
     @Autowired
-    public SubcategoryServiceImpl(SubcategoryRepository subcategoryRepository, ObjectFactory objectFactory) {
+    public SubcategoryServiceImpl(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository,
+                                  ObjectFactory objectFactory) {
     	this.subcategoryRepository = subcategoryRepository;
+    	this.categoryRepository = categoryRepository;
     	this.objectFactory = objectFactory;
     }
 
@@ -31,12 +34,15 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     }
 
     @Override
-    public List<Subcategory> getAllSubcategoriesByCategoryName(String categoryName) {
-        return subcategoryRepository.findByCategoryName(categoryName);
+    public List<String> getAllSubcategoriesNames(String categoryName) {
+        return subcategoryRepository.findByCategory(categoryRepository.findByNameIgnoreCase(categoryName))
+                .stream()
+                .map(subcategory -> subcategory.getName())
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Subcategory findByName(String subcategoryName) {
-        return subcategoryRepository.findByName(subcategoryName);
+    public Subcategory findByNameAndCategoryName(String subcategoryName, String categoryName) {
+        return subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName).orElse(null);
     }
 }
