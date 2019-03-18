@@ -27,7 +27,7 @@ public class CategoryView extends CrudView<CategoryDTO> {
 
     @Autowired
     public CategoryView(CrudForm<CategoryDTO> form, CrudService<CategoryDTO> crudService) {
-        super(form, crudService);
+        super(form, crudService, false);
         binder = new Binder<>(CategoryDTO.class);
     }
 

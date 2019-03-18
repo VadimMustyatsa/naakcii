@@ -1,5 +1,6 @@
 package naakcii.by.api.admin.views.Product;
 
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -10,6 +11,7 @@ import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.admin.views.CrudView;
 import naakcii.by.api.product.ProductDTO;
+import naakcii.by.api.product.ProductService;
 import naakcii.by.api.service.CrudService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,14 @@ public class ProductView extends CrudView<ProductDTO> {
     private final Binder<ProductDTO> binder;
 
     @Autowired
-    public ProductView(CrudForm<ProductDTO> form, CrudService<ProductDTO> crudService) {
-        super(form, crudService);
+    public ProductView(CrudForm<ProductDTO> form, CrudService<ProductDTO> crudService, ProductService productService) {
+        super(form, crudService, true);
         binder = new Binder<>(ProductDTO.class);
+        ComboBox<String> filter = getSearchBar().getFilter();
+        filter.setItems("Активные", "Неактивные");
+        filter.setValue("Активные");
+        getGrid().setItems(productService.checkIsActive(filter.getValue()));
+        filter.addValueChangeListener(e-> getGrid().setItems(productService.checkIsActive(e.getValue())));
     }
 
     @Override

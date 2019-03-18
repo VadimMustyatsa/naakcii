@@ -1,5 +1,6 @@
 package naakcii.by.api.country;
 
+import com.vaadin.flow.component.notification.Notification;
 import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,14 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
 
     @Override
     public CountryDTO saveDTO(CountryDTO entityDTO) {
-        return new CountryDTO(countryRepository.save(new Country(entityDTO)));
+        Optional<Country> country = countryRepository.findByNameIgnoreCaseAndAlphaCode2AndAlphaCode3(entityDTO.getName(), entityDTO.getAlphaCode2(),
+                entityDTO.getAlphaCode3());
+        if (country.isPresent() && entityDTO.getId() == null) {
+            Notification.show("Данная страна уже внесена в базу");
+            return null;
+        } else {
+            return new CountryDTO(countryRepository.save(new Country(entityDTO)));
+        }
     }
 
     @Override

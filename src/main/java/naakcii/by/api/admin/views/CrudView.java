@@ -26,19 +26,20 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
     private final Dialog dialog = new Dialog();
     private final CrudForm<E> form;
     private final Grid<E> grid;
+    private final SearchBar searchBar;
 
     public abstract Binder<E> getBinder();
 
     protected abstract void setupGrid();
 
-    public CrudView(CrudForm<E> form, CrudService<E> crudService) {
+    public CrudView(CrudForm<E> form, CrudService<E> crudService, boolean isFilter) {
         this.form = form;
         this.crudService = crudService;
         setSizeFull();
 
         dialog.add((Component) getForm());
 
-        SearchBar searchBar = new SearchBar(this);
+        searchBar = new SearchBar(this, isFilter);
         
         grid = new Grid<>();
         setupGrid();
@@ -95,7 +96,8 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
     private void cancel() {
         getDialog().close();
-        grid.getDataProvider().refreshAll();
+        getGrid().getDataProvider().refreshAll();
+        getGrid().asSingleSelect().clear();
     }
 
     private void delete() {
@@ -106,7 +108,7 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
     }
 
     private void closeUpdate() {
-        grid.asSingleSelect().clear();
+        getGrid().asSingleSelect().clear();
         getDialog().close();
         updateList(null);
         grid.getDataProvider().refreshAll();
@@ -132,6 +134,10 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
     public CrudService<E> getCrudService() {
         return crudService;
+    }
+
+    public SearchBar getSearchBar() {
+        return searchBar;
     }
 
     @Override

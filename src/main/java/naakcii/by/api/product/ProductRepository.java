@@ -19,4 +19,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     List<Product> findAllByOrderByName();
     List<Product> findAllByNameContainingIgnoreCase(String search);
+
+    List<Product> findAllByIsActiveTrue();
+    List<Product> findAllByIsActiveFalse();
 }

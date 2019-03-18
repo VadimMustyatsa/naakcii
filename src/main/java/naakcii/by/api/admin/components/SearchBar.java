@@ -2,6 +2,7 @@ package naakcii.by.api.admin.components;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -10,9 +11,10 @@ import naakcii.by.api.entity.AbstractDTOEntity;
 
 public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
 
-    private CrudView<E> crudView;
+    private final CrudView<E> crudView;
+    private ComboBox<String> filter;
 
-    public SearchBar(CrudView<E> crudView) {
+    public SearchBar(CrudView<E> crudView, boolean isFilter) {
         this.crudView = crudView;
         TextField search = new TextField("Поиск");
         search.setValueChangeMode(ValueChangeMode.EAGER);
@@ -23,10 +25,19 @@ public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
         addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
         addEntity.setHeight("70%");
         addEntity.addClickListener(e -> onComponentEvent());
+        if (isFilter) {
+            filter = new ComboBox<>("Фильтр");
+            add(search, filter, addEntity);
+        } else {
+            add(search, addEntity);
+        }
 
-        add(search, addEntity);
         setWidth("100%");
         addEntity.getStyle().set("margin-left", "auto").set("margin-top", "auto");
+    }
+
+    public ComboBox<String> getFilter() {
+        return filter;
     }
 
     private void onComponentEvent() {

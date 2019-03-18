@@ -12,4 +12,5 @@ public interface CountryRepository extends CrudRepository<Country, Long> {
 	Optional<Country> findByNameIgnoreCase(String name);
 	List<Country> findAllByOrderByName();
 	List<Country> findAllByNameContainingIgnoreCase(String name);
+	Optional<Country> findByNameIgnoreCaseAndAlphaCode2AndAlphaCode3(String name, String alphaCode2, String alphaCode3);
 }

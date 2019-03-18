@@ -99,4 +99,21 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
                 .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ProductDTO> checkIsActive(String filter) {
+        if (filter.equals("Активные")) {
+            return productRepository.findAllByIsActiveTrue()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
+                    .collect(Collectors.toList());
+        } else {
+            return productRepository.findAllByIsActiveFalse()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
+                    .collect(Collectors.toList());
+        }
+    }
 }

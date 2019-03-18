@@ -13,4 +13,6 @@ public interface ProductService {
     Product findProduct(Long id);
 
     List<ProductDTO> findAllDTOs();
+
+    List<ProductDTO> checkIsActive(String filter);
 }
