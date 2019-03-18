@@ -81,7 +81,7 @@ public class ProductForm extends VerticalLayout implements CrudForm<ProductDTO> 
         countryOfOriginName = new ComboBox<>("Страна происхождения");
         countryOfOriginName.setItems(countryService.getAllCountryNames());
         countryOfOriginName.setWidth("50%");
-        isActive = new Checkbox("Активен");
+        isActive = new Checkbox("Активный");
         buttons = new FormButtonsBar();
         add(name, chosePic, categories, layout1, layout2,
                 countryOfOriginName, isActive, buttons);
