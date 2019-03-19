@@ -103,13 +103,13 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
     @Override
     public List<ProductDTO> checkIsActive(String filter) {
         if (filter.equals("Активные")) {
-            return productRepository.findAllByIsActiveTrue()
+            return productRepository.findAllByIsActiveTrueOrderByName()
                     .stream()
                     .filter(Objects::nonNull)
                     .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
                     .collect(Collectors.toList());
         } else {
-            return productRepository.findAllByIsActiveFalse()
+            return productRepository.findAllByIsActiveFalseOrderByName()
                     .stream()
                     .filter(Objects::nonNull)
                     .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
