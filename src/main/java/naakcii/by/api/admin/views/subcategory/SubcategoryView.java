@@ -24,6 +24,7 @@ public class SubcategoryView extends CrudView<SubcategoryDTO> {
         super(form, crudService, false);
         binder = new Binder<>(SubcategoryDTO.class);
     }
+
     @Override
     public Binder<SubcategoryDTO> getBinder() {
         return binder;

@@ -1,6 +1,7 @@
 package naakcii.by.api.subcategory;
 
 import com.vaadin.flow.component.notification.Notification;
+import naakcii.by.api.category.Category;
 import naakcii.by.api.category.CategoryRepository;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.service.CrudService;
@@ -96,13 +97,28 @@ public class SubcategoryServiceImpl implements SubcategoryService, CrudService<S
         if(subcategory == null) {
             throw new EntityNotFoundException();
         } else {
+            Subcategory indefiniteSubcategory = getIndefiniteSubcategory();
             Set<Product> products = subcategory.getProducts();
             for (Product tempProduct : products) {
-                tempProduct.setSubcategory(subcategoryRepository.findById(1L).orElse(null));
+                tempProduct.setSubcategory(indefiniteSubcategory);
             }
             products.clear();
             subcategoryRepository.delete(subcategory);
         }
+    }
 
+    private Subcategory getIndefiniteSubcategory() {
+        Subcategory subcategoryIndefinite =
+                subcategoryRepository.findByNameIgnoreCaseAndCategoryNameIgnoreCase("Indefinite subcategory",
+                        "Indefinite category").orElse(null);
+        Category categoryIndefinite = categoryRepository.findByNameIgnoreCase("Indefinite category").orElse(null);
+        if(subcategoryIndefinite==null && categoryIndefinite==null) {
+            Category category = categoryRepository.save(new Category("Indefinite category", false));
+            return subcategoryRepository.save(new Subcategory("Indefinite category", false, category));
+        } else if (subcategoryIndefinite==null) {
+            return subcategoryRepository.save(new Subcategory("Indefinite category", false, categoryIndefinite));
+        } else {
+            return subcategoryIndefinite;
+        }
     }
 }

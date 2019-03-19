@@ -9,9 +9,9 @@ import com.vaadin.flow.shared.Registration;
 
 public class FormButtonsBar extends HorizontalLayout {
 
-    private Button save;
-    private Button delete;
-    private Button cancel;
+    private final Button save;
+    private final Button delete;
+    private final Button cancel;
 
     public FormButtonsBar() {
         save = new Button("Сохранить");
@@ -51,8 +51,10 @@ public class FormButtonsBar extends HorizontalLayout {
     public Registration addDeleteListener(ComponentEventListener<DeleteEvent> listener) {
         return delete.addClickListener(e -> listener.onComponentEvent(new DeleteEvent(this, true)));
     }
-
     public Button getSaveButton() {
         return save;
+    }
+    public Button getDeleteButton() {
+        return delete;
     }
 }

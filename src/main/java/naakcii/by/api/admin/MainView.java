@@ -29,14 +29,16 @@ public class MainView extends VerticalLayout implements RouterLayout, HasUrlPara
     public MainView(@Value("${adminka.token}") String path) {
         setSizeFull();
         List<PageInfo> pages = new ArrayList<>();
-        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_PRODUCT + "/" + path, AppConsts.ICON_PRODUCT,
-                        AppConsts.TITLE_PRODUCT));
-        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_COUNTRY + "/" + path, AppConsts.ICON_COUNTRY,
-                AppConsts.TITLE_COUNTRY));
-        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CATEGORY + "/" + path, AppConsts.ICON_CATEGORY,
-                AppConsts.TITLE_CATEGORY));
-        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_SUBCATEGORY + "/" + path, AppConsts.ICON_SUBCATEGORY,
-                AppConsts.TITLE_SUBCATEGORY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_PRODUCT + "/" + path,
+                AppConsts.ICON_PRODUCT, AppConsts.TITLE_PRODUCT));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_COUNTRY + "/" + path,
+                AppConsts.ICON_COUNTRY, AppConsts.TITLE_COUNTRY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CATEGORY + "/" + path,
+                AppConsts.ICON_CATEGORY, AppConsts.TITLE_CATEGORY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_SUBCATEGORY + "/" + path,
+                AppConsts.ICON_SUBCATEGORY, AppConsts.TITLE_SUBCATEGORY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_MEASURE + "/" + path,
+                AppConsts.ICON_MEASURE, AppConsts.TITLE_MEASURE));
         appNavigation = new AppNavigation();
         appNavigation.init(pages, AppConsts.PAGE_DEFAULT, path);
         add(appNavigation);

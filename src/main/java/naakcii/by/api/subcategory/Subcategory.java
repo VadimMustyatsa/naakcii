@@ -66,7 +66,14 @@ public class Subcategory implements Serializable {
 		this.isActive = subcategoryDTO.getIsActive();
 		this.priority = subcategoryDTO.getPriority();
 	}
-	
+
+	public Subcategory(String name, Boolean isActive, Category category) {
+		this.name = name;
+		this.isActive = isActive;
+		this.category = category;
+		category.getSubcategories().add(this);
+	}
+
 	public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + Subcategory.class + ":");
     	result.append(System.lineSeparator());

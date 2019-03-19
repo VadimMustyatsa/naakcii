@@ -1,22 +1,16 @@
 package naakcii.by.api.unitofmeasure;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.util.annotations.PureSize;
+
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Setter
@@ -53,6 +47,12 @@ public class UnitOfMeasure {
 	public UnitOfMeasure(UnitCode unitCode) {
 		this.name = unitCode.getRepresentation();
 		this.step = unitCode.getDefaultStep();
+	}
+
+	public UnitOfMeasure(UnitOfMeasureDTO unitOfMeasureDTO) {
+		this.id = unitOfMeasureDTO.getId();
+		this.name = unitOfMeasureDTO.getName();
+		this.step = unitOfMeasureDTO.getStep();
 	}
 	
 	public String toString() {

@@ -99,12 +99,22 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
         if(category == null) {
             throw new EntityNotFoundException();
         } else {
+            Category indefiniteCategory = getIndefiniteCategory();
             Set<Subcategory> subcategories = category.getSubcategories();
             for (Subcategory tempSubcategory : subcategories) {
-                tempSubcategory.setCategory(categoryRepository.findById(1L).orElse(null));
+                tempSubcategory.setCategory(indefiniteCategory);
             }
             subcategories.clear();
             categoryRepository.delete(category);
+        }
+    }
+
+    private Category getIndefiniteCategory() {
+        Category categoryIndefinite = categoryRepository.findByNameIgnoreCase("Indefinite category").orElse(null);
+        if(categoryIndefinite == null) {
+            return categoryRepository.save(new Category("Indefinite category", false));
+        } else {
+            return categoryIndefinite;
         }
     }
 }

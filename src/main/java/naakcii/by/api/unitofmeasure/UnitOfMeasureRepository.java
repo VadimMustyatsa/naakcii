@@ -9,4 +9,6 @@ public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, L
 	UnitOfMeasure findByNameIgnoreCase(String unitOfMeasureName);
 
 	List<UnitOfMeasure> findAllByOrderByName();
+
+	List<UnitOfMeasure> findByNameContainingIgnoreCase(String name);
 }

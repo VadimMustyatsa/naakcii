@@ -21,4 +21,5 @@ public interface SubcategoryRepository extends CrudRepository<Subcategory, Long>
 	@Modifying
 	@Query("update Subcategory subcategory set subcategory.isActive = false where subcategory.id = :subcategoryId")
 	int softDelete(@Param("subcategoryId") Long subcategoryId);
+	Optional<Subcategory> findByNameIgnoreCaseAndCategoryNameIgnoreCase(String subcategoryName, String categoryName);
 }
