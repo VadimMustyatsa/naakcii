@@ -2,14 +2,17 @@ package naakcii.by.api.category;
 
 import com.vaadin.flow.component.notification.Notification;
 import naakcii.by.api.service.CrudService;
+import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,11 +93,17 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     }
 
     @Override
+    @Transactional
     public void deleteDTO(CategoryDTO entityDTO) {
         Category category = categoryRepository.findById(entityDTO.getId()).orElse(null);
         if(category == null) {
             throw new EntityNotFoundException();
         } else {
+            Set<Subcategory> subcategories = category.getSubcategories();
+            for (Subcategory tempSubcategory : subcategories) {
+                tempSubcategory.setCategory(categoryRepository.findById(1L).orElse(null));
+            }
+            subcategories.clear();
             categoryRepository.delete(category);
         }
     }
