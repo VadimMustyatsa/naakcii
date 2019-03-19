@@ -33,7 +33,6 @@ public class UnitOfMeasureForm extends VerticalLayout implements CrudForm<UnitOf
         step = new TextField("Шаг изменения");
 
         buttons = new FormButtonsBar();
-        buttons.getDeleteButton().setEnabled(false);
 
         add(name, step, buttons);
     }

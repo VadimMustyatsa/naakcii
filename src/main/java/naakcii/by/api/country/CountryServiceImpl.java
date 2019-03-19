@@ -1,6 +1,8 @@
 package naakcii.by.api.country;
 
 import com.vaadin.flow.component.notification.Notification;
+import naakcii.by.api.product.Product;
+import naakcii.by.api.product.ProductRepository;
 import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,14 @@ import java.util.stream.Collectors;
 public class CountryServiceImpl implements CountryService, CrudService<CountryDTO> {
 
     private final CountryRepository countryRepository;
+    private final ProductRepository productRepository;
     private final ObjectFactory objectFactory;
 
     @Autowired
-    public CountryServiceImpl(CountryRepository countryRepository, ObjectFactory objectFactory) {
+    public CountryServiceImpl(CountryRepository countryRepository, ObjectFactory objectFactory,
+                              ProductRepository productRepository) {
         this.countryRepository = countryRepository;
+        this.productRepository = productRepository;
         this.objectFactory = objectFactory;
     }
 
@@ -97,10 +102,17 @@ public class CountryServiceImpl implements CountryService, CrudService<CountryDT
     @Override
     public void deleteDTO(CountryDTO entityDTO) {
         Country country = countryRepository.findById(entityDTO.getId()).orElse(null);
-        if(country == null) {
-            throw new EntityNotFoundException();
+        List<Product> products = productRepository
+                .findAllByCountryOfOrigin(countryRepository.findByNameIgnoreCase(entityDTO.getName()).orElse(null));
+        if (products.size() > 0) {
+            Notification.show("Данная страна присвоена " + products.size() + " товарам");
+            throw new RuntimeException("Удаление невозможно");
         } else {
-        countryRepository.delete(country);
+            if (country == null) {
+                throw new EntityNotFoundException();
+            } else {
+                countryRepository.delete(country);
+            }
         }
     }
 }

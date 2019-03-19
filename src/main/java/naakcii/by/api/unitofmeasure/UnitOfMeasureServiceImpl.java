@@ -1,6 +1,8 @@
 package naakcii.by.api.unitofmeasure;
 
 import com.vaadin.flow.component.notification.Notification;
+import naakcii.by.api.product.Product;
+import naakcii.by.api.product.ProductRepository;
 import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,13 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService, CrudServi
 
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final ObjectFactory objectFactory;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository unitOfMeasureRepository, ObjectFactory objectFactory) {
+    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository unitOfMeasureRepository, ObjectFactory objectFactory,
+                                    ProductRepository productRepository) {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
+        this.productRepository = productRepository;
         this.objectFactory = objectFactory;
     }
 
@@ -73,6 +78,13 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService, CrudServi
 
     @Override
     public void deleteDTO(UnitOfMeasureDTO entityDTO) {
-
+        List<Product> products = productRepository
+                .findAllByUnitOfMeasure(unitOfMeasureRepository.findByNameIgnoreCase(entityDTO.getName()));
+        if(products.size()>0) {
+            Notification.show("Эта единица измерения присвоена " + products.size() + " товарам");
+            throw new RuntimeException("Удаление невозможно");
+        } else {
+            unitOfMeasureRepository.delete(unitOfMeasureRepository.findByNameIgnoreCase(entityDTO.getName()));
+        }
     }
 }

@@ -1,5 +1,6 @@
 package naakcii.by.api.product;
 
+import naakcii.by.api.country.Country;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     List<Product> findAllByIsActiveTrueOrderByName();
     List<Product> findAllByIsActiveFalseOrderByName();
+    List<Product> findAllByUnitOfMeasure(UnitOfMeasure unitOfMeasure);
+    List<Product> findAllByCountryOfOrigin(Country country);
 }
