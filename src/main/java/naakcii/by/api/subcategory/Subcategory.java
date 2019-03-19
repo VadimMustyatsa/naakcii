@@ -1,23 +1,5 @@
 package naakcii.by.api.subcategory;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +7,14 @@ import lombok.Setter;
 import naakcii.by.api.category.Category;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.util.annotations.PureSize;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Setter
@@ -70,16 +60,11 @@ public class Subcategory implements Serializable {
 	@NotNull(message = "Subcategory must have field 'isActive' defined.")
 	private Boolean isActive;
 	
-	public Subcategory(String name, Boolean isActive) {
-		this.name = name;
-		this.isActive = isActive;
-	}
-	
-	public Subcategory(String name, Boolean isActive, Category category) {
-		this.name = name;
-		this.isActive = isActive;
-		this.category = category;
-		category.getSubcategories().add(this);
+	public Subcategory(SubcategoryDTO subcategoryDTO) {
+		this.id = subcategoryDTO.getId();
+		this.name = subcategoryDTO.getName();
+		this.isActive = subcategoryDTO.getIsActive();
+		this.priority = subcategoryDTO.getPriority();
 	}
 	
 	public String toString() {

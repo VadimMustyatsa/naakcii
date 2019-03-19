@@ -47,6 +47,15 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     }
 
     @Override
+    public List<String> getAllCategoriesNames() {
+        return categoryRepository.findAllByOrderByName()
+                .stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
     public List<CategoryDTO> findAllDTOs() {
         return categoryRepository.findAllByOrderByPriority()
                 .stream()

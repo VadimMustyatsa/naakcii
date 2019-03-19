@@ -84,14 +84,19 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
                         closeUpdate();
                     }
                 } catch (Exception e) {
-                    NativeButton button = new NativeButton("Закрыть");
-                    Label error = new Label(e.toString());
-                    Notification notification = new Notification(error, button);
-                    notification.setPosition(Notification.Position.TOP_STRETCH);
-                    notification.open();
-                    button.addClickListener(event -> notification.close());
+                    errorNotification(e);
                 }
             }
+    }
+
+    private void errorNotification(Exception e) {
+        e.printStackTrace();
+        NativeButton button = new NativeButton("Закрыть");
+        Label error = new Label(e.toString());
+        Notification notification = new Notification(error, button);
+        notification.setPosition(Notification.Position.TOP_STRETCH);
+        notification.open();
+        button.addClickListener(event -> notification.close());
     }
 
     private void cancel() {
@@ -103,9 +108,13 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
     private void delete() {
         E entityDTO = getForm().getDTO();
-        crudService.deleteDTO(entityDTO);
-        Notification.show(getForm().getChangedDTOName() + " удалён");
-        closeUpdate();
+        try {
+            crudService.deleteDTO(entityDTO);
+            Notification.show(getForm().getChangedDTOName() + " удалён");
+            closeUpdate();
+        } catch (Exception e) {
+            errorNotification(e);
+        }
     }
 
     private void closeUpdate() {

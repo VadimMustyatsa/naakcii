@@ -20,4 +20,8 @@ public class AppConsts {
     public static final String PAGE_CATEGORY = "category";
     public static final String TITLE_CATEGORY = "Категории";
     public static final String ICON_CATEGORY = "tasks";
+
+    public static final String PAGE_SUBCATEGORY = "subcategory";
+    public static final String TITLE_SUBCATEGORY = "Подкатегории";
+    public static final String ICON_SUBCATEGORY = "tree-table";
 }

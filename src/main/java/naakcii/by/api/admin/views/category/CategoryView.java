@@ -23,7 +23,7 @@ public class CategoryView extends CrudView<CategoryDTO> {
     @Value("${no.image}")
     private String noImage;
 
-    private Binder<CategoryDTO> binder;
+    private final Binder<CategoryDTO> binder;
 
     @Autowired
     public CategoryView(CrudForm<CategoryDTO> form, CrudService<CategoryDTO> crudService) {
@@ -56,6 +56,7 @@ public class CategoryView extends CrudView<CategoryDTO> {
         getGrid().addColumn(CategoryDTO::getPriority).setHeader("Порядок отображения").setSortable(true);
         getGrid().addColumn(new ComponentRenderer<>(categoryDTO -> {
             Checkbox isActive = new Checkbox();
+            isActive.setReadOnly(true);
             isActive.setValue(categoryDTO.getIsActive());
             return isActive;
         })).setHeader("Активна").setSortable(true);

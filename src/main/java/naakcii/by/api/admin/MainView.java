@@ -20,7 +20,7 @@ import java.util.List;
 @Viewport(AppConsts.VIEWPORT)
 public class MainView extends VerticalLayout implements RouterLayout, HasUrlParameter<String> {
 
-    private AppNavigation appNavigation;
+    private final AppNavigation appNavigation;
 
     @Value("${adminka.token}")
     private String adminkaPath;
@@ -35,6 +35,8 @@ public class MainView extends VerticalLayout implements RouterLayout, HasUrlPara
                 AppConsts.TITLE_COUNTRY));
         pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CATEGORY + "/" + path, AppConsts.ICON_CATEGORY,
                 AppConsts.TITLE_CATEGORY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_SUBCATEGORY + "/" + path, AppConsts.ICON_SUBCATEGORY,
+                AppConsts.TITLE_SUBCATEGORY));
         appNavigation = new AppNavigation();
         appNavigation.init(pages, AppConsts.PAGE_DEFAULT, path);
         add(appNavigation);
