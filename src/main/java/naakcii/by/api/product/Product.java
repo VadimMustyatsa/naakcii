@@ -1,29 +1,23 @@
 package naakcii.by.api.product;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 import naakcii.by.api.util.annotations.Barcode;
 import naakcii.by.api.util.annotations.PureSize;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Setter
@@ -92,6 +86,11 @@ public class Product implements Serializable {
 	@Valid
 	private Subcategory subcategory;
 
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<
+				@Valid
+				@NotNull(message = "Product must have list of chainProducts without null elements.")
+						ChainProduct> chainProducts = new HashSet<ChainProduct>();
 	
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")

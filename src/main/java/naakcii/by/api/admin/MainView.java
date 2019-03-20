@@ -37,6 +37,8 @@ public class MainView extends VerticalLayout implements RouterLayout, HasUrlPara
                 AppConsts.ICON_CATEGORY, AppConsts.TITLE_CATEGORY));
         pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_SUBCATEGORY + "/" + path,
                 AppConsts.ICON_SUBCATEGORY, AppConsts.TITLE_SUBCATEGORY));
+        pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CHAIN + "/" + path,
+                AppConsts.ICON_CHAIN, AppConsts.TITLE_CHAIN));
         pages.add(new PageInfo(AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_MEASURE + "/" + path,
                 AppConsts.ICON_MEASURE, AppConsts.TITLE_MEASURE));
         appNavigation = new AppNavigation();

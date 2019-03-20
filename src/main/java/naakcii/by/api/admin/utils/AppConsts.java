@@ -25,6 +25,10 @@ public class AppConsts {
     public static final String TITLE_SUBCATEGORY = "Подкатегории";
     public static final String ICON_SUBCATEGORY = "tree-table";
 
+    public static final String PAGE_CHAIN = "chain";
+    public static final String TITLE_CHAIN = "Торговые сети";
+    public static final String ICON_CHAIN = "building";
+
     public static final String PAGE_MEASURE = "unitOfMeasure";
     public static final String TITLE_MEASURE = "Единицы измерения";
     public static final String ICON_MEASURE = "sliders";

@@ -12,7 +12,6 @@ import naakcii.by.api.admin.components.FormButtonsBar;
 import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.category.CategoryDTO;
-import naakcii.by.api.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -31,8 +30,7 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
     private CategoryDTO categoryDTO;
 
     @Autowired
-    public CategoryForm(@Value("${category.icons.upload.location}") String uploadLocation, @Value("${category.icons.path.pattern}") String pathPattern,
-                        CategoryService categoryService) {
+    public CategoryForm(@Value("${upload.location}") String uploadLocation, @Value("${images.path.pattern}") String pathPattern) {
         setSizeFull();
         name = new TextField("Категория");
         name.focus();
@@ -42,6 +40,8 @@ public class CategoryForm extends VerticalLayout implements CrudForm<CategoryDTO
         priority = new TextField("Порядок отображения");
         isActive = new Checkbox("Активна");
         buttons = new FormButtonsBar();
+        uploadLocation = uploadLocation + "CategoryIcons/";
+        pathPattern = pathPattern + "CategoryIcons/";
         ImageUpload imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
         HorizontalLayout upload = new HorizontalLayout(icon, imageUpload);
 
