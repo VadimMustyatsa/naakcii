@@ -25,7 +25,11 @@ public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
         addEntity.setHeight("70%");
         addEntity.addClickListener(e -> onComponentEvent());
 
-        add(search, filterComponent, addEntity);
+        if (filterComponent!=null) {
+            add(search, filterComponent, addEntity);
+        } else {
+            add(search, addEntity);
+        }
         setWidth("100%");
         addEntity.getStyle().set("margin-left", "auto").set("margin-top", "auto");
     }
