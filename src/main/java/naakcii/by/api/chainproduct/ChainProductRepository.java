@@ -55,4 +55,5 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
 
     List<ChainProduct> findAllByProductIsActiveTrueAndChainIsActiveTrueAndEndDateGreaterThanEqualOrderByChainName(LocalDate endDateRestriction);
     List<ChainProduct> findAllByStartDateGreaterThanEqual(LocalDate startDateRestriction);
+    List<ChainProduct> findAllByProductNameContainingIgnoreCase(String name);
 }

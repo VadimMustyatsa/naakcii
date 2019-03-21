@@ -61,8 +61,13 @@ public class ChainProductServiceImpl implements ChainProductService, CrudService
 	}
 
 	@Override
+	@Transactional
 	public List<ChainProductDTO> searchName(String name) {
-		return null;
+		return chainProductRepository.findAllByProductNameContainingIgnoreCase(name)
+				.stream()
+				.filter(Objects::nonNull)
+				.map((ChainProduct chainProduct) -> objectFactory.getInstance(ChainProductDTO.class, chainProduct))
+				.collect(Collectors.toList());
 	}
 
 	@Override
