@@ -30,9 +30,9 @@ public class ProductView extends CrudView<ProductDTO> {
 
     @Autowired
     public ProductView(CrudForm<ProductDTO> form, CrudService<ProductDTO> crudService, ProductService productService) {
-        super(form, crudService, true);
+        super(form, crudService, new ComboBox<String>("Фильтр"));
         binder = new Binder<>(ProductDTO.class);
-        ComboBox<String> filter = getSearchBar().getFilter();
+        ComboBox<String> filter = (ComboBox<String>) getFilterComponent();
         filter.setItems("Активные", "Неактивные");
         filter.setValue("Активные");
         getGrid().setItems(productService.checkIsActive(filter.getValue()));

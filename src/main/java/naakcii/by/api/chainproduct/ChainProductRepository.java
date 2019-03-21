@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -51,4 +52,7 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
 
     @Query("select avg(discountPercent) from ChainProduct")
     BigDecimal findAverageDiscountPercentage();
+
+    List<ChainProduct> findAllByProductIsActiveTrueAndChainIsActiveTrueAndEndDateGreaterThanEqualOrderByChainName(LocalDate endDateRestriction);
+    List<ChainProduct> findAllByStartDateGreaterThanEqual(LocalDate startDateRestriction);
 }

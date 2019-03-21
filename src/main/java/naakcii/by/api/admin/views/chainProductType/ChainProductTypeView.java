@@ -24,7 +24,7 @@ public class ChainProductTypeView extends CrudView<ChainProductTypeDTO> {
     private final Binder<ChainProductTypeDTO> binder;
 
     public ChainProductTypeView(CrudForm<ChainProductTypeDTO> form, CrudService<ChainProductTypeDTO> crudService) {
-        super(form, crudService, false);
+        super(form, crudService, null);
         binder = new Binder<>(ChainProductTypeDTO.class);
     }
 

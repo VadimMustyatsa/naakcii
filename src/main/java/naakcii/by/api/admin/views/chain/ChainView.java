@@ -27,7 +27,7 @@ public class ChainView extends CrudView<ChainDTO> {
 
     @Autowired
     public ChainView(CrudForm<ChainDTO> form, CrudService<ChainDTO> crudService) {
-        super(form, crudService, false);
+        super(form, crudService, null);
         binder = new Binder<>(ChainDTO.class);
     }
 

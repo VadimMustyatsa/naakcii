@@ -21,7 +21,7 @@ public class SubcategoryView extends CrudView<SubcategoryDTO> {
 
     @Autowired
     public SubcategoryView(CrudForm<SubcategoryDTO> form, CrudService<SubcategoryDTO> crudService) {
-        super(form, crudService, false);
+        super(form, crudService, null);
         binder = new Binder<>(SubcategoryDTO.class);
     }
 

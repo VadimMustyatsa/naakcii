@@ -33,7 +33,11 @@ public class AppConsts {
     public static final String TITLE_CHAINPRODUCTTYPE = "Типы акций";
     public static final String ICON_CHAINPRODUCTTYPE = "book-percent";
 
+    public static final String PAGE_CHAINPRODUCT = "chainProduct";
+    public static final String TITLE_CHAINPRODUCT = "Акции";
+    public static final String ICON_CHAINPRODUCT = "star";
+
     public static final String PAGE_MEASURE = "unitOfMeasure";
-    public static final String TITLE_MEASURE = "Единицы измерения";
+    public static final String TITLE_MEASURE = "Ед. измерения";
     public static final String ICON_MEASURE = "sliders";
 }

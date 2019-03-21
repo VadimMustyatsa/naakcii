@@ -19,7 +19,7 @@ public class UnitOfMeasureView extends CrudView<UnitOfMeasureDTO> {
 
     @Autowired
     public UnitOfMeasureView(CrudForm<UnitOfMeasureDTO> form, CrudService<UnitOfMeasureDTO> crudService) {
-        super(form, crudService, false);
+        super(form, crudService, null);
         binder = new Binder<>(UnitOfMeasureDTO.class);
     }
 

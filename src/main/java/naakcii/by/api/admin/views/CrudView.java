@@ -26,20 +26,22 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
     private final Dialog dialog = new Dialog();
     private final CrudForm<E> form;
     private final Grid<E> grid;
+    private final Component filterComponent;
     private final SearchBar searchBar;
 
     public abstract Binder<E> getBinder();
 
     protected abstract void setupGrid();
 
-    public CrudView(CrudForm<E> form, CrudService<E> crudService, boolean isFilter) {
+    public CrudView(CrudForm<E> form, CrudService<E> crudService, Component filterComponent) {
         this.form = form;
         this.crudService = crudService;
+        this.filterComponent = filterComponent;
         setSizeFull();
 
         dialog.add((Component) getForm());
 
-        searchBar = new SearchBar(this, isFilter);
+        searchBar = new SearchBar(this, filterComponent);
         
         grid = new Grid<>();
         setupGrid();
@@ -148,6 +150,10 @@ public abstract class CrudView<E extends AbstractDTOEntity> extends VerticalLayo
 
     public SearchBar getSearchBar() {
         return searchBar;
+    }
+
+    public Component getFilterComponent() {
+        return filterComponent;
     }
 
     @Override

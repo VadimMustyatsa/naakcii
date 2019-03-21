@@ -13,8 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Formatter;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Setter
@@ -125,15 +124,15 @@ public class ChainProduct implements Serializable {
     private BigDecimal discountPercent;
 
     @Column(name = "CHAIN_PRODUCT_START_DATE")
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @NotNull(message = "ChainProduct must have have start date.")
-    private Calendar startDate;
+    private LocalDate startDate;
 
     @Column(name = "CHAIN_PRODUCT_END_DATE")
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     @Future(message = "ChainProduct's end date must be in the future.")
     @NotNull(message = "ChainProduct must have end date.")
-    private Calendar endDate;
+    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -158,35 +157,7 @@ public class ChainProduct implements Serializable {
     @NotNull(message = "ChainProduct must have type.")
     @Valid
     private ChainProductType type;
-    
-    public ChainProduct(Product product, Chain chain, BigDecimal discountPrice, ChainProductType type, Calendar startDate, Calendar endDate) {
-        this.product = product;
-        this.chain = chain;
-        this.discountPrice = discountPrice;
-        this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.id.productId = product.getId();
-        this.id.chainId = chain.getId();
-        product.getChainProducts().add(this);
-        chain.getChainProducts().add(this);
-    }
-    
-    public ChainProduct(Product product, Chain chain, BigDecimal basePrice, BigDecimal discountPrice, BigDecimal discountPercent, ChainProductType type, Calendar startDate, Calendar endDate) {
-        this.product = product;
-        this.chain = chain;
-        this.basePrice = basePrice;
-        this.discountPrice = discountPrice;
-        this.discountPercent = discountPercent;
-        this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.id.productId = product.getId();
-        this.id.chainId = chain.getId();
-        product.getChainProducts().add(this);
-        chain.getChainProducts().add(this);
-    }
-    
+
     public void setProduct(Product product) {
     	this.product = product;
     	this.id.productId = product.getId();
@@ -195,33 +166,5 @@ public class ChainProduct implements Serializable {
     public void setChain(Chain chain) {
     	this.chain = chain;
     	this.id.chainId = chain.getId();
-    }
-    
-    public String toString() {
-    	StringBuilder result = new StringBuilder("Instance of " + ChainProduct.class + ":");
-		result.append(System.lineSeparator());
-		result.append("\t").append("product id/name - " + (product == null ? null + "/" + null : id.productId + "/" + product.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("chain id/name - " + (chain == null ? null + "/" + null : id.chainId + "/" + chain.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("base price - " + basePrice + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("discount price - " + discountPrice + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("discount percent - " + discountPercent + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("start date - " + startDate == null ? null : getFormattedDate(startDate) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("end date - " + endDate == null ? null : getFormattedDate(endDate) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("type id/name - " + (type == null ? null + "/" + null : type.getId() + "/" + type.getName()) + ".");
-		return result.toString();
-    }
-    
-    private String getFormattedDate(Calendar date) {
-    	Formatter formatter = new Formatter();
-    	String formattedDate = formatter.format("%td-%tm-%tY", date, date, date).toString();
-    	formatter.close();
-    	return formattedDate;
     }
 }

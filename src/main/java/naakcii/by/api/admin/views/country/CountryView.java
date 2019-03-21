@@ -20,7 +20,7 @@ public class CountryView extends CrudView<CountryDTO> {
 
     @Autowired
     public CountryView(CrudForm<CountryDTO> form, CrudService<CountryDTO> crudService) {
-        super(form, crudService,false);
+        super(form, crudService,null);
         binder = new Binder<>(CountryDTO.class);
     }
 
