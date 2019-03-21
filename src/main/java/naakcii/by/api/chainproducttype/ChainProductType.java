@@ -51,21 +51,10 @@ public class ChainProductType implements Serializable {
 	)
 	private String tooltip;
 	
-	public ChainProductType(String name, String synonym) {
-		this.name = name;
-		this.synonym = synonym;
-	}
-	
-	public String toString() {
-		StringBuilder result = new StringBuilder("Instance of " + ChainProductType.class + ":");
-		result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("synonym - " + synonym + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("tooltip - " + tooltip + ".");
-		return result.toString();
+	public ChainProductType(ChainProductTypeDTO chainProductTypeDTO) {
+		this.id = chainProductTypeDTO.getId();
+		this.name = chainProductTypeDTO.getName();
+		this.synonym = chainProductTypeDTO.getSynonym();
+		this.tooltip = chainProductTypeDTO.getTooltip();
 	}
 }

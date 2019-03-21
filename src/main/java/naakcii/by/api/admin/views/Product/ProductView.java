@@ -1,5 +1,6 @@
 package naakcii.by.api.admin.views.Product;
 
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.binder.Binder;
@@ -62,5 +63,11 @@ public class ProductView extends CrudView<ProductDTO> {
         getGrid().addColumn(ProductDTO::getName).setFlexGrow(4).setHeader("Товар").setSortable(true);
         getGrid().addColumn(ProductDTO::getCategoryName).setHeader("Категория").setSortable(true);
         getGrid().addColumn(ProductDTO::getSubcategoryName).setHeader("Подкатегория").setSortable(true);
+        getGrid().addColumn(new ComponentRenderer<>(productDTO -> {
+            Checkbox isActive = new Checkbox();
+            isActive.setReadOnly(true);
+            isActive.setValue(productDTO.getIsActive());
+            return isActive;
+        })).setHeader("Активный").setSortable(true).setFlexGrow(0);
     }
 }

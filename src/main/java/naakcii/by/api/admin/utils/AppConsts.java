@@ -29,6 +29,10 @@ public class AppConsts {
     public static final String TITLE_CHAIN = "Торговые сети";
     public static final String ICON_CHAIN = "building";
 
+    public static final String PAGE_CHAINPRODUCTTYPE = "chainProductType";
+    public static final String TITLE_CHAINPRODUCTTYPE = "Типы акций";
+    public static final String ICON_CHAINPRODUCTTYPE = "book-percent";
+
     public static final String PAGE_MEASURE = "unitOfMeasure";
     public static final String TITLE_MEASURE = "Единицы измерения";
     public static final String ICON_MEASURE = "sliders";
