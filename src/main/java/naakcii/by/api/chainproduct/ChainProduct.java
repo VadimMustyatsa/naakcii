@@ -124,12 +124,10 @@ public class ChainProduct implements Serializable {
     private BigDecimal discountPercent;
 
     @Column(name = "CHAIN_PRODUCT_START_DATE")
-//    @Temporal(TemporalType.DATE)
     @NotNull(message = "ChainProduct must have have start date.")
     private LocalDate startDate;
 
     @Column(name = "CHAIN_PRODUCT_END_DATE")
-//    @Temporal(TemporalType.DATE)
     @Future(message = "ChainProduct's end date must be in the future.")
     @NotNull(message = "ChainProduct must have end date.")
     private LocalDate endDate;
