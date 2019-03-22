@@ -11,6 +11,7 @@ export class FoodsStorageService {
   getAll() {
     return this.restDataService.getChains
       .map(chainList => {
+        console.log(chainList)
         return chainList.map(chain => {
           return {
             id: chain['id'],

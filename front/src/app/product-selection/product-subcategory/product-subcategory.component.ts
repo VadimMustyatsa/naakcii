@@ -6,6 +6,8 @@ import {FoodsSubCategoriesService} from '../../shared/subCategory/foods.subCateg
 import {Category} from '../../shared/category/foods.category.model';
 import {Observer} from 'rxjs/Observer';
 
+import {FoodsFoodListService} from '../../shared/foodList/foods.foodList.service';
+
 @Component({
   selector: 'app-foods-subCategory',
   templateUrl: './product-subcategory.component.html',
@@ -17,6 +19,7 @@ export class ProductSubcategoryComponent implements OnInit {
   subCategoryList: SubCategory[];
 
   constructor(private service: FoodsSubCategoriesService,
+              private chainProductListService: FoodsFoodListService,
               @Inject(SHARED_STATE) private observer: Observer<SharedState>,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
@@ -29,16 +32,18 @@ export class ProductSubcategoryComponent implements OnInit {
           this.curCategory = update.category;
           this.subCategoryList = subCategoryList;
           this.subCategoryList[0].selected = true;
+          this.onChangeItem(this.subCategoryList[0].id);
           this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
         });
       }
     });
   }
 
-  onChangeItem(idSubCut) {
-    this.subCategoryList.map(el => {
-      el.selected = (el.id === idSubCut);
-    });
+  onChangeItem(idSubCut: number) {
+    this.chainProductListService.changeSubcategory(idSubCut);
+    // this.subCategoryList.map(el => {
+    //   el.selected = (el.id === idSubCut);
+    // });
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }
 }

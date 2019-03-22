@@ -4,6 +4,7 @@ import {Category} from '../category/foods.category.model';
 import {SubCategory} from '../subCategory/foods.subCategory.model';
 import {Storag} from '../Storage/foods.storage.model';
 import {FoodList} from '../foodList/foods.foodList.model';
+import {ChainProductFromJson} from '../model/chain-product-json.model';
 import {Observable} from 'rxjs';
 import {Statistics} from '../../home-page/model/statistics';
 
@@ -15,23 +16,23 @@ export class RestDataService {
   constructor (private http: HttpClient) { }
 
   get category() {
-    return this.http.get<Category[]>(`category`);
-    // return this.http.get<Category[]>(`categories`);
+    // return this.http.get<Category[]>(`category`);
+    return this.http.get<Category[]>(`categories`);
   }
 
   getSubCategory(categoryId) {
-    return this.http.get<SubCategory[]>(`subcategory/${categoryId}`);
-    // return this.http.get<SubCategory[]>(`subcategories/${categoryId}`);
+    // return this.http.get<SubCategory[]>(`subcategory/${categoryId}`);
+    return this.http.get<SubCategory[]>(`subcategories/${categoryId}`);
   }
 
   get getChains() {
-    return this.http.get<Storag[]>(`chain`);
-    // return this.http.get<Storag[]>(`chains`);
+    // return this.http.get<Storag[]>(`chain`);
+    return this.http.get<Storag[]>(`chains`);
   }
 
   getProducts(data) {
-    return this.http.get<FoodList[]>(`product/`, {params: data});
-    // return this.http.get<FoodList[]>(`products/`, {params: data});
+    // return this.http.get<FoodList[]>(`product/`, {params: data});
+    return this.http.get<ChainProductFromJson[]>(`products`, {params: data});
   }
 
   get statistics(): Observable<Statistics> {

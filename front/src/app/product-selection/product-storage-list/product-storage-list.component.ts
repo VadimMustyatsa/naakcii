@@ -8,7 +8,6 @@ import { Chain } from '../../shared/chain/chain.model';
 import { Observable } from 'rxjs/Observable';
 import { Cart } from '../../shared/cart/cart.model';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
-import {SessionStorageService} from "../../shared/services/session-storage.service";
 
 @Component({
   selector: 'app-foods-storage-list',
@@ -39,10 +38,9 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor(public  chainLst: Chain,
+  constructor(public chainLst: Chain,
               public cart: Cart,
               private eRef: ElementRef,
-              private sessionStorageService:SessionStorageService,
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
   }
@@ -77,9 +75,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   }
 
   setAllChains(checked) {
-    this.chainLst.lines.map(el => {
-      el.chain.selected = checked;
-    });
+    this.chainLst.setAllChains(checked);
     if (checked) {
       this.chainListText = 'Выбраны торговые сети: все';
       this.curChainPercent = '';
@@ -89,61 +85,49 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
       this.curChainPercent = '';
       this.curChainCountGoods = '';
     }
-    this.checkedAllChain = checked;
   }
 
   onChangeChain(id) {
-    this.chainLst.lines.map(el => {
-      if (el.chain.id === id) {
-        el.chain.selected = !el.chain.selected;
-      }
-    });
+    this.chainLst.changeChain(id);
     this.correctAllChainsCheck();
-   this.sessionStorageService.setChainToSessionStorage(this.chainLst.lines);
   }
 
   correctAllChainsCheck() {
-    sessionStorage.setItem('naakciiChainStorage', JSON.stringify(this.chainLst.lines));
     if (this.chainLst.lines.length > 0) {
-      let cnt = 0;
-      let curChain: Storag;
-      this.chainLst.lines.map(chain => {
-        if (chain.chain.selected) {
-          cnt += 1;
-          curChain = chain.chain;
-        }
-      });
+      const cnt = this.chainLst.selectedIds.length;
       if (cnt === 1) {
+        const curChain = this.chainLst.getChainById(this.chainLst.selectedIds[0]).chain;
         this.chainListText = `Выбрана торговая сеть: "${curChain.name}"`;
         this.checkedAllChain = false;
+        this.chainListText = curChain.name;
+        this.curChainPercent = `${curChain.percent}%`;
+        this.curChainCountGoods = String(curChain.countGoods);
       } else {
         this.curChainPercent = '';
         this.curChainCountGoods = '';
         if (cnt > 1) {
           this.chainListText = 'Выбраны торговые сети: ' + String(cnt);
-        } else if (cnt === 1) {
-          this.chainListText = curChain.name;
-          this.curChainPercent = `${curChain.percent}%`;
-          this.curChainCountGoods = String(curChain.countGoods);
         } else if (cnt === 0) {
           this.chainListText = 'Выберите торговую сеть';
         }
       }
+      this.checkedAllChain = this.chainLst.getIsSelectedAll();
+
       // проверка на однотипность выбора
-      const curCheck = this.chainLst.lines[0].chain.selected;
-      for (let i = 1; i < this.chainLst.lines.length; i++) {
-        if (curCheck !== this.chainLst.lines[i].chain.selected) {
-          return;
-        }
-      }
-      this.setAllChains(curCheck);
+      // const curCheck = this.chainLst.lines[0].chain.selected;
+      // for (let i = 1; i < this.chainLst.lines.length; i++) {
+      //   if (curCheck !== this.chainLst.lines[i].chain.selected) {
+      //     return;
+      //   }
+      // }
+      // this.setAllChains(curCheck);
     }
   }
+
 
   onChangeAllChains() {
     this.checkedAllChain = !this.checkedAllChain;
     this.setAllChains(this.checkedAllChain);
-    this.sessionStorageService.setChainToSessionStorage(this.chainLst.lines);
   }
 
   close() {

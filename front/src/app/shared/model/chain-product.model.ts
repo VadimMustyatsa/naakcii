@@ -1,8 +1,9 @@
-import {FoodList} from '../foodList/foods.foodList.model';
+import {ChainProductFromJson } from '../model/chain-product-json.model';
 import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
         MEASURE_KG, MEASURE_PIECE} from '../../CONSTANTS';
+import {environment} from '../../../environments/environment';
 
-        export class ChainProduct {
+export class ChainProduct {
 
   productId: number;
   chainId: number;
@@ -23,18 +24,20 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
 
   changeStep: number;
 
-  constructor(_chainProduct: FoodList,  private idCategory: number) {
-    this.productId = _chainProduct['id'];
+  constructor(_chainProduct: ChainProductFromJson) {
+    console.log('Приходит с API')
+    console.log(_chainProduct);
+    this.productId = _chainProduct['productId'];
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];
-    this.picture = _chainProduct['picture'].replace('%', '%25');
-    this.basePrice = _chainProduct['price'];
+    this.picture = environment.imgUrl + _chainProduct['picture'];
+    this.basePrice = _chainProduct['basePrice'];
     this.discountPrice = _chainProduct['discountPrice'];
-    this.discountPercent = _chainProduct['discount'];
-    this.unitOfMeasure = this.generateMeasure(); // генерируется пока API 1
-    this.chainProductType = this.generatechainProductType(_chainProduct['discount']);
-    this.endDateMS = this.genereateEndDate();
-    this.changeStep = this.generateChangeStep();
+    this.discountPercent = _chainProduct['discountPercent'];
+    this.unitOfMeasure  = _chainProduct.unitOfMeasure['name'];
+    this.chainProductType = _chainProduct.chainProductType;
+    this.endDateMS = _chainProduct['endDate'];
+    this.changeStep = parseFloat(_chainProduct.unitOfMeasure['step']);
   }
   // есть ли у товара базовая цена
   get isConsiderBasePrice(): boolean {
@@ -119,14 +122,6 @@ import {A_GOOD_PRICE, A_DISCOUNT_PERCENT, A_ONE_PLUS_ONE,
       case A_ONE_PLUS_ONE:
         return baseKf * 2;
     }
-  }
-  // на основе категории присваивает весовой или штучный !убрать после включения API 2!
-  generateMeasure() {
-    if ((this.idCategory === 1002) ||
-     (this.idCategory === 1003)) {
-      return MEASURE_KG;
-    }
-    return MEASURE_PIECE;
   }
 
   generatechainProductType(discountPersent) {

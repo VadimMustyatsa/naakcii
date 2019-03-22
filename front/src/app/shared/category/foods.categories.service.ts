@@ -15,6 +15,7 @@ export class FoodsCategoriesService {
   getAll() {
     return this.restDataService.category
       .map(categoryList => {
+        console.log(categoryList)
         return categoryList.map(category => {
           return {
             id: category['id'],

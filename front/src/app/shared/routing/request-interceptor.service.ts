@@ -8,7 +8,8 @@ export class RequestInterceptorService implements HttpInterceptor {
   constructor() {  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    // console.log('Запрос:')
+    // console.log(req)
     let request = req.clone({
       url: `${environment.baseUrl}/api/${req.url}`,
         setHeaders: {

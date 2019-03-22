@@ -146,50 +146,42 @@ export class Cart {
   }
 
   // генерация JSON итогового списка для PDF-----------------------------------
-  generateJsonListPDF() {
-    // let pdf = {};
-    // let chainSort = {};
-    // let totalSum = {};
-    // let sumBefore = 0;
-    // let sumAfter = 0;
+  generateJsonListPDF(): {} {
+    const pdf = {};
+    const chainSort = {};
+    const totalSum = {};
 
-    // let chainListExist: ChainLine[] = [];
-    // this.lines.forEach(line => {
-    //   if (isUndefined(chainListExist.find(x => x.chain.id == line.product.chainId))) {
-    //     chainListExist.push(this.getStorageByID(line.product.chainId));
-    //   }
-    // });
+    const chainListExist: ChainLine[] = [];
+    this.lines.forEach(line => {
+      if (isUndefined(chainListExist.find(x => x.chain.id === line.product.chainId))) {
+        chainListExist.push(this.getStorageByID(line.product.chainId));
+      }
+    });
 
-    // chainListExist.forEach(chain => {
-    //   let curCartList = [];
-    //   this.lines.forEach(cart => {
-    //     if (chain.chain.id == cart.product.chainId) {
-    //       let curCart = {};
-    //       curCart['Name'] = cart.product.name;
-    //       curCart['Comment'] = cart.comment;
-    //       curCart['priceOne'] = (cart.product.totalPrice).toFixed(2);
-    //       curCart['amount'] = cart.quantity;
-    //       curCart['priceSum'] = (cart.product.totalPrice * cart.quantity).toFixed(2);
-    //       curCartList.push(curCart);
-    //       if (cart.product.allPrice > 0) {
-    //         sumBefore += cart.product.allPrice * cart.quantity;
-    //       } else {
-    //         sumBefore += cart.product.totalPrice * cart.quantity;
-    //       }
-    //       sumAfter += cart.product.totalPrice * cart.quantity;
-    //     }
-    //   });
-    //   chainSort[chain.chain.name] = curCartList;
-    // });
+    chainListExist.forEach(chain => {
+      const curCartList = [];
+      this.lines.forEach(cart => {
+        if (chain.chain.id === cart.product.chainId) {
+          const curCart = {};
+          curCart['Name'] = cart.product.name;
+          curCart['Comment'] = cart.comment;
+          curCart['priceOne'] = (cart.product.discountPrice).toFixed(2);
+          curCart['amount'] = cart.quantity;
+          curCart['priceSum'] = (cart.product.getSumWithDiscount(cart.quantity)).toFixed(2);
+          curCartList.push(curCart);
+        }
+      });
+      chainSort[chain.chain.name] = curCartList;
+    });
 
-    // totalSum['sumBefore'] = sumBefore;
-    // totalSum['sumAfter'] = sumAfter;
-    // totalSum['discountSum'] = (sumBefore - sumAfter);
-    // totalSum['discountPersent'] = (100 - (sumAfter / sumBefore) * 100);
+    totalSum['sumBefore'] = this.sumAllBasePrice;
+    totalSum['sumAfter'] = this.sumAllDiscountPrice;
+    totalSum['discountSum'] = this.sumDiscountInMoney;
+    totalSum['discountPersent'] = this.sumDiscountInPercent;
 
-    // pdf['ChainList'] = chainSort;
-    // pdf['totalSum'] = totalSum;
-    // return pdf;
+    pdf['ChainList'] = chainSort;
+    pdf['totalSum'] = totalSum;
+    return pdf;
   }
 
   getStorageByID(id: number): ChainLine {

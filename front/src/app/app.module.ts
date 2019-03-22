@@ -47,9 +47,9 @@ import { RestDataService } from './shared/services/rest-data.service';
 import { HomePageService } from './home-page/home-page-service/home-page.service';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
 import { EmailModalComponent } from './product-selection/email-modal/email-modal.component';
-import { SubscribeService } from "./shared/services/subscribe.service";
+import { SubscribeService } from './shared/services/subscribe.service';
 import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
-import { TooltipDirective } from "./shared/directives/tooltip/tooltip.directive";
+import { TooltipDirective } from './shared/directives/tooltip/tooltip.directive';
 import { ShoppingListComponent } from './shopping-list-page/shopping-list/shopping-list.component';
 import { ChainLineComponent } from './shopping-list-page/shopping-list/chain-line/chain-line.component';
 import { CartLineComponent } from './shopping-list-page/shopping-list/cart-line/cart-line.component';
@@ -60,7 +60,7 @@ import { UndiscountHeaderComponent } from './shopping-list-page/shopping-list/un
 import { UndiscountLinesComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-lines.component';
 import { UndiscountAddComponent } from './shopping-list-page/shopping-list/undiscount-add/undiscount-add.component';
 import { UndiscountLineComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-line/undiscount-line.component';
-
+import {FoodsFoodListService} from './shared/foodList/foods.foodList.service';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -125,6 +125,7 @@ registerLocaleData(localeFr);
     FinalizePageGuard,
     RestDataService,
     SubscribeService,
+    FoodsFoodListService,
     {provide: SHARED_STATE, useValue: new Subject<SharedState>() },
     { provide: LOCALE_ID, useValue: 'ru-BY'}],
   bootstrap: [AppComponent]

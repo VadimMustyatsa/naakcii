@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  // baseUrl: 'https://178.124.206.42:8443'
-  baseUrl: 'http://178.124.206.59:8080'
+  baseUrl: 'http://178.124.206.42:8080',
+  // baseUrl: 'http://178.124.206.59:8080'
   // baseUrl: 'http://93.125.114.137:8080'
+  imgUrl: 'http://178.124.206.42:8080'
 };

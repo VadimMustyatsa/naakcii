@@ -7,10 +7,10 @@ export const UNDISCOUNT_STORAGE_KEY = 'naakciiUndiscountStorage';
 
 // String conctants from API
 export const A_GOOD_PRICE = 'Хорошая цена';
-export const A_DISCOUNT_PERCENT = 'Скидка в процентах';
+export const A_DISCOUNT_PERCENT = 'Скидка';
 export const A_ONE_PLUS_ONE = '1+1';
 
-export const MEASURE_KG = 'Кг';
-export const MEASURE_PIECE = 'Шт';
+export const MEASURE_KG = 'кг';
+export const MEASURE_PIECE = 'шт';
 
 // -------------------------

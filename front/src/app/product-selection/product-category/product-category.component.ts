@@ -5,7 +5,7 @@ import {Category} from '../../shared/category/foods.category.model';
 import {Observer} from 'rxjs/Observer';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import { NguCarousel, NguCarouselStore, NguCarouselService } from '@ngu/carousel';
-import {BreakPointCheckService} from "../../shared/services/breakpoint-check.service";
+import {BreakPointCheckService} from '../../shared/services/breakpoint-check.service';
 
 @Component({
   selector: 'app-foods-group',

@@ -7,7 +7,7 @@ import {BreakPointCheckService} from '../../../shared/services/breakpoint-check.
 
 import {SessionStorageService} from '../../../shared/services/session-storage.service';
 import roundTo2Digits from '../../../shared/utils/roundTo2Digits';
-
+import setImgStyles from '../../../shared/utils/setImgStyles';
 @Component({
   selector: 'app-action-product-card',
   templateUrl: './action-product-card.component.html',
@@ -29,6 +29,8 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('карта товара для')
+    console.log(this.product)
     this.selectAmount = this.product.startAmount;
   }
 
@@ -71,12 +73,7 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   setImgStyles() {
-    return {
-      'background-image': `url("assets/images/Products/${this.product.picture}")`,
-      'background-size': 'contain',
-      'background-repeat': 'no-repeat',
-      'background-position': 'center'
-    };
+    return setImgStyles(this.product.picture);
   }
 
   // проверяем выделена ли сеть данной карточки в фильтре сетей
@@ -89,6 +86,7 @@ export class ActionProductCardComponent implements OnInit {
         }
       }
     });
-    return selected;
+    // return selected;
+    return true;
   }
 }
