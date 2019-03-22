@@ -33,15 +33,6 @@ public class SubcategoryServiceImpl implements SubcategoryService, CrudService<S
     }
 
     @Override
-    public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(Long categoryId) {
-    	return subcategoryRepository.findByIsActiveTrueAndCategoryIdOrderByPriorityAsc(categoryId)
-    			.stream()
-    			.filter(Objects::nonNull)
-    			.map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
-    			.collect(Collectors.toList());
-    }
-
-    @Override
     public List<String> getAllSubcategoriesNames(String categoryName) {
         return subcategoryRepository.findByCategory(categoryRepository.findByNameIgnoreCase(categoryName))
                 .stream()

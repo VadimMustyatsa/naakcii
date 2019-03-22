@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ChainServiceImpl implements ChainService, CrudService<ChainDTO> {
+public class ChainServiceImpl implements CrudService<ChainDTO> {
 
     private final ChainRepository chainRepository;
     private final ObjectFactory objectFactory;

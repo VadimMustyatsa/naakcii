@@ -28,20 +28,6 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     }
 
     @Override
-    public List<CategoryDTO> getAllCategories() {
-    	return categoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
-    			.stream()
-    			.filter(Objects::nonNull)
-    			.map((Category category) -> objectFactory.getInstance(CategoryDTO.class, category))
-    			.collect(Collectors.toList());
-    }
-
-    @Override
-    public Category findByName(String name) {
-        return categoryRepository.findByNameIgnoreCase(name).orElse(null);
-    }
-
-    @Override
     public List<String> getAllActiveCategoriesNames() {
         return categoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
                 .stream()
@@ -56,7 +42,6 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
                 .map(Category::getName)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<CategoryDTO> findAllDTOs() {

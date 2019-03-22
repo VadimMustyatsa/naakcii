@@ -8,7 +8,6 @@ import naakcii.by.api.unitofmeasure.UnitOfMeasureService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -34,17 +33,6 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
         this.subcategoryService = subcategoryService;
         this.unitOfMeasureService = unitOfMeasureService;
         this.countryService = countryService;
-    }
-
-    @Override
-    public void save(Product product) {
-        productRepository.save(product);
-    }
-
-    @Override
-    @Transactional
-    public void softDelete(Product product) {
-        productRepository.softDelete(product.getId());
     }
 
     @Override
@@ -84,11 +72,6 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
         } else {
             productRepository.delete(product);
         }
-    }
-
-    @Override
-    public Product findProduct(Long id) {
-        return productRepository.findById(id).orElse(null);
     }
 
     @Override

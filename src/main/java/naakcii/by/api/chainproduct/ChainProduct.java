@@ -37,7 +37,7 @@ public class ChainProduct implements Serializable {
         @Column(name = "CHAIN_ID")
         private Long chainId;
 
-        public Id() {
+        Id() {
 
         }
 
@@ -47,7 +47,7 @@ public class ChainProduct implements Serializable {
         }
 
         public boolean equals(Object o) {
-            if (o != null && o instanceof Id) {
+            if (o instanceof Id) {
                 Id that = (Id) o;
                 return this.productId.equals(that.productId) && this.chainId.equals(that.chainId);
             }
@@ -79,14 +79,12 @@ public class ChainProduct implements Serializable {
     	message = "ChainProduct's base price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
-    	value = "75", 
-    	inclusive = true,
-    	message = "ChainProduct's base price '${validatedValue}' must be lower than '{value}'."
+    	value = "75",
+            message = "ChainProduct's base price '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
-       	value = "0.20", 
-       	inclusive = true,
-       	message = "ChainProduct's base price '${validatedValue}' must be higher than '{value}'."
+       	value = "0.20",
+            message = "ChainProduct's base price '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal basePrice;
 
@@ -98,14 +96,12 @@ public class ChainProduct implements Serializable {
     	message = "ChainProduct's discount price '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
-        value = "50", 
-        inclusive = true,
-        message = "ChainProduct's discount price '${validatedValue}' must be lower than '{value}'."
+        value = "50",
+            message = "ChainProduct's discount price '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
-      	value = "0.20", 
-       	inclusive = true,
-       	message = "ChainProduct's discount price '${validatedValue}' must be higher than '{value}'."
+      	value = "0.20",
+            message = "ChainProduct's discount price '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal discountPrice;
     
@@ -116,9 +112,8 @@ public class ChainProduct implements Serializable {
     	message = "ChainProduct's discount percent '${validatedValue}' must have up to '{integer}' integer digits and '{fraction}' fraction digits."
     )
     @DecimalMax(
-        value = "50", 
-        inclusive = true,
-        message = "ChainProduct's discount percent '${validatedValue}' must be lower than '{value}'."
+        value = "50",
+            message = "ChainProduct's discount percent '${validatedValue}' must be lower than '{value}'."
     )
     @PositiveOrZero(message = "ChainProduct's discount percent '${validatedValue}' mustn't be negative.")
     private BigDecimal discountPercent;
@@ -155,14 +150,4 @@ public class ChainProduct implements Serializable {
     @NotNull(message = "ChainProduct must have type.")
     @Valid
     private ChainProductType type;
-
-    public void setProduct(Product product) {
-    	this.product = product;
-    	this.id.productId = product.getId();
-    }
-    
-    public void setChain(Chain chain) {
-    	this.chain = chain;
-    	this.id.chainId = chain.getId();
-    }
 }

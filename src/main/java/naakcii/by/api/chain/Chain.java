@@ -68,7 +68,7 @@ public class Chain implements Serializable {
 	private Set<
 		@Valid 
 		@NotNull(message = "Chain must have list of chainProducts without null elements.")
-				ChainProduct> chainProducts = new HashSet<ChainProduct>();
+				ChainProduct> chainProducts = new HashSet<>();
 		
 	@Column(name = "CHAIN_IS_ACTIVE")
 	@NotNull(message = "Chain must have field 'isActive' defined.")
@@ -81,22 +81,5 @@ public class Chain implements Serializable {
 		this.synonym = chainDTO.getSynonym();
 		this.link = chainDTO.getLink();
 		this.isActive = chainDTO.getIsActive();
-	}
-	
-	public String toString() {
-		StringBuilder result = new StringBuilder("Instance of " + Chain.class + ":");
-		result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("synonym - " + synonym + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("logo - " + logo + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("link - " + link + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("isActive - " + isActive + ".");
-		return result.toString();
 	}
 }

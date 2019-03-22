@@ -1,20 +1,15 @@
 package naakcii.by.api.country;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.util.annotations.PureSize;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Setter
@@ -67,18 +62,5 @@ public class Country {
 		this.name = countryDTO.getName();
 		this.alphaCode2 = countryDTO.getAlphaCode2();
 		this.alphaCode3 = countryDTO.getAlphaCode3();
-	}
-	
-	public String toString() {
-		StringBuilder result = new StringBuilder("Instance of " + Country.class + ":");
-		result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("alpha code 2 - " + alphaCode2 + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("alpha code 3 - " + alphaCode3 + ".");
-		return result.toString();
 	}
 }

@@ -54,15 +54,4 @@ public class UnitOfMeasure {
 		this.name = unitOfMeasureDTO.getName();
 		this.step = unitOfMeasureDTO.getStep();
 	}
-	
-	public String toString() {
-		StringBuilder result = new StringBuilder("Instance of " + UnitOfMeasure.class + ":");
-		result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("step - " + step + ".");
-		return result.toString();
-	}
 }

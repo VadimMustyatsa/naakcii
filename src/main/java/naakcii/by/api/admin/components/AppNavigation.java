@@ -20,7 +20,7 @@ public class AppNavigation extends HorizontalLayout implements AfterNavigationOb
     private List<String> hrefs = new ArrayList<>();
     private String currentHref;
     private String defaultHref;
-
+ 
     public void init(List<PageInfo> pages, String defaultHref, String path) {
         this.defaultHref = AppConsts.PAGE_MAIN + "/" + defaultHref + "/" + path;
 

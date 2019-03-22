@@ -21,7 +21,7 @@ public class FormButtonsBar extends HorizontalLayout {
         setAlignItems(Alignment.STRETCH);
         getStyle().set("margin-top", "30px");
     }
-
+     
     public static class SaveEvent extends ComponentEvent<FormButtonsBar> {
         public SaveEvent(FormButtonsBar source, boolean fromClient) {
             super(source, fromClient);

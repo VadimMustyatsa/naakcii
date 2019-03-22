@@ -92,22 +92,6 @@ public class Product implements Serializable {
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")
 	private Boolean isActive;
-	
-	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive) {
-		this.barcode = barcode;
-		this.name = name;
-		this.unitOfMeasure = unitOfMeasure;
-		this.isActive = isActive;
-	}
-		
-	public Product(String barcode, String name, UnitOfMeasure unitOfMeasure, Boolean isActive, Subcategory subcategory) {
-		this.barcode = barcode;
-		this.name = name;
-		this.unitOfMeasure = unitOfMeasure;
-		this.isActive = isActive;
-		this.subcategory = subcategory;
-		subcategory.getProducts().add(this);
-	}
 
 	public Product(ProductDTO productDTO) {
 		this.id = productDTO.getId();
@@ -118,30 +102,4 @@ public class Product implements Serializable {
 		this.brand = productDTO.getBrand();
 		this.isActive = productDTO.getIsActive();
 	}
-
-	
-	public String toString() {
-    	StringBuilder result = new StringBuilder("Instance of " + Product.class + ":");
-    	result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("bar-code - " + barcode + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("picture - " + picture + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("unit of measure id/name - " + (unitOfMeasure == null ? null + "/" + null : unitOfMeasure.getId() + "/" + unitOfMeasure.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("manufacturer - " + manufacturer + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("brand - " + brand + ";");
-		result.append(System.lineSeparator());	
-		result.append("\t").append("country of origin id/name - " + (countryOfOrigin == null ? null + "/" + null : countryOfOrigin.getId() + "/" + countryOfOrigin.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("subcategory id/name - " + (subcategory == null ? null + "/" + null : subcategory.getId() + "/" + subcategory.getName()) + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("isActive - " + isActive + ".");
-    	return result.toString();
-    }
 }

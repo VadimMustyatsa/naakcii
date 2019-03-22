@@ -66,32 +66,11 @@ public class Category implements Serializable {
         this.isActive = isActive;
     }
 
-    public Category(String name, Boolean isActive, Set<Subcategory> subcategories) {
-        this.name = name;
-        this.isActive = isActive;
-        this.subcategories = subcategories;
-    }
-
     public Category(CategoryDTO categoryDTO) {
         this.id = categoryDTO.getId();
         this.icon = categoryDTO.getIcon();
         this.name = categoryDTO.getName();
         this.isActive = categoryDTO.getIsActive();
         this.priority = categoryDTO.getPriority();
-    }
-    
-    public String toString() {
-    	StringBuilder result = new StringBuilder("Instance of " + Category.class + ":");
-    	result.append(System.lineSeparator());
-		result.append("\t").append("id - " + id + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("name - " + name + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("priority - " + priority + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("icon - " + icon + ";");
-		result.append(System.lineSeparator());
-		result.append("\t").append("isActive - " + isActive + ".");
-    	return result.toString();
     }
 }
