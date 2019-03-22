@@ -85,9 +85,9 @@ public class Product implements Serializable {
 
 //	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 //	private Set<
-//				@Valid
-//				@NotNull(message = "Product must have list of chainProducts without null elements.")
-//						ChainProduct> chainProducts = new HashSet<ChainProduct>();
+//						@Valid
+//						@NotNull(message = "Product must have list of chainProducts without null elements.")
+//								ChainProduct> chainProducts = new HashSet<ChainProduct>();
 	
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")

@@ -12,6 +12,7 @@ import naakcii.by.api.entity.AbstractDTOEntity;
 public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
 
     private final CrudView<E> crudView;
+    private final Button addEntity;
 
     public SearchBar(CrudView<E> crudView, Component filterComponent) {
         this.crudView = crudView;
@@ -20,7 +21,7 @@ public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
         search.setPlaceholder("Введите название");
         search.setClearButtonVisible(true);
         search.addValueChangeListener(e-> getCrudView().updateList(e.getValue()));
-        Button addEntity = new Button("Добавить");
+        addEntity = new Button("Добавить");
         addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
         addEntity.setHeight("70%");
         addEntity.addClickListener(e -> onComponentEvent());
@@ -42,5 +43,9 @@ public class SearchBar<E  extends AbstractDTOEntity> extends HorizontalLayout {
 
     private CrudView<E> getCrudView() {
         return crudView;
+    }
+
+    public Button getAddEntity() {
+        return addEntity;
     }
 }

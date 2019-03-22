@@ -1,13 +1,18 @@
 package naakcii.by.api.chain;
 
 import com.vaadin.flow.component.notification.Notification;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.service.CrudService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +64,19 @@ public class ChainServiceImpl implements ChainService, CrudService<ChainDTO> {
     }
 
     @Override
+    @Transactional
     public void deleteDTO(ChainDTO entityDTO) {
-        //todo
+        Optional<Chain> chain = chainRepository.findBySynonymIgnoreCase(entityDTO.getSynonym());
+            if (!chain.isPresent()) {
+            throw new EntityNotFoundException();
+        } else {
+            Set<ChainProduct> chainProducts = chain.get().getChainProducts();
+            if(chainProducts.size()>0) {
+                Notification.show("Эта торговая сеть присвоена " + chainProducts.size() + " товарам");
+                throw new RuntimeException("Удаление невозможно");
+            } else {
+                chainRepository.delete(chain.get());
+            }
+        }
     }
 }

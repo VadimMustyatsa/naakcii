@@ -27,6 +27,7 @@ public class ChainProductView extends CrudView<ChainProductDTO> {
         filter.addValueChangeListener(e -> getGrid().setItems(chainProductService.findAllByFilter(e.getValue())));
 
         binder = new Binder<>(ChainProductDTO.class);
+        getSearchBar().getAddEntity().setEnabled(false);
     }
 
     @Override

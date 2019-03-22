@@ -44,7 +44,7 @@ public class ChainForm extends VerticalLayout implements CrudForm<ChainDTO> {
         synonym = new TextField("Синоним");
         synonym.setWidth("100%");
         buttons = new FormButtonsBar();
-        buttons.getDeleteButton().setEnabled(false);
+
         add(name, logo, uploadImage, link, synonym, isActive, buttons);
     }
     @Override
