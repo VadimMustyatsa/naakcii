@@ -1,9 +1,10 @@
 <div class="undiscount">
   <div class="item-image" [ngStyle]="setImgStyles('undiscount.png')"></div>
   <div class="input-field undiscount-product-input">
-    <label for="undiscount-products">Дополните список неакционными товарами</label>
+    <label for="undiscount-products">Дополните список товарами без скидки, которые вам нужны</label>
     <input type="text" id="undiscount-products" [(ngModel)]="undiscountProduct" app-scroll-to-top="10000"
-            (keyup.enter)="addUndiscountProduct()">
+            (keyup.enter)="addUndiscountProduct()" (focus)= "undiscountFieldHandler($event)" (focusout) = "undiscountFieldHandler($event)">
   </div>
-  <span (click)="addUndiscountProduct()" app-scroll-to-top="10000"><i class="material-icons">add</i></span>
+  <span (click)="addUndiscountProduct()" app-scroll-to-top="10000"><i
+    [className] = "crossActive ? 'material-icons grey-text text-darken-2': 'material-icons grey-text text-lighten-1'" >add</i></span>
 </div>

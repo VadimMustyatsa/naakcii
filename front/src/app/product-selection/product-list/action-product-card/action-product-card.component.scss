@@ -163,6 +163,10 @@
   height: 2px;
 }
 
+.nonselectable{
+  user-select: none;
+}
+
 .good-price{
   i{
     padding: 7px;
