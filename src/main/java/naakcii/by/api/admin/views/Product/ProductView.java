@@ -2,6 +2,7 @@ package naakcii.by.api.admin.views.Product;
 
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -18,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-//@HtmlImport("src/styles.html")
+@HtmlImport("src/styles.html")
 @Route(value = AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_PRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_PRODUCT)
 public class ProductView extends CrudView<ProductDTO> {
@@ -51,6 +52,7 @@ public class ProductView extends CrudView<ProductDTO> {
                 Image image = new Image(productDTO.getPicture(), productDTO.getName());
                 image.setWidth("50px");
                 image.setHeight("50px");
+                image.addClassNames("small-image");
                 return image;
             } else {
                 Image imageEmpty = new Image(noImage, "No image");
