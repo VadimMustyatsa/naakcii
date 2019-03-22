@@ -67,7 +67,7 @@ public class ChainServiceImpl implements ChainService, CrudService<ChainDTO> {
     @Transactional
     public void deleteDTO(ChainDTO entityDTO) {
         Optional<Chain> chain = chainRepository.findBySynonymIgnoreCase(entityDTO.getSynonym());
-            if (!chain.isPresent()) {
+        if (!chain.isPresent()) {
             throw new EntityNotFoundException();
         } else {
             Set<ChainProduct> chainProducts = chain.get().getChainProducts();

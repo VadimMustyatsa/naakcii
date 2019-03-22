@@ -27,7 +27,7 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
     @Autowired
     public ChainProductTypeForm(@Value("${upload.location}") String uploadLocation, @Value("${images.path.pattern}") String pathPattern) {
         setSizeFull();
-        name = new TextField("Категория");
+        name = new TextField("Акция");
         name.focus();
         name.setWidth("100%");
 
@@ -40,7 +40,6 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
         synonym = new TextField("Синоним");
         synonym.setWidth("100%");
         buttons = new FormButtonsBar();
-        getButtons().getDeleteButton().setEnabled(false);
 
         add(name, tooltip, imageUpload, synonym, buttons);
     }
