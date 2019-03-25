@@ -27,7 +27,7 @@ import naakcii.by.api.util.annotations.PureSize;
 public class UnitOfMeasure {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "UOM_ID")
     private Long id;
 	
