@@ -33,7 +33,7 @@ public class Chain implements Serializable {
 	private static final long serialVersionUID = -4338838997190141797L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "CHAIN_ID")
 	private Long id;
 	
