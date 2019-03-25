@@ -6,7 +6,7 @@ import {Observer} from 'rxjs/Observer';
 import {MODES, SHARED_STATE, SharedState} from '../sharedState.model';
 import { NguCarousel, NguCarouselStore, NguCarouselService } from '@ngu/carousel';
 import {BreakPointCheckService} from '../../shared/services/breakpoint-check.service';
-
+import {environment} from '../../../environments/environment';
 @Component({
   selector: 'app-foods-group',
   templateUrl: './product-category.component.html',
@@ -62,7 +62,7 @@ export class ProductCategoryComponent implements OnInit {
     // it is helps to load the data by parts to increase the performance of the app
     // must use feature to all carousel
   }
-  getImage(id: number) {
-    return 'url(\'assets/images/Category/sprites/'+this.categories.find(x=> x.id == id).icon+'.svg\')';
+  getImage(img: string) {
+    return 'url(\'' + environment.imgUrl + img + '\')';
   }
 }
