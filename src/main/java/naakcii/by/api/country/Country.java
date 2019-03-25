@@ -25,7 +25,7 @@ import naakcii.by.api.util.annotations.PureSize;
 public class Country {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "COUNTRY_ID")
     private Long id;
 	
