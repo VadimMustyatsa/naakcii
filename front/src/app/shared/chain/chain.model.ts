@@ -21,7 +21,7 @@ export class Chain {
     this.lines = this.sessionStorageService.getChainFromSessionStorage() || [];
     this.selectedIds = [];
     this.chainService.getAll().subscribe(chainList => {
-      chainList.map(line => {
+       chainList.map(line => {
         this.addLine(line);
       });
       this.changeSelectedIds();

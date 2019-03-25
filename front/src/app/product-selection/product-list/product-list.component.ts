@@ -89,8 +89,8 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
-    console.log('isVisibleProd()')
-    console.log(this.foodList.length > 0)
+    // console.log('isVisibleProd()')
+    // console.log(this.foodList.length > 0)
 
     return this.foodList.length > 0;
   }
@@ -114,8 +114,8 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
-    console.log('isCheckedChain()')
-    console.log(this.chainLst.selectedIds.length)
+    // console.log('isCheckedChain()')
+    // console.log(this.chainLst.selectedIds.length)
     return this.chainLst.selectedIds.length > 0;
   }
   // -----------------------------------------------------

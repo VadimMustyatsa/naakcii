@@ -93,7 +93,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   }
 
   correctAllChainsCheck() {
-    if (this.chainLst.lines.length > 0) {
+      if (this.chainLst.lines.length > 0) {
       const cnt = this.chainLst.selectedIds.length;
       if (cnt === 1) {
         const curChain = this.chainLst.getChainById(this.chainLst.selectedIds[0]).chain;

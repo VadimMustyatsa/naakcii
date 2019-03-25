@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import {RestDataService} from '../services/rest-data.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class FoodsStorageService {
@@ -11,7 +12,6 @@ export class FoodsStorageService {
   getAll() {
     return this.restDataService.getChains
       .map(chainList => {
-        console.log(chainList)
         return chainList.map(chain => {
           return {
             id: chain['id'],
@@ -19,8 +19,8 @@ export class FoodsStorageService {
             link: chain['link'],
             countGoods: chain['countGoods'],
             percent: chain['percent'],
-            imgLogo: chain['imgLogo'],
-            imgLogoSmall: chain['imgLogoSmall'],
+            imgLogo: environment.baseUrl + chain['logo'],
+            imgLogoSmall: environment.baseUrl + chain['logo'],
             selected: false
           };
         });

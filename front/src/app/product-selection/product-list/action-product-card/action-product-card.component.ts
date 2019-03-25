@@ -29,8 +29,6 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('карта товара для')
-    console.log(this.product)
     this.selectAmount = this.product.startAmount;
   }
 

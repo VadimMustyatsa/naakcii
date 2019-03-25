@@ -41,9 +41,9 @@ export class ProductSubcategoryComponent implements OnInit {
 
   onChangeItem(idSubCut: number) {
     this.chainProductListService.changeSubcategory(idSubCut);
-    // this.subCategoryList.map(el => {
-    //   el.selected = (el.id === idSubCut);
-    // });
+    this.subCategoryList.map(el => {
+      el.selected = (el.id === idSubCut);
+    });
     this.observer.next(new SharedState(MODES.SELECT_SUBCATEGORY, this.curCategory, this.subCategoryList));
   }
 }
