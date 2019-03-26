@@ -4,13 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.chainproduct.ChainProduct;
+import naakcii.by.api.chainstatistics.ChainStatistics;
 import naakcii.by.api.util.annotations.PureSize;
 
 @NoArgsConstructor
@@ -80,6 +75,9 @@ public class Chain implements Serializable {
 	@Column(name = "CHAIN_IS_ACTIVE")
 	@NotNull(message = "Chain must have field 'isActive' defined.")
 	private Boolean isActive;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "chain")
+	private ChainStatistics chainStatistics;
 	
 	public Chain(String name, String synonym, String link, Boolean isActive) {
 		this.name = name;
