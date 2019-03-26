@@ -5,11 +5,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import naakcii.by.api.admin.components.FormButtonsBar;
-import naakcii.by.api.admin.components.ImageUpload;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.chainproducttype.ChainProductTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -25,7 +23,7 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
     private ChainProductTypeDTO chainProductTypeDTO;
 
     @Autowired
-    public ChainProductTypeForm(@Value("${upload.location}") String uploadLocation, @Value("${images.path.pattern}") String pathPattern) {
+    public ChainProductTypeForm() {
         setSizeFull();
         name = new TextField("Акция");
         name.focus();
@@ -33,15 +31,12 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
 
         tooltip = new TextField("Тултип");
         tooltip.setWidth("100%");
-        uploadLocation = uploadLocation + "CPTTooltips/";
-        pathPattern = pathPattern + "CPTTooltips/";
-        ImageUpload imageUpload = new ImageUpload(this, uploadLocation, pathPattern);
 
         synonym = new TextField("Синоним");
         synonym.setWidth("100%");
         buttons = new FormButtonsBar();
 
-        add(name, tooltip, imageUpload, synonym, buttons);
+        add(name, synonym, tooltip, buttons);
     }
 
     @Override
