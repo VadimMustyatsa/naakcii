@@ -6,4 +6,5 @@ public interface CategoryService {
 
     List<String> getAllActiveCategoriesNames();
     List<String> getAllCategoriesNames();
+    List<CategoryDTO> checkIsActive(String filter);
 }

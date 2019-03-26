@@ -1,6 +1,6 @@
 package naakcii.by.api.admin.views.category;
 
-import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -11,6 +11,7 @@ import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.admin.views.CrudView;
 import naakcii.by.api.category.CategoryDTO;
+import naakcii.by.api.category.CategoryService;
 import naakcii.by.api.service.CrudService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,13 @@ public class CategoryView extends CrudView<CategoryDTO> {
     private final Binder<CategoryDTO> binder;
 
     @Autowired
-    public CategoryView(CrudForm<CategoryDTO> form, CrudService<CategoryDTO> crudService) {
-        super(form, crudService, null);
+    public CategoryView(CrudForm<CategoryDTO> form, CrudService<CategoryDTO> crudService, CategoryService categoryService) {
+        super(form, crudService, new ComboBox<String>("Фильтр"));
+        ComboBox<String> filter = (ComboBox<String>) getFilterComponent();
+        filter.setItems("Активные", "Неактивные");
+        filter.setValue("Активные");
+        getGrid().setItems(categoryService.checkIsActive(filter.getValue()));
+        filter.addValueChangeListener(e-> getGrid().setItems(categoryService.checkIsActive(e.getValue())));
         binder = new Binder<>(CategoryDTO.class);
     }
 
@@ -51,14 +57,8 @@ public class CategoryView extends CrudView<CategoryDTO> {
                 return imageEmpty;
             }}
         ))
-                .setHeader("Изображение").setFlexGrow(0);
+                .setHeader("Изображение");
         getGrid().addColumn(CategoryDTO::getName).setHeader("Категория").setSortable(true);
         getGrid().addColumn(CategoryDTO::getPriority).setHeader("Порядок отображения").setSortable(true);
-        getGrid().addColumn(new ComponentRenderer<>(categoryDTO -> {
-            Checkbox isActive = new Checkbox();
-            isActive.setReadOnly(true);
-            isActive.setValue(categoryDTO.getIsActive());
-            return isActive;
-        })).setHeader("Активна").setSortable(true);
     }
 }

@@ -44,6 +44,23 @@ public class CategoryServiceImpl implements CategoryService, CrudService<Categor
     }
 
     @Override
+    public List<CategoryDTO> checkIsActive(String filter) {
+        if (filter.equals("Активные")) {
+            return categoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Category category) -> objectFactory.getInstance(CategoryDTO.class, category))
+                    .collect(Collectors.toList());
+        } else {
+            return categoryRepository.findAllByIsActiveFalseOrderByPriorityAsc()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Category category) -> objectFactory.getInstance(CategoryDTO.class, category))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public List<CategoryDTO> findAllDTOs() {
         return categoryRepository.findAllByOrderByPriority()
                 .stream()
