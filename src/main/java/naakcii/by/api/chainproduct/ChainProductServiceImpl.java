@@ -25,8 +25,38 @@ public class ChainProductServiceImpl implements ChainProductService, CrudService
 
 	@Override
 	@Transactional
-	public List<ChainProductDTO> findAllByFilter(LocalDate date) {
+	public List<ChainProductDTO> findAllByFilterStart(LocalDate date) {
 		return chainProductRepository.findAllByStartDateGreaterThanEqual(date)
+				.stream()
+				.filter(Objects::nonNull)
+				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public List<ChainProductDTO> findAllByFilterEnd(LocalDate date) {
+		return chainProductRepository.findAllByEndDateLessThanEqual(date)
+				.stream()
+				.filter(Objects::nonNull)
+				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public List<ChainProductDTO> findAllByChain(String chainName) {
+		return chainProductRepository.findAllByChainName(chainName)
+				.stream()
+				.filter(Objects::nonNull)
+				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public List<ChainProductDTO> findAllByChainProductType(String chainProductTypeName) {
+		return chainProductRepository.findAllByTypeName(chainProductTypeName)
 				.stream()
 				.filter(Objects::nonNull)
 				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))

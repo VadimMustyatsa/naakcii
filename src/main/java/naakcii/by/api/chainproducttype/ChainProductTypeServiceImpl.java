@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ChainProductTypeServiceImpl implements CrudService<ChainProductTypeDTO> {
+public class ChainProductTypeServiceImpl implements CrudService<ChainProductTypeDTO>, ChainProductTypeService {
 
     private final ChainProductTypeRepository chainProductTypeRepository;
     private final ChainProductRepository chainProductRepository;
@@ -79,5 +79,13 @@ public class ChainProductTypeServiceImpl implements CrudService<ChainProductType
                 chainProductTypeRepository.delete(chainProductType.get());
             }
         }
+    }
+
+    @Override
+    public List<String> getAllChainProductTypeNames() {
+        return chainProductTypeRepository.findAllByOrderByName()
+                .stream()
+                .map(ChainProductType::getName)
+                .collect(Collectors.toList());
     }
 }

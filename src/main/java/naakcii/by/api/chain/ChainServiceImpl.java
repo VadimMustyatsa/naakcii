@@ -96,4 +96,14 @@ public class ChainServiceImpl implements CrudService<ChainDTO>, ChainService {
                     .collect(Collectors.toList());
         }
     }
+
+    @Override
+    public List<String> getAllChainNames() {
+        return chainRepository.findAllByIsActiveTrueOrderByName()
+                .stream()
+                .map(Chain::getName)
+                .collect(Collectors.toList());
+
+
+    }
 }

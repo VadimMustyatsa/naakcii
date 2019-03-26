@@ -5,5 +5,8 @@ import java.util.List;
 
 public interface ChainProductService {
 
-	List<ChainProductDTO> findAllByFilter(LocalDate date);
-}
+	List<ChainProductDTO> findAllByFilterStart(LocalDate date);
+	List<ChainProductDTO> findAllByFilterEnd(LocalDate date);
+	List<ChainProductDTO> findAllByChain(String chainName);
+	List<ChainProductDTO> findAllByChainProductType(String chainProductTypeName);
+ }

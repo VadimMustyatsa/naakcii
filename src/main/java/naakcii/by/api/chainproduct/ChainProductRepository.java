@@ -11,4 +11,7 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
     List<ChainProduct> findAllByStartDateGreaterThanEqual(LocalDate startDateRestriction);
     List<ChainProduct> findAllByProductNameContainingIgnoreCase(String name);
     List<ChainProduct> findAllByTypeId(Long chainProductTypeId);
+    List<ChainProduct> findAllByEndDateLessThanEqual(LocalDate endDateRestriction);
+    List<ChainProduct> findAllByChainName(String chainName);
+    List<ChainProduct> findAllByTypeName(String chainProductTypeName);
 }
