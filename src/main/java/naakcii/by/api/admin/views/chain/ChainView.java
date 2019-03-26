@@ -1,6 +1,6 @@
 package naakcii.by.api.admin.views.chain;
 
-import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -11,6 +11,7 @@ import naakcii.by.api.admin.utils.AppConsts;
 import naakcii.by.api.admin.views.CrudForm;
 import naakcii.by.api.admin.views.CrudView;
 import naakcii.by.api.chain.ChainDTO;
+import naakcii.by.api.chain.ChainService;
 import naakcii.by.api.service.CrudService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,13 @@ public class ChainView extends CrudView<ChainDTO> {
     private Binder<ChainDTO> binder;
 
     @Autowired
-    public ChainView(CrudForm<ChainDTO> form, CrudService<ChainDTO> crudService) {
-        super(form, crudService, null);
+    public ChainView(CrudForm<ChainDTO> form, CrudService<ChainDTO> crudService, ChainService chainService) {
+        super(form, crudService, new ComboBox<String>("Фильтр"));
+        ComboBox<String> filter = (ComboBox<String>) getFilterComponent();
+        filter.setItems("Активные", "Неактивные");
+        filter.setValue("Активные");
+        getGrid().setItems(chainService.checkIsActive(filter.getValue()));
+        filter.addValueChangeListener(e-> getGrid().setItems(chainService.checkIsActive(e.getValue())));
         binder = new Binder<>(ChainDTO.class);
     }
 
@@ -55,11 +61,5 @@ public class ChainView extends CrudView<ChainDTO> {
         getGrid().addColumn(ChainDTO::getName).setHeader("Торговая сеть").setSortable(true);
         getGrid().addColumn(ChainDTO::getSynonym).setHeader("Синоним").setSortable(true);
         getGrid().addColumn(ChainDTO::getLink).setHeader("Сайт").setSortable(true);
-        getGrid().addColumn(new ComponentRenderer<>(chainDTO -> {
-            Checkbox isActive = new Checkbox();
-            isActive.setReadOnly(true);
-            isActive.setValue(chainDTO.getIsActive());
-            return isActive;
-        })).setHeader("Активна").setSortable(true);
     }
 }

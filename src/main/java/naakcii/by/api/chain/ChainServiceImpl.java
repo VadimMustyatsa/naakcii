@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ChainServiceImpl implements CrudService<ChainDTO> {
+public class ChainServiceImpl implements CrudService<ChainDTO>, ChainService {
 
     private final ChainRepository chainRepository;
     private final ObjectFactory objectFactory;
@@ -77,6 +77,23 @@ public class ChainServiceImpl implements CrudService<ChainDTO> {
             } else {
                 chainRepository.delete(chain.get());
             }
+        }
+    }
+
+    @Override
+    public List<ChainDTO> checkIsActive(String filter) {
+        if (filter.equals("Активные")) {
+            return chainRepository.findAllByIsActiveTrueOrderByName()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Chain chain) -> objectFactory.getInstance(ChainDTO.class, chain))
+                    .collect(Collectors.toList());
+        } else {
+            return chainRepository.findAllByIsActiveFalseOrderByName()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Chain chain) -> objectFactory.getInstance(ChainDTO.class, chain))
+                    .collect(Collectors.toList());
         }
     }
 }

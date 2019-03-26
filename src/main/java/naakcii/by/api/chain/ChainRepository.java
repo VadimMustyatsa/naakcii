@@ -10,4 +10,6 @@ public interface ChainRepository extends CrudRepository<Chain, Long> {
     List<Chain> findAllByOrderByName();
     Optional<Chain> findBySynonymIgnoreCase(String synonym);
     List<Chain> findAllByNameContainingIgnoreCase(String name);
+    List<Chain> findAllByIsActiveTrueOrderByName();
+    List<Chain> findAllByIsActiveFalseOrderByName();
 }
