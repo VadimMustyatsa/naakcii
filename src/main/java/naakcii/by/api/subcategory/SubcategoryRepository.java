@@ -12,6 +12,7 @@ public interface SubcategoryRepository extends CrudRepository<Subcategory, Long>
 	List<Subcategory> findByCategory(Optional<Category> category);
 	List<Subcategory> findAllByOrderByCategoryName();
 	List<Subcategory> findAllByNameContainingIgnoreCase(String name);
-
+	List<Subcategory> findAllByIsActiveTrueOrderByPriorityAsc();
+	List<Subcategory> findAllByIsActiveFalseOrderByPriorityAsc();
 	Optional<Subcategory> findByNameIgnoreCaseAndCategoryNameIgnoreCase(String subcategoryName, String categoryName);
 }

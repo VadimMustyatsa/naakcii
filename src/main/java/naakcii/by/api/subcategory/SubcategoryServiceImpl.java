@@ -41,6 +41,23 @@ public class SubcategoryServiceImpl implements SubcategoryService, CrudService<S
     }
 
     @Override
+    public List<SubcategoryDTO> checkIsActive(String filter) {
+        if (filter.equals("Активные")) {
+            return subcategoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
+                    .collect(Collectors.toList());
+        } else {
+            return subcategoryRepository.findAllByIsActiveFalseOrderByPriorityAsc()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public Subcategory findByNameAndCategoryName(String subcategoryName, String categoryName) {
         return subcategoryRepository.findByNameAndCategoryName(subcategoryName, categoryName).orElse(null);
     }
