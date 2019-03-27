@@ -26,7 +26,7 @@ public class Subscriber implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "SUBSCRIBER_ID")
     private Long id;
 
     @Column(name = "SUBSCRIBER_EMAIL")
