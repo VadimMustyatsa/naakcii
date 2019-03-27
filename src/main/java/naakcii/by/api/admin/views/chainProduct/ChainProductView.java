@@ -92,7 +92,8 @@ public class ChainProductView extends CrudView<ChainProductDTO> {
     }
 
     private void filterApply() {
-        getGrid().setItems(chainProductService.findAllByFilter(startDate, endDate, chainName, productName, typeName));
+        getGrid().setItems(chainProductService.findAllByFilter(startDate, endDate, chainName,
+                productName, typeName));
     }
 
     @Override

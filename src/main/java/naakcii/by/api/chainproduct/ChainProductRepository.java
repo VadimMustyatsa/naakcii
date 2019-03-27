@@ -19,9 +19,10 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
             + "join cp.type typeName "
             + "where ( CAST (:startDate AS date) is null or cp.startDate >= :startDate) "
             + "and ( CAST (:endDate AS date) is null or cp.endDate <= :endDate) "
-            + "and (:chainName is null or chainName.name = :chainName) "
-            + "and (:productName is null or UPPER(productName.name) LIKE CONCAT('%',UPPER(:productName),'%')) "
-            + "and (:typeName is null or typeName.name = :typeName)")
+            + "and ( :chainName is null or chainName.name = :chainName) "
+            + "and ( :productName is null or lower(productName.name) LIKE %:productName%) "
+            + "and (:typeName is null or typeName.name = :typeName)"
+    )
     List<ChainProduct> findAllByFilter(@Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate,
                                        @Param("chainName") String chainName,

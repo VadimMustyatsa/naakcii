@@ -25,9 +25,12 @@ public class ChainProductServiceImpl implements ChainProductService, CrudService
 
 	@Override
 	@Transactional
-	public List<ChainProductDTO> findAllByFilter(LocalDate startDate, LocalDate endDate, String chainName, String productName, String typeName) {
-		List<ChainProduct> allByFilter = chainProductRepository.findAllByFilter(startDate, endDate, chainName, productName, typeName);
-		return allByFilter
+	public List<ChainProductDTO> findAllByFilter(LocalDate startDate, LocalDate endDate, String chainName,
+												 String productName, String typeName) {
+		if (productName!=null) {
+			productName = productName.toLowerCase();
+		}
+		return chainProductRepository.findAllByFilter(startDate, endDate, chainName	, productName, typeName)
 				.stream()
 				.filter(Objects::nonNull)
 				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
