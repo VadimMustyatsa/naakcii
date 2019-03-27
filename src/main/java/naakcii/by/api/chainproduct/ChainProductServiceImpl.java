@@ -25,38 +25,9 @@ public class ChainProductServiceImpl implements ChainProductService, CrudService
 
 	@Override
 	@Transactional
-	public List<ChainProductDTO> findAllByFilterStart(LocalDate date) {
-		return chainProductRepository.findAllByStartDateGreaterThanEqual(date)
-				.stream()
-				.filter(Objects::nonNull)
-				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	@Transactional
-	public List<ChainProductDTO> findAllByFilterEnd(LocalDate date) {
-		return chainProductRepository.findAllByEndDateLessThanEqual(date)
-				.stream()
-				.filter(Objects::nonNull)
-				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	@Transactional
-	public List<ChainProductDTO> findAllByChain(String chainName) {
-		return chainProductRepository.findAllByChainName(chainName)
-				.stream()
-				.filter(Objects::nonNull)
-				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	@Transactional
-	public List<ChainProductDTO> findAllByChainProductType(String chainProductTypeName) {
-		return chainProductRepository.findAllByTypeName(chainProductTypeName)
+	public List<ChainProductDTO> findAllByFilter(LocalDate startDate, LocalDate endDate, String chainName, String productName, String typeName) {
+		List<ChainProduct> allByFilter = chainProductRepository.findAllByFilter(startDate, endDate, chainName, productName, typeName);
+		return allByFilter
 				.stream()
 				.filter(Objects::nonNull)
 				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))

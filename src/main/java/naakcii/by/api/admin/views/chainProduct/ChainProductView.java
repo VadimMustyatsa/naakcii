@@ -21,38 +21,63 @@ import naakcii.by.api.chainproducttype.ChainProductTypeService;
 import naakcii.by.api.service.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 @Route(value = AppConsts.PAGE_MAIN + "/" + AppConsts.PAGE_CHAINPRODUCT, layout = MainView.class)
 @PageTitle(AppConsts.TITLE_CHAINPRODUCT)
 public class ChainProductView extends CrudView<ChainProductDTO> {
 
     private final Binder<ChainProductDTO> binder;
+    private final ChainProductService chainProductService;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String productName;
+    private String chainName;
+    private String typeName;
 
     @Autowired
     public ChainProductView(CrudForm<ChainProductDTO> form, CrudService<ChainProductDTO> crudService,
                             ChainProductService chainProductService, ChainService chainService,
                             ChainProductTypeService chainProductTypeService) {
         super(form, crudService, null);
+        this.chainProductService = chainProductService;
         getSearchBar().setVisible(false);
 
         DatePicker filterStart = new DatePicker("Начало акции");
-        filterStart.addValueChangeListener(e -> getGrid().setItems(chainProductService.findAllByFilterStart(e.getValue())));
+        filterStart.addValueChangeListener(e -> {
+            startDate = e.getValue();
+            filterApply();
+                });
 
         DatePicker filterEnd = new DatePicker("Завершение акции");
-        filterEnd.addValueChangeListener(e -> getGrid().setItems(chainProductService.findAllByFilterEnd(e.getValue())));
+        filterEnd.addValueChangeListener(e -> {
+            endDate = e.getValue();
+            filterApply();
+        });
 
         TextField searchProduct = new TextField("Поиск по товару");
         searchProduct.setValueChangeMode(ValueChangeMode.EAGER);
         searchProduct.setPlaceholder("Введите товар");
         searchProduct.setClearButtonVisible(true);
-        searchProduct.addValueChangeListener(e-> updateList(e.getValue()));
+        searchProduct.addValueChangeListener(e-> {
+            productName = e.getValue();
+            filterApply();
+        });
 
         ComboBox<String> searchChain = new ComboBox<>("Поиск по сети");
         searchChain.setItems(chainService.getAllChainNames());
-        searchChain.addValueChangeListener(e -> getGrid().setItems(chainProductService.findAllByChain(e.getValue())));
+        searchChain.addValueChangeListener(e -> {
+            chainName = e.getValue();
+            filterApply();
+        });
 
         ComboBox<String> searchChainProductType = new ComboBox<>("Поиск по типу акции");
         searchChainProductType.setItems(chainProductTypeService.getAllChainProductTypeNames());
-        searchChainProductType.addValueChangeListener(e -> getGrid().setItems(chainProductService.findAllByChainProductType(e.getValue())));
+        searchChainProductType.addValueChangeListener(e-> {
+           typeName = e.getValue();
+           filterApply();
+        });
 
         Button addEntity = new Button("Добавить");
         addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
@@ -64,7 +89,10 @@ public class ChainProductView extends CrudView<ChainProductDTO> {
         searchBarCustom.setWidth("100%");
         add(searchBarCustom, getGrid());
         binder = new Binder<>(ChainProductDTO.class);
+    }
 
+    private void filterApply() {
+        getGrid().setItems(chainProductService.findAllByFilter(startDate, endDate, chainName, productName, typeName));
     }
 
     @Override
