@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -42,7 +43,8 @@ public class SlackNotification {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            ResponseEntity<String> exchange = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            logger.info(exchange.toString());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -58,7 +60,8 @@ public class SlackNotification {
             body.add("channels", notificationChannel);
             HttpHeaders headers = new HttpHeaders();
             HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
-            restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            ResponseEntity<String> exchange = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            logger.info(exchange.toString());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

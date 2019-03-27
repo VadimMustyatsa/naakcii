@@ -51,4 +51,11 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
 
     @Query("select avg(discountPercent) from ChainProduct")
     BigDecimal findAverageDiscountPercentage();
+
+    @Query("select avg(discountPercent) from ChainProduct where product.isActive = true and chain.synonym= :synonym")
+    BigDecimal findAverageDiscountPercentageByChainIdSynonym(String synonym);
+
+    int countChainProductByProduct_IsActiveTrue();
+
+    int countChainProductByProduct_IsActiveTrueAndChain_Synonym(String synonym);
 }

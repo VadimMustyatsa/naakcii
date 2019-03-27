@@ -31,7 +31,7 @@ public class ChainStatisticsController {
     @GetMapping(path = "/{chainId}", produces = ApiConfigConstants.API_V_2_0)
     private ChainStatisticsDTO getChainStatistics(
             @ApiParam(value = "Id торговой сети", required = true)
-            @PathVariable Integer chainId
+            @PathVariable Long chainId
     ) {
         return chainStatisticsService.getChainStatistics(chainId);
     }

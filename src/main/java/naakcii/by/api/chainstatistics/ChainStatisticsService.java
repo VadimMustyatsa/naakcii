@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface ChainStatisticsService {
 
-    ChainStatisticsDTO getChainStatistics(Integer id);
+    ChainStatisticsDTO getChainStatistics(Long id);
 
     List<ChainStatisticsDTO> getAllChainsStatistics();
 
-    ChainStatisticsDTO updateChainStatistics(Integer chainId,
+    ChainStatisticsDTO updateChainStatistics(Long id,
                                              Integer discountedProducts,
                                              Integer averageDiscountPercentage,
                                              Calendar creationDate);

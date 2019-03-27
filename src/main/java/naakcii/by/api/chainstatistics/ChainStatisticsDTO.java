@@ -11,10 +11,13 @@ import lombok.Setter;
 public class ChainStatisticsDTO {
 
     @ApiModelProperty(notes = "Id торговой сети", example = "1L")
-    private Long chainId;
+    private Long id;
 
     @ApiModelProperty(notes = "Название торговой сети", example = "Алми")
-    private String chainName;
+    private String name;
+
+    @ApiModelProperty(notes = "Путь к файлу с изображением логотипа торговой сети", example = "http://pathtologo/logo.jpg")
+    private String logo;
 
     @ApiModelProperty(notes = "Количество акционных продуктов в торговой сети", example = "58")
     private Integer discountedProducts;
@@ -25,7 +28,8 @@ public class ChainStatisticsDTO {
     public ChainStatisticsDTO(ChainStatistics chainStatistics) {
         this.discountedProducts = chainStatistics.getDiscountedProducts();
         this.averageDiscountPercentage = chainStatistics.getAverageDiscountPercentage();
-        this.chainId = chainStatistics.getChain().getId();
-        this.chainName = chainStatistics.getChain().getName();
+        this.id = chainStatistics.getChain().getId();
+        this.name = chainStatistics.getChain().getName();
+        this.logo = chainStatistics.getChain().getLogo();
     }
 }

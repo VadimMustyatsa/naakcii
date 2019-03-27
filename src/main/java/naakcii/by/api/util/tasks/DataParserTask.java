@@ -1,8 +1,9 @@
 package naakcii.by.api.util.tasks;
 
+import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
 import naakcii.by.api.chainproduct.ChainProductRepository;
-import naakcii.by.api.product.ProductRepository;
+import naakcii.by.api.chainstatistics.ChainStatisticsService;
 import naakcii.by.api.statistics.StatisticsService;
 import naakcii.by.api.util.parser.DataParser;
 import naakcii.by.api.util.parser.multisheet.ParsingResult;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +32,8 @@ public class DataParserTask {
     private static final Logger logger = LogManager.getLogger(DataParserTask.class);
     private SlackNotification slackNotification;
     private ChainRepository chainRepository;
-    private ProductRepository productRepository;
     private ChainProductRepository chainProductRepository;
+    private ChainStatisticsService chainStatisticsService;
     private StatisticsService statisticsService;
     private DataParser dataParser;
 
@@ -46,14 +48,14 @@ public class DataParserTask {
 
     @Autowired
     public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepository,
-                          ProductRepository productRepository, DataParser dataParser,
-                          StatisticsService statisticsService, ChainProductRepository chainProductRepository) {
+                          DataParser dataParser, StatisticsService statisticsService,
+                          ChainProductRepository chainProductRepository, ChainStatisticsService chainStatisticsService) {
         this.slackNotification = slackNotification;
         this.chainRepository = chainRepository;
         this.dataParser = dataParser;
-        this.productRepository = productRepository;
         this.chainProductRepository = chainProductRepository;
         this.statisticsService = statisticsService;
+        this.chainStatisticsService = chainStatisticsService;
     }
 
     @Scheduled(cron = "0 15 3 * * *")
@@ -97,9 +99,10 @@ public class DataParserTask {
                     }
                 }
             } catch (Exception e) {
-                slackNotification.sendMessageToNotificationsChannel("Parsing task was terminated: " + e.getMessage());
+                slackNotification.sendMessageToNotificationsChannel("*Parsing task was terminated:* ```" + e.getMessage() + "```");
                 logger.info(e.getMessage());
             }
+            calculateAndUpdateChainStatistics(chainSynonym);
         }
         calculateAndUpdateStatistics();
     }
@@ -120,20 +123,51 @@ public class DataParserTask {
         slackNotification.sendCodeSnippetToNotificationsChannel(file);
     }
 
-    public void calculateAndUpdateStatistics() {
-        Integer chains = chainRepository.countChainsByIsActiveTrue();
-        Integer products = productRepository.countProductsByIsActiveTrue();
+    private void calculateAndUpdateStatistics() {
+        int chains = chainRepository.countChainsByIsActiveTrue();
+        int products = chainProductRepository.countChainProductByProduct_IsActiveTrue();
         BigDecimal averageDiscountPercentage = chainProductRepository.findAverageDiscountPercentage();
-        Calendar calendar = Calendar.getInstance();
 
-        if (chains != null && products != null && averageDiscountPercentage != null) {
-            statisticsService.updateStatistics(chains, products, averageDiscountPercentage.intValue(), calendar);
-            slackNotification.sendMessageToNotificationsChannel("*Statistics was updated:*"
+        if (chains != 0 && products != 0 && averageDiscountPercentage != null) {
+            statisticsService.updateStatistics(chains, products, averageDiscountPercentage.intValue(), Calendar.getInstance());
+            slackNotification.sendMessageToNotificationsChannel("*Total statistics:*"
                     + " `chains:` " + chains
-                    + " `products:` " + products
+                    + " `discounted products:` " + products
                     + " `average discount percentage:` " + averageDiscountPercentage.intValue());
         } else {
-            slackNotification.sendMessageToNotificationsChannel("Statistics update was terminated: NULL value");
+            StringBuilder message = new StringBuilder("*Statistics update was terminated*: ");
+            if (chains == 0) {
+                message.append("`chains - 0` ");
+            }
+            if (products == 0) {
+                message.append("`products - 0` ");
+            }
+            if (averageDiscountPercentage == null) {
+                message.append("`average discount percentage - NULL` ");
+            }
+            slackNotification.sendMessageToNotificationsChannel(message.toString());
+        }
+    }
+
+    private void calculateAndUpdateChainStatistics(String chainSynonym) {
+        int chainDiscountedProducts =
+                chainProductRepository.countChainProductByProduct_IsActiveTrueAndChain_Synonym(chainSynonym);
+        BigDecimal chainAvgDiscountPercentage =
+                chainProductRepository.findAverageDiscountPercentageByChainIdSynonym(chainSynonym);
+        Optional<Chain> chainOptional = chainRepository.findBySynonym(chainSynonym);
+        Integer avgDiscountPercentage = 0;
+
+        if (chainAvgDiscountPercentage != null) {
+            avgDiscountPercentage = chainAvgDiscountPercentage.intValue();
+        }
+
+        if (chainOptional.isPresent()) {
+            chainStatisticsService.updateChainStatistics(chainOptional.get().getId(),
+                    chainDiscountedProducts, avgDiscountPercentage, Calendar.getInstance());
+            slackNotification.sendMessageToNotificationsChannel("*_Statistics:_*"
+                    + " `discounted products:` " + chainDiscountedProducts
+                    + " `average discount percentage:` " + avgDiscountPercentage);
+            slackNotification.sendMessageToNotificationsChannel("-------------------------------------------------------");
         }
     }
 }
