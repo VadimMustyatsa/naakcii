@@ -1,6 +1,7 @@
 package naakcii.by.api.admin.views.chainProductType;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Scope;
 public class ChainProductTypeForm extends VerticalLayout implements CrudForm<ChainProductTypeDTO> {
 
     private final TextField name;
-    private final TextField tooltip;
+    private final TextArea tooltip;
     private final TextField synonym;
 
     private final FormButtonsBar buttons;
@@ -29,7 +30,7 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
         name.focus();
         name.setWidth("100%");
 
-        tooltip = new TextField("Тултип");
+        tooltip = new TextArea("Тултип");
         tooltip.setWidth("100%");
 
         synonym = new TextField("Синоним");
@@ -46,7 +47,7 @@ public class ChainProductTypeForm extends VerticalLayout implements CrudForm<Cha
 
     @Override
     public TextField getImageField() {
-        return tooltip;
+        return null;
     }
 
     @Override
