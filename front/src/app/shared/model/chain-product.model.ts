@@ -25,6 +25,7 @@ export class ChainProduct {
   changeStep: number;
 
   constructor(_chainProduct: ChainProductFromJson) {
+    console.log(_chainProduct)
     this.productId = _chainProduct['productId'];
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];

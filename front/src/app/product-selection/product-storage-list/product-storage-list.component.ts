@@ -21,6 +21,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   chainListText = '';
   curChainPercent = '';
   curChainCountGoods = '';
+  totalGoodsInfo: number[];
   @ViewChild('overlay') overlayElement: ElementRef;
   @ViewChild('shopList') shopListElement: ElementRef;
 
@@ -43,6 +44,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
               private eRef: ElementRef,
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
+                this.totalGoodsInfo = [];
   }
 
   @HostListener('document:click', ['$event'])
