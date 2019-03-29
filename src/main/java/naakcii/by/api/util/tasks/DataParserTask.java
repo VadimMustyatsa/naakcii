@@ -167,7 +167,7 @@ public class DataParserTask {
             slackNotification.sendMessageToNotificationsChannel("*_Statistics:_*"
                     + " `discounted products:` " + chainDiscountedProducts
                     + " `average discount percentage:` " + avgDiscountPercentage);
-            slackNotification.sendMessageToNotificationsChannel("-------------------------------------------------------");
+            slackNotification.sendMessageToNotificationsChannel("------------------------------------------");
         }
     }
 }
