@@ -58,7 +58,7 @@ public class DataParserTask {
         this.chainStatisticsService = chainStatisticsService;
     }
 
-    @Scheduled(cron = "0 15 3 * * *")
+    @Scheduled(cron = "${by.naakcii.api.util.tasks.data.parser.task}")
     public void parsingTask() {
         logger.info("Parsing start:");
         Calendar calendar = Calendar.getInstance();
