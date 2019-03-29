@@ -49,7 +49,7 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
             Pageable pageable
     );
 
-    @Query("select avg(discountPercent) from ChainProduct")
+    @Query("select avg(discountPercent) from ChainProduct where product.isActive = true")
     BigDecimal findAverageDiscountPercentage();
 
     @Query("select avg(discountPercent) from ChainProduct where product.isActive = true and chain.synonym= :synonym")
