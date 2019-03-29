@@ -39,9 +39,9 @@ public class ChainProductController {
             @RequestParam("chainIds") Set<Long> chainIds,
             @ApiParam(value = "Ids подкатегорий товаров", required = true)
             @RequestParam("subcategoryIds") Set<Long> subcategoryIds,
-            @ApiParam(value = "Номер страницы. По умолчанию = 0", required = false)
+            @ApiParam(value = "Номер страницы. По умолчанию = 0")
             @RequestParam(value = "page", required = false) Integer page,
-            @ApiParam(value = "Количество ответов на странице. По умолчанию = 12", required = false)
+            @ApiParam(value = "Количество ответов на странице. По умолчанию = 12")
             @RequestParam(value = "size", required = false) Integer size) {
         if (page == null || page < 0) {
             page = DEFAULT_PAGE_NIMBER;
