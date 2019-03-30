@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import naakcii.by.api.chain.Chain;
 
 @NoArgsConstructor
 @Setter
@@ -27,7 +28,14 @@ public class ChainStatisticsDTO {
     public ChainStatisticsDTO(ChainStatistics chainStatistics) {
         this.discountedProducts = chainStatistics.getDiscountedProducts();
         this.averageDiscountPercentage = chainStatistics.getAverageDiscountPercentage();
-        this.id = chainStatistics.getChain().getId();
-        this.name = chainStatistics.getChain().getName();
+        Chain chain = chainStatistics.getChain();
+        if (chain != null) {
+            this.id = chainStatistics.getChain().getId();
+            this.name = chainStatistics.getChain().getName();
+        } else {
+            this.id = null;
+            this.name = null;
+        }
+
     }
 }
