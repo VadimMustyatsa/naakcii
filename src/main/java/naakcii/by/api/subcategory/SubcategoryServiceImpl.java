@@ -43,13 +43,13 @@ public class SubcategoryServiceImpl implements SubcategoryService, CrudService<S
     @Override
     public List<SubcategoryDTO> checkIsActive(String filter) {
         if (filter.equals("Активные")) {
-            return subcategoryRepository.findAllByIsActiveTrueOrderByPriorityAsc()
+            return subcategoryRepository.findAllByIsActiveTrueOrderByName()
                     .stream()
                     .filter(Objects::nonNull)
                     .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
                     .collect(Collectors.toList());
         } else {
-            return subcategoryRepository.findAllByIsActiveFalseOrderByPriorityAsc()
+            return subcategoryRepository.findAllByIsActiveFalseOrderByName()
                     .stream()
                     .filter(Objects::nonNull)
                     .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
@@ -63,8 +63,29 @@ public class SubcategoryServiceImpl implements SubcategoryService, CrudService<S
     }
 
     @Override
+    public List<SubcategoryDTO> findByCategoryName(String categoryName) {
+        return subcategoryRepository.findAllByCategoryName(categoryName)
+                .stream()
+                .filter(Objects::nonNull)
+                .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SubcategoryDTO> findAllByFilter(String subcategoryName, boolean isActive, String categoryName) {
+        if (subcategoryName!=null) {
+            subcategoryName = subcategoryName.toLowerCase();
+        }
+        return subcategoryRepository.findAllByFilter(subcategoryName, isActive, categoryName)
+                .stream()
+                .filter(Objects::nonNull)
+                .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<SubcategoryDTO> findAllDTOs() {
-        return subcategoryRepository.findAllByOrderByCategoryName()
+        return subcategoryRepository.findAllByOrderByName()
                 .stream()
                 .filter(Objects::nonNull)
                 .map((Subcategory subcategory) -> objectFactory.getInstance(SubcategoryDTO.class, subcategory))
