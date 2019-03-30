@@ -11,7 +11,6 @@ import naakcii.by.api.util.annotations.PureSize;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -84,8 +83,7 @@ public class Chain implements Serializable {
     @NotNull(message = "Chain must have field 'isActive' defined.")
     private Boolean isActive;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-            orphanRemoval = true, mappedBy = "chain")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "chain")
     private ChainStatistics chainStatistics;
 
     public Chain(String name, String synonym, String link, Boolean isActive) {

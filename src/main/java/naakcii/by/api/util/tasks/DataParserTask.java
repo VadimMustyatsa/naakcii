@@ -3,7 +3,9 @@ package naakcii.by.api.util.tasks;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
 import naakcii.by.api.chainproduct.ChainProductRepository;
+import naakcii.by.api.chainstatistics.ChainStatisticsDTO;
 import naakcii.by.api.chainstatistics.ChainStatisticsService;
+import naakcii.by.api.statistics.StatisticsDTO;
 import naakcii.by.api.statistics.StatisticsService;
 import naakcii.by.api.util.parser.DataParser;
 import naakcii.by.api.util.parser.multisheet.ParsingResult;
@@ -100,7 +102,7 @@ public class DataParserTask {
                 }
             } catch (Exception e) {
                 slackNotification.sendMessageToNotificationsChannel("*Parsing task was terminated:* ```" + e.getMessage() + "```");
-                logger.info(e.getMessage());
+                logger.error(e.getMessage());
             }
             calculateAndUpdateChainStatistics(chainSynonym);
         }
@@ -129,7 +131,12 @@ public class DataParserTask {
         BigDecimal averageDiscountPercentage = chainProductRepository.findAverageDiscountPercentage();
 
         if (chains != 0 && products != 0 && averageDiscountPercentage != null) {
-            statisticsService.updateStatistics(chains, products, averageDiscountPercentage.intValue(), Calendar.getInstance());
+            StatisticsDTO statisticsDTO = statisticsService.updateStatistics(
+                    chains,
+                    products,
+                    averageDiscountPercentage.intValue(),
+                    Calendar.getInstance());
+            logger.info("Updated statistics - " + statisticsDTO);
             slackNotification.sendMessageToNotificationsChannel("*Total statistics:*"
                     + " `chains:` " + chains
                     + " `discounted products:` " + products
@@ -162,8 +169,9 @@ public class DataParserTask {
         }
 
         if (chainOptional.isPresent()) {
-            chainStatisticsService.updateChainStatistics(chainOptional.get().getId(),
+            ChainStatisticsDTO chainStatisticsDTO = chainStatisticsService.updateChainStatistics(chainOptional.get().getId(),
                     chainDiscountedProducts, avgDiscountPercentage, Calendar.getInstance());
+            logger.info("Updated `" + chainSynonym + "` statistics - " + chainStatisticsDTO);
             slackNotification.sendMessageToNotificationsChannel("*_Statistics:_*"
                     + " `discounted products:` " + chainDiscountedProducts
                     + " `average discount percentage:` " + avgDiscountPercentage);

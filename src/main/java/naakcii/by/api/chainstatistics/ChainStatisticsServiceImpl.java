@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ChainStatisticsServiceImpl implements ChainStatisticsService {
@@ -26,25 +23,6 @@ public class ChainStatisticsServiceImpl implements ChainStatisticsService {
         this.chainStatisticsRepository = chainStatisticsRepository;
         this.objectFactory = objectFactory;
         this.chainRepository = chainRepository;
-    }
-
-    @Override
-    public ChainStatisticsDTO getChainStatistics(Long id) {
-        Optional<ChainStatistics> chainStatisticsOptional = chainStatisticsRepository.findById(id);
-        ChainStatisticsDTO chainStatisticsDTO = new ChainStatisticsDTO();
-        if (chainStatisticsOptional.isPresent()) {
-            chainStatisticsDTO = objectFactory.getInstance(ChainStatisticsDTO.class, chainStatisticsOptional.get());
-        }
-        return chainStatisticsDTO;
-    }
-
-    @Override
-    public List<ChainStatisticsDTO> getAllChainsStatistics() {
-        return chainStatisticsRepository.getAllByChain_IsActiveTrueOrderByChain_NameAsc()
-                .stream()
-                .filter(Objects::nonNull)
-                .map((ChainStatistics statistics) -> objectFactory.getInstance(ChainStatisticsDTO.class, statistics))
-                .collect(Collectors.toList());
     }
 
     @Override
