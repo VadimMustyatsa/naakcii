@@ -1,9 +1,9 @@
 package naakcii.by.api.product;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.chainproduct.ChainProduct;
 import naakcii.by.api.country.Country;
 import naakcii.by.api.subcategory.Subcategory;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
@@ -15,11 +15,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = {"id", "picture", "manufacturer", "brand", "countryOfOrigin"})
+//@EqualsAndHashCode(exclude = {"id", "picture", "manufacturer", "brand", "countryOfOrigin"})
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -83,11 +85,11 @@ public class Product implements Serializable {
 	@Valid
 	private Subcategory subcategory;
 
-//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-//	private Set<
-//						@Valid
-//						@NotNull(message = "Product must have list of chainProducts without null elements.")
-//								ChainProduct> chainProducts = new HashSet<ChainProduct>();
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<
+							@Valid
+							@NotNull(message = "Product must have list of chainProducts without null elements.")
+									ChainProduct> chainProducts = new HashSet<ChainProduct>();
 	
 	@Column(name = "PRODUCT_IS_ACTIVE")
 	@NotNull(message = "Product must have field 'isActive' defined.")

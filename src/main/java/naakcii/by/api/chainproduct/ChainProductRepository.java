@@ -6,12 +6,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ChainProductRepository extends CrudRepository<ChainProduct, ChainProduct.Id> {
 
     List<ChainProduct> findAllByProductIsActiveTrueAndChainIsActiveTrueAndEndDateGreaterThanEqualOrderByChainName(LocalDate endDateRestriction);
     List<ChainProduct> findAllByProductNameContainingIgnoreCase(String name);
     List<ChainProduct> findAllByTypeId(Long chainProductTypeId);
+    Optional<ChainProduct> findAllByProductIdAndChainId(Long productId, Long chainId);
 
     @Query("select cp from ChainProduct cp "
             + "join cp.chain chainName "

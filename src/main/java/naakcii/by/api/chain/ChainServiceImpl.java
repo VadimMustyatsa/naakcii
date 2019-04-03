@@ -53,7 +53,8 @@ public class ChainServiceImpl implements CrudService<ChainDTO>, ChainService {
     @Override
     public ChainDTO saveDTO(ChainDTO chainDTO) {
         if (chainDTO.getId() == null) {
-            if (chainRepository.findBySynonymIgnoreCase(chainDTO.getSynonym()).isPresent()) {
+            if (chainRepository.findBySynonymIgnoreCase(chainDTO.getSynonym()).isPresent()
+                    || chainRepository.findByNameIgnoreCase(chainDTO.getName())!=null) {
                 Notification.show("Данная торговая сеть уже внесена в базу");
                 return null;
             }
@@ -103,7 +104,5 @@ public class ChainServiceImpl implements CrudService<ChainDTO>, ChainService {
                 .stream()
                 .map(Chain::getName)
                 .collect(Collectors.toList());
-
-
     }
 }

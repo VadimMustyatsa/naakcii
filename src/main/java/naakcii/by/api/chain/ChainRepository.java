@@ -12,4 +12,5 @@ public interface ChainRepository extends CrudRepository<Chain, Long> {
     List<Chain> findAllByNameContainingIgnoreCase(String name);
     List<Chain> findAllByIsActiveTrueOrderByName();
     List<Chain> findAllByIsActiveFalseOrderByName();
+    Chain findByNameIgnoreCase(String name);
 }

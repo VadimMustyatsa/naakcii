@@ -8,6 +8,7 @@ import naakcii.by.api.unitofmeasure.UnitOfMeasureService;
 import naakcii.by.api.util.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -56,12 +57,15 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
         product.setUnitOfMeasure(unitOfMeasureService.findUnitOfMeasureByName(entityDTO.getUnitOfMeasureName()));
         product.setCountryOfOrigin(countryService.findByName(entityDTO.getCountryOfOriginName()));
         Optional<Product> productDB = productRepository.findByNameAndBarcodeAndUnitOfMeasure(product.getName(), product.getBarcode(), product.getUnitOfMeasure());
-        if(productDB.isPresent() && entityDTO.getId()==null) {
-            Notification.show("Данный товар уже внесен в базу");
-            return null;
-        } else {
+        if(entityDTO.getId()==null) {
+            if (productDB.isPresent() || productRepository.findByNameIgnoreCase(entityDTO.getName()) != null) {
+                Notification.show("Данный товар уже внесен в базу");
+                return null;
+            }
             return new ProductDTO(productRepository.save(product));
-        }
+        } else {
+                return new ProductDTO(productRepository.save(product));
+            }
     }
 
     @Override
@@ -98,5 +102,14 @@ public class ProductServiceImpl implements ProductService, CrudService<ProductDT
                     .map((Product product) -> objectFactory.getInstance(ProductDTO.class, product))
                     .collect(Collectors.toList());
         }
+    }
+
+    @Override
+    @Transactional
+    public List<String> getAllProductNames() {
+        return productRepository.findAllByIsActiveTrueOrderByName()
+                .stream()
+                .map(Product::getName)
+                .collect(Collectors.toList());
     }
 }

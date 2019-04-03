@@ -13,8 +13,7 @@ import java.time.LocalDate;
 @Getter
 public class ChainProductDTO extends AbstractDTOEntity {
 
-	private Long productId;
-    private Long chainId;
+	private ChainProduct.Id id;
     private String chainName;
     private String productName;
 	private BigDecimal basePrice;
@@ -25,8 +24,7 @@ public class ChainProductDTO extends AbstractDTOEntity {
     private String chainProductTypeName;
     
     public ChainProductDTO(ChainProduct chainProduct) {
-    	this.productId = chainProduct.getId().getProductId();
-    	this.chainId = chainProduct.getId().getChainId();
+    	this.id = chainProduct.getId();
     	this.chainName = chainProduct.getChain().getName();
     	this.productName = chainProduct.getProduct().getName();
     	this.basePrice = chainProduct.getBasePrice();

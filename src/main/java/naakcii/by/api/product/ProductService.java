@@ -7,4 +7,6 @@ public interface ProductService {
     List<ProductDTO> searchName(String search);
 
     List<ProductDTO> checkIsActive(String filter);
+
+    List<String> getAllProductNames();
 }

@@ -18,4 +18,5 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     List<Product> findAllByIsActiveFalseOrderByName();
     List<Product> findAllByUnitOfMeasure(UnitOfMeasure unitOfMeasure);
     List<Product> findAllByCountryOfOrigin(Country country);
+    Product findByNameIgnoreCase(String name);
 }

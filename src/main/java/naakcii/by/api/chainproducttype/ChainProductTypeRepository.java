@@ -10,4 +10,5 @@ public interface ChainProductTypeRepository extends CrudRepository<ChainProductT
 	Optional<ChainProductType> findByNameIgnoreCaseAndSynonymIgnoreCase(String typeName, String typeSynonym);
 	List<ChainProductType> findAllByOrderByName();
 	List<ChainProductType> findAllByNameContainingIgnoreCase(String name);
+	ChainProductType findByNameIgnoreCase(String name);
 }

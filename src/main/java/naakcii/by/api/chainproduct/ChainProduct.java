@@ -83,7 +83,7 @@ public class ChainProduct implements Serializable {
             message = "ChainProduct's base price '${validatedValue}' must be lower than '{value}'."
     )
     @DecimalMin(
-       	value = "0.20",
+       	value = "0",
             message = "ChainProduct's base price '${validatedValue}' must be higher than '{value}'."
     )
     private BigDecimal basePrice;
@@ -150,4 +150,17 @@ public class ChainProduct implements Serializable {
     @NotNull(message = "ChainProduct must have type.")
     @Valid
     private ChainProductType type;
+
+    public ChainProduct(ChainProductDTO chainProductDTO) {
+        this.id = chainProductDTO.getId();
+        if (chainProductDTO.getBasePrice()==null) {
+            this.basePrice = BigDecimal.ZERO;
+        } else {
+            this.basePrice = chainProductDTO.getBasePrice();
+        }
+        this.discountPrice = chainProductDTO.getDiscountPrice();
+        this.discountPercent = chainProductDTO.getDiscountPercent();
+        this.startDate = chainProductDTO.getStartDate();
+        this.endDate = chainProductDTO.getEndDate();
+    }
 }

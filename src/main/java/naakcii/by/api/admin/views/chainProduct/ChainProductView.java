@@ -83,7 +83,6 @@ public class ChainProductView extends CrudView<ChainProductDTO> {
         addEntity.addThemeVariants(ButtonVariant.MATERIAL_CONTAINED);
         addEntity.setHeight("70%");
         addEntity.addClickListener(e -> onComponentEvent());
-        addEntity.setEnabled(false);
         addEntity.getStyle().set("margin-left", "auto").set("margin-top", "auto");
         HorizontalLayout searchBarCustom = new HorizontalLayout(filterStart, filterEnd, searchProduct, searchChain, searchChainProductType, addEntity);
         searchBarCustom.setWidth("100%");
