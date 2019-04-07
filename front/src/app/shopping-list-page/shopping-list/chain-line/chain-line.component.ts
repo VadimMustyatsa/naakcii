@@ -37,7 +37,9 @@ export class ChainLineComponent implements OnInit {
   public getDiscountInPercent(): number {
     return this.cart.getAllDiscountByChainInPercent(this.chainId);
   }
-
+  public checkIshaveBasePrice(): boolean {
+    return this.cart.checkIsBasePriceByChain(this.chainId);
+  }
   public setImgStyles(pict: string): {} {
     return setImgStyles(pict);
   }
