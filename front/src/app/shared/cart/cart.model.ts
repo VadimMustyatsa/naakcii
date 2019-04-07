@@ -13,7 +13,7 @@ export class Cart {
   private sumAllDiscountPrice: number;
   private sumDiscountInMoney: number ;
   private sumDiscountInPercent: number;
-
+  private isAllHaveBasePrice: boolean;
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
   const linesJSON = this.sessionStorageService.getCartFromSessionStorage() || [];
   this.lines = linesJSON.map(line => {
@@ -58,6 +58,17 @@ export class Cart {
     return curDiscount / basePrice * 100;
   }
 
+  // true - если все товары имеют базовую цену, иначе flase
+  private checkIsHaveBasePrice(cartLineList: CartLine[]): boolean {
+    let flag = true;
+    cartLineList.forEach(el => {
+      if (!el.product.isConsiderBasePrice) {
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
   getCount(): number {
     return this.lines.length;
   }
@@ -95,6 +106,15 @@ export class Cart {
       }
     });
     return cartListByChain;
+  }
+  checkIsBasePriceByChain(chainId: number) {
+    return this.checkIsHaveBasePrice(this.lines.filter( line => {
+      return line.product.chainId === chainId;
+    }));
+  }
+
+  checkAllIsBasePrice() {
+    return this.isAllHaveBasePrice;
   }
 
   // цена без учета скидки всех товаров в корзине, где известна начальная цена
@@ -203,6 +223,7 @@ export class Cart {
     this.sumAllDiscountPrice = this.culcSumDiscountPrice(this.lines);
     this.sumDiscountInMoney = this.culcDiscountInMoney(this.lines);
     this.sumDiscountInPercent = this.culcDiscountInPercent(this.lines);
+    this.isAllHaveBasePrice = this.checkIsHaveBasePrice(this.lines);
     this.sessionStorageService.setCartToSessionStorage(this.lines);
   }
 }
