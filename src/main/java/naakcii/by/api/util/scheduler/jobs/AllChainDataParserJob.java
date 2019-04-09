@@ -1,4 +1,4 @@
-package naakcii.by.api.util.tasks;
+package naakcii.by.api.util.scheduler.jobs;
 
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chain.ChainRepository;
@@ -12,9 +12,11 @@ import naakcii.by.api.util.parser.multisheet.ParsingResult;
 import naakcii.by.api.util.slack.SlackNotification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -28,10 +30,11 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
-public class DataParserTask {
+@Scope("singleton")
+@Component("AllChainDataParserJob")
+public class AllChainDataParserJob implements Job {
 
-    private static final Logger logger = LogManager.getLogger(DataParserTask.class);
+    private static final Logger logger = LogManager.getLogger(AllChainDataParserJob.class);
     private SlackNotification slackNotification;
     private ChainRepository chainRepository;
     private ChainProductRepository chainProductRepository;
@@ -49,9 +52,9 @@ public class DataParserTask {
     private String logFolder;
 
     @Autowired
-    public DataParserTask(SlackNotification slackNotification, ChainRepository chainRepository,
-                          DataParser dataParser, StatisticsService statisticsService,
-                          ChainProductRepository chainProductRepository, ChainStatisticsService chainStatisticsService) {
+    public AllChainDataParserJob(SlackNotification slackNotification, ChainRepository chainRepository,
+                                 DataParser dataParser, StatisticsService statisticsService,
+                                 ChainProductRepository chainProductRepository, ChainStatisticsService chainStatisticsService) {
         this.slackNotification = slackNotification;
         this.chainRepository = chainRepository;
         this.dataParser = dataParser;
@@ -60,16 +63,15 @@ public class DataParserTask {
         this.chainStatisticsService = chainStatisticsService;
     }
 
-    @Scheduled(cron = "${by.naakcii.api.util.tasks.data.parser.task}")
-    public void parsingTask() {
-        logger.info("Parsing start:");
+    @Override
+    public synchronized void execute(JobExecutionContext jobExecutionContext) {
+        String message = String.format("_*Parsing start  (`%s`):*_", jobExecutionContext.getJobDetail().getKey().getName());
+        slackNotification.sendMessageToNotificationsChannel(message);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy_MM_dd");
         StringBuilder fileHomePath = new StringBuilder(dataPath);
-        slackNotification.sendMessageToNotificationsChannel("_*Parsing start:*_");
         List<String> synonyms = chainRepository.getAllSynonyms();
         slackNotification.sendMessageToNotificationsChannel("_ List of chains: _" + synonyms);
-
         for (String chainSynonym : synonyms) {
             try {
                 StringBuilder currentChainFolderPath = new StringBuilder(fileHomePath);
@@ -78,8 +80,8 @@ public class DataParserTask {
                         .append(dataFolder)
                         .append(File.separator);
                 File folder = new File(currentChainFolderPath.toString());
-                logger.info("Scan folder: " + chainSynonym);
-                slackNotification.sendMessageToNotificationsChannel("*Scan folder:* _" + chainSynonym + "_ `(" + folder + ")`");
+                slackNotification.sendMessageToNotificationsChannel(
+                        String.format("*Scan folder:* _%s_ `(%s)`", chainSynonym, chainSynonym));
                 File[] folderFiles = folder.listFiles();
 
                 if (folderFiles != null) {
@@ -88,15 +90,16 @@ public class DataParserTask {
                         Matcher matcher = pattern.matcher(file.getName());
 
                         if (matcher.find()) {
-                            logger.info("Next file was parsed: " + file.getName());
-                            slackNotification.sendMessageToNotificationsChannel("Next file was parsed: `" + file.getName() + "`");
+                            slackNotification.sendMessageToNotificationsChannel(
+                                    String.format("Next file was parsed: `%s`", file.getName()));
                             List<ParsingResult<?>> parsingResults = dataParser.parseChainProducts(file.getPath(), chainSynonym);
                             parsingResults.forEach((ParsingResult<?> result) ->
                                     saveAndNotifyParsingResult(result.toString(), file.getName(),
                                             result.getTargetClass().getSimpleName()));
                         } else {
-                            slackNotification.sendMessageToNotificationsChannel("Next file was skipped: `" + file.getName() + "`");
-                            logger.info("Next file was skipped: " + file.getName());
+
+                            slackNotification.sendMessageToNotificationsChannel(
+                                    String.format("Next file was skipped: `%s`", file.getName()));
                         }
                     }
                 }
@@ -167,7 +170,6 @@ public class DataParserTask {
         if (chainAvgDiscountPercentage != null) {
             avgDiscountPercentage = chainAvgDiscountPercentage.intValue();
         }
-
         if (chainOptional.isPresent()) {
             ChainStatisticsDTO chainStatisticsDTO = chainStatisticsService.updateChainStatistics(chainOptional.get().getId(),
                     chainDiscountedProducts, avgDiscountPercentage, Calendar.getInstance());
@@ -178,4 +180,5 @@ public class DataParserTask {
             slackNotification.sendMessageToNotificationsChannel("------------------------------------------");
         }
     }
+
 }
