@@ -33,16 +33,16 @@ public class SlackNotification {
 
     public void sendMessageToNotificationsChannel(String message) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_CHAT_POST_MESSAGE_URL)
-                    .queryParam("token", botToken)
-                    .queryParam("channel", notificationChannel)
-                    .queryParam("text", message)
-                    .build()
-                    .toUri();
+            logger.info(message);
+            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_CHAT_POST_MESSAGE_URL).build().toUri();
             RestTemplate restTemplate = new RestTemplate();
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("channel", notificationChannel);
+            body.add("text", message);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+            headers.setBearerAuth(botToken);
+            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
             ResponseEntity<String> exchange = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
             logger.info(exchange.toString());
         } catch (Exception e) {
