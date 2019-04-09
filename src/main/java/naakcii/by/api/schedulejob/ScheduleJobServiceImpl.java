@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -24,18 +23,17 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
     private ScheduleJobRepository scheduleJobRepository;
 
     public List<QuartzCronJob> getAllJobs() {
-        List<QuartzCronJob> jobList = new ArrayList<>();
-        List<ScheduleJob> dbJobList = Lists.newArrayList(scheduleJobRepository.findAll());
-
-        for (ScheduleJob scheduleJob : dbJobList) {
-            String className = scheduleJob.getScheduleJobType().getClassName().trim();
-            Job job = (Job) applicationContext.getBean(className);
-            String jobExpression = scheduleJob.getCronExpression();
-            String jobName = scheduleJob.getName();
-            String jobGroup = scheduleJob.getScheduleJobType().getName();
-            jobList.add(new QuartzCronJob(job, jobName, jobGroup, jobExpression));
-        }
-        return jobList;
+        return Lists.newArrayList(scheduleJobRepository.findAll()).stream()
+                .filter(Objects::nonNull)
+                .map((ScheduleJob s) -> {
+                    String beanName = s.getScheduleJobType().getBeanName().trim();
+                    Job job = (Job) applicationContext.getBean(beanName);
+                    String jobExpression = s.getCronExpression();
+                    String jobName = s.getName();
+                    String jobGroup = s.getScheduleJobType().getName();
+                    return new QuartzCronJob(job, jobName, jobGroup, jobExpression);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

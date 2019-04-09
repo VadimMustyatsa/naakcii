@@ -33,11 +33,7 @@ public class ScheduleJobType implements Serializable {
     @Column(name = "SCHEDULE_JOB_TYPE_NAME")
     private String name;
 
-    @Column(name = "SCHEDULE_JOB_TYPE_CLASS")
-    private String className;
+    @Column(name = "SCHEDULE_JOB_TYPE_BEAN_NAME")
+    private String beanName;
 
-    public ScheduleJobType(String name, String className) {
-        this.name = name;
-        this.className = className;
-    }
 }
