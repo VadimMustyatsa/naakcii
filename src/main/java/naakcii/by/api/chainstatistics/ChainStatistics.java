@@ -8,6 +8,8 @@ import naakcii.by.api.chain.Chain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -32,6 +34,7 @@ public class ChainStatistics implements Serializable {
     private static final long serialVersionUID = 7015953223377330148L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "CHAIN_STATISTICS_ID", unique = true, nullable = false)
     private Long id;
 

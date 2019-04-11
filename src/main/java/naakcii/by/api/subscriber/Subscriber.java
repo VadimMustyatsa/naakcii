@@ -25,7 +25,7 @@ public class Subscriber implements Serializable {
     private static final long serialVersionUID = -5695859545586187219L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "SUBSCRIBER_ID")
     private Long id;
 

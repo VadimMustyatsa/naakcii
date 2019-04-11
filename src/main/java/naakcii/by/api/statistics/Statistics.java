@@ -31,7 +31,7 @@ public class Statistics implements Serializable {
     private static final long serialVersionUID = 7800996290031207909L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "STATISTICS_ID")
     private Long id;
 

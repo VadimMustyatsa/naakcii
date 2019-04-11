@@ -26,8 +26,8 @@ public class ScheduleJobType implements Serializable {
 
     @Id
     @NotNull
-    @Column(name = "SCHEDULE_JOB_TYPE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SCHEDULE_JOB_TYPE_ID")
     private Byte id;
 
     @Column(name = "SCHEDULE_JOB_TYPE_NAME")
