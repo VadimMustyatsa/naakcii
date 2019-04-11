@@ -165,43 +165,14 @@ export class Cart {
     }));
   }
 
-  // генерация JSON итогового списка для PDF-----------------------------------
-  generateJsonListPDF(): {} {
-    const pdf = {};
-    const chainSort = {};
-    const totalSum = {};
-
+  getExistListChain(): ChainLine[] {
     const chainListExist: ChainLine[] = [];
-    this.lines.forEach(line => {
+    this.lines.map(line => {
       if (isUndefined(chainListExist.find(x => x.chain.id === line.product.chainId))) {
         chainListExist.push(this.getStorageByID(line.product.chainId));
       }
     });
-
-    chainListExist.forEach(chain => {
-      const curCartList = [];
-      this.lines.forEach(cart => {
-        if (chain.chain.id === cart.product.chainId) {
-          const curCart = {};
-          curCart['Name'] = cart.product.name;
-          curCart['Comment'] = cart.comment;
-          curCart['priceOne'] = (cart.product.discountPrice).toFixed(2);
-          curCart['amount'] = cart.quantity;
-          curCart['priceSum'] = (cart.product.getSumWithDiscount(cart.quantity)).toFixed(2);
-          curCartList.push(curCart);
-        }
-      });
-      chainSort[chain.chain.name] = curCartList;
-    });
-
-    totalSum['sumBefore'] = this.sumAllBasePrice;
-    totalSum['sumAfter'] = this.sumAllDiscountPrice;
-    totalSum['discountSum'] = this.sumDiscountInMoney;
-    totalSum['discountPersent'] = this.sumDiscountInPercent;
-
-    pdf['ChainList'] = chainSort;
-    pdf['totalSum'] = totalSum;
-    return pdf;
+    return chainListExist;
   }
 
   getStorageByID(id: number): ChainLine {
