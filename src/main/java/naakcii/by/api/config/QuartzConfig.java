@@ -1,4 +1,4 @@
-package naakcii.by.api;
+package naakcii.by.api.config;
 
 import naakcii.by.api.util.scheduler.AutoWiringSpringBeanJobFactory;
 import org.springframework.beans.factory.annotation.Autowired;
