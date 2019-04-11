@@ -81,6 +81,7 @@ public class ChainControllerIntegrationTest {
 			activeChains.add(testEntityManager.persist(secondChain));
 			activeChains.add(testEntityManager.persist(thirdChain));
 			inactiveChains.add(testEntityManager.persist(fourthChain));
+			testEntityManager.flush();
 			testEntityManager.clear();
 			logger.info("Test data was created successfully: instances of '{}' were added to the database.", Chain.class);
 		} catch(Exception exception) {

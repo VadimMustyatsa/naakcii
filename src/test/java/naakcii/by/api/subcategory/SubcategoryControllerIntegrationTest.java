@@ -99,6 +99,7 @@ public class SubcategoryControllerIntegrationTest {
             categories.add(testEntityManager.persist(firstCategory));
             categories.add(testEntityManager.persist(secondCategory));
             categories.add(testEntityManager.persist(thirdCategory));
+            testEntityManager.flush();
             testEntityManager.clear();
             categoryId = firstCategory.getId();
             logger.info("Test data was created successfully: instances of '{}' and '{}' were added to the database.",
