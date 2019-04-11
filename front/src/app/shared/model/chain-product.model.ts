@@ -25,8 +25,7 @@ export class ChainProduct {
   changeStep: number;
 
   constructor(_chainProduct: ChainProductFromJson) {
-    console.log(_chainProduct)   // this.productId = _chainProduct['productId'];
-    this.productId =`${_chainProduct['chainId']}_${_chainProduct['productId']}`;
+    this.productId = `${_chainProduct['chainId']}_${_chainProduct['productId']}`;
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];
     this.picture = environment.imgUrl + _chainProduct['picture'];
