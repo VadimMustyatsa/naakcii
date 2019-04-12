@@ -37,7 +37,7 @@ public class Subcategory implements Serializable {
 	private static final long serialVersionUID = 4720680821468502372L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SUBCATEGORY_ID")
 	private Long id;
 	

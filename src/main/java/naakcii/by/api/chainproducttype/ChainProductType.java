@@ -27,7 +27,7 @@ public class ChainProductType implements Serializable {
 	private static final long serialVersionUID = 5111366809131618230L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CHAIN_PRODUCT_TYPE_ID")
     private Long id;
 	

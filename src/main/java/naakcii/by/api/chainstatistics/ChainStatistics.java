@@ -34,7 +34,7 @@ public class ChainStatistics implements Serializable {
     private static final long serialVersionUID = 7015953223377330148L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CHAIN_STATISTICS_ID", unique = true, nullable = false)
     private Long id;
 
