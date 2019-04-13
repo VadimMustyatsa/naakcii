@@ -17,12 +17,12 @@
   <div class="item-position tablet-none">{{cartLineList.length}}</div>
   <div class="item-quantity mobile-none"></div>
   <div class="item-whole-price tablet-none">
-    <span *ngIf="getAllPriceBase() > 0">{{getAllPriceBase() | currency: "BYN": "code-narrow"}}</span>
-    <span *ngIf=" getAllPriceBase() == 0">-</span>
+    <span *ngIf="checkIshaveBasePrice()">{{getAllPriceBase() | currency: "BYN": "code-narrow"}}</span>
+    <span *ngIf=" getAllPriceBase() == 0"></span>
   </div>
   <div class="item-discount tablet-none">
-    <span *ngIf=" getAllPriceBase() > 0">{{getDiscountInMoney() | currency: "BYN": "code-narrow"}}</span><br>
-    <span *ngIf=" getAllPriceBase() > 0">({{getDiscountInPercent() | number:"1.2-2"}} %)</span>
+    <span *ngIf=" checkIshaveBasePrice()">{{getDiscountInMoney() | currency: "BYN": "code-narrow"}}</span><br>
+    <span *ngIf=" checkIshaveBasePrice()">({{getDiscountInPercent() | number:"1.2-2"}} %)</span>
   </div>
   <div class="item-discount-price mobile-none">{{getAllPriceDiscount() | currency: "BYN":
     "code-narrow"}}

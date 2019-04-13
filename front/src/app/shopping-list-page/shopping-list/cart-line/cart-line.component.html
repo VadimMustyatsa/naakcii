@@ -30,13 +30,17 @@
   <div class="item-whole-price tablet-none">
     <span *ngIf="product.isConsiderBasePrice">{{product.getSumBasePrice(curCartline.quantity)| currency: "BYN": "code-narrow"}}</span>
   </div>
-  <div class="item-discount tablet-none">
+  <div class="item-discount tablet-none" [tooltip]="product.chainProductType.tooltip">
     <span *ngIf="product.isConsiderBasePrice">{{product.getSumDiscountInMoney(curCartline.quantity) | currency: "BYN": "code-narrow"}}</span><br>
     <span *ngIf="product.isConsiderBasePrice">({{product.discountPercent}} %)</span>
-    <span *ngIf="!product.isConsiderBasePrice">
-      <i *ngIf="product.isIcon" class="material-icons">{{product.textIcon}}</i>
-      <i *ngIf="!product.isIcon">"{{product.textIcon}}"</i>
-    </span>
+    <div *ngIf="!product.isConsiderBasePrice" class="icon-container" >
+      <div *ngIf="product.isIcon" class="foodDiscount  center-align white-text z-depth-3 nonselectable">
+          <i  class="material-icons">{{product.textIcon}}</i>
+      </div>
+      <div *ngIf="!product.isIcon" class="foodDiscount icon-containere  center-align white-text z-depth-3 nonselectable">
+          <i>{{product.textIcon}}</i>  
+      </div>
+    </div>
   </div>
   <div class="item-discount-price">
     <span>{{product.getSumWithDiscount(curCartline.quantity)| currency: "BYN": "code-narrow"}}</span><br>

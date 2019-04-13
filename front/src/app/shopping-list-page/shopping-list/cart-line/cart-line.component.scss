@@ -2,7 +2,6 @@
   align-items: center;
   display:flex;
   margin: 0;
-  // padding: 5px;
 }
 
 .item-whole-price, .item-discount-price, .promotional-deadline, .arrow-item, .bin-item, .item-quantity, .item-discount, .item-position {
@@ -16,6 +15,7 @@
 
 .item-quantity {
   user-select: none;
+
 }
 
 .item-name-comment {
@@ -47,6 +47,17 @@
   width: 100%;
 }
 
+.foodDiscount {
+  background-color: #616161;
+  margin: 0 auto;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  .material-icons {
+    margin-top: 8px;
+  }
+}
 
 .btn-floating {
   transform: scale(0.5);
