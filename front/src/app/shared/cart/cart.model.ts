@@ -13,7 +13,7 @@ export class Cart {
   private sumAllDiscountPrice: number;
   private sumDiscountInMoney: number ;
   private sumDiscountInPercent: number;
-
+  private isAllHaveBasePrice: boolean;
   constructor(public  chainLst: Chain,  private sessionStorageService: SessionStorageService) {
   const linesJSON = this.sessionStorageService.getCartFromSessionStorage() || [];
   this.lines = linesJSON.map(line => {
@@ -58,6 +58,17 @@ export class Cart {
     return curDiscount / basePrice * 100;
   }
 
+  // true - если все товары имеют базовую цену, иначе flase
+  private checkIsHaveBasePrice(cartLineList: CartLine[]): boolean {
+    let flag = true;
+    cartLineList.forEach(el => {
+      if (!el.product.isConsiderBasePrice) {
+        flag = false;
+      }
+    });
+    return flag;
+  }
+
   getCount(): number {
     return this.lines.length;
   }
@@ -95,6 +106,15 @@ export class Cart {
       }
     });
     return cartListByChain;
+  }
+  public checkIsBasePriceByChain(chainId: number): boolean {
+    return this.checkIsHaveBasePrice(this.lines.filter( line => {
+      return line.product.chainId === chainId;
+    }));
+  }
+
+  public checkAllIsBasePrice(): boolean {
+    return this.isAllHaveBasePrice;
   }
 
   // цена без учета скидки всех товаров в корзине, где известна начальная цена
@@ -145,43 +165,14 @@ export class Cart {
     }));
   }
 
-  // генерация JSON итогового списка для PDF-----------------------------------
-  generateJsonListPDF(): {} {
-    const pdf = {};
-    const chainSort = {};
-    const totalSum = {};
-
+  getExistListChain(): ChainLine[] {
     const chainListExist: ChainLine[] = [];
-    this.lines.forEach(line => {
+    this.lines.map(line => {
       if (isUndefined(chainListExist.find(x => x.chain.id === line.product.chainId))) {
         chainListExist.push(this.getStorageByID(line.product.chainId));
       }
     });
-
-    chainListExist.forEach(chain => {
-      const curCartList = [];
-      this.lines.forEach(cart => {
-        if (chain.chain.id === cart.product.chainId) {
-          const curCart = {};
-          curCart['Name'] = cart.product.name;
-          curCart['Comment'] = cart.comment;
-          curCart['priceOne'] = (cart.product.discountPrice).toFixed(2);
-          curCart['amount'] = cart.quantity;
-          curCart['priceSum'] = (cart.product.getSumWithDiscount(cart.quantity)).toFixed(2);
-          curCartList.push(curCart);
-        }
-      });
-      chainSort[chain.chain.name] = curCartList;
-    });
-
-    totalSum['sumBefore'] = this.sumAllBasePrice;
-    totalSum['sumAfter'] = this.sumAllDiscountPrice;
-    totalSum['discountSum'] = this.sumDiscountInMoney;
-    totalSum['discountPersent'] = this.sumDiscountInPercent;
-
-    pdf['ChainList'] = chainSort;
-    pdf['totalSum'] = totalSum;
-    return pdf;
+    return chainListExist;
   }
 
   getStorageByID(id: number): ChainLine {
@@ -203,6 +194,7 @@ export class Cart {
     this.sumAllDiscountPrice = this.culcSumDiscountPrice(this.lines);
     this.sumDiscountInMoney = this.culcDiscountInMoney(this.lines);
     this.sumDiscountInPercent = this.culcDiscountInPercent(this.lines);
+    this.isAllHaveBasePrice = this.checkIsHaveBasePrice(this.lines);
     this.sessionStorageService.setCartToSessionStorage(this.lines);
   }
 }

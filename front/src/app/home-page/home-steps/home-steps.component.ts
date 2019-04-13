@@ -4,7 +4,7 @@ import { BreakPointCheckService } from '../../shared/services/breakpoint-check.s
 const steps = [
   {id: 1, text: 'Выбирайте подходящие торговые сети', img: 'assets\\images\\Steps\\step_1.svg'},
   {id: 2, text: 'Выбирайте и добавляйте акционные товары в список', img: 'assets\\images\\Steps\\step_2.svg'},
-  {id: 3, text: 'Смотрите экономию и редактируйте список', img: 'assets\\images\\Steps\\step_3.svg'},
+  {id: 3, text: 'Оцените экономию и редактируйте список', img: 'assets\\images\\Steps\\step_3.svg'},
   {id: 4, text: 'Дописывайте в список неакционные товары', img: 'assets\\images\\Steps\\step_4.svg'},
   {id: 5, text: 'Всё! Скачивайте список и отправляйтесь за покупками', img: 'assets\\images\\Steps\\step_5.svg'}
 ];
