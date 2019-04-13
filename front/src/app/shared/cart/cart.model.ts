@@ -107,13 +107,13 @@ export class Cart {
     });
     return cartListByChain;
   }
-  checkIsBasePriceByChain(chainId: number) {
+  public checkIsBasePriceByChain(chainId: number): boolean {
     return this.checkIsHaveBasePrice(this.lines.filter( line => {
       return line.product.chainId === chainId;
     }));
   }
 
-  checkAllIsBasePrice() {
+  public checkAllIsBasePrice(): boolean {
     return this.isAllHaveBasePrice;
   }
 
