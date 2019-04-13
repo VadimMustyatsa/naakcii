@@ -37,7 +37,7 @@ public class ChainDTO {
         ChainStatistics chainStatistics = chain.getChainStatistics();
         if (chainStatistics != null) {
             this.discountedProducts = chainStatistics.getDiscountedProducts();
-            this.averageDiscountPercentage = chainStatistics.getDiscountedProducts();
+            this.averageDiscountPercentage = chainStatistics.getAverageDiscountPercentage();
         } else {
             this.discountedProducts = 0;
             this.averageDiscountPercentage = 0;
