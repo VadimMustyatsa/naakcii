@@ -1,58 +1,82 @@
-<div *ngIf="isVisibleChain()" class="foodCard"
-    [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
-    [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
-    [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
-    [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
-    [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
-  <div class="card sticky-action">
-    <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
-      <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
-        {{product.textIcon}}
-      </div>
-      <div *ngIf="product.isIcon"
-          class="foodDiscount deep-orange center-align white-text z-depth-3 good-price nonselectable">
-        <i [tooltip]="product.chainProductType.tooltip" class="material-icons">{{product.textIcon}}</i>
-      </div>
-    </div>
 
-    <div class="card-content tooltip-container">
-      <div class="foodName"><b>
-        {{product.name | cutString: nameMaxWidth}}<br>
-        {{product.boxWeight}}
-        <span *ngIf="product.name.length >= nameMaxWidth" class="tooltiptext">{{product.name}}</span>
-      </b>
-      </div>
-      <div class="foodStorage">
-        <div class="grey-text">
-          {{getNameStorage()}}
-        </div>
-        <div>
-          <img src="{{getImgStorage()}}">
-        </div>
-      </div>
-      <div *ngIf="product.isConsiderBasePrice" class="foodAllPrice">
-        {{product.basePrice | number:"1.2-2"}} руб.
-      </div>
-      <div *ngIf="!product.isConsiderBasePrice" class="foodAllPriceNo">&nbsp;</div>
-      <div class="foodTotalPrice">
-        {{product.discountPrice | number:"1.2-2"}} руб.
-      </div>
+<div class="container-flip">
+  <div #card id="card-flip">
+    <div class="front">
+      <div *ngIf="isVisibleChain()"
+           [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
+           [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
+           [class.isHandset]="(breakPointCheckService.isHandset | async)?.matches"
+           [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
+           [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
+        <div class="card sticky-action">
+          <div type="button" (click)="rotate(card)" class="trigger">rotate</div>
+          <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
+            <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
+              {{product.textIcon}}
+            </div>
+            <div *ngIf="product.isIcon"
+                 class="foodDiscount deep-orange center-align white-text z-depth-3 good-price nonselectable">
+              <i [tooltip]="product.chainProductType.tooltip" class="material-icons">{{product.textIcon}}</i>
+            </div>
+          </div>
 
-      <div class="amountItem center">
-        <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
-          <i class="material-icons">remove</i>
-        </a>
-        <span *ngIf="product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure | lowercase}}</span>
-        <span *ngIf="!product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount}} {{product.unitOfMeasure | lowercase}}</span>
-        <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
-          <i class="material-icons">add</i>
-        </a>
-        <a class="selectFood btn waves-block deep-orange" (click)="selectFood()">Добавить</a>
-      </div>
-      <div class="endStock">
-      <span class="grey-text">
+          <div class="card-content tooltip-container">
+            <div class="foodName"><b>
+              {{product.name | cutString: nameMaxWidth}}<br>
+              {{product.boxWeight}}
+              <span *ngIf="product.name.length >= nameMaxWidth" class="tooltiptext">{{product.name}}</span>
+            </b>
+            </div>
+            <div class="foodStorage">
+              <div class="grey-text">
+                {{getNameStorage()}}
+              </div>
+              <div>
+                <img src="{{getImgStorage()}}">
+              </div>
+            </div>
+            <div *ngIf="product.isConsiderBasePrice" class="foodAllPrice">
+              {{product.basePrice | number:"1.2-2"}} руб.
+            </div>
+            <div *ngIf="!product.isConsiderBasePrice" class="foodAllPriceNo">&nbsp;</div>
+            <div class="foodTotalPrice">
+              {{product.discountPrice | number:"1.2-2"}} руб.
+            </div>
+
+            <div class="amountItem center">
+              <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
+                <i class="material-icons">remove</i>
+              </a>
+              <span *ngIf="product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure | lowercase}}</span>
+              <span *ngIf="!product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount}} {{product.unitOfMeasure | lowercase}}</span>
+              <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
+                <i class="material-icons">add</i>
+              </a>
+              <a class="selectFood btn waves-block deep-orange" (click)="selectFood()">Добавить</a>
+            </div>
+            <div class="endStock">
+      <span (click)="rotate(card)" class="grey-text">
         Окончание акции: <span> {{ product.endDate|date:'d MMMM' }}</span>
       </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="back">
+      <div class="foodCard card sticky-action">
+      <div>
+        <div>
+          <span>Бренд:</span><span>{{product.brand}}</span>
+        </div>
+        <div>
+          <span>Производитель:</span><span>{{product.manufacturer}}</span>
+        </div>
+        <div>
+          <span>Страна произвлдства:</span><span>{{product.countryOfOrigin}}</span>
+        </div>
+        <div class="trigger" type="button" (click)="rotate(card)">rotate</div>
+      </div>
       </div>
     </div>
   </div>

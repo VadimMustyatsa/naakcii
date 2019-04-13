@@ -87,4 +87,8 @@ export class ActionProductCardComponent implements OnInit {
     // return selected;
     return true;
   }
+
+  public rotate(el: HTMLElement): void {
+      el.classList.toggle('flipped');
+  }
 }

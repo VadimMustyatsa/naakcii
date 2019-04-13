@@ -25,7 +25,6 @@ export class ChainProduct {
   changeStep: number;
 
   constructor(_chainProduct: ChainProductFromJson) {
-    console.log(_chainProduct)   // this.productId = _chainProduct['productId'];
     this.productId =`${_chainProduct['chainId']}_${_chainProduct['productId']}`;
     this.chainId = _chainProduct['chainId'];
     this.name = _chainProduct['name'];
@@ -37,6 +36,9 @@ export class ChainProduct {
     this.chainProductType = _chainProduct.chainProductType;
     this.endDateMS = _chainProduct['endDate'];
     this.changeStep = parseFloat(_chainProduct.unitOfMeasure['step']);
+    this.brand = _chainProduct['brand'];
+    this.countryOfOrigin = _chainProduct['countryOfOrigin'];
+    this.manufacturer = _chainProduct['manufacturer'];
   }
   // есть ли у товара базовая цена
   get isConsiderBasePrice(): boolean {
