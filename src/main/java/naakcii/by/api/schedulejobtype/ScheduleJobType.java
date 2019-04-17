@@ -29,7 +29,7 @@ public class ScheduleJobType implements Serializable {
     @Column(name = "SCHEDULE_JOB_TYPE_ID")
     private Byte id;
 
-    @Column(name = "SCHEDULE_JOB_TYPE_NAME")
+    @Column(name = "SCHEDULE_JOB_TYPE_NAME", unique = true)
     private String name;
 
     @Column(name = "SCHEDULE_JOB_TYPE_BEAN_NAME")
