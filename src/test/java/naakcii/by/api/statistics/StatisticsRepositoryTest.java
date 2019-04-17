@@ -1,9 +1,7 @@
 package naakcii.by.api.statistics;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -41,42 +39,9 @@ public class StatisticsRepositoryTest {
     @Test
     public void test_find_first_by_order_by_id_asc() {
         Statistics statistics = statisticsRepository.findFirstByOrderByIdAsc();
-        assertThat(statistics.getId()).isEqualTo(1L);
         assertThat(statistics.getChainQuantity()).isEqualTo(1);
         assertThat(statistics.getDiscountedProducts()).isEqualTo(111);
         assertThat(statistics.getAverageDiscountPercentage()).isEqualTo(11);
         assertThat(statistics.getCreationDate().getTime()).isEqualTo("2018-01-01");
     }
-
-    @Test
-    public void test_save() {
-        Statistics statistics = new Statistics(3, 333, 33, new GregorianCalendar(2018, 2, 3));
-        statisticsRepository.save(statistics);
-        assertThat(statistics.getId()).isNotNull();
-    }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void test_incorrect_null_save() {
-        thrown.expect(RuntimeException.class);
-        thrown.expectMessage("Chain quantity of the statistics mustn't be null.");
-        thrown.expectMessage("Discounted products of the statistics mustn't be null.");
-        thrown.expectMessage("Average discount percentage of the statistics mustn't be null.");
-        thrown.expectMessage("Creation date of the statistics mustn't be null.");
-        Statistics statistics = new Statistics();
-        statisticsRepository.save(statistics);
-    }
-
-    @Test
-    public void test_incorrect_negative_save() {
-        thrown.expect(RuntimeException.class);
-        thrown.expectMessage("Chain quantity of the statistics '-1' must be positive.");
-        thrown.expectMessage("Discounted products of the statistics '-1' must be positive.");
-        thrown.expectMessage("Average discount percentage of the statistics '-1' must be positive.");
-        Statistics statistics = new Statistics(-1, -1, -1, new GregorianCalendar());
-        statisticsRepository.save(statistics);
-    }
-
 }

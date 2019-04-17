@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,17 +33,18 @@ public class SlackNotification {
 
     public void sendMessageToNotificationsChannel(String message) {
         try {
-            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_CHAT_POST_MESSAGE_URL)
-                    .queryParam("token", botToken)
-                    .queryParam("channel", notificationChannel)
-                    .queryParam("text", message)
-                    .build()
-                    .toUri();
+            logger.info(message);
+            URI uri = UriComponentsBuilder.fromHttpUrl(SLACK_CHAT_POST_MESSAGE_URL).build().toUri();
             RestTemplate restTemplate = new RestTemplate();
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("channel", notificationChannel);
+            body.add("text", message);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            headers.setBearerAuth(botToken);
+            HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
+            ResponseEntity<String> exchange = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            logger.info(exchange.toString());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -58,7 +60,8 @@ public class SlackNotification {
             body.add("channels", notificationChannel);
             HttpHeaders headers = new HttpHeaders();
             HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
-            restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            ResponseEntity<String> exchange = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+            logger.info(exchange.toString());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

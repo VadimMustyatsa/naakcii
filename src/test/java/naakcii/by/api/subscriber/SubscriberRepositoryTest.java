@@ -1,9 +1,7 @@
 package naakcii.by.api.subscriber;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -44,25 +42,5 @@ public class SubscriberRepositoryTest {
         Subscriber secondSubscriberByEmail = subscriberRepository.findByEmail("secindsubscriber@gmail.com");
         assertThat(firstSubscriberByEmail.getEmail()).isEqualTo("firstsubscriber@gmail.com");
         assertThat(secondSubscriberByEmail.getEmail()).isEqualTo("secindsubscriber@gmail.com");
-    }
-
-    @Test
-    public void test_save() {
-        Subscriber subscriber = new Subscriber();
-        subscriber.setEmail("subscriber@gmail.com");
-        subscriberRepository.save(subscriber);
-        assertThat(subscriber.getId()).isNotNull();
-    }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void test_incorrect_save() {
-        thrown.expect(RuntimeException.class);
-        thrown.expectMessage("Email should be valid");
-        Subscriber subscriber = new Subscriber();
-        subscriber.setEmail("subscriber");
-        subscriberRepository.save(subscriber);
     }
 }
