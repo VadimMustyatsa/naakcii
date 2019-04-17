@@ -28,7 +28,6 @@ public class ScheduleJob implements Serializable {
     private static final long serialVersionUID = -4053114041932518831L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SCHEDULE_JOB_ID")
     private Integer id;
