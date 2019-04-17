@@ -34,7 +34,7 @@ public class ScheduleJob implements Serializable {
     private Integer id;
 
     @NotNull
-    @Column(name = "SCHEDULE_JOB_NAME", unique = true, updatable = false)
+    @Column(name = "SCHEDULE_JOB_NAME", unique = true)
     private String name;
 
     @NotNull
