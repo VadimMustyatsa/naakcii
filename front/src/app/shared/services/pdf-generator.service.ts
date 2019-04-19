@@ -89,8 +89,8 @@ export class PdfGeneratorService {
                 alignment: 'center',
                 margin: [0, 15]
               });
-              const priceSum = item.product.getSumWithDiscount(item.quantity);
-              columns.push({width: '10%', text: numberFormater(priceSum), style: 'itemSumStyle', margin: [0, 15]});
+              const priceSum = item.product.getSumWithDiscount(item.quantity).toFixed(2);
+              columns.push({width: '10%', text: numberFormater(Number(priceSum)), style: 'itemSumStyle', margin: [0, 15]});
               itemColumnList['columns'] = columns;
               itemColumnList['style'] = 'itemStyle';
               docContent.push(itemColumnList);

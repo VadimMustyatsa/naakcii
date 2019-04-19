@@ -18,8 +18,7 @@
     </a>
   </div>
   <div>
-    <a href="javascript:void(0);"
-        class="btn tooltipped viber-btn" data-position="top" data-tooltip="Эта функция скоро станет доступна">
+    <a href="javascript:void(0);" class="btn viber-btn" data-position="top" tooltip="Эта функция скоро станет доступна" >
       <span *ngIf="!(breakPointCheckService.isTablet | async)?.matches">Отправить в</span>
       <div [ngStyle]="{'background-image':'url(assets/images/viber-disabled.svg)'}"></div>
     </a>
