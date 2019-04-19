@@ -2,13 +2,6 @@
   padding: 5px;
 }
 
-.foodCard {
-  padding: 0 5px;
-  height: 400px;
-  width: 165px;
-  word-wrap: break-word;
-}
-
 .foodName {
   font-size: 12px;
   height: 80px;
@@ -27,7 +20,6 @@
 }
 
 .foodStorage div img {
-  width: 30px;
   height: 25px;
 }
 
@@ -226,13 +218,15 @@
   }
 }
 
-
 ////////////////////////// flip //////////////////////////////////////////
 .container-flip {
   width: 180px;
-  height: 407px;
+  height: 415px;
   position: relative;
   perspective: 800px;
+  a:hover {
+    box-shadow: none;
+  }
 }
 
 #card-flip {
@@ -244,11 +238,10 @@
   margin-left: 5px
 }
 
-#card-flip .front,  #card-flip .back{
+#card-flip .front, #card-flip .back {
   margin: 0;
   display: block;
   position: absolute;
-  //width: 100%;
   height: 100%;
   backface-visibility: hidden;
 }
@@ -258,24 +251,57 @@
 }
 
 #card-flip .back {
-  transform: rotateY( 180deg);
+  transform: rotateY(180deg);
   z-index: 100;
 }
 
 #card-flip.flipped {
-  transform: rotateY( 180deg);
+  transform: rotateY(180deg);
 }
 
-.btn-floating{
+.btn-floating {
   position: inherit;
 }
 
-.trigger{
+.trigger-front {
   position: absolute;
-  top:0;
+  top: 0;
   right: 1px;
   z-index: 50;
-  background-color: lightgray;
   padding: 2px;
   cursor: pointer;
+  img {
+    height: 30px;
+    margin: -4px -5px 0 0;
+  }
 }
+
+.trigger-back {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  z-index: 50;
+  padding: 2px;
+  cursor: pointer;
+  transform: rotateY(180deg);
+  img {
+    height: 30px;
+    margin: -4px -5px 0 0;
+  }
+}
+
+.back-content-wrapper {
+  height: 397px;
+  width: 165px;
+  word-wrap: break-word;
+  padding-top: 30px;
+  top: 1px;
+  .grey-text {
+    font-size: 11px;
+  }
+  .back-items {
+    margin: 5px;
+  }
+}
+
+

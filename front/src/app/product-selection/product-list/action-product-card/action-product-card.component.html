@@ -1,4 +1,3 @@
-
 <div class="container-flip">
   <div #card id="card-flip">
     <div class="front">
@@ -9,9 +8,12 @@
            [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
            [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
         <div class="card sticky-action">
-          <div type="button" (click)="rotate(card)" class="trigger">rotate</div>
+          <div type="button" (click)="rotate(card)" class="trigger-front" [tooltip]="FRONT_TRIGGER_TOOLTIP">
+            <img src="../../../../assets/images/corner.png">
+          </div>
           <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
-            <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip" class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
+            <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip"
+                 class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
               {{product.textIcon}}
             </div>
             <div *ngIf="product.isIcon"
@@ -44,18 +46,18 @@
             </div>
 
             <div class="amountItem center">
-              <a class="btn-floating btn teal grey darken-1" (click)="subItem()">
+              <a class="btn-floating btn teal grey" (click)="subItem()">
                 <i class="material-icons">remove</i>
               </a>
               <span *ngIf="product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount | number:"1.1"}} {{product.unitOfMeasure | lowercase}}</span>
               <span *ngIf="!product.isFractionalPart" class="grey-text text-darken-2">{{selectAmount}} {{product.unitOfMeasure | lowercase}}</span>
-              <a class="btn-floating btn teal grey darken-1" (click)="addItem()">
+              <a class="btn-floating btn teal grey" (click)="addItem()">
                 <i class="material-icons">add</i>
               </a>
               <a class="selectFood btn waves-block deep-orange" (click)="selectFood()">Добавить</a>
             </div>
             <div class="endStock">
-      <span (click)="rotate(card)" class="grey-text">
+      <span class="grey-text">
         Окончание акции: <span> {{ product.endDate|date:'d MMMM' }}</span>
       </span>
             </div>
@@ -64,20 +66,23 @@
       </div>
     </div>
     <div class="back">
-      <div class="foodCard card sticky-action">
-      <div>
-        <div>
-          <span>Бренд:</span><span>{{product.brand}}</span>
+      <div class="back-content-wrapper card sticky-action">
+          <div class="back-items">
+            <div class="grey-text">Бренд:</div>
+            <div>{{product.brand}}</div>
+          </div>
+          <div class="back-items">
+            <div class="grey-text">Производитель:</div>
+            <div>{{product.manufacturer}}</div>
+          </div>
+          <div class="back-items">
+            <div class="grey-text">Страна произвлдства:</div>
+            <div>{{product.countryOfOrigin}}</div>
+          </div>
+          <div class="trigger-back" type="button" (click)="rotate(card)" [tooltip]="BACK_TRIGGER_TOOLTIP">
+            <img src="../../../../assets/images/corner.png">
+          </div>
         </div>
-        <div>
-          <span>Производитель:</span><span>{{product.manufacturer}}</span>
-        </div>
-        <div>
-          <span>Страна произвлдства:</span><span>{{product.countryOfOrigin}}</span>
-        </div>
-        <div class="trigger" type="button" (click)="rotate(card)">rotate</div>
-      </div>
-      </div>
     </div>
   </div>
 </div>
