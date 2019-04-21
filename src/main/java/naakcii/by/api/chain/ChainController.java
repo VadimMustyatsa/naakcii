@@ -24,7 +24,8 @@ public class ChainController {
     }
 
     @GetMapping(produces = ApiConfigConstants.API_V_2_0)
-    @ApiOperation("Возвращает список всех торговых сетей")
+    @ApiOperation("Возвращает список всех торговых сетей с параметром 'isActive' = true. "
+    			+ "Список упорядочен по имени 'name' торговой сети.")
     public List<ChainDTO> getAllChains() {
         return chainService.getAllChains();
     }

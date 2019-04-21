@@ -13,10 +13,10 @@ import naakcii.by.api.util.CustomUnitStepSerializer;
 @Getter
 public class UnitOfMeasureDTO {
 
-	@ApiModelProperty(notes = "Наименование единицы измерения", example="Кг")
+	@ApiModelProperty(notes = "Наименование единицы измерения.", example = "кг")
 	private String name;
 
-	@ApiModelProperty(notes = "Шаг изменения единицы измерения", example="0.1")
+	@ApiModelProperty(notes = "Шаг изменения количества товара для данной единицы измерения.", example = "0.1")
 	@JsonSerialize(using = CustomUnitStepSerializer.class)
 	private BigDecimal step;
 	

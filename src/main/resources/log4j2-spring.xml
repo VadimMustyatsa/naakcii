@@ -5,6 +5,7 @@
 		<Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
 		<Property name="LOG_LEVEL_PATTERN">%5p</Property>
 		<Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+		<Property name="LOG_FILE_PATH">C:/logs</Property>
 		<Property name="CONSOLE_LOG_PATTERN">%clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${LOG_LEVEL_PATTERN}} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%t]}{faint} %clr{%c{-5}}{cyan} %clr{%c:%M(%L)}{blue} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
 		<Property name="FILE_LOG_PATTERN">%d{${LOG_DATEFORMAT_PATTERN}} ${LOG_LEVEL_PATTERN} ${sys:PID} --- [%t] %c{-5} %c:%M(%L) : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
 	</Properties>
@@ -12,6 +13,13 @@
 		<Console name="Console" target="SYSTEM_OUT" follow="true">
 			<PatternLayout pattern="${sys:CONSOLE_LOG_PATTERN}" />
 		</Console>
+		<RollingFile name="DataParser" fileName="${LOG_FILE_PATH}/parser.log"
+               filePattern="${LOG_FILE_PATH}/parser-%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${FILE_LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+		</RollingFile >
 	</Appenders>
 	<Loggers>
     <!--<Logger name="org.hibernate.SQL" level="trace" additivity="false">
@@ -28,6 +36,12 @@
 		<Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error" />
 		<Logger name="org.hibernate.validator.internal.util.Version" level="trace" />
 		<logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+		<Logger name="naakcii.by.api.util.parser" level="debug" additivity="false">
+			<AppenderRef ref="DataParser"  />
+		</Logger>
+        <Logger name="naakcii.by.api.util.tasks.DataParserTask" level="debug" additivity="false">
+            <AppenderRef ref="DataParser"  />
+        </Logger>
 		<Root level="info">
 			<AppenderRef ref="Console" />
 		</Root>

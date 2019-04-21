@@ -26,9 +26,10 @@ public class SubcategoryController {
     }
 
     @GetMapping(path = "/{categoryId}", produces = ApiConfigConstants.API_V_2_0)
-    @ApiOperation("Возвращает список всех подкатегорий заданного id товара")
+    @ApiOperation("Возвращает список всех подкатегорий товаров с параметром 'isActive' = true входящих в заданную категорию. "
+    			+ "Список упорядочен по возрастанию параметра 'priority' подкатегории.")
     public List<SubcategoryDTO> getAllSubcategoriesByCategoryId(
-            @ApiParam(value = "Id категории товара", required = true)
+            @ApiParam(value = "Идентификатор категории товара.", required = true)
             @PathVariable("categoryId") Long categoryId) {
         return subcategoryService.getAllSubcategoriesByCategoryId(categoryId);
     }

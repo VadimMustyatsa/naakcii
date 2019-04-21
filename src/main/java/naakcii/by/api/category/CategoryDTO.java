@@ -10,16 +10,16 @@ import lombok.Setter;
 @Getter
 public class CategoryDTO {
 
-    @ApiModelProperty(notes = "Id категории товара", example="1L")
+    @ApiModelProperty(notes = "Искусственный идентификатор (суррогатный ключ) категории товара.", example = "1L")
     private Long Id;
 
-    @ApiModelProperty(notes = "Наименование категории товара", example="Бакалея")
+    @ApiModelProperty(notes = "Наименование категории товара.", example = "Хлебобулочные изделия")
     private String name;
 
-    @ApiModelProperty(notes = "Приоритет", example="1")
+    @ApiModelProperty(notes = "Приоритет категории товара.", example = "100")
     private Integer priority;
 
-    @ApiModelProperty(notes = "Путь к файлу с изображением категории товара", example="http://pathtoicon/icon.jpg")
+    @ApiModelProperty(notes = "Путь к файлу, содержащему иконку категории товара.", example = "С:/categories/icons/fish.jpg")
     private String icon;
     
     public CategoryDTO(Category category) {

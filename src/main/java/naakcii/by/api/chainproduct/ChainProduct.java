@@ -261,7 +261,7 @@ public class ChainProduct implements Serializable {
 		result.append(System.lineSeparator());
 		
 		if (type == null) {
-			result.append("\t").append("type - " + null + ";");
+			result.append("\t").append("type - " + null + ".");
 		} else {
 			result.append("\t").append("type - ");
 			result.append(System.lineSeparator());
@@ -269,7 +269,7 @@ public class ChainProduct implements Serializable {
 			result.append(System.lineSeparator());
 			result.append("\t").append("\t").append("name - " + type.getName() + ";");
 			result.append(System.lineSeparator());
-			result.append("\t").append("\t").append("synonym - " + type.getSynonym() + ";");
+			result.append("\t").append("\t").append("synonym - " + type.getSynonym() + ".");
 		}
 		
 		return result.toString();

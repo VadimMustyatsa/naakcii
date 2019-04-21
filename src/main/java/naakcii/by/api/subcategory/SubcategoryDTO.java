@@ -11,13 +11,13 @@ import naakcii.by.api.category.Category;
 @Getter
 public class SubcategoryDTO {
 
-    @ApiModelProperty(notes = "Id подкатегории товара", example = "1L")
+    @ApiModelProperty(notes = "Искусственный идентификатор (суррогатный ключ) подкатегории товара.", example = "1L")
     private Long id;
-    @ApiModelProperty(notes = "Id торговой сети", example="Макароны")
+    @ApiModelProperty(notes = "Наименование подкатегории товара", example = "Сдобные изделия")
     private String name;
-    @ApiModelProperty(notes = "Id категории товара", example="1L")
+    @ApiModelProperty(notes = "Идентификатор категории товара, к которой принадлежит данная подкатегория.", example = "1L")
     private Long categoryId;
-    @ApiModelProperty(notes = "Приоритет", example="1")
+    @ApiModelProperty(notes = "Приоритет подкатегории товара.", example = "100")
     private Integer priority;
     
     public SubcategoryDTO(Subcategory subcategory) {

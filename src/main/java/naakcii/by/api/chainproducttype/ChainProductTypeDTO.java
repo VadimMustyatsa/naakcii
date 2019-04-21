@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 public class ChainProductTypeDTO {
 
-	@ApiModelProperty(notes = "Название акции",example="1+1")
+	@ApiModelProperty(notes = "Название типа акции.", example = "1+1")
 	private String name;
-	@ApiModelProperty(notes = "Всплывающее сообщение",example="1+1")
+	@ApiModelProperty(notes = "Краткое описание типи акции.", example = "Два товара по цене одного.")
 	private String tooltip;
 	
 	public ChainProductTypeDTO(ChainProductType chainProductType) {

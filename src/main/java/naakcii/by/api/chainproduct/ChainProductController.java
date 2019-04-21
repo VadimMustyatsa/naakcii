@@ -3,6 +3,7 @@ package naakcii.by.api.chainproduct;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import naakcii.by.api.config.ApiConfigConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import naakcii.by.api.config.ApiConfigConstants;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,15 +38,19 @@ public class ChainProductController {
 	}
 	
 	@GetMapping(produces = ApiConfigConstants.API_V_2_0)
-	@ApiOperation("Возвращает список товаров по id торговой сети и id подкатегории, отсортированный по цене товара со скидкой")
+	@ApiOperation("Возвращает первым параметром (ключ 'chainProducts') список актуальных по дате акционных товаров с параметром 'isActive' = true, входящих в заданные подкатегории и торговые сети. "
+				+ "Параметра запроса 'size' отвечает за количество элементов в списке, а параметр 'page' - за отступ для поиска в базе данных."
+				+ "Параметры 'startDate' и 'endDate' каждого акционного товара удовлетворяют условию: 'startDate' <= 'currentDate' <= 'endDate'. "
+				+ "Список упорядочен по возрастанию параметра 'chainProducts' акционного товара."
+				+ "Возвращает вторым параметром (ключ 'numberOfChainProducts') общее количество акционных товаров в базе данных, удовлетворяющих данным условиям.")
     public Map<String, ?> getAllProductsByChainIdsAndSubcategoryIds(
-			@ApiParam(value = "Ids торговой сети", required = true)
+			@ApiParam(value = "Идентификаторы торговых сетей.", required = true)
     		@RequestParam("chainIds") Set<Long> chainIds,
-			@ApiParam(value = "Ids подкатегорий товаров", required = true)
+			@ApiParam(value = "Идентификаторы подкатегорий товаров.", required = true)
     		@RequestParam("subcategoryIds") Set<Long> subcategoryIds,
-			@ApiParam(value = "Номер страницы. По умолчанию = 0", required = false)
+			@ApiParam(value = "Номер страницы. По умолчанию = 0.", required = false)
     		@RequestParam(value = "page", required = false) Integer page,
-			@ApiParam(value = "Количество ответов на странице. По умолчанию = 12", required = false)
+			@ApiParam(value = "Количество акционных товаров на странице. По умолчанию = 12.", required = false)
     		@RequestParam(value = "size", required = false) Integer size) {
 		if (page == null || page < 0) {
 			page = DEFAULT_PAGE_NIMBER;

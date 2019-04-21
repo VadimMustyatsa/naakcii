@@ -32,26 +32,26 @@ public class Statistics implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "STATISTICS_ID")
     private Long id;
 
-    @Column(name = "CHAIN_QUANTITY")
+    @Column(name = "STATISTICS_CHAIN_QUANTITY")
     @NotNull(message = "Chain quantity of the statistics mustn't be null.")
     @Positive(message = "Chain quantity of the statistics '${validatedValue}' must be positive.")
     private Integer chainQuantity;
 
-    @Column(name = "DISCOUNTED_PRODUCTS")
+    @Column(name = "STATISTICS_DISCOUNTED_PRODUCTS")
     @NotNull(message = "Discounted products of the statistics mustn't be null.")
     @Positive(message = "Discounted products of the statistics '${validatedValue}' must be positive.")
     private Integer discountedProducts;
 
-    @Column(name = "AVERAGE_DISCOUNT_PERCENTAGE")
+    @Column(name = "STATISTICS_AVERAGE_DISCOUNT_PERCENTAGE")
     @NotNull(message = "Average discount percentage of the statistics mustn't be null.")
     @Positive(message = "Average discount percentage of the statistics '${validatedValue}' must be positive.")
     @Max(value = 100, message = "Average discount percentage of the statistics '${validatedValue}' must be less 100")
     private Integer averageDiscountPercentage;
 
-    @Column(name = "CREATION_DATE")
+    @Column(name = "STATISTICS_CREATION_DATE")
     @NotNull(message = "Creation date of the statistics mustn't be null.")
     @Temporal(TemporalType.DATE)
     private Calendar creationDate;

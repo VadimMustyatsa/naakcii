@@ -24,7 +24,8 @@ public class CategoryController {
     }
 
     @GetMapping(produces = ApiConfigConstants.API_V_2_0)
-    @ApiOperation("Возвращает список всех категорий товаров")
+    @ApiOperation("Возвращает список всех категорий товаров с параметром 'isActive' = true. "
+    			+ "Список упорядочен по возрастанию параметра 'priority' категории.")
     public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
     }

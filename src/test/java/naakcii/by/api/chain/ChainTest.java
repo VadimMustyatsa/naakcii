@@ -43,8 +43,8 @@ public class ChainTest {
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
-		ChainProduct firstChainProduct = new ChainProduct(product, chain, new BigDecimal("5.50"), chainProductTypeType, startDate, endDate);
-		ChainProduct secondChainProduct = new ChainProduct(product, chain, new BigDecimal("3.75"), chainProductTypeType, startDate, endDate);
+		new ChainProduct(product, chain, new BigDecimal("5.50"), chainProductTypeType, startDate, endDate);
+		new ChainProduct(product, chain, new BigDecimal("3.75"), chainProductTypeType, startDate, endDate);
 	}
 
 	public void createInvalidChainProducts(Chain chain) {
@@ -53,8 +53,8 @@ public class ChainTest {
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_MONTH, 10);
-		ChainProduct firstChainProduct = new ChainProduct(product, chain, null, chainProductTypeType, startDate, endDate);
-		ChainProduct secondChainProduct = new ChainProduct(product, chain, new BigDecimal("2.00"), null, startDate, endDate);
+		new ChainProduct(product, chain, null, chainProductTypeType, startDate, endDate);
+		new ChainProduct(product, chain, new BigDecimal("2.00"), null, startDate, endDate);
 	}
 
 	@Test

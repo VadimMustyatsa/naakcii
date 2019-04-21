@@ -95,6 +95,7 @@ public class CategoryControllerIntegrationTest {
 			activeCategories.add(testEntityManager.persist(thirdCategory));
 			activeCategories.add(testEntityManager.persist(firstCategory));
 			inactiveCategories.add(testEntityManager.persist(fourthCategory));
+			testEntityManager.flush();
 			testEntityManager.clear();
 			logger.info("Test data was created successfully: instances of '{}' and '{}' were added to the database.",
 					Category.class, Subcategory.class);
