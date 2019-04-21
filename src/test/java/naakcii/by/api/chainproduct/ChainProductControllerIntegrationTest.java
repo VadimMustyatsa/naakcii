@@ -11,7 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import naakcii.by.api.unitofmeasure.UnitCode;
@@ -58,6 +60,8 @@ import naakcii.by.api.subcategory.Subcategory;
 public class ChainProductControllerIntegrationTest {
 
 	private static final Logger logger = LogManager.getLogger(ChainProductControllerIntegrationTest.class);
+	private static final String CHAIN_PRODUCTS_KEY = "chainProducts";
+	private static final String NUMBER_OF_CHAIN_PRODUCTS_KEY = "numberOfChainProducts";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -128,7 +132,7 @@ public class ChainProductControllerIntegrationTest {
 		Chain secondChain = new Chain("Виталюр", "Vitalur", "www.vitalur.by", true);
 		Chain thirdChain = new Chain("Евроопт", "Evroopt", "www.evroopt.by", true);
 		Chain fourthChain = new Chain("БелМаркет", "Belmarket", "www.belmarket.by", true);
-		//Creation of chainProduct types.
+		//Creation of chain product types.
 		ChainProductType firstChainProductType = new ChainProductType("Скидка", "discount");
 		firstChainProductType.setTooltip("Скидка всплывающее сообщение.");
 		ChainProductType secondChainProductType = new ChainProductType("Хорошая цена", "good_price");
@@ -136,7 +140,7 @@ public class ChainProductControllerIntegrationTest {
 		//Creation of countries.
 		Country firstCountry = new Country(CountryCode.BY);
 		Country secondCountry = new Country(CountryCode.LT);
-		//Creation of Unit of Measure
+		//Creation of units of measure
 		UnitOfMeasure firstUnitOfMeasure = new UnitOfMeasure(UnitCode.KG);
 		UnitOfMeasure secondUnitOfMeasure = new UnitOfMeasure(UnitCode.PC);
 		//Creation of products.
@@ -188,7 +192,7 @@ public class ChainProductControllerIntegrationTest {
 		tenthProduct.setManufacturer("ОАО Слуцкий сыродельный комбинат");
 		tenthProduct.setBrand("Стары Менск");
 		tenthProduct.setCountryOfOrigin(secondCountry);
-		//Saving of all entities.
+		//Saving of all aforenamed entities.
 		unitOfMeasures = new ArrayList<>();
 		try {
 			unitOfMeasures.add(testEntityManager.persist(firstUnitOfMeasure));
@@ -242,7 +246,7 @@ public class ChainProductControllerIntegrationTest {
 			logger.error("Exception has occurred during the creation of test data ('{}' instances): {}.", Country.class, exception);
 		}
 		
-		//Creation of chainProducts.
+		//Creation of chain products.
 		Calendar firstStartDate = getCurrentDate();
 		firstStartDate.add(Calendar.DAY_OF_MONTH, -7);
 		Calendar firstEndDate = getCurrentDate();
@@ -355,7 +359,7 @@ public class ChainProductControllerIntegrationTest {
 		sixteenthChainProduct.setDiscountPrice(new BigDecimal("1.30"));
 		sixteenthChainProduct.setDiscountPercent(new BigDecimal("12"));
 		testEntityManager.flush();
-		//Subcategory and chainProduct IDs saving.
+		//Subcategory and chain product identifiers saving.
 		firstSubcategoryId = firstSubcategory.getId();
 		secondSubcategoryId = secondSubcategory.getId();
 		thirdSubcategoryId = thirdSubcategory.getId();
@@ -448,13 +452,21 @@ public class ChainProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		Map<String, Object> expectedResult = new LinkedHashMap<>();
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ChainProductDTO(twelvethChainProduct));
 		expectedProductDTOs.add(new ChainProductDTO(thirteenthChainProduct));
 		expectedProductDTOs.add(new ChainProductDTO(ninthChainProduct));
-		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
+		expectedResult.put(CHAIN_PRODUCTS_KEY, expectedProductDTOs);
+		expectedResult.put(NUMBER_OF_CHAIN_PRODUCTS_KEY, 3L);
+		String expectedJson = objectMapper.writeValueAsString(expectedResult);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals(expectedJson, resultJson);
+		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): "
+				   + "{'chainProducts':["
+				   + "{productId:10, chainId:3, name:'Масло особое', unitOfMeasure:{name:'кг', step:0.1}, manufacturer:'ОАО Барановичский мясомолочный комбинат', brand :'Раніца', countryOfOrigin:'Беларусь', picture: 'butter2.png', basePrice:1.50, discountPercent:33, discountPrice:1.00, startDate:1542488400000, endDate:1546117200000, chainProductType:{name: 'Хорошая цена, tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}},"
+				   + "{productId:7, chainId:1, name:'Молоко 2.5%', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'ОАО Молочные горки', brand:'Простоквашино', countryOfOrigin:'Литва', picture:'milk.png', basePrice:7.50, discountPercent:47, discountPrice:4.00, startDate:1543698000000, endDate:1546117200000, chainProductType:{name:'Скидка', tooltipText:'Скидка всплывающее сообщение.', synonym:'discount'},"
+				   + "{productId:1, chainId:1, name:'Салями', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'СООО Старфуд', brand:'Смакі прысмакі', countryOfOrigin:'Беларусь', picture:'salyami.png', basePrice:15.05, discountPercent:29, discountPrice:10.75, startDate:1543698000000, endDate:1545512400000, chainProductType:{name:'Хорошая цена', tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}}"
+				   + "], 'numberOfChainProducts':3}.", expectedJson, resultJson);	
 		removeTestData();
 	}
 	
@@ -498,11 +510,13 @@ public class ChainProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		Map<String, Object> expectedResult = new LinkedHashMap<>();
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
-		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
+		expectedResult.put(CHAIN_PRODUCTS_KEY, expectedProductDTOs);
+		expectedResult.put(NUMBER_OF_CHAIN_PRODUCTS_KEY, 3L);
+		String expectedJson = objectMapper.writeValueAsString(expectedResult);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		System.out.println(expectedJson);
-		assertEquals("Expected JSON shouldn't contain anything, as all results have been placed on previous page : [].", expectedJson, resultJson);	
+		assertEquals("Expected JSON shouldn't contain any chain products, as all results have been placed on previous page : {'chainProducts':[], 'numberOfChainProducts':3}.", expectedJson, resultJson);	
 		removeTestData();
 	}
 	
@@ -546,17 +560,21 @@ public class ChainProductControllerIntegrationTest {
 		stopWatch.stop();
 		logger.info("Execution of request '{}({})' has finished.", "GET", "/products");
 		logger.info("Execution time is: {} milliseconds.", stopWatch.getTotalTimeMillis());
+		Map<String, Object> expectedResult = new LinkedHashMap<>();
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
 		expectedProductDTOs.add(new ChainProductDTO(twelvethChainProduct));
 		expectedProductDTOs.add(new ChainProductDTO(thirteenthChainProduct));
 		expectedProductDTOs.add(new ChainProductDTO(ninthChainProduct));
-		String expectedJson = objectMapper.writeValueAsString(expectedProductDTOs);
+		expectedResult.put(CHAIN_PRODUCTS_KEY, expectedProductDTOs);
+		expectedResult.put(NUMBER_OF_CHAIN_PRODUCTS_KEY, 3L);
+		String expectedJson = objectMapper.writeValueAsString(expectedResult);
 		String resultJson = mvcResult.getResponse().getContentAsString();
-		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): ["
-				   + "{productId:7, chainId:7, name:'Масло особое',unitOfMeasure:{name:'кг', step:0.1}, manufacturer:'ОАО Барановичский мясомолочный комбинат', brand :'Раніца', countryOfOrigin:'Беларусь', picture: 'butter2.png', basePrice:1.50, discountPercent:33, discountPrice:1.00, startDate:1542488400000, endDate:1546117200000, chainProductType:{name: 'Хорошая цена, tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}},"
-				   + "{productId:6, chainId:6, name:'Молоко 2.5%', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'ОАО Молочные горки', brand:'Простоквашино', countryOfOrigin:'Литва', picture:'milk.png', basePrice:7.50, discountPercent:47, discountPrice:4.00, startDate:1543698000000, endDate:1546117200000, chainProductType:{name:'Скидка', tooltipText:'Скидка всплывающее сообщение.', synonym:'discount'},"
+		assertEquals("Expected JSON should contain the same data, as it is the 1st page with size 12 (default values): "
+				   + "{'chainProducts':["
+				   + "{productId:10, chainId:3, name:'Масло особое', unitOfMeasure:{name:'кг', step:0.1}, manufacturer:'ОАО Барановичский мясомолочный комбинат', brand :'Раніца', countryOfOrigin:'Беларусь', picture: 'butter2.png', basePrice:1.50, discountPercent:33, discountPrice:1.00, startDate:1542488400000, endDate:1546117200000, chainProductType:{name: 'Хорошая цена, tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}},"
+				   + "{productId:7, chainId:1, name:'Молоко 2.5%', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'ОАО Молочные горки', brand:'Простоквашино', countryOfOrigin:'Литва', picture:'milk.png', basePrice:7.50, discountPercent:47, discountPrice:4.00, startDate:1543698000000, endDate:1546117200000, chainProductType:{name:'Скидка', tooltipText:'Скидка всплывающее сообщение.', synonym:'discount'},"
 				   + "{productId:1, chainId:1, name:'Салями', unitOfMeasure:{name:'шт', step:1.0}, manufacturer:'СООО Старфуд', brand:'Смакі прысмакі', countryOfOrigin:'Беларусь', picture:'salyami.png', basePrice:15.05, discountPercent:29, discountPrice:10.75, startDate:1543698000000, endDate:1545512400000, chainProductType:{name:'Хорошая цена', tooltipText:'Хорошая цена всплывающее сообщение.', synonym:'good_price'}}"
-				   + "].", expectedJson, resultJson);	
+				   + "], 'numberOfChainProducts':3}.", expectedJson, resultJson);	
 		removeTestData();
 	}
 	

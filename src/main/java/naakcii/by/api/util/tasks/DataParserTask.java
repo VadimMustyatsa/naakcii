@@ -2,7 +2,7 @@ package naakcii.by.api.util.tasks;
 
 import naakcii.by.api.chain.ChainRepository;
 import naakcii.by.api.util.parser.DataParser;
-import naakcii.by.api.util.parser.multisheet.ParsingResult;
+import naakcii.by.api.util.parser.ParsingResult;
 import naakcii.by.api.util.slack.SlackNotification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,8 +63,8 @@ public class DataParserTask {
                         if (matcher.find()) {
                             logger.info("Next file was parsed: " + file.getName());
                             slackNotification.sendMessageToNotificationsChannel("Next file was parsed: `" + file.getName() + "`");
-                            List<ParsingResult<?>> parsingResults = dataParser.parseChainProducts(file.getPath(), chainSynonym);
-                            parsingResults.forEach((ParsingResult<?> result) ->
+                            List<ParsingResult<?, ?>> parsingResults = dataParser.parseChainProducts(file.getPath(), chainSynonym);
+                            parsingResults.forEach((ParsingResult<?, ?> result) ->
                                     slackNotification.sendCodeSnippetToNotificationsChannel(result.toString()));
                         } else {
                             logger.info("Next file was skipped: " + file.getName());

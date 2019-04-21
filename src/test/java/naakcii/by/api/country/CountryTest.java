@@ -39,7 +39,7 @@ public class CountryTest {
         country.setAlphaCode3("ARM");
         Set<ConstraintViolation<Country>> constraintViolations = validator.validate(country);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as country name is too short:", 1, constraintViolations.size());
-        assertEquals("Country's name 'Ar' must be between '3' and '50' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Country's name 'Ar' must be between '3' and '75' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CountryTest {
         country.setAlphaCode3("ARM");
         Set<ConstraintViolation<Country>> constraintViolations = validator.validate(country);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as country name is too short:", 1, constraintViolations.size());
-        assertEquals("Country's name ' Ar ' must be between '3' and '50' characters long.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Country's name ' Ar ' must be between '3' and '75' characters long.", constraintViolations.iterator().next().getMessage());
     }
 
     @Test

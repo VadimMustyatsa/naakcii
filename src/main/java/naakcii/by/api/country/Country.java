@@ -29,11 +29,11 @@ public class Country {
     @Column(name = "COUNTRY_ID")
     private Long id;
 	
-	@Column(name = "COUNTRY_NAME", unique = true, length = 50)
+	@Column(name = "COUNTRY_NAME", unique = true, length = 75)
     @NotNull(message = "Country's name mustn't be null.")
     @PureSize(
     	min = 3, 
-    	max = 50,
+    	max = 75,
     	message = "Country's name '${validatedValue}' must be between '{min}' and '{max}' characters long."
     )
 	private String name;

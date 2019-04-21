@@ -30,7 +30,6 @@ import naakcii.by.api.util.annotations.Barcode.List;
  * <p>
  * {@code null} elements are considered valid.
  */
-
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
@@ -45,19 +44,20 @@ public @interface Barcode {
     Class<? extends Payload>[] payload() default { };
     
     /**
-	 * @return length of the element must equal to one of the elements
+	 * @return length of the element must be equal to one of the elements
 	 */
     int[] lengths = {4, 8, 12, 13, 14};
     
     /**
 	 * Defines several {@link Barcode} annotations on the same element.
 	 *
-	 * @see PureSize
+	 * @see Bracode
 	 */
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 	@Retention(RUNTIME)
 	@Documented
 	@interface List {
+    	
     	Barcode[] value();
 	}
 }

@@ -28,7 +28,6 @@ import naakcii.by.api.util.annotations.PureSize.List;
  * <p>
  * {@code null} elements are considered valid.
  */
-
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Repeatable(List.class)
@@ -61,6 +60,7 @@ public @interface PureSize {
 	@Retention(RUNTIME)
 	@Documented
 	@interface List {
+		
 		PureSize[] value();
 	}
 }

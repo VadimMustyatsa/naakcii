@@ -2,6 +2,7 @@ package naakcii.by.api.subcategory;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -89,11 +90,25 @@ public class Subcategory implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("name - " + name + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("category id/name - " + (category == null ? null + "/" + null : category.getId() + "/" + category.getName()) + ";");
+		
+		if (category == null) {
+			result.append("\t").append("category - " + null + ";");
+		} else {
+			result.append("\t").append("category - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + category.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + category.getName() + ";");
+		}
+		
 		result.append(System.lineSeparator());
 		result.append("\t").append("priority - " + priority + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("isActive - " + isActive + ".");
     	return result.toString();
     }
+	
+	public Optional<Category> getOptionalCategory() {
+		return Optional.ofNullable(category);
+	}
 }

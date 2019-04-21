@@ -41,4 +41,9 @@ public class ChainProductServiceImpl implements ChainProductService {
 				.map((ChainProduct action) -> objectFactory.getInstance(ChainProductDTO.class, action))
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public Long getNumberOfProductsByChainIdsAndSubcategoryIds(Set<Long> chainIds, Set<Long> subcategoryIds) {
+		return chainProductRepository.countByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate());
+	}
 }

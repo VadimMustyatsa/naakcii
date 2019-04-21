@@ -2,6 +2,7 @@ package naakcii.by.api.product;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -143,17 +144,63 @@ public class Product implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("picture - " + picture + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("unit of measure id/name - " + (unitOfMeasure == null ? null + "/" + null : unitOfMeasure.getId() + "/" + unitOfMeasure.getName()) + ";");
+		
+		if (unitOfMeasure == null) {
+			result.append("\t").append("unit of measure - " + null + ";");
+		} else {
+			result.append("\t").append("unit of measure - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + unitOfMeasure.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + unitOfMeasure.getName() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("step - " + unitOfMeasure.getStep() + ";");
+		}
+		
 		result.append(System.lineSeparator());
 		result.append("\t").append("manufacturer - " + manufacturer + ";");
 		result.append(System.lineSeparator());
 		result.append("\t").append("brand - " + brand + ";");
 		result.append(System.lineSeparator());	
-		result.append("\t").append("country of origin id/name - " + (countryOfOrigin == null ? null + "/" + null : countryOfOrigin.getId() + "/" + countryOfOrigin.getName()) + ";");
+		
+		if (countryOfOrigin == null) {
+			result.append("\t").append("country of origin - " + null + ";");
+		} else {
+			result.append("\t").append("country of origin - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + countryOfOrigin.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + countryOfOrigin.getName() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("alpha code 2 - " + countryOfOrigin.getAlphaCode2() + ";");
+		}
+		
 		result.append(System.lineSeparator());
-		result.append("\t").append("subcategory id/name - " + (subcategory == null ? null + "/" + null : subcategory.getId() + "/" + subcategory.getName()) + ";");
+		
+		if (subcategory == null) {
+			result.append("\t").append("subcategory - " + null + ";");
+		} else {
+			result.append("\t").append("subcategory - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + subcategory.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + subcategory.getName() + ";");
+		}
+		
 		result.append(System.lineSeparator());
 		result.append("\t").append("isActive - " + isActive + ".");
     	return result.toString();
     }
+	
+	public Optional<UnitOfMeasure> getOptionalUnitOfMeasure() {
+		return Optional.ofNullable(unitOfMeasure);
+	}
+	
+	public Optional<Country> getOptionalCountry() {
+		return Optional.ofNullable(countryOfOrigin);
+	}
+	
+	public Optional<Subcategory> getOptionalSubcategory() {
+		return Optional.ofNullable(subcategory);
+	}
 }

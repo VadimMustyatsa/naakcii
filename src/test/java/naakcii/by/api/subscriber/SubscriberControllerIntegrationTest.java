@@ -3,6 +3,7 @@ package naakcii.by.api.subscriber;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import naakcii.by.api.APIApplication;
 import naakcii.by.api.config.ApiConfigConstants;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Formatter;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -30,6 +31,7 @@ import lombok.Setter;
 import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.product.Product;
+import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 
 @NoArgsConstructor
 @Setter
@@ -215,9 +217,37 @@ public class ChainProduct implements Serializable {
     public String toString() {
     	StringBuilder result = new StringBuilder("Instance of " + ChainProduct.class + ":");
 		result.append(System.lineSeparator());
-		result.append("\t").append("product id/name - " + (product == null ? null + "/" + null : id.productId + "/" + product.getName()) + ";");
+		result.append("\t").append("composite id (productId/chainId) - " + id.productId + "/" + id.chainId + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("chain id/name - " + (chain == null ? null + "/" + null : id.chainId + "/" + chain.getName()) + ";");
+		
+		if (product == null) {
+			result.append("\t").append("product - " + null + ";");
+		} else {
+			result.append("\t").append("product - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + product.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + product.getName() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("bar-code - " + product.getBarcode() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("unit of measure - " + product.getOptionalUnitOfMeasure().map((UnitOfMeasure unit) -> unit.getStep() + " " + unit.getName()).orElse(null) + ";");
+		}
+		
+		result.append(System.lineSeparator());
+		
+		if (chain == null) {
+			result.append("\t").append("chain - " + null + ";");
+		} else {
+			result.append("\t").append("chain - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + chain.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + chain.getName() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("synonym" + chain.getSynonym() + ";");
+		}
+		
 		result.append(System.lineSeparator());
 		result.append("\t").append("base price - " + basePrice + ";");
 		result.append(System.lineSeparator());
@@ -225,11 +255,23 @@ public class ChainProduct implements Serializable {
 		result.append(System.lineSeparator());
 		result.append("\t").append("discount percent - " + discountPercent + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("start date - " + startDate == null ? null : getFormattedDate(startDate) + ";");
+		result.append("\t").append("start date - " + (startDate == null ? null : getFormattedDate(startDate)) + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("end date - " + endDate == null ? null : getFormattedDate(endDate) + ";");
+		result.append("\t").append("end date - " + (endDate == null ? null : getFormattedDate(endDate)) + ";");
 		result.append(System.lineSeparator());
-		result.append("\t").append("type id/name - " + (type == null ? null + "/" + null : type.getId() + "/" + type.getName()) + ".");
+		
+		if (type == null) {
+			result.append("\t").append("type - " + null + ";");
+		} else {
+			result.append("\t").append("type - ");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("id - " + type.getId() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("name - " + type.getName() + ";");
+			result.append(System.lineSeparator());
+			result.append("\t").append("\t").append("synonym - " + type.getSynonym() + ";");
+		}
+		
 		return result.toString();
     }
     
@@ -238,5 +280,25 @@ public class ChainProduct implements Serializable {
     	String formattedDate = formatter.format("%td-%tm-%tY", date, date, date).toString();
     	formatter.close();
     	return formattedDate;
+    }
+    
+    public Optional<Chain> getOptionalChain() {
+    	return Optional.ofNullable(chain);
+    }
+    
+    public Optional<Product> getOptionalProduct() {
+    	return Optional.ofNullable(product);
+    }
+    
+    public Optional<ChainProductType> getOptionalType() {
+    	return Optional.ofNullable(type);
+    }
+    
+    public Optional<Calendar> getOptionalStartDate() {
+    	return Optional.ofNullable(startDate);
+    }
+    
+    public Optional<Calendar> getOptionalEndDate() {
+    	return Optional.ofNullable(endDate);
     }
 }

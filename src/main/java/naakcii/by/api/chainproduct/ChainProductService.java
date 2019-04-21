@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ChainProductService {
 	
-	List<ChainProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> chainIds, Set<Long> subcategoryIds, Pageable pageable); 
+	List<ChainProductDTO> getAllProductsByChainIdsAndSubcategoryIds(Set<Long> chainIds, Set<Long> subcategoryIds, Pageable pageable);
+	Long getNumberOfProductsByChainIdsAndSubcategoryIds(Set<Long> chainIds, Set<Long> subcategoryIds);
 }

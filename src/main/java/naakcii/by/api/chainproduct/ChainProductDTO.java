@@ -3,12 +3,16 @@ package naakcii.by.api.chainproduct;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Formatter;
+import java.util.Optional;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chainproducttype.ChainProductTypeDTO;
+import naakcii.by.api.country.Country;
+import naakcii.by.api.product.Product;
 import naakcii.by.api.unitofmeasure.UnitOfMeasureDTO;
 
 @NoArgsConstructor
@@ -49,20 +53,25 @@ public class ChainProductDTO {
     
     public ChainProductDTO(ChainProduct chainProduct) {
     	this.productId = chainProduct.getId().getProductId();
-    	this.chainId = chainProduct.getId().getProductId();
-    	this.chainName = chainProduct.getChain().getName();
-    	this.name = chainProduct.getProduct().getName();
-    	this.unitOfMeasure = new UnitOfMeasureDTO(chainProduct.getProduct().getUnitOfMeasure());
-    	this.manufacturer = chainProduct.getProduct().getManufacturer();
-    	this.brand = chainProduct.getProduct().getBrand();
-    	this.countryOfOrigin = chainProduct.getProduct().getCountryOfOrigin().getName();
-    	this.picture = chainProduct.getProduct().getPicture();
+    	this.chainId = chainProduct.getId().getChainId();
+    	this.chainName = chainProduct.getOptionalChain().map(Chain::getName).orElse(null);
+    	Optional<Product> optionalProduct = chainProduct.getOptionalProduct();
+    	
+    	if (optionalProduct.isPresent()) {
+    		this.name = optionalProduct.get().getName();
+    		this.unitOfMeasure = optionalProduct.flatMap(Product::getOptionalUnitOfMeasure).map(UnitOfMeasureDTO::new).orElse(null);
+    		this.manufacturer = optionalProduct.get().getManufacturer();
+    		this.brand = optionalProduct.get().getBrand();
+    		this.countryOfOrigin = optionalProduct.flatMap(Product::getOptionalCountry).map(Country::getName).orElse(null);
+    		this.picture = optionalProduct.get().getPicture();
+    	}
+    	
     	this.basePrice = chainProduct.getBasePrice();
     	this.discountPercent = chainProduct.getDiscountPercent();
     	this.discountPrice = chainProduct.getDiscountPrice();
-    	this.startDate = chainProduct.getStartDate().getTimeInMillis();
-    	this.endDate = chainProduct.getEndDate().getTimeInMillis();
-    	this.chainProductType = new ChainProductTypeDTO(chainProduct.getType());
+    	this.startDate = chainProduct.getOptionalStartDate().map(Calendar::getTimeInMillis).orElse(null);
+    	this.endDate = chainProduct.getOptionalEndDate().map(Calendar::getTimeInMillis).orElse(null);
+    	this.chainProductType = chainProduct.getOptionalType().map(ChainProductTypeDTO::new).orElse(null);
     }
     
     private String getFormattedDate(Calendar date) {

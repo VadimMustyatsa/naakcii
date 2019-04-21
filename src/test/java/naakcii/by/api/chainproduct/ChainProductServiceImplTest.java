@@ -45,13 +45,13 @@ public class ChainProductServiceImplTest {
 	private ChainProduct thirdChainProduct;
 	
 	@Mock
-	private ChainProductDTO firstProductDTO;
+	private ChainProductDTO firstChainProductDTO;
 	
 	@Mock
-	private ChainProductDTO secondProductDTO;
+	private ChainProductDTO secondChainProductDTO;
 	
 	@Mock
-	private ChainProductDTO thirdProductDTO;
+	private ChainProductDTO thirdChainProductDTO;
 	
 	@Mock
 	private Set<Long> subcategoryIds;
@@ -87,20 +87,29 @@ public class ChainProductServiceImplTest {
 	@Test
 	public void test_get_all_products_by_chain_ids_and_subcategory_ids() {
 		List<ChainProductDTO> expectedProductDTOs = new ArrayList<>();
-		expectedProductDTOs.add(firstProductDTO);
-		expectedProductDTOs.add(secondProductDTO);
-		expectedProductDTOs.add(thirdProductDTO);
+		expectedProductDTOs.add(firstChainProductDTO);
+		expectedProductDTOs.add(secondChainProductDTO);
+		expectedProductDTOs.add(thirdChainProductDTO);
 		when(chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable))
 			.thenReturn(createListOfChainProducts());
-		when(objectFactory.getInstance(ChainProductDTO.class, firstChainProduct)).thenReturn(firstProductDTO);
-		when(objectFactory.getInstance(ChainProductDTO.class, secondChainProduct)).thenReturn(secondProductDTO);
-		when(objectFactory.getInstance(ChainProductDTO.class, thirdChainProduct)).thenReturn(thirdProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, firstChainProduct)).thenReturn(firstChainProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, secondChainProduct)).thenReturn(secondChainProductDTO);
+		when(objectFactory.getInstance(ChainProductDTO.class, thirdChainProduct)).thenReturn(thirdChainProductDTO);
 		List<ChainProductDTO> resultProductDTOs = productService.getAllProductsByChainIdsAndSubcategoryIds(subcategoryIds, chainIds, pageable);
 		verify(chainProductRepository).findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate(), pageable);
 		verify(objectFactory).getInstance(ChainProductDTO.class, firstChainProduct);
 		verify(objectFactory).getInstance(ChainProductDTO.class, secondChainProduct);
 		verify(objectFactory).getInstance(ChainProductDTO.class, thirdChainProduct);
-		assertEquals("Size of the result list of product data transfer objects should be 3.", resultProductDTOs.size(), 3);
+		assertEquals("Size of the result list of product data transfer objects should be 3.", 3, resultProductDTOs.size());
 		assertEquals("Result list of product data transfer objects should be: [firstProductDTO, secondProductDTO, thirdProductDTO].", expectedProductDTOs, resultProductDTOs);
+	}
+	
+	@Test
+	public void test_get_number_of_products_by_chain_ids_and_subcategory_ids() {
+		when(chainProductRepository.countByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate()))
+			.thenReturn(15L);	
+		Long resultNumberOfProducts = productService.getNumberOfProductsByChainIdsAndSubcategoryIds(chainIds, subcategoryIds);
+		verify(chainProductRepository).countByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(subcategoryIds, chainIds, getCurrentDate(), getCurrentDate());
+		assertEquals("Result number of products should be 15", 15L, resultNumberOfProducts.longValue());
 	}
 }

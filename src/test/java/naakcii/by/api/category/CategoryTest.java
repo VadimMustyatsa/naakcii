@@ -47,7 +47,7 @@ public class CategoryTest {
 		createSubcategories(category);
 		Set<ConstraintViolation<Category>> constraintViolations = validator.validate(category);
 		assertEquals("Expected size of the ConstraintViolation set should be 1, as category's name is null:", 1, constraintViolations.size());
-        assertEquals("Category's name mustn't be null.", constraintViolations.iterator().next().getMessage());
+        assertEquals("Category's name mustn't be null.", constraintViolations.iterator().next().getMessage());         
 	}
 	
 	@Test

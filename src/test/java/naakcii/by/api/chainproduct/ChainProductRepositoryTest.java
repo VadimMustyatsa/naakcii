@@ -211,7 +211,7 @@ public class ChainProductRepositoryTest {
 	public void test_find_all_by_subcategory_id() {
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				thirdSubcategoryId, Calendar.getInstance(), Calendar.getInstance());
-		assertEquals("Number ChainProducts, that have been found in the database, should be 3: [10thChainProduct, 11thChainProduct, 12thChainProduct].", 3, ChainProducts.size());
+		assertEquals("Number of ChainProducts, that have been found in the database, should be 3: [10thChainProduct, 11thChainProduct, 12thChainProduct].", 3, ChainProducts.size());
 		assertTrue("Result list of ChainProducts should contain 10th ChainProduct.", ChainProducts.contains(tenthChainProduct));
 		assertTrue("Result list of ChainProducts should contain 11th ChainProduct.", ChainProducts.contains(eleventhChainProduct));
 		assertTrue("Result list of ChainProducts should contain 12th ChainProduct.", ChainProducts.contains(twelvethChainProduct));
@@ -224,7 +224,7 @@ public class ChainProductRepositoryTest {
 		subcategoryIds.add(secondSubcategoryId);
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, Calendar.getInstance(), Calendar.getInstance());
-		assertEquals("Number ChainProducts, that have been found in the database, should be 9: "
+		assertEquals("Number of ChainProducts, that have been found in the database, should be 9: "
 				+ "[1stChainProduct, 2ndChainProduct, 3rdChainProduct, 4thChainProduct, 5thChainProduct, 6thChainProduct, 7thChainProduct, 8thChainProduct, 9thChainProduct].", 9, ChainProducts.size());
 		assertTrue("Result list of ChainProducts should contain 1st ChainProduct.", ChainProducts.contains(firstChainProduct));
 		assertTrue("Result list of ChainProducts should contain 2nd ChainProduct.", ChainProducts.contains(secondChainProduct));
@@ -248,7 +248,7 @@ public class ChainProductRepositoryTest {
 		chainIds.add(thirdChainId);
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
-		assertEquals("Number ChainProducts, that have been found in the database, should be 6: "
+		assertEquals("Number of ChainProducts, that have been found in the database, should be 6: "
 				+ "[2ndChainProduct, 3rdChainProduct, 4thChainProduct, 5thChainProduct, 8thChainProduct, 9thChainProduct].", 6, ChainProducts.size());
 		assertTrue("Result list of ChainProducts should contain 2nd ChainProduct.", ChainProducts.contains(secondChainProduct));
 		assertTrue("Result list of ChainProducts should contain 3rd ChainProduct.", ChainProducts.contains(thirdChainProduct));
@@ -270,12 +270,8 @@ public class ChainProductRepositoryTest {
 		chainIds.add(thirdChainId);
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
-		assertEquals("Number ChainProducts, that have been found in the database and placed on the first page, should be 4: ["
-				+ "8thChainProduct (discountPrice = 1.75), "
-				+ "3rdChainProduct (discountPrice = 2.25), "
-				+ "5thChainProduct (discountPrice = 5.25), "
-				+ "2ndChainProduct (discountPrice = 6.75)"
-				+ "].", 4, ChainProducts.size());
+		assertEquals("Number of ChainProducts, that have been found in the database and placed on the first page, should be 4: "
+				+ "[8thChainProduct, 3rdChainProduct, 5thChainProduct, 2ndChainProduct].", 4, ChainProducts.size());
 		assertTrue("Result list of ChainProducts should contain 8th ChainProduct.", ChainProducts.contains(eighthChainProduct));
 		assertTrue("Result list of ChainProducts should contain 3rd ChainProduct.", ChainProducts.contains(thirdChainProduct));
 		assertTrue("Result list of ChainProducts should contain 5th ChainProduct.", ChainProducts.contains(fifthChainProduct));
@@ -294,10 +290,8 @@ public class ChainProductRepositoryTest {
 		chainIds.add(thirdChainId);
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
-		assertEquals("Number ChainProducts, that have been found in the database and placed on the second page, should be 2: ["
-				+ "9thChainProduct (discountPrice = 10.75), "
-				+ "4thChainProduct (discountPrice = 12.50), "
-				+ "].", 2, ChainProducts.size());
+		assertEquals("Number ChainProducts, that have been found in the database and placed on the second page, should be 2: "
+				+ "[9thChainProduct, 4thChainProduct].", 2, ChainProducts.size());
 		assertTrue("Result list of ChainProducts should contain 9th ChainProduct.", ChainProducts.contains(ninthChainProduct));
 		assertTrue("Result list of ChainProducts should contain 4th ChainProduct.", ChainProducts.contains(fourthChainProduct));
 	}
@@ -314,7 +308,22 @@ public class ChainProductRepositoryTest {
 		chainIds.add(thirdChainId);
 		List<ChainProduct> ChainProducts = chainProductRepository.findByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
 				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance(), pageRequest);
-		assertEquals("Number ChainProducts, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previous pages.", 0, ChainProducts.size());
+		assertEquals("Number of ChainProducts, that have been found in the database and placed on the second page, should be 0, as all results have been placed on two previous pages.", 0, ChainProducts.size());
+	}
+	
+	@Test
+	public void test_count_by_subcategories_ids_and_chain_ids() {
+		Set<Long> subcategoryIds = new HashSet<>();
+		subcategoryIds.add(firstSubcategoryId);
+		subcategoryIds.add(secondSubcategoryId);
+		subcategoryIds.add(fourthSubcategoryId);
+		Set<Long> chainIds = new HashSet<>();
+		chainIds.add(secondChainId);
+		chainIds.add(thirdChainId);
+		Long numberOfChainProducts = chainProductRepository.countByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+				subcategoryIds, chainIds, Calendar.getInstance(), Calendar.getInstance());
+		assertEquals("Number of ChainProducts, that have been found in the database, should be 6: "
+				+ "[8thChainProduct, 3rdChainProduct, 5thChainProduct, 2ndChainProduct, 9thChainProduct, 4thChainProduct].", 6L, numberOfChainProducts.longValue());
 	}
 	
 	@After

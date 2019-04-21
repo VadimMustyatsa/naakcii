@@ -46,4 +46,11 @@ public interface ChainProductRepository extends CrudRepository<ChainProduct, Cha
     		Calendar endDateRestriction,
     		Pageable pageable
     );
+    
+    Long countByProductIsActiveTrueAndProductSubcategoryIdInAndChainIdInAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+    		Set<Long> subcategoryIds, 
+    		Set<Long> chainIds, 
+    		Calendar startDateRestriction, 
+    		Calendar endDateRestriction
+    );
 }
