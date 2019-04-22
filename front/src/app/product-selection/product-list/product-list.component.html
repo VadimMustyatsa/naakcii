@@ -7,13 +7,9 @@
   <div *ngIf="isVisibleProd()">
     <div class="food-cards">
         <div *ngFor="let curFood of foodList">
-          <app-action-product-card [product]="curFood" (openModal)="openModal()">
+          <app-action-product-card [product]="curFood">
           </app-action-product-card>
       </div>
-    </div>
-    <div id="modal1" data-target="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
-        [materializeActions]="modalActions">
-      <app-email-modal (childEvent)="closeModal()"></app-email-modal>
     </div>
     <div *ngIf="showLoadingCard" class="loadingCard">
         <div class="progress amber">

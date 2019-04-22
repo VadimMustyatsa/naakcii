@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChainProduct } from '../../../shared/model/chain-product.model';
 import { FoodsStorageService } from '../../../shared/Storage/foods.storage.service';
 import { Cart } from '../../../shared/cart/cart.model';
@@ -22,7 +22,6 @@ export class ActionProductCardComponent implements OnInit {
   public readonly BACK_TRIGGER_TOOLTIP: string = 'Вернуться';
 
   @Input() product: ChainProduct;
-  @Output() openModal: EventEmitter<void> = new EventEmitter();
 
   constructor( public chainLst: Chain,
                public breakPointCheckService: BreakPointCheckService,
@@ -54,13 +53,6 @@ export class ActionProductCardComponent implements OnInit {
   selectFood() {
     this.cart.addLine( this.product, this.selectAmount );  // добавляем в корзину
     this.selectAmount = this.product.startAmount;  // сбрасываем на 1 на карточке
-    if ( this.emailSenderIsNotOpened ) {
-      this.openModal.emit();
-    }
-  }
-
-  get emailSenderIsNotOpened() {
-    return !this.sessionStorageService.getSenderEmailOpened();
   }
 
   subItem() {

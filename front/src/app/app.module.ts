@@ -46,7 +46,6 @@ import { UndiscountService } from './shared/services/undiscount.service';
 import { RestDataService } from './shared/services/rest-data.service';
 import { HomePageService } from './home-page/home-page-service/home-page.service';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
-import { EmailModalComponent } from './product-selection/email-modal/email-modal.component';
 import { SubscribeService } from './shared/services/subscribe.service';
 import { DateGeneratorDirective } from './shared/directives/date-generator/date-generator.directive';
 import { TooltipDirective } from './shared/directives/tooltip/tooltip.directive';
@@ -87,7 +86,6 @@ registerLocaleData(localeFr);
     HomePartnersComponent,
     TooltipDirective,
     ScrollToTopDirective,
-    EmailModalComponent,
     DateGeneratorDirective,
     ShoppingListComponent,
     ChainLineComponent,

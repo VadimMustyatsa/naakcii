@@ -149,12 +149,4 @@ export class ProductListComponent implements OnInit {
   // checkDuplicate(foodList: ChainProduct[], product: ChainProduct) {
   //   return foodList.some(el => el.chainId === product.chainId );
   // }
-
-  modalActions = new EventEmitter<string|MaterializeAction>();
-  openModal() {
-    this.modalActions.emit({action: 'modal', params: ['open']});
-  }
-  closeModal() {
-    this.modalActions.emit({action: 'modal', params: ['close']});
-  }
 }

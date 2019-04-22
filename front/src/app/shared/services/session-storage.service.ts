@@ -38,12 +38,4 @@ export class SessionStorageService {
   setToUndiscountStorage(undiscount) {
     sessionStorage.setItem(CONSTANTS.UNDISCOUNT_STORAGE_KEY, JSON.stringify(undiscount));
   }
-
-  setSenderEmailOpened(email: string) {
-    sessionStorage.setItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL, email);
-  }
-
-  getSenderEmailOpened(): string {
-    return sessionStorage.getItem(CONSTANTS.SESSION_STORAGE_KEY_EMAIL);
-  }
 }
