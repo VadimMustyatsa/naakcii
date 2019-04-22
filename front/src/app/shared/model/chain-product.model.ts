@@ -36,6 +36,9 @@ export class ChainProduct {
     this.chainProductType = _chainProduct.chainProductType;
     this.endDateMS = _chainProduct['endDate'];
     this.changeStep = parseFloat(_chainProduct.unitOfMeasure['step']);
+    this.brand = _chainProduct['brand'];
+    this.countryOfOrigin = _chainProduct['countryOfOrigin'];
+    this.manufacturer = _chainProduct['manufacturer'];
   }
   // есть ли у товара базовая цена
   get isConsiderBasePrice(): boolean {
