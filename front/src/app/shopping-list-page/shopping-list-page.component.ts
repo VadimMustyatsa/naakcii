@@ -1,9 +1,7 @@
 import {
   Component,
-  ElementRef,
   OnInit,
   ChangeDetectionStrategy,
-  HostListener,
   EventEmitter
 } from '@angular/core';
 import {Title} from '@angular/platform-browser';
@@ -28,14 +26,6 @@ export class ShoppingListPageComponent implements OnInit {
               public cart: Cart,
               public breakPointCheckService: BreakPointCheckService
     ) { }
-
-  @HostListener('click', ['$event.target'])
-  onClick(btn) {
-    if (btn.id === 'snackbar' || btn.parentNode.id === 'snackbar') {
-      document.getElementById('snackbar').classList.add('animated-hide');
-    }
-  }
-
   ngOnInit() {
     this.titleService.setTitle('Список покупок – НаАкции.Бел');
   }

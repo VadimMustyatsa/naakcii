@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FoodsCategoriesService} from '../shared/category/foods.categories.service';
 import {Title} from "@angular/platform-browser";
 import { BreakPointCheckService} from '../shared/services/breakpoint-check.service';
@@ -13,13 +13,6 @@ import { BreakPointCheckService} from '../shared/services/breakpoint-check.servi
 export class ProductSelectionComponent implements OnInit {
 
   constructor(private service: FoodsCategoriesService, private titleService: Title, public breakPointCheckService: BreakPointCheckService,) {
-  }
-
-  @HostListener('click', ['$event.target'])
-  onClick(btn) {
-    if (btn.id === 'snackbar' || btn.parentNode.id === 'snackbar') {
-      document.getElementById('snackbar').classList.add('animated-hide');
-    }
   }
 
   ngOnInit() {
