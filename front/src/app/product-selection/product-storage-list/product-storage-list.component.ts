@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, EventEmitter, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
-import { Storag } from '../../shared/Storage/foods.storage.model';
 import { FoodsStorageService } from '../../shared/Storage/foods.storage.service';
 import 'rxjs/add/operator/map';
 import { MODES, SHARED_STATE, SharedState } from '../sharedState.model';
@@ -8,6 +7,7 @@ import { Chain } from '../../shared/chain/chain.model';
 import { Observable } from 'rxjs/Observable';
 import { Cart } from '../../shared/cart/cart.model';
 import { BreakPointCheckService } from '../../shared/services/breakpoint-check.service';
+import { SessionStorageService } from '../../shared/services/session-storage.service';
 
 @Component({
   selector: 'app-foods-storage-list',
@@ -19,29 +19,28 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   actionsCollapsible = new EventEmitter<string | MaterializeAction>();
   checkedAllChain: boolean;
   chainListText = '';
-  curChainPercent = '';
-  curChainCountGoods = '';
   totalGoodsInfo: number[];
   @ViewChild('overlay') overlayElement: ElementRef;
   @ViewChild('shopList') shopListElement: ElementRef;
 
 
   iconCollapsible = {minimized: 'keyboard_arrow_right', maximized: 'keyboard_arrow_down'};
-  curentIconCollapsible = String(this.iconCollapsible.minimized);
+  currentIconCollapsible = String(this.iconCollapsible.minimized);
   params = [
     {
       onOpen: (el) => {
-        this.curentIconCollapsible = String(this.iconCollapsible.maximized);
+        this.currentIconCollapsible = String(this.iconCollapsible.maximized);
       },
       onClose: (el) => {
-        this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+        this.currentIconCollapsible = String(this.iconCollapsible.minimized);
       }
     }
   ];
 
-  constructor(public chainLst: Chain,
+  constructor(public chainList: Chain,
               public cart: Cart,
               private eRef: ElementRef,
+              private sessionStorageService: SessionStorageService,
               public breakPointCheckService: BreakPointCheckService,
               @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
                 this.totalGoodsInfo = [];
@@ -57,10 +56,6 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.chainLst.lines.length > 0) {
-      this.correctAllChainsCheck();
-      return;
-    }
     this.stateEvents.subscribe((update) => {
       if (update.mode === MODES.LOADED_CHAIN) {
         this.correctAllChainsCheck();
@@ -77,55 +72,42 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
   }
 
   setAllChains(checked) {
-    this.chainLst.setAllChains(checked);
+    this.chainList.setAllChains(checked);
     if (checked) {
       this.chainListText = 'Выбраны торговые сети: все';
-      this.curChainPercent = '';
-      this.curChainCountGoods = '';
     } else {
       this.chainListText = 'Выберите торговую сеть';
-      this.curChainPercent = '';
-      this.curChainCountGoods = '';
     }
   }
 
   onChangeChain(id) {
-    this.chainLst.changeChain(id);
+    this.chainList.changeChain(id);
     this.correctAllChainsCheck();
   }
 
   correctAllChainsCheck() {
-      if (this.chainLst.lines.length > 0) {
-      const cnt = this.chainLst.selectedIds.length;
-      if (cnt === 1) {
-        const curChain = this.chainLst.getChainById(this.chainLst.selectedIds[0]).chain;
-        this.chainListText = `Выбрана торговая сеть: "${curChain.name}"`;
-        this.checkedAllChain = false;
-        this.chainListText = curChain.name;
-        this.curChainPercent = `${curChain.percent}%`;
-        this.curChainCountGoods = String(curChain.countGoods);
-      } else {
-        this.curChainPercent = '';
-        this.curChainCountGoods = '';
-        if (cnt > 1) {
-          this.chainListText = 'Выбраны торговые сети: ' + String(cnt);
-        } else if (cnt === 0) {
-          this.chainListText = 'Выберите торговую сеть';
-        }
-      }
-      this.checkedAllChain = this.chainLst.getIsSelectedAll();
-
-      // проверка на однотипность выбора
-      // const curCheck = this.chainLst.lines[0].chain.selected;
-      // for (let i = 1; i < this.chainLst.lines.length; i++) {
-      //   if (curCheck !== this.chainLst.lines[i].chain.selected) {
-      //     return;
-      //   }
-      // }
-      // this.setAllChains(curCheck);
+      if (this.chainList.lines.length > 0) {
+      this.refreshCheckedChains(this.chainList.selectedIds.length);
+      this.checkedAllChain = this.chainList.getIsSelectedAll();
     }
   }
 
+  private refreshCheckedChains(cnt: number): void{
+    if (cnt === 1) {
+      const curChain = this.chainList.getChainById(this.chainList.selectedIds[0]).chain;
+      this.chainListText = `Выбрана торговая сеть: "${curChain.name}"`;
+      this.checkedAllChain = false;
+    } else {
+      if (cnt > 1) {
+        this.chainListText = 'Выбраны торговые сети: ' + String(cnt);
+      } else if (cnt === 0) {
+        this.chainListText = 'Выберите торговую сеть';
+      }
+      if(cnt === this.chainList.lines.length){
+        this.chainListText = 'Выбраны торговые сети: все';
+      }
+    }
+  }
 
   onChangeAllChains() {
     this.checkedAllChain = !this.checkedAllChain;
@@ -134,6 +116,6 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
 
   close() {
     this.actionsCollapsible.emit({action: 'collapsible', params: ['close', 0]});
-    this.curentIconCollapsible = String(this.iconCollapsible.minimized);
+    this.currentIconCollapsible = String(this.iconCollapsible.minimized);
   }
 }

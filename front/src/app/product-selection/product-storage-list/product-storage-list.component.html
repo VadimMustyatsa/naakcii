@@ -13,9 +13,7 @@
       <li>
         <div class="collapsible-header row grey darken-1">
           <div class="col">{{chainListText}}</div>
-          <div class="col">{{curChainPercent}}</div>
-          <div class="col">{{curChainCountGoods}}</div>
-          <div class="col"><i class="material-icons white-text">{{curentIconCollapsible}}</i></div>
+          <div class="col"><i class="material-icons white-text">{{currentIconCollapsible}}</i></div>
         </div>
         <div class="collapsible-body">
           <ul class="collection with-header">
@@ -35,14 +33,14 @@
                 </label>
               </div>
               <div class="col">
-                <span class="average-percent">{{chainLst.chainAverageDiscount}}</span>
+                <span class="average-percent">{{chainList.chainAverageDiscount}}</span>
               </div>
               <div class="col">
-                <span class="total-goods">{{chainLst.itemAllCount}}</span>
+                <span class="total-goods">{{chainList.itemAllCount}}</span>
               </div>
             </li>
 
-            <li *ngFor="let chain of chainLst.lines"
+            <li *ngFor="let chain of chainList.lines"
                 class="collection-item row"
                 (click)="onChangeChain(chain.chain.id)">
               <div class="chainName col">
