@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Category} from '../category/foods.category.model';
 import {SubCategory} from '../subCategory/foods.subCategory.model';
 import {Storag} from '../Storage/foods.storage.model';
-import {FoodList} from '../foodList/foods.foodList.model';
 import {ChainProductFromJson} from '../model/chain-product-json.model';
 import {Observable} from 'rxjs';
 import {Statistics} from '../../home-page/model/statistics';
