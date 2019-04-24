@@ -100,7 +100,7 @@ export class ProductListComponent implements OnInit {
   // countVisibleProd() {
   //   let countProduct = 0;
   //   this.foodList.map(food => {
-  //     this.chainLst.lines.map(chain => {
+  //     this.chainList.lines.map(chain => {
   //       if (chain.chain.id === food.chainId) {
   //         if (chain.chain.selected) {
   //           countProduct += 1;
@@ -114,8 +114,6 @@ export class ProductListComponent implements OnInit {
 
   // проверяем есть ли хоть одна выбранная сеть-----------
   isCheckedChain() {
-    // console.log('isCheckedChain()')
-    // console.log(this.chainLst.selectedIds.length)
     return this.chainLst.selectedIds.length > 0;
   }
   // -----------------------------------------------------

@@ -24,7 +24,6 @@ export class FoodsFoodListService {
     const dataGet = {subcategoryIds: this.subCategoryIdList, chainIds: this.chainIdList, page: 0, size: 12};
     return this.restDataService.getProducts( dataGet )
       .subscribe( ( productList: any) => {
-        console.log( productList );
         const newProductList = productList.chainProducts.filter( product => {
           if ( product != null ) {
             return true;
