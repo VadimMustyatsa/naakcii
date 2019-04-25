@@ -2,8 +2,8 @@ export class Storag {
   id: number;
   name: string;
   link: string;
-  countGoods: number;
-  percent: number;
+  averageDiscountPercentage: number;
+  discountedProducts: number;
   imgLogo: string;
   imgLogoSmall: string;
   selected: boolean;

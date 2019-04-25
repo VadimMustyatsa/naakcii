@@ -17,8 +17,8 @@ export class FoodsStorageService {
             id: chain['id'],
             name: chain['name'],
             link: chain['link'],
-            countGoods: chain['countGoods'],
-            percent: chain['percent'],
+            discountedProducts: chain['discountedProducts'],
+            averageDiscountPercentage: chain['averageDiscountPercentage'],
             imgLogo: environment.baseUrl + chain['logo'],
             imgLogoSmall: environment.baseUrl + chain['logo'],
             selected: false
