@@ -79,8 +79,7 @@ export class ActionProductCardComponent implements OnInit {
         }
       }
     } );
-    // return selected;
-    return true;
+    return selected;
   }
 
   public rotate( el: HTMLElement ): void {
