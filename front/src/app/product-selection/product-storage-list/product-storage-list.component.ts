@@ -57,7 +57,7 @@ export class ProductStorageListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.stateEvents.subscribe((update) => {
-      if (update.mode === MODES.LOADED_CHAIN) {
+      if (update.mode === MODES.LOADED_CHAIN || this.sessionStorageService.getChainFromSessionStorage().length) {
         this.correctAllChainsCheck();
       }
     });
