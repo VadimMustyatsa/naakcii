@@ -60,6 +60,7 @@ import { UndiscountLinesComponent } from './shopping-list-page/shopping-list/und
 import { UndiscountAddComponent } from './shopping-list-page/shopping-list/undiscount-add/undiscount-add.component';
 import { UndiscountLineComponent } from './shopping-list-page/shopping-list/undiscount-lines/undiscount-line/undiscount-line.component';
 import {FoodsFoodListService} from './shared/foodList/foods.foodList.service';
+import { FixMessageComponent } from './shared/components/fix-message/fix-message.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -96,7 +97,8 @@ registerLocaleData(localeFr);
     UndiscountHeaderComponent,
     UndiscountLinesComponent,
     UndiscountAddComponent,
-    UndiscountLineComponent
+    UndiscountLineComponent,
+    FixMessageComponent
   ],
   imports: [
     BrowserModule,

@@ -28,6 +28,7 @@ export class ProductListComponent implements OnInit {
   isNextCard = false;
   showLoadingCard = false;
   isFoodLength: boolean;
+  private chainList: any;
 
   constructor(public  chainLst: Chain,
               public breakPointCheckService: BreakPointCheckService,
@@ -40,76 +41,73 @@ export class ProductListComponent implements OnInit {
       this.foodList = chainProductList;
     });
 
-    // this.stateEvents.subscribe((update) => {
-    //   if (update.mode === MODES.SELECT_SUBCATEGORY) {
-    //     this.foodList = [];
-    //     this.selectedSubCatListID = [];
-    //     if (update.subCatList) {
-    //       for (let i = 0; i < update.subCatList.length; i++) {
-    //         if (update.subCatList[i].selected) {
-    //           this.selectedSubCatListID.push({id: update.subCatList[i].id});
-    //         }
-    //       }
-    //       if (this.selectedSubCatListID.length > 0) {
-    //         this.countLoadCard = 0;
-    //         const first = this.countLoadCard;
-    //         const last = this.firstLoadedCard;
-    //         this.isNextCard = false;
-    //         this.foodList.length = 0;
-    //         this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
-    //           productList.map(product => {
-    //             if (!this.checkDuplicate(this.foodList, product)) {
-    //               this.foodList.push(product);
-    //               console.log('добавлен продукт для отображения');
-    //               console.log(product);
-    //             }
-    //           });
-    //           if (productList.length === this.firstLoadedCard) {
-    //             this.isNextCard = true;
-    //             this.countLoadCard += this.firstLoadedCard;
-    //             if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
-    //               this.updateFoodList();
-    //             }
-    //           } else {
-    //             this.isNextCard = false;
-    //           }
-    //         });
-    //       }
-    //     }
-    //   }
-    //   this.isFoodLength = false;
-    //   setTimeout(() => {
-    //     if (this.foodList && this.foodList.length === 0) {
-    //       this.isFoodLength = true;
-    //     }
-    //   }, 700);
-    // });
+    this.stateEvents.subscribe((update) => {
+      if (update.mode === MODES.SELECT_SUBCATEGORY) {
+        this.foodList = [];
+        this.selectedSubCatListID = [];
+        if (update.subCatList) {
+          for (let i = 0; i < update.subCatList.length; i++) {
+            if (update.subCatList[i].selected) {
+              this.selectedSubCatListID.push({id: update.subCatList[i].id});
+            }
+          }
+          if (this.selectedSubCatListID.length > 0) {
+            this.countLoadCard = 0;
+            const first = this.countLoadCard;
+            const last = this.firstLoadedCard;
+            this.isNextCard = false;
+            this.foodList.length = 0;
+            // this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
+            //   productList.map(product => {
+            //     if (!this.checkDuplicate(this.foodList, product)) {
+            //       this.foodList.push(product);
+            //       console.log('добавлен продукт для отображения');
+            //       console.log(product);
+            //     }
+            //   });
+            //   if (productList.length === this.firstLoadedCard) {
+            //     this.isNextCard = true;
+            //     this.countLoadCard += this.firstLoadedCard;
+            //     if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
+            //       this.updateFoodList();
+            //     }
+            //   } else {
+            //     this.isNextCard = false;
+            //   }
+            // });
+          }
+        }
+      }
+      this.isFoodLength = false;
+      setTimeout(() => {
+        if (this.foodList && this.foodList.length === 0) {
+          this.isFoodLength = true;
+        }
+      }, 700);
+    });
 
   }
 
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
-    // console.log('isVisibleProd()')
-    // console.log(this.foodList.length > 0)
-
     return this.foodList.length > 0;
   }
   // --------------------------------------------------
 
   // считаем сколько в загруженных карточках есть товаров подходящих под выбранные сети
-  // countVisibleProd() {
-  //   let countProduct = 0;
-  //   this.foodList.map(food => {
-  //     this.chainList.lines.map(chain => {
-  //       if (chain.chain.id === food.chainId) {
-  //         if (chain.chain.selected) {
-  //           countProduct += 1;
-  //         }
-  //       }
-  //     });
-  //   });
-  //   return countProduct;
-  // }
+  countVisibleProd() {
+    let countProduct = 0;
+    this.foodList.map(food => {
+      this.chainList.lines.map(chain => {
+        if (chain.chain.id === food.chainId) {
+          if (chain.chain.selected) {
+            countProduct += 1;
+          }
+        }
+      });
+    });
+    return countProduct;
+  }
   // -----------------------------------------------------
 
   // проверяем есть ли хоть одна выбранная сеть-----------
@@ -119,32 +117,32 @@ export class ProductListComponent implements OnInit {
   // -----------------------------------------------------
 
   // Догружаем следующую порцию карточек------------------
-  // updateFoodList() {
-  //   if (!this.isNextCard) {
-  //     return;
-  //   }
-  //   this.isNextCard = false;
-  //   const first = this.countLoadCard;
-  //   const last = this.countLoadCard + this.loadedCard;
-  //   this.showLoadingCard = true;
-  //   this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
-  //     productList.map(product => {
-  //       this.foodList.push(product);
-  //     });
-  //     if (productList.length === this.loadedCard) {
-  //       this.isNextCard = true;
-  //       this.countLoadCard += this.loadedCard;
-  //       if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
-  //         this.updateFoodList();
-  //       }
-  //     } else {
-  //       this.isNextCard = false;
-  //     }
-  //     this.showLoadingCard = false;
-  //   });
-  // }
+  updateFoodList() {
+    if (!this.isNextCard) {
+      return;
+    }
+    this.isNextCard = false;
+    const first = this.countLoadCard;
+    const last = this.countLoadCard + this.loadedCard;
+    this.showLoadingCard = true;
+    // this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
+    //   productList.map(product => {
+    //     this.foodList.push(product);
+    //   });
+    //   if (productList.length === this.loadedCard) {
+    //     this.isNextCard = true;
+    //     this.countLoadCard += this.loadedCard;
+    //     if (this.countVisibleProd() < this.firstLoadedCard) {  // необходимо догрузить
+    //       this.updateFoodList();
+    //     }
+    //   } else {
+    //     this.isNextCard = false;
+    //   }
+    //   this.showLoadingCard = false;
+    // });
+  }
   // -----------------------------------------------------
-  // checkDuplicate(foodList: ChainProduct[], product: ChainProduct) {
-  //   return foodList.some(el => el.chainId === product.chainId );
-  // }
+  checkDuplicate(foodList: ChainProduct[], product: ChainProduct) {
+    return foodList.some(el => el.chainId === product.chainId );
+  }
 }

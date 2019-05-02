@@ -21,7 +21,7 @@ export class FoodsFoodListService {
       this.chainProductSubject.next( [] );
       return 0;
     }
-    const dataGet = {subcategoryIds: this.subCategoryIdList, chainIds: this.chainIdList, page: 0, size: 12};
+    const dataGet = {subcategoryIds: this.subCategoryIdList, chainIds: this.chainIdList, page: 0, size: 22};
     return this.restDataService.getProducts( dataGet )
       .subscribe( ( productList: any) => {
         const newProductList = productList.chainProducts.filter( product => {
