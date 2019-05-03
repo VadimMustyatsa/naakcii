@@ -150,9 +150,11 @@ public class ChainProductTest {
 
     @Test
     public void test_chain_product_end_date_is_in_the_past() {
+    	Calendar startDate = Calendar.getInstance();
+    	startDate.add(Calendar.MONTH, -2);
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, -1);
-        ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.25"), getChainProductType(), getStartDate(), endDate);
+        ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("5.25"), getChainProductType(), startDate, endDate);
         Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
         assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct end date is in the past:", 1, constraintViolations.size());
         assertEquals("ChainProduct's end date must be in the future.", constraintViolations.iterator().next().getMessage());
@@ -203,6 +205,23 @@ public class ChainProductTest {
                 .collect(Collectors.toList());
         assertTrue(messages.contains("ChainProductType's name mustn't be null."));
         assertTrue(messages.contains("ChainProductType's synonym mustn't be null."));
+	}
+	
+	@Test
+	public void test_chain_product_has_start_date_after_end_date() {
+		Calendar startDate = Calendar.getInstance();
+		startDate.add(Calendar.WEEK_OF_YEAR, 2);
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(Calendar.WEEK_OF_YEAR, 1);
+		ChainProduct chainProduct = new ChainProduct(new Product(), new Chain(), new BigDecimal("15.25"), getChainProductType(), startDate, endDate);
+		chainProduct.setBasePrice(new BigDecimal("15.25"));
+		chainProduct.setDiscountPercent(new BigDecimal("5"));
+		Set<ConstraintViolation<ChainProduct>> constraintViolations = validator.validate(chainProduct);
+		assertEquals("Expected size of the ConstraintViolation set should be 1, as chainProduct has start date after end date:", 1, constraintViolations.size());
+		List<String> messages = constraintViolations.stream()
+                .map((ConstraintViolation<ChainProduct> constraintViolation) -> constraintViolation.getMessage())
+                .collect(Collectors.toList());
+        assertTrue(messages.contains("Chain Product has start date value after end date value."));
 	}
 
 	@Test

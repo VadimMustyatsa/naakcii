@@ -10,11 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import naakcii.by.api.chain.Chain;
+import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.chainproducttype.ChainProductTypeDTO;
 import naakcii.by.api.country.Country;
 
 import naakcii.by.api.product.Product;
 import naakcii.by.api.unitofmeasure.UnitOfMeasureDTO;
+import naakcii.by.api.chainproducttype.TypeCode;
 
 @NoArgsConstructor
 @Setter
@@ -73,6 +75,7 @@ public class ChainProductDTO {
     	this.startDate = chainProduct.getOptionalStartDate().map(Calendar::getTimeInMillis).orElse(null);
     	this.endDate = chainProduct.getOptionalEndDate().map(Calendar::getTimeInMillis).orElse(null);
     	this.chainProductType = chainProduct.getOptionalType().map(ChainProductTypeDTO::new).orElse(null);
+    	modifyUnitStep(chainProduct.getOptionalType().orElse(null));
     }
 
     private String getFormattedDate(Calendar date) {
@@ -80,5 +83,15 @@ public class ChainProductDTO {
         String formattedDate = formatter.format("%td-%tm-%tY", date, date, date).toString();
         formatter.close();
         return formattedDate;
+    }
+    
+    private void modifyUnitStep(ChainProductType type) {
+    	if ((type != null) && (unitOfMeasure != null)) {
+    		BigDecimal baseStep = unitOfMeasure.getStep();
+    		
+    		if (type.getSynonym().equals(TypeCode.ONE_PLUS_ONE.getSynonym())) {
+    			unitOfMeasure.setStep(baseStep.multiply(new BigDecimal(2.00)));
+    		}
+    	}
     }
 }

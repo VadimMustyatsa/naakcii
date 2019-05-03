@@ -32,6 +32,7 @@ import naakcii.by.api.chain.Chain;
 import naakcii.by.api.chainproducttype.ChainProductType;
 import naakcii.by.api.product.Product;
 import naakcii.by.api.unitofmeasure.UnitOfMeasure;
+import naakcii.by.api.util.annotations.ValidChainProduct;
 
 @NoArgsConstructor
 @Setter
@@ -39,7 +40,9 @@ import naakcii.by.api.unitofmeasure.UnitOfMeasure;
 @EqualsAndHashCode(exclude = {"id"})
 @Entity
 @Table(name = "CHAIN_PRODUCT")
+//@org.hibernate.annotations.Check(constraints = "startDate < endDate")
 @org.hibernate.annotations.Immutable
+@ValidChainProduct
 public class ChainProduct implements Serializable {
 
 	private static final long serialVersionUID = 1525810593299011676L;

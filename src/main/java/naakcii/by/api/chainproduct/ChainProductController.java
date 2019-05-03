@@ -45,13 +45,17 @@ public class ChainProductController {
 				+ "Возвращает вторым параметром (ключ 'numberOfChainProducts') общее количество акционных товаров в базе данных, удовлетворяющих данным условиям.")
     public Map<String, ?> getAllProductsByChainIdsAndSubcategoryIds(
 			@ApiParam(value = "Идентификаторы торговых сетей.", required = true)
-    		@RequestParam("chainIds") Set<Long> chainIds,
+    		@RequestParam(value = "chainIds", required = true) 
+			Set<Long> chainIds,
 			@ApiParam(value = "Идентификаторы подкатегорий товаров.", required = true)
-    		@RequestParam("subcategoryIds") Set<Long> subcategoryIds,
+    		@RequestParam(value = "subcategoryIds", required = true) 
+			Set<Long> subcategoryIds,
 			@ApiParam(value = "Номер страницы. По умолчанию = 0.", required = false)
-    		@RequestParam(value = "page", required = false) Integer page,
+    		@RequestParam(value = "page", required = false) 
+			Integer page,
 			@ApiParam(value = "Количество акционных товаров на странице. По умолчанию = 12.", required = false)
-    		@RequestParam(value = "size", required = false) Integer size) {
+    		@RequestParam(value = "size", required = false) 
+			Integer size) {
 		if (page == null || page < 0) {
 			page = DEFAULT_PAGE_NIMBER;
 		}
