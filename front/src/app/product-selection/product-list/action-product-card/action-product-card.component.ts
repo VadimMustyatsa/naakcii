@@ -32,6 +32,10 @@ export class ActionProductCardComponent implements OnInit {
     this.selectAmount = this.product.startAmount;
   }
 
+  public get isDefaultPlaceholderImage(): boolean {
+    return true
+  }
+
   getStorageByID( id: number ): ChainLine {
     return this.chainLst.lines.find( x => x.chain.id === id );
   }

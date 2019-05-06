@@ -67,22 +67,30 @@
     </div>
     <div class="back">
       <div class="back-content-wrapper card sticky-action">
-          <div class="back-items">
-            <div class="grey-text">Бренд:</div>
-            <div>{{product.brand}}</div>
-          </div>
-          <div class="back-items">
-            <div class="grey-text">Производитель:</div>
-            <div>{{product.manufacturer}}</div>
-          </div>
-          <div class="back-items">
-            <div class="grey-text">Страна производства:</div>
-            <div>{{product.countryOfOrigin}}</div>
-          </div>
-          <div class="trigger-back" type="button" (click)="rotate(card)" [tooltip]="BACK_TRIGGER_TOOLTIP">
-            <img src="../../../../assets/images/corner.png">
+        <div class="back-items">
+          <div class="grey-text">Бренд:</div>
+          <div>{{product.brand}}</div>
+        </div>
+        <div class="back-items">
+          <div class="grey-text">Производитель:</div>
+          <div>{{product.manufacturer}}</div>
+        </div>
+        <div class="back-items">
+          <div class="grey-text">Страна производства:</div>
+          <div>{{product.countryOfOrigin}}</div>
+        </div>
+        <div class="back-items">
+          <div *ngIf="isDefaultPlaceholderImage" class="grey-text message">
+            *Внешний вид товаров, представленных на фотографиях, может несколько отличаться от товаров, выставленных в
+            торговом зале.
           </div>
         </div>
+        <div>
+        </div>
+        <div class="trigger-back" type="button" (click)="rotate(card)" [tooltip]="BACK_TRIGGER_TOOLTIP">
+          <img src="../../../../assets/images/corner.png">
+        </div>
+      </div>
     </div>
   </div>
 </div>
