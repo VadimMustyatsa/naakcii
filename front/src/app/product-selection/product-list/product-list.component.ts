@@ -37,8 +37,8 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.foodsService.getChainProductSubject().subscribe(chainProductList => {
-      this.foodList = chainProductList;
+    this.foodsService.getChainProductSubject().subscribe(chainProducts => {
+      this.foodList = chainProducts.newProductList || [];
     });
 
     this.stateEvents.subscribe((update) => {
@@ -57,7 +57,8 @@ export class ProductListComponent implements OnInit {
             const last = this.firstLoadedCard;
             this.isNextCard = false;
             this.foodList.length = 0;
-            // this.foodsService.getFoodList(this.selectedSubCatListID, first, last).subscribe(productList => {
+            // this.foodsService.getFoodList(1).subscribe(productList => {
+            //   console.log(productList);
             //   productList.map(product => {
             //     if (!this.checkDuplicate(this.foodList, product)) {
             //       this.foodList.push(product);
@@ -145,4 +146,5 @@ export class ProductListComponent implements OnInit {
   checkDuplicate(foodList: ChainProduct[], product: ChainProduct) {
     return foodList.some(el => el.chainId === product.chainId );
   }
+
 }

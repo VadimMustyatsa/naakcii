@@ -1,6 +1,6 @@
 <div class="container-flip">
   <div #card id="card-flip">
-    <div class="front">
+    <div [ngClass]="corner">
       <div *ngIf="isVisibleChain()"
            [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches"
            [class.isMobile]="(breakPointCheckService.isMobile | async)?.matches"
@@ -8,9 +8,9 @@
            [class.isTablet]="(breakPointCheckService.isTablet | async)?.matches"
            [class.isNetBook]="(breakPointCheckService.isNetBook | async)?.matches">
         <div class="card sticky-action">
-          <div type="button" (click)="rotate(card)" class="trigger-front" [tooltip]="FRONT_TRIGGER_TOOLTIP">
-            <img src="../../../../assets/images/corner.png">
+          <div *ngIf="isBackSideInfo" (click)="rotate(card)" class="trigger-front" [tooltip]="FRONT_TRIGGER_TOOLTIP">
           </div>
+          <div class="margin-top"></div>
           <div class="card-image tooltip-container-bottom" [ngStyle]="setImgStyles()">
             <div *ngIf="!product.isIcon" [tooltip]="product.chainProductType.tooltip"
                  class="foodDiscount deep-orange center-align white-text z-depth-3 nonselectable">
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <div class="back">
+    <div class="back corner-back">
       <div class="back-content-wrapper card sticky-action">
         <div class="back-items">
           <div class="grey-text">Бренд:</div>
@@ -87,8 +87,7 @@
         </div>
         <div>
         </div>
-        <div class="trigger-back" type="button" (click)="rotate(card)" [tooltip]="BACK_TRIGGER_TOOLTIP">
-          <img src="../../../../assets/images/corner.png">
+        <div class="trigger-back" (click)="rotate(card)" [tooltip]="BACK_TRIGGER_TOOLTIP">
         </div>
       </div>
     </div>

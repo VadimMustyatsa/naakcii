@@ -20,6 +20,7 @@ export class ActionProductCardComponent implements OnInit {
   public readonly nameMaxWidth = 80;
   public readonly FRONT_TRIGGER_TOOLTIP: string = 'Больше информации';
   public readonly BACK_TRIGGER_TOOLTIP: string = 'Вернуться';
+  public corner = 'front';
 
   @Input() product: ChainProduct;
 
@@ -28,12 +29,20 @@ export class ActionProductCardComponent implements OnInit {
                private cart: Cart, private sessionStorageService: SessionStorageService ) {
   }
 
+
   ngOnInit() {
     this.selectAmount = this.product.startAmount;
+    if(this.isBackSideInfo){
+      this.corner = 'front corner-front';
+    }
   }
 
   public get isDefaultPlaceholderImage(): boolean {
     return true
+  }
+
+  public get isBackSideInfo(): boolean {
+    return !!(this.product.manufacturer || this.product.brand ||this.product.countryOfOrigin);
   }
 
   getStorageByID( id: number ): ChainLine {

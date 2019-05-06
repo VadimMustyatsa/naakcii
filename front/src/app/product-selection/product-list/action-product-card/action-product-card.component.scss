@@ -90,7 +90,6 @@
 
 .foodDiscount {
   position: absolute;
-  top: 5px;
   left: 10px;
   height: 40px;
   width: 40px;
@@ -171,6 +170,10 @@
 .card-image {
   overflow: visible;
   box-sizing: padding-box;
+}
+
+.margin-top{
+  height: 1px;
 }
 
 /*********************************/
@@ -267,13 +270,13 @@
   position: absolute;
   top: 0;
   right: 1px;
-  z-index: 50;
+  z-index: 3000;
   padding: 2px;
   cursor: pointer;
-  img {
-    height: 30px;
-    margin: -4px -5px 0 0;
-  }
+  height: 30px;
+  width: 30px;
+  margin: -4px -5px 0 0;
+  background-color: transparent;
 }
 
 .trigger-back {
@@ -284,10 +287,11 @@
   padding: 2px;
   cursor: pointer;
   transform: rotateY(180deg);
-  img {
-    height: 30px;
-    margin: -4px -5px 0 0;
-  }
+  height: 30px;
+  width: 30px;
+  margin: -4px -5px 0 0;
+  background-color: transparent;
+  z-index: 3000;
 }
 
 .back-content-wrapper {
@@ -306,5 +310,57 @@
 
 .message {
   margin-top: 30px;
+}
+
+/*///////////// Corners //////////////////*/
+
+.corner-back, .corner-front {
+  position: relative;
+}
+
+.corner-front {
+  box-shadow: none;
+}
+
+.corner-back:before, .corner-front:before, .corner-back:after, .corner-front:after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  z-index: 2000;
+}
+
+.corner-back:before {
+  top: 4px;
+  left: -4px;
+  border-bottom: 30px solid #f5f5f5;
+  border-left: 30px solid transparent;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.corner-back:after {
+  top: 4px;
+  left: -4px;
+  border-top: 30px solid #FFF;
+  border-right: 30px solid transparent;
+}
+
+.corner-front:before {
+  top: 4px;
+  right: -4px;
+  border-bottom: 30px solid #f5f5f5;
+  border-right: 30px solid transparent;
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.corner-front:after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -4px;
+  width: 0px;
+  height: 0px;
+  border-top: 32px solid #fff;
+  border-left: 32px solid transparent;
 }
 

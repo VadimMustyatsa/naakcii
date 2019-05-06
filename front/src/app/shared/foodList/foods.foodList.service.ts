@@ -6,7 +6,7 @@ import { ChainProduct } from '../model/chain-product.model';
 @Injectable()
 export class FoodsFoodListService {
 
-  chainProductSubject: Subject<ChainProduct[]>;
+  chainProductSubject: Subject<any>;
   subCategoryIdList: number[];
   chainIdList: number[];
 
@@ -16,14 +16,17 @@ export class FoodsFoodListService {
     this.chainIdList = [];
   }
 
-  getFoodList() {
+  getFoodList( page = 0, size = 12 ) {
     if ( ( this.subCategoryIdList.length === 0 ) || ( this.chainIdList.length === 0 ) ) {
-      this.chainProductSubject.next( [] );
+      this.chainProductSubject.next( {} );
       return 0;
     }
-    const dataGet = {subcategoryIds: this.subCategoryIdList, chainIds: this.chainIdList, page: 0, size: 22};
-    return this.restDataService.getProducts( dataGet )
-      .subscribe( ( productList: any) => {
+    const dataGet = {
+      subcategoryIds: this.subCategoryIdList,
+      chainIds: this.chainIdList,
+    };
+    return this.restDataService.getProducts( {...dataGet, page, size} )
+      .subscribe( ( productList: any ) => {
         const newProductList = productList.chainProducts.filter( product => {
           if ( product != null ) {
             return true;
@@ -33,11 +36,11 @@ export class FoodsFoodListService {
         } ).map( product => {
           return new ChainProduct( product );
         } );
-        this.chainProductSubject.next( newProductList );
+        this.chainProductSubject.next( {newProductList, numberOfChainProducts: productList.numberOfChainProducts } );
       } );
   }
 
-  getChainProductSubject(): Subject<ChainProduct[]> {
+  getChainProductSubject(): Subject<any> {
     return this.chainProductSubject;
   }
 
@@ -51,7 +54,6 @@ export class FoodsFoodListService {
     this.chainIdList = selectedIds;
     this.getFoodList();
   }
-
 }
 
 
