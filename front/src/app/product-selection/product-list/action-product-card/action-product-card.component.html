@@ -67,15 +67,15 @@
     </div>
     <div class="back corner-back">
       <div class="back-content-wrapper card sticky-action">
-        <div class="back-items">
+        <div *ngIf="product.brand" class="back-items">
           <div class="grey-text">Бренд:</div>
           <div>{{product.brand}}</div>
         </div>
-        <div class="back-items">
+        <div *ngIf="product.manufacturer" class="back-items">
           <div class="grey-text">Производитель:</div>
           <div>{{product.manufacturer}}</div>
         </div>
-        <div class="back-items">
+        <div  *ngIf="product.countryOfOrigin" class="back-items">
           <div class="grey-text">Страна производства:</div>
           <div>{{product.countryOfOrigin}}</div>
         </div>
