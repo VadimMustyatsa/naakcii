@@ -38,7 +38,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.foodsService.getChainProductSubject().subscribe(chainProducts => {
-      this.foodList = chainProducts.newProductList || [];
+     this.foodList = chainProducts.newProductList || [];
     });
 
     this.stateEvents.subscribe((update) => {
@@ -79,19 +79,19 @@ export class ProductListComponent implements OnInit {
           }
         }
       }
-      this.isFoodLength = false;
-      setTimeout(() => {
-        if (this.foodList && this.foodList.length === 0) {
-          this.isFoodLength = true;
-        }
-      }, 700);
+      // this.isFoodLength = false;
+      // setTimeout(() => {
+      //   if (this.foodList && this.foodList.length === 0) {
+      //     this.isFoodLength = true;
+      //   }
+      // }, 700);
     });
 
   }
 
   // проверяем есть ли для выбранных сетей товары-----
   isVisibleProd() {
-    return this.foodList.length > 0;
+    return this.foodList.length;
   }
   // --------------------------------------------------
 
@@ -112,8 +112,8 @@ export class ProductListComponent implements OnInit {
   // -----------------------------------------------------
 
   // проверяем есть ли хоть одна выбранная сеть-----------
-  isCheckedChain() {
-    return this.chainLst.selectedIds.length > 0;
+  get isCheckedChain() {
+    return this.chainLst.selectedIds.length;
   }
   // -----------------------------------------------------
 

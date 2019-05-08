@@ -19,7 +19,7 @@
   </div>
   <ul *ngIf="!isVisibleProd()" class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
-      <div *ngIf="isCheckedChain()" class="grey-text text-darken-2">
+      <div *ngIf="isCheckedChain" class="grey-text text-darken-2">
         <p>
           В выбранных торговых сетях сейчас нет акций на товары выбранной категории или подкатегории.
         </p>
@@ -27,7 +27,7 @@
           Попробуйте поискать в других сетях.
         </p>
       </div>
-      <div *ngIf="!isCheckedChain()" class="grey-text text-darken-2">
+      <div *ngIf="!isCheckedChain" class="grey-text text-darken-2">
         <p>
           Не выбрана ни одна торговая сеть.
         </p>
@@ -43,7 +43,7 @@
     </li>
   </ul>
 </div>
-<div *ngIf="!foodList.length && isFoodLength" class="cards">
+<div *ngIf="!foodList.length && isFoodLength && isCheckedChain" class="cards">
   <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
     <li class="collapsible-header amber-text">
       <div class="grey-text text-darken-2">

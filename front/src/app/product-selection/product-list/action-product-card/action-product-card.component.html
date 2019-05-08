@@ -1,4 +1,4 @@
-<div class="container-flip">
+<div *ngIf="isVisibleChain()" class="container-flip">
   <div #card id="card-flip">
     <div [ngClass]="corner">
       <div *ngIf="isVisibleChain()"

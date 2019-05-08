@@ -4,8 +4,9 @@ import { FoodsStorageService } from '../../../shared/Storage/foods.storage.servi
 import { Cart } from '../../../shared/cart/cart.model';
 import { Chain, ChainLine } from '../../../shared/chain/chain.model';
 import { BreakPointCheckService } from '../../../shared/services/breakpoint-check.service';
+import { environment } from '../../../../environments/environment';
+import * as CONSTANTS  from '../../../CONSTANTS'
 
-import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import roundTo2Digits from '../../../shared/utils/roundTo2Digits';
 import setImgStyles from '../../../shared/utils/setImgStyles';
 
@@ -26,23 +27,23 @@ export class ActionProductCardComponent implements OnInit {
 
   constructor( public chainLst: Chain,
                public breakPointCheckService: BreakPointCheckService,
-               private cart: Cart, private sessionStorageService: SessionStorageService ) {
+               private cart: Cart ) {
   }
 
 
   ngOnInit() {
     this.selectAmount = this.product.startAmount;
-    if(this.isBackSideInfo){
+    if ( this.isBackSideInfo ) {
       this.corner = 'front corner-front';
     }
   }
 
   public get isDefaultPlaceholderImage(): boolean {
-    return true
+    return !(this.product.picture === environment.imgUrl);
   }
 
   public get isBackSideInfo(): boolean {
-    return !!(this.product.manufacturer || this.product.brand ||this.product.countryOfOrigin);
+    return !!( this.product.manufacturer || this.product.brand || this.product.countryOfOrigin );
   }
 
   getStorageByID( id: number ): ChainLine {
@@ -79,7 +80,7 @@ export class ActionProductCardComponent implements OnInit {
   }
 
   setImgStyles() {
-    return setImgStyles( this.product.picture );
+    return setImgStyles( this.isDefaultPlaceholderImage ? this.product.picture : CONSTANTS.PRODUCT_PLACEHOLDER_IMG);
   }
 
   // проверяем выделена ли сеть данной карточки в фильтре сетей
