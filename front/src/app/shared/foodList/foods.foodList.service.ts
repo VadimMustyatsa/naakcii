@@ -16,7 +16,7 @@ export class FoodsFoodListService {
     this.chainIdList = [];
   }
 
-  getFoodList( page = 0, size = 12 ) {
+  getFoodList( page = 0, size = 25 ) {
     if ( ( this.subCategoryIdList.length === 0 ) || ( this.chainIdList.length === 0 ) ) {
       this.chainProductSubject.next( {} );
       return 0;
