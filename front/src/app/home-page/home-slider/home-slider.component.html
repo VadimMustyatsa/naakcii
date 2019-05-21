@@ -6,7 +6,7 @@
      [class.isWeb]="(breakPointCheckService.isWeb | async)?.matches">
   <div class="headers">
     <p class="title">Составляйте список покупок и экономьте с нами!</p>
-    <section
+    <section *ngIf="false"
     [@getData]="getData">
       <div *ngFor="let title of titles" >
         <i class="material-icons">check</i>
